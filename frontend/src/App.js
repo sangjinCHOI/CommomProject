@@ -1,5 +1,7 @@
 import "@material-tailwind/react/tailwind.css";
 import Button from "@material-tailwind/react/Button";
+import Alert from "@material-tailwind/react/Alert";
+import ClosingAlert from "@material-tailwind/react/ClosingAlert";
 
 function App() {
   return (
@@ -17,6 +19,9 @@ function App() {
           large_test
         </button>
       </div>
+      <br />
+      <Alert color="green">LOGIN SUCCESS</Alert>
+      <ClosingAlert color="red">LOGIN FAILED</ClosingAlert>
       
     </div>
   );
