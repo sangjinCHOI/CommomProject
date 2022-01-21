@@ -21,7 +21,7 @@ function App() {
       </div>
       <br />
       <Alert color="green">LOGIN SUCCESS</Alert>
-      <ClosingAlert color="red">LOGIN FAILED</ClosingAlert>
+      <ClosingAlert color="red">LOGIN FAIL</ClosingAlert>
       
     </div>
   );
