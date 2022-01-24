@@ -13,4 +13,6 @@ public interface UserMapper {
 	int userSignup(User user);
 	int checkPw(User user);
 	int checkEmail(String userEmail);
+	int changePw(User user);
+	int changeBirth(User user);
 }

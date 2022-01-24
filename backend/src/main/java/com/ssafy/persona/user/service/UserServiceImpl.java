@@ -53,4 +53,14 @@ public class UserServiceImpl implements UserService{
 		return (userMapper.checkEmail(userEmail));
 	}
 
+	@Override
+	public int changePw(User user) {
+		return (userMapper.changePw(user));
+	}
+
+	@Override
+	public int changeBirth(User user) {
+		return (userMapper.changeBirth(user));
+	}
+
 }

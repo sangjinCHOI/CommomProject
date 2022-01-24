@@ -39,4 +39,17 @@ values (#{userId}, #{userPw}, #{userEmail}, now())
 		where user_email=#{userEmail}
 	</select>
 	
+	<update id="changePw">
+		update tb_user
+		set user_pw=#{userPw}
+		where user_id=#{userId}
+	</update>
+	
+	<update id="changeBirth">
+		update tb_user
+		set user_birth=#{userBirth}
+		where user_id=#{userId}
+	</update>
+	
+	
 </mapper>
