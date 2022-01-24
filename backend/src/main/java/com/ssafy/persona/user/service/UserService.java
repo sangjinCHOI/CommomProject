@@ -1,5 +1,7 @@
 package com.ssafy.persona.user.service;
 
-public interface UserService {
+import com.ssafy.persona.user.model.dto.UserGetResponse;
 
+public interface UserService {
+	public UserGetResponse getUser(int user_seq);
 }
