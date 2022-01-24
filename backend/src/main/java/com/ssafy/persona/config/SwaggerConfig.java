@@ -28,8 +28,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Practice Swagger")
-                .description("practice swagger config")
+                .title("Persona Swagger")
+                .description("ssafy 6기 5반 6조의 공통 프로젝트 persona swagger 페이지 입니다.")
                 .version("1.0")
                 .build();
     }

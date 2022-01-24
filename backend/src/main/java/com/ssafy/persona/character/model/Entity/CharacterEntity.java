@@ -6,15 +6,15 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
 @Getter
-@ToString
-@RequiredArgsConstructor
 @AllArgsConstructor
-public class Character {
+@RequiredArgsConstructor
+@Builder
+public class CharacterEntity {
 	@Id
 	private int characterSeq;
 	@Column
@@ -25,6 +25,8 @@ public class Character {
 	private String nickname;
 	@Column
 	private String introduction;
+	@Column
+	private int representativeAchievement;
 	@Column
 	private boolean alarmAllow;
 	@Column
@@ -40,7 +42,7 @@ public class Character {
 	@Column
 	private boolean characterActive;
 	@Column
-	private String characterDeleteReason;
+	private char characterDeleteReason;
 	@Column
 	private LocalDateTime characterCreatedDate;
 	@Column
