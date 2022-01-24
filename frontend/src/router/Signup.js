@@ -25,7 +25,6 @@ export default function Signup() {
               placeholder="USER ID"
               outline={true}
               iconName="person"
-              background-color="white"
             />
           </div>
 
@@ -69,7 +68,7 @@ export default function Signup() {
         </div>
 
         <div>
-          <a className="flex justify-center" href="">
+          <a className="flex justify-center" href="../login">
             이미 회원이십니까?
           </a>
         </div>
