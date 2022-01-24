@@ -10,7 +10,7 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
-// http://localhost:8080/swagger-ui/
+// http://localhost:8080/swagger-ui/index.html
 
 @Configuration
 public class SwaggerConfig {
@@ -20,7 +20,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30)
                 .useDefaultResponseMessages(false)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.springswagger.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.ssafy.persona"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());
