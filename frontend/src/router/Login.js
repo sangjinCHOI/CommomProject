@@ -32,7 +32,7 @@ export default function Signup() {
                   setPassShow(true)
               }}
             />
-            <a href="">아이디를 잊으셨나요?</a>
+            <a href="../idinquiry">아이디를 잊으셨나요?</a>
             {passShow ? <PassComp></PassComp> : null}
           </div>
 
