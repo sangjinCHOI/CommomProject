@@ -14,7 +14,6 @@ import lombok.ToString;
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-
 public class Content {
 	@Id
 	private int contentSeq;
