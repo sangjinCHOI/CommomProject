@@ -6,6 +6,7 @@ import CharactersCreate from "./router/CharactersCreate";
 import Home from "./router/Home";
 import Signup from "./router/Signup";
 import Login from "./router/Login";
+import Alarm from "./router/Alarm"
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           {/* Layout 필요한 주소 */}
           <Layout>
             <Route exact path="/" component={Home} />
+            <Route exact path="/alarm" component={Alarm} />
           </Layout>
         </Switch>
       </Router>
