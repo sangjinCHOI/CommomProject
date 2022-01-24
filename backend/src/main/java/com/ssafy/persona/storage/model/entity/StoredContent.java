@@ -1,18 +1,22 @@
-package com.ssafy.persona.storage.model.Entity;
+package com.ssafy.persona.storage.model.entity;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @Getter
-@Setter
 @ToString
-@RequiredArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class StoredContent {
+	@Id
 	private int storedSeq;
+	@Column
 	private int storageSeq;
+	@Column
 	private int contentSeq;
 }
