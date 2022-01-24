@@ -22,14 +22,15 @@ export default function Signup() {
             <InputIcon
               type="text"
               color="lightBlue"
-              placeholder="USER ID"
+              placeholder="ID"
               outline={true}
               iconName="person"
               background-color="white"
             />
+            <a href="">아이디를 잊으셨나요?</a>
           </div>
 
-          <div className="mb-5 px-4">
+          <div className="mb-5 px-4" >
             <InputIcon
               type="password"
               color="lightBlue"
@@ -37,27 +38,10 @@ export default function Signup() {
               outline={true}
               iconName="pin"
             />
+            <a href="">비밀번호를 잊으셨나요?</a>
           </div>
 
-          <div className="mb-5 px-4">
-            <InputIcon
-              type="password"
-              color="lightBlue"
-              placeholder="Password"
-              outline={true}
-              iconName="pin"
-            />
-          </div>
-
-          <div className="mb-4 px-4">
-            <InputIcon
-              type="email"
-              color="lightBlue"
-              placeholder="Email Address"
-              outline={true}
-              iconName="email"
-            />
-          </div>
+          
         </CardBody>
       </Card>
 
@@ -66,12 +50,6 @@ export default function Signup() {
           <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
             Register
           </Button>
-        </div>
-
-        <div>
-          <a className="flex justify-center" href="">
-            이미 회원이십니까?
-          </a>
         </div>
       </CardFooter>
     </div>
