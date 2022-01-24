@@ -15,6 +15,7 @@ function App() {
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
           <Route path="/characters" component={Characters} />
+          <Route path="/characters/create" component={CharactersCreate} />
           {/* Layout 필요한 주소 */}
           <Layout>
             <Route exact path="/" component={Home} />
