@@ -9,6 +9,7 @@ import SignupEmail from "./router/SignupEmail";
 import Login from "./router/Login";
 import IdInquiry from "./router/IdInquiry";
 import IdInquiryResult from "./router/IdInquiryResult";
+import PwInquiry from "./router/PwInquiry";
 import Profile from "./router/Profile";
 import Follow from "./router/Follow";
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/login" component={Login} />
           <Route exact path="/idinquiry" component={IdInquiry} />
           <Route path="/idinquiry/result" component={IdInquiryResult} />
+          <Route exact path="/pwinquiry" component={PwInquiry} />
           <Route exact path="/characters" component={Characters} />
           <Route exact path="/characters/create" component={CharactersCreate} />
           {/* Layout 필요한 주소 */}
