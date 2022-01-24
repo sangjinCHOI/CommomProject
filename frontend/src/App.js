@@ -5,6 +5,7 @@ import Characters from "./router/Characters";
 import CharactersCreate from "./router/CharactersCreate";
 import Home from "./router/Home";
 import Signup from "./router/Signup";
+import SignupEmail from "./router/SignupEmail";
 import Login from "./router/Login";
 import Profile from "./router/Profile";
 import Follow from "./router/Follow";
@@ -15,7 +16,8 @@ function App() {
       <Router>
         <Switch>
           {/* Layout 필요 없는 주소 */}
-          <Route path="/signup" component={Signup} />
+          <Route exact path="/signup" component={Signup} />
+          <Route path="/signup/email" component={SignupEmail} />
           <Route path="/login" component={Login} />
           <Route exact path="/characters" component={Characters} />
           <Route exact path="/characters/create" component={CharactersCreate} />
