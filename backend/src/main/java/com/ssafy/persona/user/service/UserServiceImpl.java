@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.persona.user.mapper.UserMapper;
 import com.ssafy.persona.user.model.dto.UserGetResponse;
-import com.ssafy.persona.user.model.dto.UserSignupRequest;
 import com.ssafy.persona.user.model.entity.User;
 
 @Service
@@ -47,6 +46,11 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int checkPw(User user) {
 		return (userMapper.checkPw(user));
+	}
+
+	@Override
+	public int checkEmail(String userEmail) {
+		return (userMapper.checkEmail(userEmail));
 	}
 
 }

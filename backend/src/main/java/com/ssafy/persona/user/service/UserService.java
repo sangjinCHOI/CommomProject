@@ -12,4 +12,5 @@ public interface UserService {
 	boolean userValid(String userId);
 	int userSignup(User user);
 	int checkPw(User user);
+	int checkEmail(String userEmail);
 }

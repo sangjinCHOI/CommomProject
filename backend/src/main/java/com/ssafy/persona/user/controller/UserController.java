@@ -48,6 +48,13 @@ public class UserController {
 		return (new ResponseEntity<Character>('1',HttpStatus.ACCEPTED));
 	}
 	
+	@GetMapping("/email/valid")
+	public ResponseEntity<Character> emailValid(String userEmail){
+		if(userService.checkEmail(userEmail) > 0)
+			return (new ResponseEntity<Character>('0',HttpStatus.OK));
+		return (new ResponseEntity<Character>('1',HttpStatus.ACCEPTED));
+	}
+	
 	@GetMapping("/setting/verification")
 	public ResponseEntity checkPw(UserLoginRequest user) {
 		if(userService.checkPw(user.toUser()) > 0)

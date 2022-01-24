@@ -33,4 +33,10 @@ values (#{userId}, #{userPw}, #{userEmail}, now())
 		where user_id=#{userId} and user_pw=#{userPw}
 	</select>
 	
+	<select id="checkEmail" resultType="Integer">
+		select count(*)
+		from tb_user
+		where user_email=#{userEmail}
+	</select>
+	
 </mapper>

@@ -12,4 +12,5 @@ public interface UserMapper {
 	int userValid(String userId);
 	int userSignup(User user);
 	int checkPw(User user);
+	int checkEmail(String userEmail);
 }
