@@ -20,4 +20,10 @@
 		from tb_user
 		where user_id=#{user_id}
 	</select>
+	
+	<insert id="userSignup">
+		insert into `tb_user` 
+(user_id, user_pw, user_email, user_created_date)
+values (#{userId}, #{userPw}, #{userEmail}, now());
+	</insert>
 </mapper>

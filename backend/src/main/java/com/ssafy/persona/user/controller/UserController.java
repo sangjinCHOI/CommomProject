@@ -5,10 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.persona.user.model.dto.UserGetResponse;
+import com.ssafy.persona.user.model.dto.UserSignupRequest;
 import com.ssafy.persona.user.service.UserService;
 
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
@@ -29,6 +31,14 @@ public class UserController {
 		else {
 			return (new ResponseEntity<UserGetResponse>(user,HttpStatus.ACCEPTED));
 		}
+	}
+	
+	@PostMapping
+	public ResponseEntity signupUser(UserSignupRequest user) {
+	
+		if(userService.userSignup(user.toUser()) > 0)
+			return (new ResponseEntity(HttpStatus.OK));
+		return (new ResponseEntity(HttpStatus.ACCEPTED));
 	}
 	
 	@GetMapping("/valid")
