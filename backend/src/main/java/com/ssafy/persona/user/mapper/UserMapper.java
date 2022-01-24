@@ -15,4 +15,5 @@ public interface UserMapper {
 	int checkEmail(String userEmail);
 	int changePw(User user);
 	int changeBirth(User user);
+	String getUserId(String userEmail);
 }

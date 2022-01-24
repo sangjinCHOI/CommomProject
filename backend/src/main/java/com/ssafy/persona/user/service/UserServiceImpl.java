@@ -63,4 +63,9 @@ public class UserServiceImpl implements UserService{
 		return (userMapper.changeBirth(user));
 	}
 
+	@Override
+	public String getUserId(String userEmail) {
+		return (userMapper.getUserId(userEmail));
+	}
+
 }

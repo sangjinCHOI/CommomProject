@@ -53,6 +53,13 @@ public class UserController {
 		return (new ResponseEntity<Character>('1',HttpStatus.ACCEPTED));
 	}
 	
+	@GetMapping("/email")
+	public ResponseEntity<String> emailGet(String userEmail){
+		if (userService.checkEmail(userEmail) < 1)
+			return (new ResponseEntity<String>("",HttpStatus.ACCEPTED));
+		return (new ResponseEntity<String>(userService.getUserId(userEmail),HttpStatus.OK));
+	}
+	
 	@GetMapping("/email/valid")
 	public ResponseEntity<Character> emailValid(String userEmail){
 		if(userService.checkEmail(userEmail) > 0)
