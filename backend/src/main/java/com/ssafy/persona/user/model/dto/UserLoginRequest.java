@@ -1,14 +1,14 @@
 package com.ssafy.persona.user.model.dto;
 
+import com.ssafy.persona.user.model.entity.User;
+
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 
 @Getter
 @AllArgsConstructor
-@Builder
 @ToString
 public class UserLoginRequest {
 	@NonNull
@@ -16,4 +16,9 @@ public class UserLoginRequest {
 	@NonNull
 	private String userPw;
 	
+	public User toUser() {
+		return (User.builder()
+					.userId(userId)
+					.userPw(userPw).build());
+	}
 }

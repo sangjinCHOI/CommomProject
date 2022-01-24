@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.persona.user.model.dto.UserGetResponse;
+import com.ssafy.persona.user.model.dto.UserLoginRequest;
 import com.ssafy.persona.user.model.dto.UserSignupRequest;
 import com.ssafy.persona.user.service.UserService;
 
@@ -45,5 +46,12 @@ public class UserController {
 	public ResponseEntity<Character> userValid(String userId){
 		if(userService.userValid(userId)) return (new ResponseEntity<Character>('2',HttpStatus.OK));
 		return (new ResponseEntity<Character>('1',HttpStatus.ACCEPTED));
+	}
+	
+	@GetMapping("/setting/verification")
+	public ResponseEntity checkPw(UserLoginRequest user) {
+		if(userService.checkPw(user.toUser()) > 0)
+			return (new ResponseEntity(HttpStatus.OK));
+		return (new ResponseEntity(HttpStatus.ACCEPTED));
 	}
 }

@@ -24,6 +24,13 @@
 	<insert id="userSignup">
 		insert into `tb_user` 
 (user_id, user_pw, user_email, user_created_date)
-values (#{userId}, #{userPw}, #{userEmail}, now());
+values (#{userId}, #{userPw}, #{userEmail}, now())
 	</insert>
+	
+	<select id="checkPw" resultType="Integer">
+		select count(*)
+		from tb_user
+		where user_id=#{userId} and user_pw=#{userPw}
+	</select>
+	
 </mapper>

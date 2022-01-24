@@ -11,4 +11,5 @@ public interface UserService {
 	UserGetResponse getUser(int userSeq);
 	boolean userValid(String userId);
 	int userSignup(User user);
+	int checkPw(User user);
 }

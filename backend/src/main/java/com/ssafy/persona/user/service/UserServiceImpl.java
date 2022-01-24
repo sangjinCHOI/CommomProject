@@ -44,4 +44,9 @@ public class UserServiceImpl implements UserService{
 		return (userMapper.userSignup(user));
 	}
 
+	@Override
+	public int checkPw(User user) {
+		return (userMapper.checkPw(user));
+	}
+
 }
