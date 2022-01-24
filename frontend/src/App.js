@@ -2,6 +2,7 @@ import "@material-tailwind/react/tailwind.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Characters from "./router/Characters";
+import CharactersCreate from "./router/CharactersCreate";
 import Home from "./router/Home";
 import Signup from "./router/Signup";
 import Login from "./router/Login";
