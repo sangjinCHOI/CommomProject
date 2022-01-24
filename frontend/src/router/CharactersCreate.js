@@ -4,7 +4,7 @@ import {
   DropdownItem,
   Textarea,
 } from "@material-tailwind/react";
-import CharactersProfile from "../components/CharactersProfile";
+import CharacterImg from "../components/CharacterImg";
 
 export default function CharactersCreate() {
   return (
@@ -17,7 +17,7 @@ export default function CharactersCreate() {
         alt="main_logo"
         className="mx-auto my-24 w-96"
       />
-      <CharactersProfile updateUserImg={"변경"} />
+      <CharacterImg updateUserImg={"변경"} />
       <div className="w-96 mx-auto">
         <InputIcon placeholder={"NICKNAME"} outline={true} color={"blueGray"} />
         <Dropdown
