@@ -6,9 +6,13 @@ import Card from "@material-tailwind/react/Card";
 import Button from "@material-tailwind/react/Button";
 import Logo from "../assets/images/main_logo.png";
 import styles from "./Signup.module.css";
+import { useState } from "react";
 
 export default function Signup() {
-  return (
+    var [passShow, setPassShow] = useState(false);
+
+    return (
+
     <div className={`${styles.center}`}>
       <div id="logo" className={`${styles.logo}`}>
         <img src={Logo} />
@@ -16,7 +20,6 @@ export default function Signup() {
 
       <Card>
         <CardBody>
-          {/* <Input type="email" placeholder="Full Name" color="lightBlue" outline={true} /> */}
 
           <div className="mt-3 mb-5 px-4">
             <InputIcon
@@ -25,21 +28,15 @@ export default function Signup() {
               placeholder="ID"
               outline={true}
               iconName="person"
-              background-color="white"
+              onChange={function(){
+                  setPassShow(true)
+              }}
             />
             <a href="">아이디를 잊으셨나요?</a>
+            {passShow ? <PassComp></PassComp> : null}
           </div>
 
-          <div className="mb-5 px-4" >
-            <InputIcon
-              type="password"
-              color="lightBlue"
-              placeholder="Password"
-              outline={true}
-              iconName="pin"
-            />
-            <a href="">비밀번호를 잊으셨나요?</a>
-          </div>
+          
 
           
         </CardBody>
@@ -47,11 +44,26 @@ export default function Signup() {
 
       <CardFooter>
         <div className="flex justify-center">
-          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
-            Register
-          </Button>
+          <a href="../signup"><Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
+            regist
+          </Button></a>
         </div>
       </CardFooter>
     </div>
   );
 }
+
+function PassComp(){
+    return(
+        <div className="mb-5" >
+            <InputIcon
+              type="password"
+              color="lightBlue"
+              placeholder="Password"
+              outline={true}
+              iconName="pin"
+            />
+            
+            <a href="">비밀번호를 잊으셨나요?</a>
+          </div>
+    );}
