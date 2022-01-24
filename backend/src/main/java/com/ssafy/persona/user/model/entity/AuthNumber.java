@@ -1,4 +1,4 @@
-package com.ssafy.persona.character.model.Entity;
+package com.ssafy.persona.user.model.entity;
 
 import java.time.LocalDateTime;
 
@@ -11,20 +11,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @Getter
-@ToString
-@RequiredArgsConstructor
 @AllArgsConstructor
-public class Alarm {
+@RequiredArgsConstructor
+@ToString
+public class AuthNumber {
 	@Id
-	private int alarmSeq;
+	private int authSeq;
 	@Column
 	private int userSeq;
 	@Column
-	private int characterSeq;
+	private String authText;
 	@Column
-	private String alarmType;
-	@Column
-	private String alarmText;
-	@Column
-	private LocalDateTime alarmDate;
+	private LocalDateTime authCreatedDate;
 }

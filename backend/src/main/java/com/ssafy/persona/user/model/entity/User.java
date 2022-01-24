@@ -8,10 +8,12 @@ import org.springframework.data.relational.core.mapping.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 @Getter
 @AllArgsConstructor
 @RequiredArgsConstructor
+@ToString
 public class User {
 	@Id
 	private int userSeq;
