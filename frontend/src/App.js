@@ -7,6 +7,7 @@ import Home from "./router/Home";
 import Signup from "./router/Signup";
 import SignupEmail from "./router/SignupEmail";
 import Login from "./router/Login";
+import IdInquiry from "./router/IdInquiry";
 import Profile from "./router/Profile";
 import Follow from "./router/Follow";
 
@@ -19,6 +20,7 @@ function App() {
           <Route exact path="/signup" component={Signup} />
           <Route path="/signup/email" component={SignupEmail} />
           <Route path="/login" component={Login} />
+          <Route path="/idinquiry" component={IdInquiry} />
           <Route exact path="/characters" component={Characters} />
           <Route exact path="/characters/create" component={CharactersCreate} />
           {/* Layout 필요한 주소 */}
