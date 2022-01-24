@@ -13,12 +13,18 @@ public class UserServiceImpl implements UserService{
 	UserMapper userMapper;
 	
 	@Override
-	public UserGetResponse getUser(int user_seq) {
+	public UserGetResponse getUser(int userSeq) {
 		// user가 없다면
-		if(userMapper.seqIsValid(user_seq) < 1)
+		if(userMapper.seqIsValid(userSeq) < 1)
 			return (null);
 		// 해당 user 있음
-		return (userMapper.getUser(user_seq));
+		return (userMapper.getUser(userSeq));
+	}
+
+	@Override
+	public boolean userValid(String userId) {
+		if(userMapper.userValid(userId) > 0) return (true);
+		return (false);
 	}
 
 }

@@ -6,6 +6,7 @@ import com.ssafy.persona.user.model.dto.UserGetResponse;
 
 @Mapper
 public interface UserMapper {
-	int seqIsValid(int user_seq);
-	UserGetResponse getUser(int user_seq);
+	int seqIsValid(int userSeq);
+	UserGetResponse getUser(int userSeq);
+	int userValid(String userId);
 }
