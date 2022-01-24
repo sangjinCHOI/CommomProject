@@ -16,4 +16,5 @@ public interface UserService {
 	int changePw(User user);
 	int changeBirth(User user);
 	String getUserId(String userEmail);
+	int userActive(String userEmail);
 }

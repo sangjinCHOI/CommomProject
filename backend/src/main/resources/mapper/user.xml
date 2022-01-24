@@ -57,4 +57,9 @@ values (#{userId}, #{userPw}, #{userEmail}, now())
 		where user_email=#{userEmail}
 	</select>
 	
+	<select id="userActive" resultType="Integer">
+		select user_is_acitve
+		from tb_user
+		where user_email=#{userEmail}
+	</select>
 </mapper>
