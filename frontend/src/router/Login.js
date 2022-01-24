@@ -44,9 +44,9 @@ export default function Signup() {
 
       <CardFooter>
         <div className="flex justify-center">
-          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
-            Login
-          </Button>
+          <a href="../signup"><Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
+            regist
+          </Button></a>
         </div>
       </CardFooter>
     </div>
