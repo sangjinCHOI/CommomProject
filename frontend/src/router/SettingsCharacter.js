@@ -1,27 +1,23 @@
-import { Button, InputIcon, Textarea } from "@material-tailwind/react";
+import { Button, Input, Textarea } from "@material-tailwind/react";
 import CharacterImg from "../components/CharacterImg";
 
 export default function SettingsCharacter() {
   return (
     <>
-      <div class="flex mx-10 mt-20">
+      <div className="flex mx-10 mt-20">
         <div className="text-center text-md flex flex-col justify-evenly">
           <CharacterImg updateUserImg={"변경 삭제"} />
           <span>캐릭터 삭제</span>
         </div>
         <div className="w-96 mx-auto mt-16 flex flex-col justify-center">
           <div className="bg-white rounded-lg">
-            <InputIcon
-              placeholder={"NICKNAME"}
-              outline={true}
-              color={"blueGray"}
-            />
+            <Input placeholder={"NICKNAME"} outline={true} color={"blueGray"} />
           </div>
           <input
             type="text"
             value="요리"
             disabled
-            class="my-3 block w-full px-3 py-2 border border-slate-300 rounded-md disabled:bg-slate-300 disabled:text-black-500"
+            className="my-3 block w-full px-3 py-2 border border-slate-300 rounded-md disabled:bg-slate-300 disabled:text-black-500"
           />
           <div
             className="bg-white rounded-md rounded-lg"
