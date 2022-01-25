@@ -69,6 +69,14 @@ public class ContentController {
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 	}
+	@ApiOperation(value = "reply delete", notes = "reply 삭제, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@DeleteMapping("/reply/{replySeq}")
+	public ResponseEntity<String> replyDelete(@PathVariable("replySeq") @ApiParam(value = "삭제할 댓글의 댓글번호.", required = true) int replySeq) {
+		if (contentService.replyDelete(replySeq)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
 
 
 	

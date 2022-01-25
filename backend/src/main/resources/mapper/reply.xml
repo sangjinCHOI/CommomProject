@@ -13,5 +13,10 @@
 		set reply_text = #{replyText}, reply_modified_date = now()
 		where reply_seq = #{replySeq}
 	</update>
-
+	
+	<update id="replyDelete" parameterType="int">
+		update tb_reply
+		set reply_is_active = 0, reply_modified_date = now()
+		where reply_seq = #{replySeq}
+	</update>
 </mapper>

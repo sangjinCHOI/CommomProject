@@ -9,4 +9,5 @@ import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
 public interface ReplyMapper {
 	int replyCreate(ReplyCreateRequest replyCreateRequest);
 	int replyModify(ReplyModifyRequest replyModifyRequest);
+	int replyDelete(int replySeq);
 }

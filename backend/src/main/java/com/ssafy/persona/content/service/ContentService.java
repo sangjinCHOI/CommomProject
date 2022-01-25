@@ -12,4 +12,5 @@ public interface ContentService {
 	
 	boolean replyCreate(ReplyCreateRequest replyCreateRequest);
 	boolean replyModify(ReplyModifyRequest replyModifyRequest);
+	boolean replyDelete(int replySeq);
 }

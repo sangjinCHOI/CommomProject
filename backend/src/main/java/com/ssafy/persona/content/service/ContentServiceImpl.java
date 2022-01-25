@@ -42,5 +42,10 @@ public class ContentServiceImpl implements ContentService {
 	public boolean replyModify(ReplyModifyRequest replyModifyRequest) {
 		return replyMapper.replyModify(replyModifyRequest) == 1;
 	}
+
+	@Override
+	public boolean replyDelete(int replySeq) {
+		return replyMapper.replyDelete(replySeq) == 1;
+	}
 	
 }
