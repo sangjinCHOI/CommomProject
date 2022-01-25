@@ -11,7 +11,7 @@ function classNames(...classes) {
 
 export default function Example() {
   return (
-    <div style={{ backgroundColor: "#E2EFF2", position: "sticky", top: 0}}>
+    <div style={{ backgroundColor: "#E2EFF2", position: "sticky", top: 0, marginTop: 15}}>
       <Disclosure as="nav" className="bg-black-800">
         <>
           <div className="mx-auto px-2 lg:px-8">
@@ -67,7 +67,7 @@ export default function Example() {
           </div>
         </>
       </Disclosure>
-      <hr style={{ backgroundColor: "grey", marginTop: 3, height: 2 }} />
+      <hr style={{ backgroundColor: "grey", marginTop: 15, marginBottom: 5, height: 2 }} />
     </div>
   )
 }
