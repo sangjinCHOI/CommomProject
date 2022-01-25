@@ -9,10 +9,9 @@ import styles from "./Signup.module.css";
 import { useState } from "react";
 
 export default function Signup() {
-    var [passShow, setPassShow] = useState(false);
+  var [passShow, setPassShow] = useState(false);
 
-    return (
-
+  return (
     <div className={`${styles.center}`}>
       <div id="logo" className={`${styles.logo}`}>
         <img src={Logo} />
@@ -20,7 +19,6 @@ export default function Signup() {
 
       <Card>
         <CardBody>
-
           <div className="mt-3 mb-5 px-4">
             <InputIcon
               type="text"
@@ -28,17 +26,13 @@ export default function Signup() {
               placeholder="ID"
               outline={true}
               iconName="person"
-              onChange={function(){
-                  setPassShow(true)
+              onChange={function () {
+                setPassShow(true);
               }}
             />
             <a href="">아이디를 잊으셨나요?</a>
             {passShow ? <PassComp></PassComp> : null}
           </div>
-
-          
-
-          
         </CardBody>
       </Card>
 
@@ -53,17 +47,18 @@ export default function Signup() {
   );
 }
 
-function PassComp(){
-    return(
-        <div className="mb-5" >
-            <InputIcon
-              type="password"
-              color="lightBlue"
-              placeholder="Password"
-              outline={true}
-              iconName="pin"
-            />
-            
-            <a href="">비밀번호를 잊으셨나요?</a>
-          </div>
-    );}
+function PassComp() {
+  return (
+    <div className="mb-5">
+      <InputIcon
+        type="password"
+        color="lightBlue"
+        placeholder="Password"
+        outline={true}
+        iconName="pin"
+      />
+
+      <a href="">비밀번호를 잊으셨나요?</a>
+    </div>
+  );
+}
