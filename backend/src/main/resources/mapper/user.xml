@@ -36,7 +36,7 @@ values (#{userId}, #{userPw}, #{userEmail}, now())
 	<select id="checkEmail" resultType="Integer">
 		select count(*)
 		from tb_user
-		where user_email=#{userEmail}
+		where user_email=#{userEmail} and user_is_active=true
 	</select>
 	
 	<update id="changePw">
@@ -61,5 +61,11 @@ values (#{userId}, #{userPw}, #{userEmail}, now())
 		select user_is_acitve
 		from tb_user
 		where user_email=#{userEmail}
+	</select>
+
+	<select id="userLogin" resultType="Integer">
+		select count(*)
+		from tb_user
+		where user_id=#{userId} and user_pw=#{userPw}
 	</select>
 </mapper>

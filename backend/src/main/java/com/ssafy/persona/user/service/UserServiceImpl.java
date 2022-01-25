@@ -15,7 +15,6 @@ public class UserServiceImpl implements UserService{
 	UserMapper userMapper;
 	
 	@Override
-	@Transactional
 	public UserGetResponse getUser(int userSeq) {
 		// user가 없다면
 		if(userMapper.seqIsValid(userSeq) < 1)
@@ -71,6 +70,11 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int userActive(String userEmail) {
 		return (userMapper.userActive(userEmail));
+	}
+
+	@Override
+	public int userLogin(User user) {
+		return (userMapper.userLogin(user));
 	}
 
 }

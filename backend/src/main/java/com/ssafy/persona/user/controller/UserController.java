@@ -1,5 +1,8 @@
 package com.ssafy.persona.user.controller;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.persona.user.model.dto.UserGetResponse;
@@ -17,6 +21,7 @@ import com.ssafy.persona.user.model.dto.UserLoginRequest;
 import com.ssafy.persona.user.model.dto.UserSignupRequest;
 import com.ssafy.persona.user.model.dto.UserUpdateRequest;
 import com.ssafy.persona.user.model.entity.User;
+import com.ssafy.persona.user.security.SecurityService;
 import com.ssafy.persona.user.service.UserService;
 
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
@@ -25,6 +30,9 @@ import com.ssafy.persona.user.service.UserService;
 public class UserController {
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	private SecurityService securityService;
 	
 	@GetMapping
 	public ResponseEntity<UserGetResponse> getUser(int userSeq) {
@@ -47,6 +55,21 @@ public class UserController {
 		return (new ResponseEntity(HttpStatus.ACCEPTED));
 	}
 	
+
+	@GetMapping("/login")
+	public ResponseEntity<String> createToken(UserLoginRequest request){
+		
+		// 로그인 매칭 정보 없음
+		if(userService.userLogin(request.toUser()) < 1) {
+			return (new ResponseEntity<String>("",HttpStatus.ACCEPTED));
+		}
+		
+		// 만료기간 1분
+		String token = securityService.createToken(request.getUserId(), (1*1000*60));
+		
+		return (new ResponseEntity<String>(token, HttpStatus.OK));
+	}
+
 	@GetMapping("/valid")
 	public ResponseEntity<Character> userValid(String userId){
 		if(userService.userValid(userId)) return (new ResponseEntity<Character>('2',HttpStatus.OK));
@@ -55,11 +78,9 @@ public class UserController {
 	
 	@GetMapping("/email")
 	public ResponseEntity<String> emailGet(String userEmail){
+		
 		if (userService.checkEmail(userEmail) < 1)
 			return (new ResponseEntity<String>("",HttpStatus.ACCEPTED));
-		// 계정이 비활성 되어있을때
-		if (userService.checkEmail(userEmail) < 1)
-			return (new ResponseEntity<String>("",HttpStatus.ACCEPTED));		
 		return (new ResponseEntity<String>(userService.getUserId(userEmail),HttpStatus.OK));
 	}
 	
@@ -104,4 +125,7 @@ public class UserController {
 	public ResponseEntity dataex(Exception e) {
 		return (new ResponseEntity(HttpStatus.BAD_REQUEST));
 	}
+	
+	
+
 }

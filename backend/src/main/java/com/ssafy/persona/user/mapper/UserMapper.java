@@ -17,4 +17,5 @@ public interface UserMapper {
 	int changeBirth(User user);
 	String getUserId(String userEmail);
 	int userActive(String userEmail);
+	int userLogin(User user);
 }
