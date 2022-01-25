@@ -20,14 +20,16 @@ public class GeneralInterceptor implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		HttpSession session = request.getSession();
+		//System.out.println(request.getHeader("token"));
 		
 
 		try {
-			securityService.getSubject(session.getAttribute("token").toString());
+			//securityService.getSubject(session.getAttribute("token").toString());
 			
 		} catch (Exception e) {
 			// 로그인 페이지로 redirect 해야함
+			// 사용자 정의 Exception으로 throw 하기
+			//throw new myException
 			return (false);
 		}
 		
