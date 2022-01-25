@@ -22,14 +22,16 @@ export default function Characters() {
         </span>
       </div>
       <div className="flex justify-center m-8">
-        <CharacterImg
-          nickname={"개발왕"}
-          imgSrc={
-            isManagement
-              ? require("../assets/images/character_edit.png")
-              : require("../assets/images/default_user.png")
-          }
-        />
+        <Link to={isManagement ? "../characters/update" : ""}>
+          <CharacterImg
+            nickname={"개발왕"}
+            imgSrc={
+              isManagement
+                ? require("../assets/images/character_edit.png")
+                : require("../assets/images/default_user.png")
+            }
+          />
+        </Link>
         <CharacterImg
           nickname={"요리왕"}
           imgSrc={
