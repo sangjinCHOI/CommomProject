@@ -6,8 +6,9 @@ import Card from "@material-tailwind/react/Card";
 import Button from "@material-tailwind/react/Button";
 import Logo from "../assets/images/main_logo.png";
 import styles from "./Signup.module.css";
+import { Link } from "react-router-dom";
 
-export default function Signup() {
+export default function IdInquiryResult() {
   return (
     <div className={`${styles.center}`}>
       <div id="logo" className={`${styles.logo}`}>
@@ -19,11 +20,9 @@ export default function Signup() {
           <p align="center">귀하의 아이디는 {} 입니다.</p>
 
           <div align="center" className="mt-3 mb-5 px-4">
-
-          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
-            전체 아이디를 이메일러 전송
-          </Button>
-          
+            <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
+              전체 아이디를 이메일러 전송
+            </Button>
           </div>
         </CardBody>
       </Card>
@@ -36,9 +35,9 @@ export default function Signup() {
         </div> */}
 
         <div>
-          <a className="flex justify-center" href="../Login">
+          <Link className="flex justify-center" to="../login">
             Login
-          </a>
+          </Link>
         </div>
       </CardFooter>
     </div>

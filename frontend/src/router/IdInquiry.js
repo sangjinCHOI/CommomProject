@@ -6,8 +6,9 @@ import Card from "@material-tailwind/react/Card";
 import Button from "@material-tailwind/react/Button";
 import Logo from "../assets/images/main_logo.png";
 import styles from "./Signup.module.css";
+import { Link } from "react-router-dom";
 
-export default function Signup() {
+export default function IdInquiry() {
   return (
     <div className={`${styles.center}`}>
       <div id="logo" className={`${styles.logo}`}>
@@ -36,17 +37,17 @@ export default function Signup() {
           <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
             아이디 찾기
           </Button>
-          <a href="../PwInquiry">
+          <Link to="../accounts/pw_inquiry">
             <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
               비밀번호 찾기
             </Button>
-          </a>
+          </Link>
         </div>
 
         <div>
-          <a className="flex justify-center" href="../Login">
+          <Link className="flex justify-center" to="../accounts/login">
             back
-          </a>
+          </Link>
         </div>
       </CardFooter>
     </div>

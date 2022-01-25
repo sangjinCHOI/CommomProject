@@ -7,7 +7,7 @@ import Button from "@material-tailwind/react/Button";
 import Logo from "../assets/images/main_logo.png";
 import styles from "./Signup.module.css";
 
-export default function Signup() {
+export default function SignupEmail() {
   return (
     <div className={`${styles.center}`}>
       <div id="logo" className={`${styles.logo}`}>

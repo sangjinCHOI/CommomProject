@@ -7,9 +7,10 @@ import Button from "@material-tailwind/react/Button";
 import Logo from "../assets/images/main_logo.png";
 import styles from "./Signup.module.css";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
-export default function Signup() {
-    var [emailShow, setEmailShow] = useState(false);
+export default function PwInquiry() {
+  var [emailShow, setEmailShow] = useState(false);
 
   return (
     <div className={`${styles.center}`}>
@@ -28,51 +29,47 @@ export default function Signup() {
               placeholder="ID"
               outline={true}
               iconName="person"
-              onChange={function(){
-                setEmailShow(true)
-            }}
+              onChange={function () {
+                setEmailShow(true);
+              }}
             />
           </div>
 
           {emailShow ? <EmailComp></EmailComp> : null}
-
-          
-
-          
-
         </CardBody>
       </Card>
 
       <CardFooter>
         <div className="flex justify-center">
-          <a href=""></a><Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
+          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
             비밀번호 찾기
           </Button>
         </div>
 
         <div>
-          <a className="flex justify-center" href="../Login">
+          <Link className="flex justify-center" to="../accounts/login">
             Login
-          </a>
+          </Link>
         </div>
       </CardFooter>
     </div>
   );
 }
 
-function EmailComp(){
-    return(
-        <>
-        <p align="center">가입한 이메일을 입력해 주세요.</p>
+function EmailComp() {
+  return (
+    <>
+      <p align="center">가입한 이메일을 입력해 주세요.</p>
 
-        <div className="mt-3 mb-5 px-4">
-            <InputIcon
-              type="text"
-              color="lightBlue"
-              placeholder="E-mail"
-              outline={true}
-              iconName="person"
-            />
-          </div>
-          </>
-    );}
+      <div className="mt-3 mb-5 px-4">
+        <InputIcon
+          type="text"
+          color="lightBlue"
+          placeholder="E-mail"
+          outline={true}
+          iconName="person"
+        />
+      </div>
+    </>
+  );
+}
