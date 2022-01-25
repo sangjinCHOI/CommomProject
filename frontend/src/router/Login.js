@@ -9,10 +9,12 @@ import { Link } from "react-router-dom";
 
 export default function Login() {
   const [_id, setId] = useState("");
+
   let [passShow, setPassShow] = useState(false);
 
   const onIdHandler = (e) => {
-    console.log("test");
+    console.log("id : " + _id);
+
     setId(e.target.value);
     if (e.target.value == "") {
       setPassShow(false);
@@ -55,7 +57,7 @@ export default function Login() {
       </div>
       <CardFooter>
         <div className="flex justify-center">
-          <Button color="lightBlue" buttonType="submit" size="lg" ripple="dark" onSubmit={onSubmit}>
+          <Button color="lightBlue" buttonType="submit" size="lg" ripple="dark" onClick={onSubmit}>
             로그인
           </Button>
           <Link to="../accounts/signup">
@@ -73,7 +75,8 @@ function PassComp() {
   const [password, setPassword] = useState("");
 
   const onPasswordHandler = (e) => {
-    setPassword(e.currentTarget.value);
+    console.log("pass : " + password);
+    setPassword(e.target.value);
   };
 
   return (

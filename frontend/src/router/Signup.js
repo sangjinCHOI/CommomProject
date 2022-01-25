@@ -5,8 +5,39 @@ import Button from "@material-tailwind/react/Button";
 import Logo from "../assets/images/main_logo.png";
 import styles from "./Signup.module.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function Signup() {
+  const [_id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordCheck, setpasswordCheck] = useState("");
+  const [email, setEmail] = useState("");
+
+  const onIdHandler = (e) => {
+    console.log("id : " + _id);
+    setId(e.target.value);
+  };
+
+  const onPasswordHandler = (e) => {
+    console.log("pass : " + password);
+    setId(e.target.value);
+  };
+
+  const onPasswordCheckHandler = (e) => {
+    console.log("passcheck : " + passwordCheck);
+    setId(e.target.value);
+  };
+
+  const onEmailHandler = (e) => {
+    console.log("email : " + email);
+    setId(e.target.value);
+  };
+
+  const onSubmit = (e) => {
+    // e.preventDefault();
+    console.log("회원가입");
+  };
+
   return (
     <div className={`${styles.center}`}>
       <div id="logo" className={`${styles.logo}`}>
@@ -24,6 +55,7 @@ export default function Signup() {
             placeholder="USER ID"
             outline={true}
             iconName="person"
+            onChange={onIdHandler}
           />
         </div>
       </div>
@@ -36,6 +68,7 @@ export default function Signup() {
             placeholder="Password"
             outline={true}
             iconName="pin"
+            onChange={onPasswordHandler}
           />
         </div>
       </div>
@@ -48,6 +81,7 @@ export default function Signup() {
             placeholder="Password Check"
             outline={true}
             iconName="pin"
+            onChange={onPasswordCheckHandler}
           />
         </div>
       </div>
@@ -60,13 +94,14 @@ export default function Signup() {
             placeholder="Email Address"
             outline={true}
             iconName="email"
+            onChange={onEmailHandler}
           />
         </div>
       </div>
 
       <CardFooter>
         <div className="flex justify-center">
-          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
+          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark" onClick={onSubmit}>
             Register
           </Button>
         </div>

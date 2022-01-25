@@ -7,12 +7,12 @@ export default function SettingsCharacter() {
 
   return (
     <>
-      <div className="flex mx-10 mt-20">
+      <div className="flex mx-10 mt-10">
         <div className="text-center text-md flex flex-col justify-evenly">
           <CharacterImg updateUserImg={"변경 삭제"} />
           <button onClick={(e) => setShowModal(true)}>캐릭터 삭제</button>
         </div>
-        <div className="w-96 mx-auto mt-16 flex flex-col justify-center">
+        <div className="w-96 mx-auto mt-10 flex flex-col justify-center">
           <div className="bg-white rounded-lg">
             <Input placeholder={"NICKNAME"} outline={true} color={"blueGray"} />
           </div>
