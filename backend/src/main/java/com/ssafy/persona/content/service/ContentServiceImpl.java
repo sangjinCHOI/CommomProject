@@ -7,6 +7,7 @@ import com.ssafy.persona.content.mapper.ContentMapper;
 import com.ssafy.persona.content.mapper.ReplyMapper;
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
+import com.ssafy.persona.content.model.dto.ContentReportRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
 
@@ -46,6 +47,11 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public boolean replyDelete(int replySeq) {
 		return replyMapper.replyDelete(replySeq) == 1;
+	}
+
+	@Override
+	public boolean contentReport(ContentReportRequest contentReportRequest) {
+		return contentMapper.contentReport(contentReportRequest) == 1;
 	}
 	
 }
