@@ -38,7 +38,6 @@ public class UserController {
 	public ResponseEntity<UserGetResponse> getUser(int userSeq) {
 		
 		UserGetResponse user = userService.getUser(userSeq);
-		
 		if (user != null) {
 			return (new ResponseEntity<UserGetResponse>(user,HttpStatus.OK));
 		}
