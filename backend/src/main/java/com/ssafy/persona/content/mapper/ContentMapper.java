@@ -9,4 +9,5 @@ import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 public interface ContentMapper {
 	int contentCreate(ContentCreateRequest createContentRequest);
 	int contentModify(ContentModifyRequest contentModifyRequest);
+	int contentDelete(int contentSeq);
 }

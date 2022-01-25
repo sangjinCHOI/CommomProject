@@ -3,6 +3,8 @@ package com.ssafy.persona.content.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,4 +43,16 @@ public class ContentController {
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 	}
+	@ApiOperation(value = "content delete", notes = "content 삭제, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@DeleteMapping("/content/{contentSeq}")
+	public ResponseEntity<String> deleteArticle(@PathVariable("contentSeq") @ApiParam(value = "삭제할 글의 글번호.", required = true) int contentSeq) {
+		if (contentService.contentDelete(contentSeq)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+
+
+	
+	
 }

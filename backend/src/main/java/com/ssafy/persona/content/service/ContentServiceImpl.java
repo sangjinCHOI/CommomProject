@@ -21,5 +21,11 @@ public class ContentServiceImpl implements ContentService {
 	public boolean contentModify(ContentModifyRequest contentModifyRequest) {
 		return contentMapper.contentModify(contentModifyRequest) == 1;
 	}
+
+	@Override
+	public boolean contentDelete(int contentSeq) {
+		// TODO Auto-generated method stub
+		return contentMapper.contentDelete(contentSeq) == 1;
+	}
 	
 }
