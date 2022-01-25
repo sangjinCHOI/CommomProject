@@ -16,7 +16,6 @@ public class ContentModifyRequest {
 	private String contentText;
 	private boolean contentIsPublic;
 	private boolean contentIsMedia;
-	private LocalDateTime contentModifiedDate;
 	
 	public Content toContent() {
 		return Content.builder()
@@ -24,7 +23,6 @@ public class ContentModifyRequest {
 					  .contentText(contentText)
 					  .contentIsPublic(contentIsPublic)
 					  .contentIsMedia(contentIsMedia)
-					  .contentModifiedDate(contentModifiedDate)
 					  .build();
 	}	
 }
