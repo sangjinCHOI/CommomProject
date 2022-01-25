@@ -8,6 +8,7 @@ import com.ssafy.persona.content.mapper.ReplyMapper;
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
+import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
 
 @Service
 public class ContentServiceImpl implements ContentService {
@@ -35,6 +36,11 @@ public class ContentServiceImpl implements ContentService {
 	public boolean replyCreate(ReplyCreateRequest replyCreateRequest) {
 		return replyMapper.replyCreate(replyCreateRequest) == 1;
 
+	}
+
+	@Override
+	public boolean replyModify(ReplyModifyRequest replyModifyRequest) {
+		return replyMapper.replyModify(replyModifyRequest) == 1;
 	}
 	
 }
