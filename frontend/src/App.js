@@ -58,7 +58,7 @@ function App() {
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/alarm" component={Alarm} />
-                <Route exact path="/search/temp" component={Search} />
+                <Route exact path="/search" component={Search} />
                 {/* characters, login, signup같은 닉네임이 있다면 문제 발생 가능 주의 */}
                 <Route exact path="/:nickname" component={Profile} />
                 <Route exact path="/:nickname/follow" component={Follow} />
