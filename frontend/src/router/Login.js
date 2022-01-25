@@ -8,7 +8,27 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Login() {
-  var [passShow, setPassShow] = useState(false);
+  const [_id, setId] = useState("");
+  let [passShow, setPassShow] = useState(false);
+
+  const onIdHandler = (e) => {
+    console.log("test");
+    setId(e.target.value);
+    if (e.target.value == "") {
+      setPassShow(false);
+    }
+  };
+
+  const onSubmit = (e) => {
+    // e.preventDefault();
+    console.log("로그인");
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      setPassShow(true);
+    }
+  };
 
   return (
     <div className={`${styles.center}`}>
@@ -25,18 +45,17 @@ export default function Login() {
             placeholder="ID를 입력해주세요"
             outline={true}
             iconName="person"
-            onChange={function () {
-              setPassShow(true);
-            }}
+            value={_id}
+            onChange={onIdHandler}
+            onKeyPress={handleKeyPress}
           />
         </div>
         <Link to="../accounts/id_inquiry">아이디를 잊으셨나요?</Link>
         {passShow ? <PassComp></PassComp> : null}
       </div>
-
       <CardFooter>
         <div className="flex justify-center">
-          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
+          <Button color="lightBlue" buttonType="submit" size="lg" ripple="dark" onSubmit={onSubmit}>
             로그인
           </Button>
           <Link to="../accounts/signup">
@@ -51,6 +70,12 @@ export default function Login() {
 }
 
 function PassComp() {
+  const [password, setPassword] = useState("");
+
+  const onPasswordHandler = (e) => {
+    setPassword(e.currentTarget.value);
+  };
+
   return (
     <div className="mb-5">
       <div className="bg-white rounded-lg">
@@ -60,6 +85,8 @@ function PassComp() {
           placeholder="Password를 입력해주세요"
           outline={true}
           iconName="pin"
+          value={password}
+          onChange={onPasswordHandler}
         />
       </div>
       <Link to="../accounts/pw_inquiry">비밀번호를 잊으셨나요?</Link>
