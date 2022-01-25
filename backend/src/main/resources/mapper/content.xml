@@ -14,9 +14,10 @@
 		where content_seq = #{contentSeq}
 	</update>
 	
-	<delete id="contentDelete" parameterType="int">
-		delete from tb_content
+	<update id="contentDelete" parameterType="int">
+		update tb_content
+		set content_is_active = 0, content_modified_date = now()
 		where content_seq = #{contentSeq}
-	</delete>
+	</update>
 	
 </mapper>
