@@ -10,6 +10,7 @@ import Login from "./router/Login";
 import IdInquiry from "./router/IdInquiry";
 import IdInquiryResult from "./router/IdInquiryResult";
 import PwInquiry from "./router/PwInquiry";
+import PwInquiryResult from "./router/PwInquiryResult";
 import Profile from "./router/Profile";
 import Follow from "./router/Follow";
 
@@ -19,12 +20,13 @@ function App() {
       <Router>
         <Switch>
           {/* Layout 필요 없는 주소 */}
-          <Route exact path="/signup" component={Signup} />
-          <Route path="/signup/email" component={SignupEmail} />
-          <Route path="/login" component={Login} />
-          <Route exact path="/idinquiry" component={IdInquiry} />
-          <Route path="/idinquiry/result" component={IdInquiryResult} />
-          <Route exact path="/pwinquiry" component={PwInquiry} />
+          <Route exact path="/accounts/signup" component={Signup} />
+          <Route path="/accounts/signup/email" component={SignupEmail} />
+          <Route path="/accounts/login" component={Login} />
+          <Route exact path="/accounts/id_inquiry" component={IdInquiry} />
+          <Route path="/accounts/id_inquiry/result" component={IdInquiryResult} />
+          <Route exact path="/accounts/pw_inquiry" component={PwInquiry} />
+          <Route exact path="/accounts/pw_inquiry/result" component={PwInquiryResult} />
           <Route exact path="/characters" component={Characters} />
           <Route exact path="/characters/create" component={CharactersCreate} />
           {/* Layout 필요한 주소 */}
