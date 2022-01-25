@@ -10,7 +10,7 @@
 	
 	<update id="contentModify" parameterType="contentModifyRequest">
 		update tb_content
-		set content_text = #{contentText}, content_is_public = #{contentIsPublic}, content_is_media = #{contentIsMedia}, content_modified_date = #{contentModifiedDate}
+		set content_text = #{contentText}, content_is_public = #{contentIsPublic}, content_is_media = #{contentIsMedia}, content_modified_date = now()
 		where content_seq = #{contentSeq}
 	</update>
 	
