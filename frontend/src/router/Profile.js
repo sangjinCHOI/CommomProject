@@ -6,6 +6,9 @@ export default function Profile() {
   return (
     <div>
       <CharacterProfile nickname={nickname} />
+      <div className="flex justify-center items-center py-20">여기에 게시물이 들어갑니다.</div>
+      <div className="flex justify-center items-center py-20">여기에 게시물이 들어갑니다.</div>
+      <div className="flex justify-center items-center py-20">여기에 게시물이 들어갑니다.</div>
     </div>
   );
 }

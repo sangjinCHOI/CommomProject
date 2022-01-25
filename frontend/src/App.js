@@ -1,7 +1,7 @@
 import "@material-tailwind/react/tailwind.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Layout from "./components/Layout";
-import SettingLayout from "./components/SettingLayout"
+import SettingLayout from "./components/SettingLayout";
 import Characters from "./router/Characters";
 import CharactersCreate from "./router/CharactersCreate";
 import Home from "./router/Home";
@@ -20,6 +20,8 @@ import SettingsAlarm from "./router/SettingsAlarm";
 import SettingsHelp from "./router/SettingsHelp";
 import Profile from "./router/Profile";
 import Follow from "./router/Follow";
+import CharactersUpdate from "./router/CharactersUpdate";
+import Search from "./router/Search";
 
 function App() {
   return (
@@ -36,6 +38,7 @@ function App() {
           <Route exact path="/accounts/pw_inquiry/result" component={PwInquiryResult} />
           <Route exact path="/characters" component={Characters} />
           <Route exact path="/characters/create" component={CharactersCreate} />
+          <Route exact path="/characters/update" component={CharactersUpdate} />
 
           {/* SettingLayout 필요한 주소 */}
           <Route path="/settings/:path?" exact>
@@ -48,20 +51,20 @@ function App() {
               </Switch>
             </SettingLayout>
           </Route>
-          
+
           {/* Layout 필요한 주소 */}
           <Route>
             <Layout>
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/alarm" component={Alarm} />
+                <Route exact path="/search/temp" component={Search} />
                 {/* characters, login, signup같은 닉네임이 있다면 문제 발생 가능 주의 */}
                 <Route exact path="/:nickname" component={Profile} />
                 <Route exact path="/:nickname/follow" component={Follow} />
               </Switch>
             </Layout>
           </Route>
-
         </Switch>
       </Router>
     </>

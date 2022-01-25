@@ -9,7 +9,11 @@ import styles from "./Signup.module.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+<<<<<<< HEAD
 export default function Login() {
+=======
+export default function Signup() {
+>>>>>>> b364cecd7814286908235068c0b1aa934d677100
   var [passShow, setPassShow] = useState(false);
 
   return (
@@ -39,11 +43,19 @@ export default function Login() {
 
       <CardFooter>
         <div className="flex justify-center">
+<<<<<<< HEAD
           <Link to="../accounts/signup">
             <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
               regist
             </Button>
           </Link>
+=======
+          <a href="../signup">
+            <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
+              regist
+            </Button>
+          </a>
+>>>>>>> b364cecd7814286908235068c0b1aa934d677100
         </div>
       </CardFooter>
     </div>
@@ -56,11 +68,20 @@ function PassComp() {
       <InputIcon
         type="password"
         color="lightBlue"
+<<<<<<< HEAD
         placeholder="Password를 입력해주세요"
         outline={true}
         iconName="pin"
       />
       <Link to="../accounts/pw_inquiry">비밀번호를 잊으셨나요?</Link>
+=======
+        placeholder="Password"
+        outline={true}
+        iconName="pin"
+      />
+
+      <a href="">비밀번호를 잊으셨나요?</a>
+>>>>>>> b364cecd7814286908235068c0b1aa934d677100
     </div>
   );
 }
