@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
+import com.ssafy.persona.content.model.dto.ContentReportRequest;
+import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
+import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
 import com.ssafy.persona.content.service.ContentService;
 
 import io.swagger.annotations.Api;
@@ -29,7 +32,7 @@ public class ContentController {
 	
 	@ApiOperation(value = "content create", notes = "content 작성, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/content")
-	public ResponseEntity<String> createContent(@RequestBody @ApiParam(value = "게시글 정보.", required = true) ContentCreateRequest contentCreateRequest) {
+	public ResponseEntity<String> contentCreate(@RequestBody @ApiParam(value = "게시글 정보.", required = true) ContentCreateRequest contentCreateRequest) {
 		if (contentService.contentCreate(contentCreateRequest)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
@@ -37,7 +40,7 @@ public class ContentController {
 	}
 	@ApiOperation(value = "content modify", notes = "content 수정, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping("/content")
-	public ResponseEntity<String> modifyArticle(@RequestBody @ApiParam(value = "수정할 글정보.", required = true) ContentModifyRequest contentModifyRequest) {
+	public ResponseEntity<String> contentModify(@RequestBody @ApiParam(value = "수정할 글정보.", required = true) ContentModifyRequest contentModifyRequest) {
 		if (contentService.contentModify(contentModifyRequest)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
@@ -45,14 +48,44 @@ public class ContentController {
 	}
 	@ApiOperation(value = "content delete", notes = "content 삭제, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("/content/{contentSeq}")
-	public ResponseEntity<String> deleteArticle(@PathVariable("contentSeq") @ApiParam(value = "삭제할 글의 글번호.", required = true) int contentSeq) {
+	public ResponseEntity<String> contentDelete(@PathVariable("contentSeq") @ApiParam(value = "삭제할 글의 글번호.", required = true) int contentSeq) {
 		if (contentService.contentDelete(contentSeq)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
+	@ApiOperation(value = "reply create", notes = "reply 작성, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping("/content/reply")
+	public ResponseEntity<String> replyContent(@RequestBody @ApiParam(value = "댓글 정보.", required = true) ReplyCreateRequest replyCreateRequest) {
+		if (contentService.replyCreate(replyCreateRequest)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	@ApiOperation(value = "reply modify", notes = "reply 수정, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PutMapping("/content/reply")
+	public ResponseEntity<String> replyModify(@RequestBody @ApiParam(value = "수정할 댓글 정보.", required = true) ReplyModifyRequest replyModifyRequest) {
+		if (contentService.replyModify(replyModifyRequest)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+	}
+	@ApiOperation(value = "reply delete", notes = "reply 삭제, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@DeleteMapping("/reply/{replySeq}")
+	public ResponseEntity<String> replyDelete(@PathVariable("replySeq") @ApiParam(value = "삭제할 댓글의 댓글번호.", required = true) int replySeq) {
+		if (contentService.replyDelete(replySeq)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	@ApiOperation(value = "content report", notes = "content 신고, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping("/content/report")
+	public ResponseEntity<String> contentReport(@RequestBody @ApiParam(value = "게시글 신고.", required = true) ContentReportRequest contentReportRequest) {
+		if (contentService.contentReport(contentReportRequest)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
 
-
-	
 	
 }

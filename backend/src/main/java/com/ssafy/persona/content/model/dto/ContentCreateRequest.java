@@ -1,7 +1,5 @@
 package com.ssafy.persona.content.model.dto;
 
-import java.time.LocalDateTime;
-
 import com.ssafy.persona.content.model.entity.Content;
 
 import lombok.AllArgsConstructor;
@@ -17,7 +15,6 @@ public class ContentCreateRequest {
 	private String contentText;
 	private boolean contentIsPublic;
 	private boolean contentIsMedia;
-	private LocalDateTime contentCreatedDate;
 	
 	public Content toContent() {
 		return Content.builder()
@@ -26,7 +23,6 @@ public class ContentCreateRequest {
 					  .contentText(contentText)
 					  .contentIsPublic(contentIsPublic)
 					  .contentIsMedia(contentIsMedia)
-					  .contentCreatedDate(contentCreatedDate)
 					  .build();
 	}
 }
