@@ -7,13 +7,14 @@ import Home from "./router/Home";
 import Signup from "./router/Signup";
 import SignupEmail from "./router/SignupEmail";
 import Login from "./router/Login";
-import Alarm from "./router/Alarm"
+import Alarm from "./router/Alarm";
 import SettingsCharacter from "./router/SettingsCharacter";
 import SettingsAccount from "./router/SettingsAccout";
 import SettingsAlarm from "./router/SettingsAlarm";
 import SettingsHelp from "./router/SettingsHelp";
 import Profile from "./router/Profile";
 import Follow from "./router/Follow";
+import CharactersUpdate from "./router/CharactersUpdate";
 
 function App() {
   return (
@@ -24,8 +25,9 @@ function App() {
           <Route exact path="/signup" component={Signup} />
           <Route path="/signup/email" component={SignupEmail} />
           <Route path="/login" component={Login} />
-          <Route exact path="/characters" component={Characters} />
+          <Route exact path="/characters/select" component={Characters} />
           <Route exact path="/characters/create" component={CharactersCreate} />
+          <Route exact path="/characters/update" component={CharactersUpdate} />
           {/* Layout 필요한 주소 */}
           <Layout>
             <Route exact path="/" component={Home} />
