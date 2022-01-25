@@ -1,5 +1,6 @@
 package com.ssafy.persona.user.controller;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -70,9 +71,14 @@ public class UserController {
 	}
 
 	@GetMapping("/valid")
-	public ResponseEntity<Character> userValid(String userId){
-		if(userService.userValid(userId)) return (new ResponseEntity<Character>('2',HttpStatus.OK));
-		return (new ResponseEntity<Character>('1',HttpStatus.ACCEPTED));
+	public ResponseEntity<Map<String,Character>> userValid(String userId){
+		Map<String, Character>map = new HashMap<>();
+		if(userService.userValid(userId)) {
+			map.put("valid", '2');
+			return (new ResponseEntity<Map<String,Character>>(map,HttpStatus.OK));
+		}
+		map.put("valid", '1');
+		return (new ResponseEntity<Map<String,Character>>(map,HttpStatus.ACCEPTED));
 	}
 	
 	@GetMapping("/email")
