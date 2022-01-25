@@ -9,7 +9,7 @@ import styles from "./Signup.module.css";
 import { useState } from "react";
 
 export default function Signup() {
-  var [passShow, setPassShow] = useState(false);
+    var [emailShow, setEmailShow] = useState(false);
 
   return (
     <div className={`${styles.center}`}>
@@ -19,29 +19,40 @@ export default function Signup() {
 
       <Card>
         <CardBody>
-          <div className="mt-3 mb-5 px-4">
+          <p align="center">가입한 ID을 입력해 주세요.</p>
+
+          <div className="mt-3 mb-4 px-4">
             <InputIcon
               type="text"
               color="lightBlue"
               placeholder="ID"
               outline={true}
               iconName="person"
-              onChange={function () {
-                setPassShow(true);
-              }}
+              onChange={function(){
+                setEmailShow(true)
+            }}
             />
-            <a href="../idinquiry">아이디를 잊으셨나요?</a>
-            {passShow ? <PassComp></PassComp> : null}
           </div>
+
+          {emailShow ? <EmailComp></EmailComp> : null}
+
+          
+
+          
+
         </CardBody>
       </Card>
 
       <CardFooter>
         <div className="flex justify-center">
-          <a href="../signup">
-            <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
-              regist
-            </Button>
+          <a href=""></a><Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
+            비밀번호 찾기
+          </Button>
+        </div>
+
+        <div>
+          <a className="flex justify-center" href="../Login">
+            Login
           </a>
         </div>
       </CardFooter>
@@ -49,18 +60,19 @@ export default function Signup() {
   );
 }
 
-function PassComp() {
-  return (
-    <div className="mb-5">
-      <InputIcon
-        type="password"
-        color="lightBlue"
-        placeholder="Password"
-        outline={true}
-        iconName="pin"
-      />
+function EmailComp(){
+    return(
+        <>
+        <p align="center">가입한 이메일을 입력해 주세요.</p>
 
-      <a href="">비밀번호를 잊으셨나요?</a>
-    </div>
-  );
-}
+        <div className="mt-3 mb-5 px-4">
+            <InputIcon
+              type="text"
+              color="lightBlue"
+              placeholder="E-mail"
+              outline={true}
+              iconName="person"
+            />
+          </div>
+          </>
+    );}
