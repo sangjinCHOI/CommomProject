@@ -57,17 +57,20 @@ public class UserController {
 	
 
 	@GetMapping("/login")
-	public ResponseEntity<String> createToken(UserLoginRequest request){
-		
+	public ResponseEntity<Map<String,String>> createToken(UserLoginRequest request){
+
+		Map<String, String>map = new HashMap<>();
 		// 로그인 매칭 정보 없음
 		if(userService.userLogin(request.toUser()) < 1) {
-			return (new ResponseEntity<String>("",HttpStatus.ACCEPTED));
+			map.put("token", "");
+			return (new ResponseEntity<Map<String,String>>(map,HttpStatus.ACCEPTED));
 		}
 		
 		// 만료기간 1분
 		String token = securityService.createToken(request.getUserId(), (1*1000*60));
-		
-		return (new ResponseEntity<String>(token, HttpStatus.OK));
+
+		map.put("token", token);
+		return (new ResponseEntity<Map<String,String>>(map, HttpStatus.OK));
 	}
 
 	@GetMapping("/valid")
