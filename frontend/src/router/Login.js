@@ -18,25 +18,22 @@ export default function Login() {
         <img src={Logo} />
       </div>
 
-      <Card>
-        <CardBody>
-          <div className="mt-3 mb-5 px-4">
-            <InputIcon
-              type="text"
-              color="lightBlue"
-              placeholder="ID를 입력해주세요"
-              outline={true}
-              iconName="person"
-              onChange={function () {
-                setPassShow(true);
-              }}
-            />
-
-            <Link to="../accounts/id_inquiry">아이디를 잊으셨나요?</Link>
-            {passShow ? <PassComp></PassComp> : null}
-          </div>
-        </CardBody>
-      </Card>
+      <div className="mt-3 mb-5 px-4">
+        <div className="bg-white rounded-lg">
+          <InputIcon
+            type="text"
+            color="lightBlue"
+            placeholder="ID를 입력해주세요"
+            outline={true}
+            iconName="person"
+            onChange={function () {
+              setPassShow(true);
+            }}
+          />
+        </div>
+        <Link to="../accounts/id_inquiry">아이디를 잊으셨나요?</Link>
+        {passShow ? <PassComp></PassComp> : null}
+      </div>
 
       <CardFooter>
         <div className="flex justify-center">
