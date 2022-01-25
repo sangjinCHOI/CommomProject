@@ -7,6 +7,10 @@ import Home from "./router/Home";
 import Signup from "./router/Signup";
 import SignupEmail from "./router/SignupEmail";
 import Login from "./router/Login";
+import IdInquiry from "./router/IdInquiry";
+import IdInquiryResult from "./router/IdInquiryResult";
+import PwInquiry from "./router/PwInquiry";
+import PwInquiryResult from "./router/PwInquiryResult";
 
 import Alarm from "./router/Alarm";
 import SettingsCharacter from "./router/SettingsCharacter";
