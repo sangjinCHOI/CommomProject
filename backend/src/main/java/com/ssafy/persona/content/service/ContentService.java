@@ -4,7 +4,7 @@ import com.ssafy.persona.content.model.dto.ContentCreateRequest;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 
 public interface ContentService {
-	public boolean contentCreate(ContentCreateRequest contentCreateRequest);
-	public boolean contentModify(ContentModifyRequest contentModifyRequest);
-	public boolean contentDelete(int contentSeq);
+	boolean contentCreate(ContentCreateRequest contentCreateRequest);
+	boolean contentModify(ContentModifyRequest contentModifyRequest);
+	boolean contentDelete(int contentSeq);
 }
