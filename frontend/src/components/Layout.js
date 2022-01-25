@@ -1,5 +1,5 @@
 import Navbar from "./Navbar";
-import SettingSideBar from "./SettingSideBar"
+import SettingSideBar from "./SettingSideBar";
 
 export default function Layout({ children }) {
   return (
