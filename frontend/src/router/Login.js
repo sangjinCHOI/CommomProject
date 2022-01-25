@@ -31,6 +31,7 @@ export default function Login() {
                 setPassShow(true);
               }}
             />
+
             <Link to="../accounts/id_inquiry">아이디를 잊으셨나요?</Link>
             {passShow ? <PassComp></PassComp> : null}
           </div>
