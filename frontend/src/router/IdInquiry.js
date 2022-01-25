@@ -6,13 +6,9 @@ import Card from "@material-tailwind/react/Card";
 import Button from "@material-tailwind/react/Button";
 import Logo from "../assets/images/main_logo.png";
 import styles from "./Signup.module.css";
-import { useState } from "react";
 
 export default function Signup() {
-    var [passShow, setPassShow] = useState(false);
-
-    return (
-
+  return (
     <div className={`${styles.center}`}>
       <div id="logo" className={`${styles.logo}`}>
         <img src={Logo} />
@@ -20,6 +16,8 @@ export default function Signup() {
 
       <Card>
         <CardBody>
+          <p align="center">가입한 이메일을 입력해 주세요.</p>
+          <br />
 
           <div className="mt-3 mb-5 px-4">
             <InputIcon
@@ -28,42 +26,29 @@ export default function Signup() {
               placeholder="ID"
               outline={true}
               iconName="person"
-              onChange={function(){
-                  setPassShow(true)
-              }}
             />
-            <a href="../idinquiry">아이디를 잊으셨나요?</a>
-            {passShow ? <PassComp></PassComp> : null}
           </div>
-
-          
-
-          
         </CardBody>
       </Card>
 
       <CardFooter>
         <div className="flex justify-center">
-          <a href="../signup"><Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
-            regist
-          </Button></a>
+          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
+            아이디 찾기
+          </Button>
+          <a href="../PwInquiry">
+            <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
+              비밀번호 찾기
+            </Button>
+          </a>
+        </div>
+
+        <div>
+          <a className="flex justify-center" href="../Login">
+            back
+          </a>
         </div>
       </CardFooter>
     </div>
   );
 }
-
-function PassComp(){
-    return(
-        <div className="mb-5" >
-            <InputIcon
-              type="password"
-              color="lightBlue"
-              placeholder="Password"
-              outline={true}
-              iconName="pin"
-            />
-            
-            <a href="">비밀번호를 잊으셨나요?</a>
-          </div>
-    );}
