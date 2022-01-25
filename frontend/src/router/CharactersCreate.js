@@ -31,20 +31,20 @@ export default function CharactersCreate() {
             buttonText="CATEGORY"
             className="w-96 my-8"
           >
-            <div className="w-96">
-              <DropdownItem color="gray" children="개발" />
-              <DropdownItem color="gray" children="요리" />
+            <div className="w-80">
+              <DropdownItem color="lightBlue" children="개발" />
+              <DropdownItem color="lightBlue" children="요리" />
             </div>
           </Dropdown>
         </div>
-        <Card>
+        <div className="bg-white rounded-lg" style={{ height: 185 }}>
           <Textarea
-            placeholder={"한 줄 소개를 입력하세요."}
+            placeholder="한 줄 소개를 입력하세요."
             outline={true}
-            color={"blueGray"}
+            color="lightBlue"
             className="mt-8"
           />
-        </Card>
+        </div>
       </div>
       <div className="text-center text-2xl mt-16 flex justify-center">
         <Link to="../characters/select">

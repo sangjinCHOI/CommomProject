@@ -1,3 +1,4 @@
+import { Label } from "@material-tailwind/react";
 import CharacterImg from "./CharacterImg";
 
 export default function CharacterProfile({ nickname }) {
@@ -32,9 +33,15 @@ export default function CharacterProfile({ nickname }) {
 
           <div className="text-sm">킹왕짱 나가신다!</div>
           <div className="py-1">
-            <span>업적 보기 </span>
-            <span>프로필 편집 </span>
-            <span>부캐 보기</span>
+            <div className="inline-block">
+              <Label>업적 보기</Label>
+            </div>
+            <div className="inline-block">
+              <Label>프로필 편집 </Label>
+            </div>
+            <div className="inline-block">
+              <Label>부캐 보기</Label>
+            </div>
           </div>
         </div>
       </div>
