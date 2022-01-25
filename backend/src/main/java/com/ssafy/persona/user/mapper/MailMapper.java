@@ -1,5 +1,8 @@
 package com.ssafy.persona.user.mapper;
 
-public interface MailMapper {
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
+public interface MailMapper {
+	String getEmail(int userSeq);
 }

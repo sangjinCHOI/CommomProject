@@ -8,8 +8,10 @@ import org.springframework.data.relational.core.mapping.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class Mail {
@@ -20,7 +22,7 @@ public class Mail {
 	@Column	
 	private char mailType;
 	@Column
-	private String userText;
+	private String mailText;
 	@Column
 	private LocalDateTime mailSendDate;
 }
