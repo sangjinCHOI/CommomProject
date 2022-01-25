@@ -97,10 +97,15 @@ public class UserController {
 	}
 	
 	@GetMapping("/email/valid")
-	public ResponseEntity<Character> emailValid(String userEmail){
-		if(userService.checkEmail(userEmail) > 0)
-			return (new ResponseEntity<Character>('0',HttpStatus.OK));
-		return (new ResponseEntity<Character>('1',HttpStatus.ACCEPTED));
+	public ResponseEntity<Map<String,Character>> emailValid(String userEmail){
+		Map<String, Character>map = new HashMap<>();
+		
+		if(userService.checkEmail(userEmail) > 0) {
+			map.put("valid", '0');
+			return (new ResponseEntity<Map<String,Character>>(map,HttpStatus.OK));
+		}
+		map.put("valid", '1');
+		return (new ResponseEntity<Map<String,Character>>(map,HttpStatus.ACCEPTED));
 	}
 	
 	@PutMapping("/setting/account")
