@@ -15,6 +15,7 @@ import SettingsHelp from "./router/SettingsHelp";
 import Profile from "./router/Profile";
 import Follow from "./router/Follow";
 import CharactersUpdate from "./router/CharactersUpdate";
+import Search from "./router/Search";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route exact path="/settings/alarm" component={SettingsAlarm} />
             <Route exact path="/settings/help" component={SettingsHelp} />
             <Route exact path="/alarm" component={Alarm} />
+            <Route exact path="/search/temp" component={Search} />
             {/* characters, login, signup같은 닉네임이 있다면 문제 발생 가능 주의 */}
             <Route exact path="/:nickname" component={Profile} />
             <Route exact path="/:nickname/follow" component={Follow} />
