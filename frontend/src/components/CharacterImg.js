@@ -1,21 +1,21 @@
 import "@material-tailwind/react/tailwind.css";
 import { Image } from "@material-tailwind/react";
 import styles from "./CharacterImg.module.css";
-import defaultUserImg from "../assets/images/default_user_img.png";
+import defaultUserImg from "../assets/images/default_user.png";
 
 export default function CharacterImg({
   nickname,
   updateUserImg,
   imgWidth = "100px",
+  imgSrc = defaultUserImg,
 }) {
-  const imgSize = imgWidth;
   return (
     <div className="my-4 mx-8">
       <div className={`${styles.center}`}>
         <Image
-          src={defaultUserImg}
+          src={imgSrc}
           alt="user_img"
-          width={imgSize}
+          width={imgWidth}
           rounded={true}
           className={(`${styles.profileWrapper}`, `${styles.ProfileImg}`)}
         />

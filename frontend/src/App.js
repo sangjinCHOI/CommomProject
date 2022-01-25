@@ -36,7 +36,7 @@ function App() {
           <Route path="/accounts/id_inquiry/result" component={IdInquiryResult} />
           <Route exact path="/accounts/pw_inquiry" component={PwInquiry} />
           <Route exact path="/accounts/pw_inquiry/result" component={PwInquiryResult} />
-          <Route exact path="/characters" component={Characters} />
+          <Route exact path="/characters/select" component={Characters} />
           <Route exact path="/characters/create" component={CharactersCreate} />
           <Route exact path="/characters/update" component={CharactersUpdate} />
 

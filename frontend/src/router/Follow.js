@@ -18,7 +18,7 @@ export default function Follow() {
         <span className="px-20 py-4 mt-8 bg-white">팔로잉</span>
       </div>
       {nicknameList.map((nickname) => (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center" key={nickname}>
           <CharacterImg imgWidth="50px" />
           <div className="w-44">{nickname}</div>
           <div className="m-2">팔로우</div>
