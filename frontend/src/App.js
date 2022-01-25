@@ -1,6 +1,7 @@
 import "@material-tailwind/react/tailwind.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Layout from "./components/Layout";
+import SettingLayout from "./components/SettingLayout"
 import Characters from "./router/Characters";
 import CharactersCreate from "./router/CharactersCreate";
 import Home from "./router/Home";
@@ -26,18 +27,32 @@ function App() {
           <Route path="/login" component={Login} />
           <Route exact path="/characters" component={Characters} />
           <Route exact path="/characters/create" component={CharactersCreate} />
+
+          {/* SettingLayout 필요한 주소 */}
+          <Route path="/settings/:path?" exact>
+            <SettingLayout>
+              <Switch>
+                <Route exact path="/settings/character" component={SettingsCharacter} />
+                <Route exact path="/settings/account" component={SettingsAccount} />
+                <Route exact path="/settings/alarm" component={SettingsAlarm} />
+                <Route exact path="/settings/help" component={SettingsHelp} />
+              </Switch>
+            </SettingLayout>
+          </Route>
+          
           {/* Layout 필요한 주소 */}
-          <Layout>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/settings/character" component={SettingsCharacter} />
-            <Route exact path="/settings/account" component={SettingsAccount} />
-            <Route exact path="/settings/alarm" component={SettingsAlarm} />
-            <Route exact path="/settings/help" component={SettingsHelp} />
-            <Route exact path="/alarm" component={Alarm} />
-            {/* characters, login, signup같은 닉네임이 있다면 문제 발생 가능 주의 */}
-            <Route exact path="/:nickname" component={Profile} />
-            <Route exact path="/:nickname/follow" component={Follow} />
-          </Layout>
+          <Route>
+            <Layout>
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/alarm" component={Alarm} />
+                {/* characters, login, signup같은 닉네임이 있다면 문제 발생 가능 주의 */}
+                <Route exact path="/:nickname" component={Profile} />
+                <Route exact path="/:nickname/follow" component={Follow} />
+              </Switch>
+            </Layout>
+          </Route>
+
         </Switch>
       </Router>
     </>
