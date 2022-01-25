@@ -49,9 +49,10 @@ public class UserController {
 	
 	@PostMapping
 	public ResponseEntity signupUser(UserSignupRequest user) {
-	
+	System.out.println(user.toString());
 		if(userService.userSignup(user.toUser()) > 0)
 			return (new ResponseEntity(HttpStatus.OK));
+			
 		return (new ResponseEntity(HttpStatus.ACCEPTED));
 	}
 	
@@ -140,6 +141,7 @@ public class UserController {
 	// DateTimeFormat에 맞지않는 파라미터가 들어왔을때 처리
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public ResponseEntity dataex(Exception e) {
+		System.out.println("this is dataFormat Err");
 		return (new ResponseEntity(HttpStatus.BAD_REQUEST));
 	}
 	

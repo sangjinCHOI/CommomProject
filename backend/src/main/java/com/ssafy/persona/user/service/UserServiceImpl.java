@@ -38,7 +38,8 @@ public class UserServiceImpl implements UserService{
 			return (0);
 		}
 		// userEmail 중복검사 해야할듯
-		
+		if (userMapper.checkEmail(user.getUserEmail())>0)
+			return (0);
 		return (userMapper.userSignup(user));
 	}
 
