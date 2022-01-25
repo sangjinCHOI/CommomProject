@@ -16,31 +16,41 @@ export default function SettingsHelp() {
                     <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-10 py-4 text-left">
                       <span className="text-lg font-bold">고객센터</span>
                     </th>
-                    <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left"></th>
+                    <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-center">
+                      <button className="material-icons">arrow_forward_ios</button>
+                    </th>
                   </tr>
                   <tr>
                     <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-10 py-4 text-left">
                       <span className="text-lg font-bold">커뮤니티 규정</span>
                     </th>
-                    <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left"></th>
+                    <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-center">
+                      <button className="material-icons">arrow_forward_ios</button>
+                    </th>
                   </tr>
                   <tr>
                     <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-10 py-4 text-left">
                       <span className="text-lg font-bold">데이터 정책</span>
                     </th>
-                    <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-center"></th>
+                    <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-center">
+                      <button className="material-icons">arrow_forward_ios</button>
+                    </th>
                   </tr>
                   <tr>
                     <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-10 py-4 text-left">
                       <span className="text-lg font-bold">이용 약관</span>
                     </th>
-                    <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-center"></th>
+                    <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-center">
+                      <button className="material-icons">arrow_forward_ios</button>
+                    </th>
                   </tr>
                   <tr>
                     <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-10 py-4 text-left">
                       <span className="text-lg font-bold">정보</span>
                     </th>
-                    <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-center"></th>
+                    <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-center">
+                      <button className="material-icons">arrow_forward_ios</button>
+                    </th>
                   </tr>
                 </tbody>
               </table>
