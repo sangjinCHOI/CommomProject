@@ -85,11 +85,15 @@ public class UserController {
 	}
 	
 	@GetMapping("/email")
-	public ResponseEntity<String> emailGet(String userEmail){
+	public ResponseEntity<Map<String,String>> emailGet(String userEmail){
+		Map<String, String>map = new HashMap<>();
 		
-		if (userService.checkEmail(userEmail) < 1)
-			return (new ResponseEntity<String>("",HttpStatus.ACCEPTED));
-		return (new ResponseEntity<String>(userService.getUserId(userEmail),HttpStatus.OK));
+		if (userService.checkEmail(userEmail) < 1) {
+			map.put("userId", "");
+			return (new ResponseEntity<Map<String,String>>(map,HttpStatus.ACCEPTED));
+		}
+		map.put("userId", userService.getUserId(userEmail));
+		return (new ResponseEntity<Map<String,String>>(map,HttpStatus.OK));
 	}
 	
 	@GetMapping("/email/valid")
