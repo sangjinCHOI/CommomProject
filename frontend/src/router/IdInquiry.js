@@ -28,7 +28,6 @@ export default function Signup() {
               iconName="person"
             />
           </div>
-
         </CardBody>
       </Card>
 
@@ -37,9 +36,11 @@ export default function Signup() {
           <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
             아이디 찾기
           </Button>
-          <a href=""></a><Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
-            비밀번호 찾기
-          </Button>
+          <a href="../PwInquiry">
+            <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
+              비밀번호 찾기
+            </Button>
+          </a>
         </div>
 
         <div>
