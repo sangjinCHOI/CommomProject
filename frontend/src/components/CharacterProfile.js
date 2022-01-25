@@ -9,7 +9,7 @@ export default function CharacterProfile({ nickname }) {
           <div>
             <div className="inline-block bg-red-500 px-1 mr-2 rounded-full">
               <img
-                src={require("../assets/images/sample_achievement_img.png")}
+                src={require("../assets/images/sample_achievement.png")}
                 alt="sample_achievement_img"
                 width="16px"
                 className="inline-block mr-1"
