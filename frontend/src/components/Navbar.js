@@ -53,25 +53,16 @@ export default function Example() {
               </div>
 
               <div className="flex items-center static inset-auto ml-6 pr-0">
-                <span
-                  className="hidden md:block material-icons h-10 w-10 mt-1 mx-2"
-                  style={{ fontSize: 40 }}
-                >
+                <button className="hidden md:block material-icons h-10 w-10 mt-1 mx-2" style={{ fontSize: 40 }}>
                   add_circle_outline
-                </span>
+                </button>
                 <Link to="/alarm">
-                  <span
-                    className="hidden md:block material-icons h-10 w-10 mt-1 mx-2"
-                    style={{ fontSize: 40 }}
-                  >
+                  <span className="hidden md:block material-icons h-10 w-10 mt-1 mx-2" style={{ fontSize: 40 }}>
                     notifications_none
                   </span>
                 </Link>
                 <Link to="">
-                  <span
-                    className="hidden md:block material-icons h-10 w-10 mt-1 mx-2"
-                    style={{ fontSize: 40 }}
-                  >
+                  <span className="hidden md:block material-icons h-10 w-10 mt-1 mx-2" style={{ fontSize: 40 }}>
                     person_outline
                   </span>
                 </Link>
@@ -84,7 +75,7 @@ export default function Example() {
                       </span>
                     </Menu.Button>
                   </div>
-                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white">
                     <Menu.Item>
                       <Link to="/" className="block md:hidden px-4 py-2 text-sm text-gray-700">
                         게시글 작성
@@ -106,10 +97,7 @@ export default function Example() {
                       </Link>
                     </Menu.Item>
                     <Menu.Item>
-                      <Link
-                        to="/settings/character"
-                        className="block px-4 py-2 text-sm text-gray-700"
-                      >
+                      <Link to="/settings/character" className="block px-4 py-2 text-sm text-gray-700">
                         설정
                       </Link>
                     </Menu.Item>

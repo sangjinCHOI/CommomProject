@@ -1,4 +1,4 @@
-// import axios from "axios";
+import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
@@ -21,18 +21,38 @@ export default function Signup() {
     console.log("id : " + _id);
     setId(e.target.value);
 
-    if (_id.length <= 8) {
+    var RegId = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
+
+    if (!RegId.test(_id)) {
       setShowIdConfirm(true);
     } else {
       setShowIdConfirm(false);
     }
+
+    axios
+      .get("http://localhost:8080/user/valid", {
+        params: {
+          userId: e.target.value,
+        },
+      })
+      .then(({ data }) => {
+        if (data.valid == 2) {
+          console.log("중복");
+        }
+      });
   };
 
   const onPasswordHandler = (e) => {
+    // console.log("id : " + _id);
+    // const RegPass = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
+
+    const specialLetter = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+    const isValidPassword = password.length >= 8 && specialLetter >= 1;
+
     console.log("pass : " + password);
     setPassword(e.target.value);
 
-    if (password.length <= 8) {
+    if (!isValidPassword) {
       setShowPassConfirm(true);
     } else {
       setShowPassConfirm(false);
@@ -43,7 +63,7 @@ export default function Signup() {
     console.log("passcheck : " + passwordCheck);
     setpasswordCheck(e.target.value);
 
-    if (password == passwordCheck) {
+    if (password == e.target.value) {
       setShowIdCheckConfirm(true);
     } else {
       setShowIdCheckConfirm(false);
@@ -51,6 +71,11 @@ export default function Signup() {
   };
 
   const onEmailHandler = (e) => {
+    const isValidEmail = email.includes("@") && email.includes(".");
+    if (!isValidEmail) {
+      setShowEmailConfirm(true);
+    } else setShowEmailConfirm(false);
+
     console.log("email : " + email);
     setEmail(e.target.value);
   };
@@ -59,15 +84,35 @@ export default function Signup() {
     e.preventDefault();
     console.log("회원가입");
 
+    // if (!isValidInput || !isValidEmail || !isValidEmail) {
+    //   alert("please fill in the blanks");
+    //   console.log();
+    // }
+
     // axios({
     //   method: "post",
     //   url: "http://localhost:8080/user",
     //   data: {
-    //     userEmail: email,
-    //     userId: _id,
-    //     userPw: passwordCheck,
+    //     userEmail: email.toString,
+    //     userId: _id.toString,
+    //     userPw: passwordCheck.toString,
     //   },
-    // });
+    axios
+      .post("http://localhost:8080/user", {
+        userEmail: " ",
+        userId: " ",
+        userPw: " ",
+      })
+      .then((Response) => console.log(Response.data));
+    // .then((document.location.href = "/accounts/login"));
+
+    axios
+      .get("http://localhost:8080/user", {
+        params: {
+          userSeq: 1,
+        },
+      })
+      .then((Response) => console.log(Response.data));
   };
 
   return (
@@ -132,6 +177,7 @@ export default function Signup() {
             onChange={onEmailHandler}
           />
         </div>
+        {showEmailConfirm ? <EmailConf></EmailConf> : null}
       </div>
 
       <CardFooter>
@@ -154,14 +200,15 @@ export default function Signup() {
 function IdConf(props) {
   return (
     <div className="mb-5">
-      <p>아이디는 8자 이상</p>
+      <p>아이디는 문자와 숫자를 섞어 8자 이상 16자리 이하로 만들어 주세요.(특수문자 제외)</p>
     </div>
   );
 }
+
 function PassConf(props) {
   return (
     <div className="mb-5">
-      <p>비밀번호는 최소 8자리</p>
+      <p>비밀번호는 문자와 숫자를 섞어 8자 이상 16자리 이하로 만들어 주세요.(특수문자 제외)</p>
     </div>
   );
 }
@@ -175,7 +222,7 @@ function PassCheckConf(props) {
 function EmailConf(props) {
   return (
     <div className="mb-5">
-      <p>이메일 형식이 아닙니다.</p>
+      <p>이메일 형식이 잘못 되었습니다.</p>
     </div>
   );
 }

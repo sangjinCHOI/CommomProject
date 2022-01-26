@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader } from "@material-tailwind/react";
+import { Card, CardBody } from "@material-tailwind/react";
 
 export default function SettingsHelp() {
   return (
