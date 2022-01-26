@@ -25,4 +25,6 @@ public class Mail {
 	private String mailText;
 	@Column
 	private LocalDateTime mailSendDate;
+	@Column
+	private String userEmail;
 }

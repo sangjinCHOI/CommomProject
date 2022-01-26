@@ -61,15 +61,39 @@ public class UserController {
 			mail.setUserSeq(userService.getUserSeq(user.getUserId()));
 			mail.setMailText("위 인증완료를 누르면 인증이 진행됩니다");
 			
-			mailService.sendMail(mail, user.toUser());
+			mailService.sendMail(mail, user.getUserId());
 			return (new ResponseEntity(HttpStatus.OK));
 		}
 			
 		return (new ResponseEntity(HttpStatus.ACCEPTED));
 	}
 	
+	@PostMapping("/email")
+	public ResponseEntity updateUser(String userId) {
+
+		Mail mail = new Mail();
+
+		mail.setUserSeq(userService.getUserSeq(userId));
+		mail.setMailText("위 인증완료를 누르면 인증이 진행됩니다");
+		mailService.sendMail(mail, userId);
+
+		return (new ResponseEntity(HttpStatus.OK));
+	}
+	
+	@PostMapping("/email/id")
+	public ResponseEntity findId(String userEmail) {
+		Mail mail = new Mail();
+
+		mail.setUserEmail(userEmail);
+		//mail.setUserSeq(userService.getUserSeq(userId));
+		mail.setMailText("가입하신 아이디는 위와 같습니다.");
+		mailService.findId(mail, userEmail);
+
+		return (new ResponseEntity(HttpStatus.OK));
+	}
+	
 	// 이메일에서 인증 눌렀을 때 반응
-	@GetMapping("mail/verify")
+	@GetMapping("/mail/verify")
 	public void verifyEmail(MailVerifyRequest mailRequest){
 		
 		if(mailService.verifyEmail(mailRequest) > 0) {
@@ -170,10 +194,6 @@ public class UserController {
 		System.out.println("this is dataFormat Err");
 		return (new ResponseEntity(HttpStatus.BAD_REQUEST));
 	}
-	
-	@GetMapping("/test")
-	public void tmptest() {
-		mailService.sendMail(new Mail(), new User());
-	}
+
 
 }

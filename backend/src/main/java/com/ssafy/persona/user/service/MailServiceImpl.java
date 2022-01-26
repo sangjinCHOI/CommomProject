@@ -44,7 +44,7 @@ public class MailServiceImpl implements MailService{
         return buffer.toString();
     } 
 	
-	public void sendMail(Mail mail, User user) {
+	public void sendMail(Mail mail, String userId) {
 		
 		String authKey = getKey(8);
 		
@@ -52,29 +52,32 @@ public class MailServiceImpl implements MailService{
 		
 		try {
 			MailHandler mailHandler = new MailHandler(mailSender);
-			
+
 			// 받는 이메일 설정
 			mailHandler.setTo(mailMapper.getEmail(mail.getUserSeq()));
 
 			// 메일 제목
 			mailHandler.setSubject("Persona 인증 메일입니다.");
-			
+
 			// 메일 이미지 추가
 			String imgContent = "<img src=\"https://ifh.cc/g/zKpgxC.png\" alt=\"img\" /><br/>";
-			
+	
 			// EC2 올리면 서버 설정필요
 			imgContent = 
 					"<a href='http://localhost:8080/user/mail/verify?userId="
-					+ user.getUserId() 
+					+ userId 
 					+ "&authText="
 					+ authKey
 					+"'>인증하기</a> <br /> ";
-			
-			mailHandler.setText(imgContent, true);
-			
-			mailMapper.addAuthNumber(user.getUserId(), authKey);
+			mailHandler.setText(imgContent, true);	
 			
 			mailHandler.send();
+			System.out.println(mailMapper.countAuth(userId));
+			if(mailMapper.countAuth(userId) > 0) {
+				mailMapper.updateAuthNumber(userId, authKey);
+				return ;
+			}
+			mailMapper.addAuthNumber(userId, authKey);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -85,5 +88,32 @@ public class MailServiceImpl implements MailService{
 	public int verifyEmail(MailVerifyRequest mailRequest) {
 		
 		return (mailMapper.verifyEmail(mailRequest));
+	}
+
+	@Override
+	public void findId(Mail mail, String userEmail) {
+
+		try {
+			MailHandler mailHandler = new MailHandler(mailSender);
+
+			// 받는 이메일 설정
+			mailHandler.setTo(userEmail);
+
+			// 메일 제목
+			mailHandler.setSubject("Persona 아이디 찾기 결과입니다.");
+
+			String imgContent = "<img src=\"https://ifh.cc/g/zKpgxC.png\" alt=\"img\" /><br/>";
+	
+			imgContent = "";
+			imgContent += mailMapper.getIdtoEmail(userEmail);
+			
+			mailHandler.setText(imgContent, true);	
+			
+			mailHandler.send();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+	
 	}
 }
