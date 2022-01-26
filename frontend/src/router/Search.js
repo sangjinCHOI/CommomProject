@@ -1,3 +1,5 @@
+import { Label } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
 import MainCard from "../components/MainCard";
 
@@ -15,9 +17,11 @@ export default function Search({ location }) {
       <div className="mb-8">
         <div className="flex justify-between p-2">
           <div className="material-icons flex items-center text-lg">
-            person<span className="ml-1">사람</span>
+            person<span className="ml-1">캐릭터</span>
           </div>
-          <div className="text-lg">더 보기</div>
+          <Link to={{ pathname: "/search/characters", search: `?query=${query}` }}>
+            <div className="text-lg">더 보기</div>
+          </Link>
         </div>
         <MainCard>
           <div className="flex justify-center">
@@ -37,11 +41,12 @@ export default function Search({ location }) {
         </div>
         <MainCard>
           <div className="flex justify-center items-center text-xl h-16">
-            <div className="p-2">#요리</div>
-            <div className="p-2">#요리법</div>
-            <div className="p-2">#계란 요리</div>
-            <div className="p-2">#요리보고</div>
-            <div className="p-2">#요리조리</div>
+            <Label>#요리</Label>
+            <Label>#요리법</Label>
+            <Label>#계란 요리</Label>
+            <Label>#요리보고</Label>
+            <Label>#요리조리</Label>
+            <Label>#맛있는 요리</Label>
           </div>
         </MainCard>
       </div>
@@ -57,7 +62,9 @@ export default function Search({ location }) {
           {nicknameList.map((nickname) => (
             <div className="flex items-center">
               <CharacterImg imgWidth="50px" />
-              <div style={{ width: "126px" }}>{nickname}</div>
+              <div style={{ width: "126px" }} key={nickname}>
+                {nickname}
+              </div>
               <div className="pl-2 w-72">
                 {tempText.length < 40 ? tempText : tempText.slice(0, 40) + "..."}
               </div>
