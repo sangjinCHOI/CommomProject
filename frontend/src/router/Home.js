@@ -1,7 +1,11 @@
+import MainCard from "../components/MainCard";
+
 export default function Home() {
   return (
     <div className="text-3xl">
-      <h1>this is home</h1>
+      <MainCard>
+        this is chilasdasdasda<div>asdasd</div>
+      </MainCard>
     </div>
   );
 }
