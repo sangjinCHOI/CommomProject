@@ -27,7 +27,6 @@ public class CharacterGetResponse {
 	private LocalDateTime characterModifiedDate;
 
 	public CharacterGetResponse(CharacterEntity ce) {
-		super();
 		this.nickname = ce.getNickname();
 		this.categorySeq = ce.getCategorySeq();
 		this.introduction = ce.getIntroduction();
