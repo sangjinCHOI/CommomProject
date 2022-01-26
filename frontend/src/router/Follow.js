@@ -18,11 +18,10 @@ export default function Follow() {
     "PersonA",
   ];
 
-  const [isFollower, setIsFollower] = useState(true);
+  const [isFollowerTab, setIsFollowerTab] = useState(true);
 
   const follow = (e) => {
     e.preventDefault();
-    console.log(e);
   };
 
   return (
@@ -31,22 +30,22 @@ export default function Follow() {
         <div className="flex justify-center items-center">
           <Button
             className={`px-20 py-5 w-60 text-center text-xl border-2 border-white ${
-              isFollower ? "bg-sky-500" : "bg-gray-300 text-gray-300"
+              isFollowerTab ? "bg-sky-500" : "bg-gray-300 text-gray-300"
             }`}
             buttonType="outline"
             onClick={() => {
-              setIsFollower(true);
+              setIsFollowerTab(true);
             }}
           >
             팔로워
           </Button>
           <Button
             className={`px-20 py-5 w-60 text-center text-xl border-2 border-white ${
-              isFollower ? "bg-gray-300 text-gray-300" : "bg-sky-500"
+              isFollowerTab ? "bg-gray-300 text-gray-300" : "bg-sky-500"
             }`}
             buttonType="outline"
             onClick={() => {
-              setIsFollower(false);
+              setIsFollowerTab(false);
             }}
           >
             팔로잉
@@ -60,7 +59,7 @@ export default function Follow() {
           />
           <span class="material-icons absolute right-12">search</span>
         </div>
-        {isFollower
+        {isFollowerTab
           ? shuffle(nicknameList).map((nickname) => (
               <div className="flex justify-center items-center" key={nickname}>
                 <Link to={`../${nickname}`}>
