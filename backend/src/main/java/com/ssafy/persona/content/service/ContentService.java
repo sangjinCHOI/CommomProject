@@ -22,4 +22,6 @@ public interface ContentService {
 	List<ReplyGetResponse> replyList(int contentSeq);
 	
 	boolean contentReport(ContentReportRequest contentReportRequest);
+	
+	List<ContentGetResponse> contentPersonalList(int characterSeq);
 }

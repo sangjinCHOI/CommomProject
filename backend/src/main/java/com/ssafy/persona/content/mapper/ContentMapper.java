@@ -1,5 +1,7 @@
 package com.ssafy.persona.content.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
@@ -14,4 +16,5 @@ public interface ContentMapper {
 	int contentDelete(int contentSeq);
 	int contentReport(ContentReportRequest contentReportRequest);
 	ContentGetResponse contentGet(int contentSeq);
+	List<ContentGetResponse> contentPersonalList(int characterSeq);
 }

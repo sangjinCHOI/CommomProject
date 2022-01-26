@@ -67,5 +67,10 @@ public class ContentServiceImpl implements ContentService {
 	public ContentGetResponse contentGet(int contentSeq) {
 		return contentMapper.contentGet(contentSeq);
 	}
+
+	@Override
+	public List<ContentGetResponse> contentPersonalList(int characterSeq) {
+		return contentMapper.contentPersonalList(characterSeq);
+	}
 	
 }
