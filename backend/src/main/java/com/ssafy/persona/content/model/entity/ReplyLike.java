@@ -4,21 +4,19 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
 @Getter
-@ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class LIke {
+@Builder
+public class ReplyLike {
 	@Id
-	private int likeSeq;
+	private int replyLikeSeq;
 	@Column
-	private char likeTarget;
-	@Column
-	private int likeRelationSeq;
+	private int replySeq;
 	@Column
 	private int characterSeq;
 }
