@@ -25,9 +25,11 @@ export default function Search({ location }) {
         </div>
         <MainCard>
           <div className="flex justify-center">
-            <div className="mx-8 my-6">
-              <CharacterImg nickname="요리킹" />
-            </div>
+            <Link to="../요리킹">
+              <div className="mx-8 my-6">
+                <CharacterImg nickname="요리킹" />
+              </div>
+            </Link>
             <div className="mx-8 my-6">
               <CharacterImg nickname="난요리만해" />
             </div>
@@ -69,11 +71,13 @@ export default function Search({ location }) {
         <MainCard>
           {nicknameList.map((nickname) => (
             <div className="flex justify-center items-center">
-              <div className="m-3">
-                <CharacterImg imgWidth="50px" />
-              </div>
+              <Link to={`../${nickname}`}>
+                <div className="m-3">
+                  <CharacterImg imgWidth="50px" />
+                </div>
+              </Link>
               <div style={{ width: "126px" }} key={nickname}>
-                {nickname}
+                <Link to={`../${nickname}`}>{nickname}</Link>
               </div>
               <div className="ml-8 w-72">
                 {tempText.length < 40 ? tempText : tempText.slice(0, 40) + "..."}

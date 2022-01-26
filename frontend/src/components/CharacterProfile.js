@@ -1,4 +1,5 @@
 import { Label } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 import CharacterImg from "./CharacterImg";
 
 export default function CharacterProfile({ nickname }) {
@@ -43,10 +44,14 @@ export default function CharacterProfile({ nickname }) {
               <Label color="blueGray">업적 보기</Label>
             </div>
             <div className="inline-block px-1">
-              <Label color="blueGray">프로필 편집 </Label>
+              <Link to="../characters/update">
+                <Label color="blueGray">프로필 편집</Label>
+              </Link>
             </div>
             <div className="inline-block px-1">
-              <Label color="blueGray">부캐 보기</Label>
+              <Link to="../characters/select">
+                <Label color="blueGray">부캐 보기</Label>
+              </Link>
             </div>
           </div>
         </div>
