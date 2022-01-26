@@ -2,6 +2,9 @@ package com.ssafy.persona.character.service;
 
 import java.util.List;
 
+import com.ssafy.persona.character.model.dto.AlarmCreateRequest;
+import com.ssafy.persona.character.model.dto.AlarmGetResponse;
+import com.ssafy.persona.character.model.dto.AlarmUpdateRequest;
 import com.ssafy.persona.character.model.dto.CharacterCreatRequest;
 import com.ssafy.persona.character.model.dto.CharacterDeleteRequest;
 import com.ssafy.persona.character.model.dto.CharacterGetResponse;
@@ -18,4 +21,10 @@ public interface CharacterService {
 
 	List<CharacterGetResponse> list(int userSeq);
 
+	int createAlarm(AlarmCreateRequest request);
+	
+	int updateAlarmStatus(AlarmUpdateRequest request);
+	
+	List<AlarmGetResponse> getAlarmList(int characterSeq);
+	
 }

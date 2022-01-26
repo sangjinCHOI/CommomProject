@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ssafy.persona.character.model.dto.AlarmCreateRequest;
+import com.ssafy.persona.character.model.dto.AlarmGetResponse;
+import com.ssafy.persona.character.model.dto.AlarmUpdateRequest;
 import com.ssafy.persona.character.model.dto.CharacterCreatRequest;
 import com.ssafy.persona.character.model.dto.CharacterDeleteRequest;
 import com.ssafy.persona.character.model.dto.CharacterGetResponse;
@@ -21,4 +24,9 @@ public interface CharacterMapper {
 
 	List<CharacterGetResponse> list(int userSeq);
 
+	int createAlarm(AlarmCreateRequest request);
+	
+	int updateAlarmStatus(AlarmUpdateRequest request);
+	
+	List<AlarmGetResponse> getAlarmList(int characterSeq);
 }
