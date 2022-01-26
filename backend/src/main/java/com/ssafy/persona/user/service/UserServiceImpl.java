@@ -87,6 +87,11 @@ public class UserServiceImpl implements UserService{
 	public int emailIsValid(String userId) {
 		return (userMapper.emailIsValid(userId));
 	}
+
+	@Override
+	public String getUserEmail(String userId) {
+		return (userMapper.getUserEmail(userId));
+	}
 	
 	
 

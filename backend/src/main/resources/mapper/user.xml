@@ -81,4 +81,10 @@ values (#{userId}, #{userPw}, #{userEmail}, now())
 		where user_id=#{userId}
 	</update>
 	
+	<select id="getUserEmail" resultType="String">
+		select user_email
+		from tb_user
+		where user_id=#{userId}
+	</select>
+	
 </mapper>

@@ -8,4 +8,6 @@ public interface MailService {
 	void sendMail(Mail mail, String userId);
 	int verifyEmail(MailVerifyRequest mailRequest);
 	void findId(Mail mail, String userId);
+	String makePw();
+	void sendPw(Mail mail, String userEmail, String tmpPw);
 }

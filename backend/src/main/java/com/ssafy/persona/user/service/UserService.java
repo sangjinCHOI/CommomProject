@@ -15,6 +15,7 @@ public interface UserService {
 	int changePw(User user);
 	int changeBirth(User user);
 	String getUserId(String userEmail);
+	String getUserEmail(String userId);
 	int userActive(String userEmail);
 	int userLogin(User user);
 	int getUserSeq(String userId);
