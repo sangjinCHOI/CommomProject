@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 export default function Login() {
   const [_id, setId] = useState("");
-
+  const [password, setPassword] = useState("");
   let [passShow, setPassShow] = useState(false);
 
   const onIdHandler = (e) => {
@@ -19,6 +19,16 @@ export default function Login() {
     if (e.target.value == "") {
       setPassShow(false);
     }
+  };
+
+  // const onPasswordHandler = (e) => {
+  //   console.log("pass : " + password);
+  //   setPassword(e.target.value);
+  // };
+
+  const onPasswordHandler = (e) => {
+    console.log("pass : " + password);
+    setPassword(e.target.value);
   };
 
   const onSubmit = (e) => {
@@ -57,7 +67,7 @@ export default function Login() {
       </div>
       <CardFooter>
         <div className="flex justify-center">
-          <Button color="lightBlue" buttonType="submit" size="lg" ripple="dark" onClick={onSubmit}>
+          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark" onClick={onSubmit}>
             로그인
           </Button>
           <Link to="../accounts/signup">
@@ -71,14 +81,7 @@ export default function Login() {
   );
 }
 
-function PassComp() {
-  const [password, setPassword] = useState("");
-
-  const onPasswordHandler = (e) => {
-    console.log("pass : " + password);
-    setPassword(e.target.value);
-  };
-
+function PassComp(props) {
   return (
     <div className="mb-5">
       <div className="bg-white rounded-lg">
@@ -88,8 +91,12 @@ function PassComp() {
           placeholder="Password를 입력해주세요"
           outline={true}
           iconName="pin"
-          value={password}
-          onChange={onPasswordHandler}
+          value={props.password}
+          //onChange={props.onPasswordHandler}
+
+          onChange={() => {
+            props.onPasswordHandler(this.props.pass);
+          }}
         />
       </div>
       <Link to="../accounts/pw_inquiry">비밀번호를 잊으셨나요?</Link>
