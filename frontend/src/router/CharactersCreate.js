@@ -45,17 +45,13 @@ export default function CharactersCreate() {
           />
         </div>
         <div className="bg-white rounded-lg text-gray-400">
-          <Dropdown
-            color="lightblue"
-            buttonType="outline"
-            buttonText="CATEGORY"
-            className="w-96 my-8"
-          >
-            <div>
-              <DropdownItem color="lightBlue" children="개발" />
-              <DropdownItem color="lightBlue" children="요리" />
-            </div>
-          </Dropdown>
+          <div className="my-8">
+            <select className="bg-white rounded-lg w-96 h-11 p-2 border border-gray-300 outline-sky-500 text-black">
+              <option className="rounded-lg h-10">미정</option>
+              <option className="rounded-lg h-10">요리</option>
+              <option className="rounded-lg h-10">개발</option>
+            </select>
+          </div>
         </div>
         <div className="relative bg-white rounded-lg" style={{ height: 185 }}>
           <Textarea
