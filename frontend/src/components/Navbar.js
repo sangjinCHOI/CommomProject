@@ -53,9 +53,9 @@ export default function Example() {
               </div>
 
               <div className="flex items-center static inset-auto ml-6 pr-0">
-                <span className="hidden md:block material-icons h-10 w-10 mt-1 mx-2" style={{ fontSize: 40 }}>
+                <button className="hidden md:block material-icons h-10 w-10 mt-1 mx-2" style={{ fontSize: 40 }}>
                   add_circle_outline
-                </span>
+                </button>
                 <Link to="/alarm">
                   <span className="hidden md:block material-icons h-10 w-10 mt-1 mx-2" style={{ fontSize: 40 }}>
                     notifications_none
