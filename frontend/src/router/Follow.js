@@ -49,24 +49,32 @@ export default function Follow() {
       </div>
       {isFollower
         ? shuffle(nicknameList).map((nickname) => (
-            <div className="flex justify-center items-center" key={nickname}>
-              <CharacterImg imgWidth="50px" />
-              <div className="w-44">{nickname}</div>
+            <div className="flex justify-center items-center">
+              <div className="m-3">
+                <CharacterImg imgWidth="50px" />
+              </div>
+              <div className="w-44" key={nickname}>
+                {nickname}
+              </div>
               <div className="m-2">
                 <Link to="" onClick={follow}>
                   <Label color="lightBlue">팔로우</Label>
                 </Link>
               </div>
-              <div className="mr-8">
+              <div className="mr-3">
                 <Label color="blueGray">삭제</Label>
               </div>
             </div>
           ))
         : shuffle(nicknameList).map((nickname) => (
-            <div className="flex justify-center items-center" key={nickname}>
-              <CharacterImg imgWidth="50px" />
-              <div className="w-44">{nickname}</div>
-              <div className="ml-12 mr-8">
+            <div className="flex justify-center items-center">
+              <div className="m-3">
+                <CharacterImg imgWidth="50px" />
+              </div>
+              <div className="w-44" key={nickname}>
+                {nickname}
+              </div>
+              <div className="ml-12 mr-3">
                 <Label color="blueGray">언팔로우</Label>
               </div>
             </div>

@@ -6,7 +6,7 @@ export default function CharacterProfile({ nickname }) {
     <>
       <div className="flex justify-center items-center p-4 mb-4">
         <CharacterImg />
-        <div>
+        <div className="ml-10">
           <div>
             <div className="inline-block bg-red-500 px-1 mr-2 rounded-full">
               <img

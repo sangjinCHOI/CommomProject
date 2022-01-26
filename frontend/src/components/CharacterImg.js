@@ -10,7 +10,8 @@ export default function CharacterImg({
   imgSrc = defaultUserImg,
 }) {
   return (
-    <div className="my-4 mx-8">
+    // <div className="my-4 mx-8">
+    <div>
       <div className={`${styles.center}`}>
         <Image
           src={imgSrc}

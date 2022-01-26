@@ -25,9 +25,15 @@ export default function Search({ location }) {
         </div>
         <MainCard>
           <div className="flex justify-center">
-            <CharacterImg nickname="요리킹" />
-            <CharacterImg nickname="난요리만해" />
-            <CharacterImg nickname="내요리먹어볼사람" />
+            <div className="mx-8 my-6">
+              <CharacterImg nickname="요리킹" />
+            </div>
+            <div className="mx-8 my-6">
+              <CharacterImg nickname="난요리만해" />
+            </div>
+            <div className="mx-8 my-6">
+              <CharacterImg nickname="내요리먹어볼사람" />
+            </div>
           </div>
         </MainCard>
       </div>
@@ -62,12 +68,14 @@ export default function Search({ location }) {
         </div>
         <MainCard>
           {nicknameList.map((nickname) => (
-            <div className="flex items-center">
-              <CharacterImg imgWidth="50px" />
+            <div className="flex justify-center items-center">
+              <div className="m-3">
+                <CharacterImg imgWidth="50px" />
+              </div>
               <div style={{ width: "126px" }} key={nickname}>
                 {nickname}
               </div>
-              <div className="pl-2 w-72">
+              <div className="ml-8 w-72">
                 {tempText.length < 40 ? tempText : tempText.slice(0, 40) + "..."}
               </div>
             </div>
@@ -86,7 +94,7 @@ export default function Search({ location }) {
         </div>
         <MainCard>
           <div className="flex justify-center">
-            <div className="relative border border-gray-500">
+            <div className="relative border border-gray-400">
               <img
                 src={require("../assets/images/storageImg_sample_1.jpg")}
                 alt="sample_1"
@@ -98,7 +106,7 @@ export default function Search({ location }) {
               />
               <div className="absolute top-4 left-4 text-xl w-40">요리하는 부부 저장소</div>
             </div>
-            <div className="relative border border-gray-500">
+            <div className="relative border border-gray-400">
               <img
                 src={require("../assets/images/storageImg_sample_2.jpg")}
                 alt="sample_1"
@@ -110,7 +118,7 @@ export default function Search({ location }) {
               />
               <div className="absolute top-4 left-4 text-xl w-40">맛있는 요리 모음</div>
             </div>
-            <div className="relative border border-gray-500">
+            <div className="relative border border-gray-400">
               <img
                 src={require("../assets/images/storageImg_sample_3.jpg")}
                 alt="sample_1"
