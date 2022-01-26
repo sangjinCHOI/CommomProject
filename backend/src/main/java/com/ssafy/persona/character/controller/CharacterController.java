@@ -105,7 +105,7 @@ public class CharacterController {
 		return new ResponseEntity<CharacterGetResponse>(characterService.detail(characterSeq), HttpStatus.OK);
 	} // 예외처리 필요
 
-	@GetMapping("characters")
+	@GetMapping("characters/{userSeq}")
 	public ResponseEntity<List<CharacterGetResponse>> characterList(@PathVariable int userSeq) {
 		logger.info("캐릭터 리스트 - 요청 계정 번호: " + userSeq);
 

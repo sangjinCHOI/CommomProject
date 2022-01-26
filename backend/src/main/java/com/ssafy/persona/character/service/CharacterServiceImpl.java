@@ -34,6 +34,8 @@ public class CharacterServiceImpl implements CharacterService {
 
 	@Override
 	public CharacterGetResponse detail(int characterSeq) {
+		System.out.println(characterSeq);
+		System.out.println(characterMapper.detail(characterSeq));
 		return characterMapper.detail(characterSeq);
 	}
 
