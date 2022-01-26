@@ -20,17 +20,17 @@ export default function Signup() {
 
   const onPasswordHandler = (e) => {
     console.log("pass : " + password);
-    setId(e.target.value);
+    setPassword(e.target.value);
   };
 
   const onPasswordCheckHandler = (e) => {
     console.log("passcheck : " + passwordCheck);
-    setId(e.target.value);
+    setpasswordCheck(e.target.value);
   };
 
   const onEmailHandler = (e) => {
     console.log("email : " + email);
-    setId(e.target.value);
+    setEmail(e.target.value);
   };
 
   const onSubmit = (e) => {
