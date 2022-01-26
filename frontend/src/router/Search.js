@@ -13,7 +13,7 @@ export default function Search({ location }) {
   const nicknameList = ["닉네임은여덟글자", "테스트1", "TEST2", "테3"];
   return (
     <>
-      <div className="mt-4">{query} 검색 결과</div>
+      <div className="mt-4">'{query}' 전체 검색 결과</div>
       <div className="mb-8">
         <div className="flex justify-between p-2">
           <div className="material-icons flex items-center text-lg">
@@ -78,7 +78,9 @@ export default function Search({ location }) {
           <div className="material-icons flex items-center text-lg">
             folder_shared<span className="ml-1">저장소</span>
           </div>
-          <div className="text-lg">더 보기</div>
+          <Link to={{ pathname: "/search/storages", search: `?query=${query}` }}>
+            <div className="text-lg">더 보기</div>
+          </Link>
         </div>
         <MainCard>
           <div className="flex justify-center">
