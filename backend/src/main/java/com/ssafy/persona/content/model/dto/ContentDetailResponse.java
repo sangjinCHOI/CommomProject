@@ -11,7 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @ToString
-public class ContentGetResponse {
+public class ContentDetailResponse {
 	private int contentSeq;
 	private boolean contentIsActive;
 	private boolean contentIsPublic;
@@ -24,7 +24,7 @@ public class ContentGetResponse {
 	private LocalDateTime contentCreatedDate;
 	private LocalDateTime contentModifiedDate;
 	
-	public ContentGetResponse(Content content) {
+	public ContentDetailResponse(Content content) {
 		super();
 		this.contentSeq = content.getContentSeq();
 		this.contentIsActive = content.isContentIsActive();
