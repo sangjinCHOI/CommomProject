@@ -5,9 +5,6 @@ export default function SettingsHelp() {
     <>
       <div className="flex mx-10 mt-20">
         <Card>
-          <CardHeader color="lightBlue" contentPosition="left">
-            <h2 className="text-white text-2xl">도움말 및 지원</h2>
-          </CardHeader>
           <CardBody className="pt-0 mx-5">
             <div className="overflow-x-auto">
               <table className="items-center w-full bg-transparent border-collapse">
