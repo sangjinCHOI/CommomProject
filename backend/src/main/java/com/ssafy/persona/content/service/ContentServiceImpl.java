@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.persona.content.mapper.ContentMapper;
 import com.ssafy.persona.content.mapper.ReplyMapper;
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
+import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
@@ -60,6 +61,11 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public List<ReplyGetResponse> replyList(int contentSeq) {
 		return replyMapper.replyList(contentSeq);
+	}
+
+	@Override
+	public ContentGetResponse contentGet(int contentSeq) {
+		return contentMapper.contentGet(contentSeq);
 	}
 	
 }
