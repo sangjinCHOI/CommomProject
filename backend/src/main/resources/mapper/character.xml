@@ -43,13 +43,10 @@
 		where character_seq=#{characterSeq}
 	</update>
 
-	<select id="detail"	resultType="com.ssafy.persona.character.model.dto.CharacterGetResponse">
-		select 
-			nickname as nickname, category_seq as categorySeq, introduction as introduction, representative_achievement as representativeAchievement,
-			 alarm_allow as alarmAllow,
-			like_alarm as likeAlarm, reply_alarm as replyAlarm, follow_alarm as followAlarm, modify_alarm as modifyAlarm,
-			 reported_time as reportedTime, character_active as characterActive
-			, character_created_date as characterCreatedDate, character_modified_date as characterModifiedDate
+	<select id="detail"	resultType="CharacterGetResponse">
+		select nickname, category_seq, introduction, representative_achievement, alarm_allow,
+			like_alarm, reply_alarm, follow_alarm, modify_alarm, reported_time, character_active
+			, character_created_date, character_modified_date
 		from
 			tb_character
 		where character_seq=#{characterSeq}
@@ -57,12 +54,10 @@
 
 	<select id="list"
 		resultType="com.ssafy.persona.character.model.dto.CharacterGetResponse">
-		select 
-			nickname, category_seq, introduction, representative_achievement, alarm_allow,
+		select nickname, category_seq, introduction, representative_achievement, alarm_allow,
 			like_alarm, reply_alarm, follow_alarm, modify_alarm, reported_time, character_active
 			, character_created_date, character_modified_date
-		from
-			tb_character
+		from tb_character
 		where user_seq= #{userSeq}
 	</select>
 
