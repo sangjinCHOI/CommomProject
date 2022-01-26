@@ -8,11 +8,11 @@ import com.ssafy.persona.character.model.dto.CharacterGetResponse;
 import com.ssafy.persona.character.model.dto.CharacterUpdateRequest;
 
 public interface CharacterService {
-	int regist(CharacterCreatRequest ccr);
+	int regist(CharacterCreatRequest request);
 
-	int update(CharacterUpdateRequest cur);
+	int update(CharacterUpdateRequest request);
 
-	int delete(CharacterDeleteRequest cdr);
+	int delete(CharacterDeleteRequest request);
 
 	CharacterGetResponse detail(int characterSeq);
 

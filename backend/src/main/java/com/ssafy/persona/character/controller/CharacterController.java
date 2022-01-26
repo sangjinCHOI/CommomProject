@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.persona.character.model.dto.CharacterCreatRequest;
@@ -45,12 +46,12 @@ public class CharacterController {
 	private FollowService followService;
 
 	@PostMapping("/")
-	public ResponseEntity<Map<String, String>> createCharacter(@RequestBody CharacterCreatRequest ccr) {
-		logger.info("캐릭터 생성 요청 - 요청 유저 번호: " + ccr.getUserSeq());
+	public ResponseEntity<Map<String, String>> createCharacter(@RequestBody CharacterCreatRequest request) {
+		logger.info("캐릭터 생성 요청 - 요청 유저 번호: " + request.getUserSeq());
 		String message = "";
 		HttpStatus status = null;
 
-		if (characterService.regist(ccr) == 1) {
+		if (characterService.regist(request) == 1) {
 			message = SUCCESS;
 			status = HttpStatus.OK;
 		} else {
@@ -63,12 +64,12 @@ public class CharacterController {
 	}
 
 	@PutMapping("/")
-	public ResponseEntity<Map<String, String>> modifyCharacter(@RequestBody CharacterUpdateRequest cur) {
-		logger.info("캐릭터 정보 수정 요청 - 요청 캐릭터 번호: " + cur.getCharacterSeq());
+	public ResponseEntity<Map<String, String>> modifyCharacter(@RequestBody CharacterUpdateRequest request) {
+		logger.info("캐릭터 정보 수정 요청 - 요청 캐릭터 번호: " + request.getCharacterSeq());
 		String message = "";
 		HttpStatus status = null;
 
-		if (characterService.update(cur) == 1) {
+		if (characterService.update(request) == 1) {
 			message = SUCCESS;
 			status = HttpStatus.OK;
 		} else {
@@ -81,12 +82,12 @@ public class CharacterController {
 	}
 
 	@DeleteMapping("/")
-	public ResponseEntity<Map<String, String>> deleteCharacter(@RequestBody CharacterDeleteRequest cdr) {
-		logger.info("캐릭터 삭제 요청 - 요청 캐릭터 번호: " + cdr.getCharacterSeq());
+	public ResponseEntity<Map<String, String>> deleteCharacter(@RequestBody CharacterDeleteRequest request) {
+		logger.info("캐릭터 삭제 요청 - 요청 캐릭터 번호: " + request.getCharacterSeq());
 		String message = "";
 		HttpStatus status = null;
 
-		if (characterService.delete(cdr) == 1) {
+		if (characterService.delete(request) == 1) {
 			message = SUCCESS;
 			status = HttpStatus.OK;
 		} else {
@@ -131,12 +132,12 @@ public class CharacterController {
 	}
 
 	@PostMapping("follow")
-	public ResponseEntity<Map<String, String>> followRequest(@RequestBody FollowRequest fr) {
-		logger.info("팔로워 요청 - follwer: " + fr.getFollower() + " followee: " + fr.getFollowee());
+	public ResponseEntity<Map<String, String>> followRequest(@RequestBody FollowRequest request) {
+		logger.info("팔로워 요청 - follwer: " + request.getFollower() + " followee: " + request.getFollowee());
 		String message = "";
 		HttpStatus status = null;
 
-		if (followService.follow(fr) == 1) {
+		if (followService.follow(request) == 1) {
 			message = SUCCESS;
 			status = HttpStatus.OK;
 		} else {
@@ -149,12 +150,12 @@ public class CharacterController {
 	}
 
 	@DeleteMapping("follow")
-	public ResponseEntity<Map<String, String>> unFollowRequest(@RequestBody FollowRequest fr) {
-		logger.info("팔로워 삭제요청 - follower: " + fr.getFollower() + " followee: " + fr.getFollowee());
+	public ResponseEntity<Map<String, String>> unFollowRequest(@RequestBody FollowRequest request) {
+		logger.info("팔로워 삭제요청 - follower: " + request.getFollower() + " followee: " + request.getFollowee());
 		String message = "";
 		HttpStatus status = null;
 
-		if (followService.unFollow(fr) == 1) {
+		if (followService.unFollow(request) == 1) {
 			message = SUCCESS;
 			status = HttpStatus.OK;
 		} else {
@@ -166,19 +167,19 @@ public class CharacterController {
 		return new ResponseEntity<Map<String, String>>(result, status);
 	}
 
-	@GetMapping("followers")
-	public ResponseEntity<List<FollowerListResponse>> followerList(@RequestBody FollowerListRequest flr) {
-		logger.info("follower list request - 요청캐릭터: " + flr.getFollowee());
+	@PostMapping("followers")
+	public ResponseEntity<List<FollowerListResponse>> followerList(@RequestBody FollowerListRequest request) {
+		logger.info("follower list request - 요청캐릭터: " + request.getFollowee());
 
-		return new ResponseEntity<List<FollowerListResponse>>(followService.getFollowerList(flr), HttpStatus.OK);
+		return new ResponseEntity<List<FollowerListResponse>>(followService.getFollowerList(request), HttpStatus.OK);
 	} // 예외처리 필요
 
-	@GetMapping("followees")
-	public ResponseEntity<List<Map<String, Integer>>> followeeList(@RequestBody FolloweeListRequest flr) {
-		logger.info("followee list request - 요청캐릭터: " + flr.getFollower());
+	@PostMapping("followees")
+	public ResponseEntity<List<Map<String, Integer>>> followeeList(@RequestBody FolloweeListRequest request) {
+		logger.info("followee list request - 요청캐릭터: " + request.getFollower());
 
 		List<Map<String, Integer>> result = new ArrayList<>();
-		for (int i : followService.getFolloweeList(flr)) {
+		for (int i : followService.getFolloweeList(request)) {
 			Map<String, Integer> tmpMap = new HashMap<>();
 			tmpMap.put("followee", i);
 			result.add(tmpMap);

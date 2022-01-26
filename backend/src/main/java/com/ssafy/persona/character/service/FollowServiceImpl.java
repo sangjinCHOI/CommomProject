@@ -18,23 +18,23 @@ public class FollowServiceImpl implements FollowService {
 	FollowMapper followMapper;
 	
 	@Override
-	public int follow(FollowRequest fr) {
-		return followMapper.follow(fr);
+	public int follow(FollowRequest request) {
+		return followMapper.follow(request);
 	}
 
 	@Override
-	public int unFollow(FollowRequest fr) {
-		return followMapper.unFollow(fr);
+	public int unFollow(FollowRequest request) {
+		return followMapper.unFollow(request);
 	}
 
 	@Override
-	public List<FollowerListResponse> getFollowerList(FollowerListRequest flr) {
-		return followMapper.getFollowerList(flr);
+	public List<FollowerListResponse> getFollowerList(FollowerListRequest request) {
+		return followMapper.getFollowerList(request);
 	}
 
 	@Override
-	public List<Integer> getFolloweeList(FolloweeListRequest flr) {
-		return followMapper.getFolloweeList(flr);
+	public List<Integer> getFolloweeList(FolloweeListRequest request) {
+		return followMapper.getFolloweeList(request);
 	}
 
 }

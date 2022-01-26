@@ -18,18 +18,18 @@ public class CharacterServiceImpl implements CharacterService {
 	CharacterMapper characterMapper;
 	
 	@Override
-	public int regist(CharacterCreatRequest ccr) {
-		return characterMapper.regist(ccr);
+	public int regist(CharacterCreatRequest request) {
+		return characterMapper.regist(request);
 	}
 
 	@Override
-	public int update(CharacterUpdateRequest cur) {
-		return characterMapper.update(cur);
+	public int update(CharacterUpdateRequest request) {
+		return characterMapper.update(request);
 	}
 
 	@Override
-	public int delete(CharacterDeleteRequest cdr) {
-		return characterMapper.delete(cdr);
+	public int delete(CharacterDeleteRequest request) {
+		return characterMapper.delete(request);
 	}
 
 	@Override

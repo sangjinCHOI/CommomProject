@@ -11,11 +11,11 @@ import com.ssafy.persona.character.model.dto.CharacterUpdateRequest;
 
 @Mapper
 public interface CharacterMapper {
-	int regist(CharacterCreatRequest ccr);
+	int regist(CharacterCreatRequest request);
 
-	int update(CharacterUpdateRequest cur);
+	int update(CharacterUpdateRequest request);
 
-	int delete(CharacterDeleteRequest cdr);
+	int delete(CharacterDeleteRequest request);
 
 	CharacterGetResponse detail(int characterSeq);
 
