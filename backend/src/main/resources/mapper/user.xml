@@ -68,4 +68,17 @@ values (#{userId}, #{userPw}, #{userEmail}, now())
 		from tb_user
 		where user_id=#{userId} and user_pw=#{userPw}
 	</select>
+	
+	<select id="getUserSeq" resultType="Integer">
+		select user_seq
+		from tb_user
+		where user_id=#{userId}
+	</select>
+	
+	<update id="emailIsValid">
+		update tb_user
+		set email_is_auth=true
+		where user_id=#{userId}
+	</update>
+	
 </mapper>

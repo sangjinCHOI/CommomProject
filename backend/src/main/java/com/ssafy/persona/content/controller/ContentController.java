@@ -69,9 +69,15 @@ public class ContentController {
 	}
 	
 	@ApiOperation(value = "content personal list", notes = "특정 인물의 게시물 리스트 조회", response = ContentGetResponse.class)
-	@GetMapping("/contents/{characterSeq}")
+	@GetMapping("/content/person/{characterSeq}")
 	public ResponseEntity<List<ContentGetResponse>> contentPersonalList(@PathVariable("characterSeq") @ApiParam(value = "특정 인물을 조회할 캐릭터 번호.", required = true) int characterSeq){
 		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentPersonalList(characterSeq), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "content tag list", notes = "특정 태그의 게시물 리스트 조회", response = ContentGetResponse.class)
+	@GetMapping("/content/tag/{tagText}")
+	public ResponseEntity<List<ContentGetResponse>> contentTagList(@PathVariable("tagText") @ApiParam(value = "특정 태그를 조회할 태그 내용.", required = true) String tagText){
+		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentTagList(tagText), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "reply create", notes = "reply 작성, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)

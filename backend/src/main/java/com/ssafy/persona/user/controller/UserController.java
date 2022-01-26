@@ -17,12 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.persona.user.model.dto.MailVerifyRequest;
 import com.ssafy.persona.user.model.dto.UserGetResponse;
 import com.ssafy.persona.user.model.dto.UserLoginRequest;
 import com.ssafy.persona.user.model.dto.UserSignupRequest;
 import com.ssafy.persona.user.model.dto.UserUpdateRequest;
+import com.ssafy.persona.user.model.entity.Mail;
 import com.ssafy.persona.user.model.entity.User;
 import com.ssafy.persona.user.security.SecurityService;
+import com.ssafy.persona.user.service.MailService;
 import com.ssafy.persona.user.service.UserService;
 
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
@@ -31,6 +34,9 @@ import com.ssafy.persona.user.service.UserService;
 public class UserController {
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	MailService mailService;
 	
 	@Autowired
 	private SecurityService securityService;
@@ -49,13 +55,57 @@ public class UserController {
 	
 	@PostMapping
 	public ResponseEntity signupUser(UserSignupRequest user) {
-	System.out.println(user.toString());
-		if(userService.userSignup(user.toUser()) > 0)
+		if(userService.userSignup(user.toUser()) > 0) {
+			
+			Mail mail = new Mail();
+			mail.setUserSeq(userService.getUserSeq(user.getUserId()));
+			mail.setMailText("위 인증완료를 누르면 인증이 진행됩니다");
+			
+			mailService.sendMail(mail, user.getUserId());
 			return (new ResponseEntity(HttpStatus.OK));
+		}
 			
 		return (new ResponseEntity(HttpStatus.ACCEPTED));
 	}
 	
+	@PostMapping("/email")
+	public ResponseEntity updateUser(String userId) {
+
+		Mail mail = new Mail();
+
+		mail.setUserSeq(userService.getUserSeq(userId));
+		mail.setMailText("위 인증완료를 누르면 인증이 진행됩니다");
+		mailService.sendMail(mail, userId);
+
+		return (new ResponseEntity(HttpStatus.OK));
+	}
+	
+	@PostMapping("/email/id")
+	public ResponseEntity findId(String userEmail) {
+		Mail mail = new Mail();
+
+		mail.setUserEmail(userEmail);
+		//mail.setUserSeq(userService.getUserSeq(userId));
+		mail.setMailText("가입하신 아이디는 위와 같습니다.");
+		mailService.findId(mail, userEmail);
+
+		return (new ResponseEntity(HttpStatus.OK));
+	}
+	
+	// 이메일에서 인증 눌렀을 때 반응
+	@GetMapping("/mail/verify")
+	public void verifyEmail(MailVerifyRequest mailRequest){
+		
+		if(mailService.verifyEmail(mailRequest) > 0) {
+			// 허가 받았다고 user 업데이트 해야함
+			userService.emailIsValid(mailRequest.getUserId());
+			System.out.println("성공");
+			
+		}
+		else
+			System.out.println("실패");
+		//return null;
+	}
 
 	@GetMapping("/login")
 	public ResponseEntity<Map<String,String>> createToken(UserLoginRequest request){
@@ -144,7 +194,6 @@ public class UserController {
 		System.out.println("this is dataFormat Err");
 		return (new ResponseEntity(HttpStatus.BAD_REQUEST));
 	}
-	
-	
+
 
 }
