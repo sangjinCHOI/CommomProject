@@ -1,11 +1,10 @@
-import "@material-tailwind/react/tailwind.css";
-import CardFooter from "@material-tailwind/react/CardFooter";
-import InputIcon from "@material-tailwind/react/InputIcon";
-import Button from "@material-tailwind/react/Button";
-import Logo from "../assets/images/main_logo.png";
-import styles from "./Signup.module.css";
-import { Link } from "react-router-dom";
+// import axios from "axios";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import styles from "./Signup.module.css";
+import "@material-tailwind/react/tailwind.css";
+import Logo from "../assets/images/main_logo.png";
+import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
 
 export default function Signup() {
   const [_id, setId] = useState("");
@@ -13,19 +12,42 @@ export default function Signup() {
   const [passwordCheck, setpasswordCheck] = useState("");
   const [email, setEmail] = useState("");
 
+  const [showIdConfirm, setShowIdConfirm] = useState(false);
+  const [showPassConfirm, setShowPassConfirm] = useState(false);
+  const [showPassCheckConfirm, setShowIdCheckConfirm] = useState(false);
+  const [showEmailConfirm, setShowEmailConfirm] = useState(false);
+
   const onIdHandler = (e) => {
     console.log("id : " + _id);
     setId(e.target.value);
+
+    if (_id.length <= 8) {
+      setShowIdConfirm(true);
+    } else {
+      setShowIdConfirm(false);
+    }
   };
 
   const onPasswordHandler = (e) => {
     console.log("pass : " + password);
     setPassword(e.target.value);
+
+    if (password.length <= 8) {
+      setShowPassConfirm(true);
+    } else {
+      setShowPassConfirm(false);
+    }
   };
 
   const onPasswordCheckHandler = (e) => {
     console.log("passcheck : " + passwordCheck);
     setpasswordCheck(e.target.value);
+
+    if (password == passwordCheck) {
+      setShowIdCheckConfirm(true);
+    } else {
+      setShowIdCheckConfirm(false);
+    }
   };
 
   const onEmailHandler = (e) => {
@@ -34,8 +56,18 @@ export default function Signup() {
   };
 
   const onSubmit = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     console.log("회원가입");
+
+    // axios({
+    //   method: "post",
+    //   url: "http://localhost:8080/user",
+    //   data: {
+    //     userEmail: email,
+    //     userId: _id,
+    //     userPw: passwordCheck,
+    //   },
+    // });
   };
 
   return (
@@ -58,6 +90,7 @@ export default function Signup() {
             onChange={onIdHandler}
           />
         </div>
+        {showIdConfirm ? <IdConf></IdConf> : null}
       </div>
 
       <div className="mb-5 px-11">
@@ -71,6 +104,7 @@ export default function Signup() {
             onChange={onPasswordHandler}
           />
         </div>
+        {showPassConfirm ? <PassConf></PassConf> : null}
       </div>
 
       <div className="mb-5 px-11">
@@ -84,6 +118,7 @@ export default function Signup() {
             onChange={onPasswordCheckHandler}
           />
         </div>
+        {showPassCheckConfirm ? <PassCheckConf></PassCheckConf> : null}
       </div>
 
       <div className="mb-4 px-11">
@@ -112,6 +147,35 @@ export default function Signup() {
           </Link>
         </div>
       </CardFooter>
+    </div>
+  );
+}
+
+function IdConf(props) {
+  return (
+    <div className="mb-5">
+      <p>아이디는 8자 이상</p>
+    </div>
+  );
+}
+function PassConf(props) {
+  return (
+    <div className="mb-5">
+      <p>비밀번호는 최소 8자리</p>
+    </div>
+  );
+}
+function PassCheckConf(props) {
+  return (
+    <div className="mb-5">
+      <p>비밀번호가 동일 하지 않습니다.</p>
+    </div>
+  );
+}
+function EmailConf(props) {
+  return (
+    <div className="mb-5">
+      <p>이메일 형식이 아닙니다.</p>
     </div>
   );
 }
