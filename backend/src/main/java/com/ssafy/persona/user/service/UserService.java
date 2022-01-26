@@ -17,4 +17,5 @@ public interface UserService {
 	String getUserId(String userEmail);
 	int userActive(String userEmail);
 	int userLogin(User user);
+	int getUserSeq(String userId);
 }

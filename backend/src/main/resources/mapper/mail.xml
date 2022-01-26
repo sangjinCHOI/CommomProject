@@ -9,4 +9,23 @@
 		where user_seq=#{userSeq}
 	</select>
 
+	<insert id="addAuthNumber">
+		insert into tb_auth_number
+		(user_seq, auth_text, auth_created_date)
+		values(
+			(select user_seq
+			from tb_user
+			where user_id=#{userId}
+			LIMIT 1), #{authText}, now()
+		)
+	</insert>
+	
+	<select id="verifyEmail" resultType="Integer">
+		select count(*)
+		from tb_auth_number
+		where auth_text=#{authText} 
+		and user_seq=(select user_seq
+						from tb_user
+						where user_id=#{userId})
+	</select>
 </mapper>

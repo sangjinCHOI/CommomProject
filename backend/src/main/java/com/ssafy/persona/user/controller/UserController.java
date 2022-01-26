@@ -17,12 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.persona.user.model.dto.MailVerifyRequest;
 import com.ssafy.persona.user.model.dto.UserGetResponse;
 import com.ssafy.persona.user.model.dto.UserLoginRequest;
 import com.ssafy.persona.user.model.dto.UserSignupRequest;
 import com.ssafy.persona.user.model.dto.UserUpdateRequest;
+import com.ssafy.persona.user.model.entity.Mail;
 import com.ssafy.persona.user.model.entity.User;
 import com.ssafy.persona.user.security.SecurityService;
+import com.ssafy.persona.user.service.MailService;
 import com.ssafy.persona.user.service.UserService;
 
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
@@ -31,6 +34,9 @@ import com.ssafy.persona.user.service.UserService;
 public class UserController {
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	MailService mailService;
 	
 	@Autowired
 	private SecurityService securityService;
@@ -49,13 +55,29 @@ public class UserController {
 	
 	@PostMapping
 	public ResponseEntity signupUser(UserSignupRequest user) {
-	System.out.println(user.toString());
-		if(userService.userSignup(user.toUser()) > 0)
+		if(userService.userSignup(user.toUser()) > 0) {
+			
+			Mail mail = new Mail();
+			mail.setUserSeq(userService.getUserSeq(user.getUserId()));
+			mail.setMailText("위 인증완료를 누르면 인증이 진행됩니다");
+			
+			mailService.sendMail(mail, user.toUser());
 			return (new ResponseEntity(HttpStatus.OK));
+		}
 			
 		return (new ResponseEntity(HttpStatus.ACCEPTED));
 	}
 	
+	// 이메일에서 인증 눌렀을 때 반응
+	@GetMapping("mail/verify")
+	public void verifyEmail(MailVerifyRequest mailRequest){
+		
+		if(mailService.verifyEmail(mailRequest) > 0)
+			System.out.println("성공");
+		else
+			System.out.println("실패");
+		//return null;
+	}
 
 	@GetMapping("/login")
 	public ResponseEntity<Map<String,String>> createToken(UserLoginRequest request){
@@ -145,6 +167,9 @@ public class UserController {
 		return (new ResponseEntity(HttpStatus.BAD_REQUEST));
 	}
 	
-	
+	@GetMapping("/test")
+	public void tmptest() {
+		mailService.sendMail(new Mail(), new User());
+	}
 
 }

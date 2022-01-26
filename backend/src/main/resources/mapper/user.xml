@@ -68,4 +68,11 @@ values (#{userId}, #{userPw}, #{userEmail}, now())
 		from tb_user
 		where user_id=#{userId} and user_pw=#{userPw}
 	</select>
+	
+	<select id="getUserSeq" resultType="Integer">
+		select user_seq
+		from tb_user
+		where user_id=#{userId}
+	</select>
+	
 </mapper>
