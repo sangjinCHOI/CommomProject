@@ -1,4 +1,3 @@
-import CharacterImg from "../components/CharacterImg";
 import MainCard from "../components/MainCard";
 
 export default function SearchCharacters({ location }) {

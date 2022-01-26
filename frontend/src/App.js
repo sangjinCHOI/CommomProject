@@ -25,6 +25,7 @@ import CharactersUpdate from "./router/CharactersUpdate";
 import Search from "./router/Search";
 import SearchCharacters from "./router/SearchCharacters";
 import SearchStorages from "./router/SearchStorages";
+import SearchTags from "./router/SearchTags";
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
                 <Route exact path="/search" component={Search} />
                 <Route exact path="/search/characters" component={SearchCharacters} />
                 <Route exact path="/search/storages" component={SearchStorages} />
+                <Route exact path="/search/tags" component={SearchTags} />
                 {/* characters, login, signup같은 닉네임이 있다면 문제 발생 가능 주의 */}
                 <Route exact path="/:nickname" component={Profile} />
                 <Route exact path="/:nickname/follow" component={Follow} />

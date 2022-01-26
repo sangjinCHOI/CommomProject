@@ -37,7 +37,9 @@ export default function Search({ location }) {
           <div className="material-icons flex items-center text-lg">
             tag<span className="ml-1">태그</span>
           </div>
-          <div className="text-lg">더 보기</div>
+          <Link to={{ pathname: "/search/tags", search: `?query=${query}` }}>
+            <div className="text-lg">더 보기</div>
+          </Link>
         </div>
         <MainCard>
           <div className="flex justify-center items-center text-xl h-16">
