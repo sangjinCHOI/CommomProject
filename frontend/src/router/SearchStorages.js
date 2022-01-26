@@ -1,4 +1,5 @@
 import MainCard from "../components/MainCard";
+import styles from "./SearchStorages.module.css";
 
 export default function SearchCharacters({ location }) {
   const queryString = location.search;
@@ -15,7 +16,7 @@ export default function SearchCharacters({ location }) {
           <img
             src={require("../assets/images/storageImg_sample_1.jpg")}
             alt="storage_img"
-            className="w-80 h-40 border border-gray-500"
+            className={`${styles.test} w-80 h-40 border border-gray-500`}
             style={{
               width: "100%",
               height: "100%",
@@ -32,7 +33,7 @@ export default function SearchCharacters({ location }) {
           <img
             src={require("../assets/images/storageImg_sample_2.jpg")}
             alt="storage_img"
-            className="w-80 h-40 border border-gray-500"
+            className={`${styles.test} w-80 h-40 border border-gray-500`}
             style={{
               width: "100%",
               height: "100%",
@@ -49,7 +50,7 @@ export default function SearchCharacters({ location }) {
           <img
             src={require("../assets/images/storageImg_sample_3.jpg")}
             alt="storage_img"
-            className="w-80 h-40 border border-gray-500"
+            className={`${styles.test} w-80 h-40 border border-gray-500`}
             style={{
               width: "100%",
               height: "100%",
