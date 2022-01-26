@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
+import com.ssafy.persona.content.model.dto.ContentDetailResponse;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
@@ -59,6 +60,12 @@ public class ContentController {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value = "content detail", notes = "게시글 상세조회", response = ContentDetailResponse.class)
+	@GetMapping("/content/{contentSeq}")
+	public ResponseEntity<ContentDetailResponse> contentGet(@PathVariable("contentSeq") @ApiParam(value = "조회할 글의 글번호", required = true) int contentSeq){
+		return new ResponseEntity<ContentDetailResponse>(contentService.contentGet(contentSeq), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "reply create", notes = "reply 작성, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
