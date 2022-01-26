@@ -5,7 +5,7 @@ import CharacterImg from "./CharacterImg";
 export default function CharacterProfile({ nickname }) {
   return (
     <>
-      <div className="flex justify-center items-center p-4 mb-4">
+      <div className="flex justify-center items-center p-4 my-4">
         <CharacterImg />
         <div className="ml-10">
           <div>
@@ -21,34 +21,36 @@ export default function CharacterProfile({ nickname }) {
             {nickname}
           </div>
           <div className="py-1">
-            <div className="inline-block w-20">
+            <div className="inline-block mr-8">
               <span>
                 게시물 <span className="font-bold">55</span>
               </span>
             </div>
-            <div className="inline-block w-28">
+            <div className="inline-block mr-8">
               <span>
-                팔로워 <span className="font-bold">16,314</span>
+                팔로워 <span className="font-bold">163K</span>
               </span>
             </div>
-            <div className="inline-block w-24">
+            <div className="inline-block">
               <span>
-                팔로잉 <span className="font-bold">234</span>
+                팔로우 <span className="font-bold">2.34K</span>
               </span>
             </div>
           </div>
 
-          <div className="text-sm">킹왕짱 나가신다!</div>
-          <div className="py-1">
-            <div className="inline-block px-1">
+          <div className="text-sm w-72 h-7">
+            킹왕짱 나가신다!ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
+          </div>
+          <div className="my-4">
+            <div className="inline-block px-2">
               <Label color="blueGray">업적 보기</Label>
             </div>
-            <div className="inline-block px-1">
+            <div className="inline-block px-2">
               <Link to="../characters/update">
                 <Label color="blueGray">프로필 편집</Label>
               </Link>
             </div>
-            <div className="inline-block px-1">
+            <div className="inline-block px-2">
               <Link to="../characters/select">
                 <Label color="blueGray">부캐 보기</Label>
               </Link>

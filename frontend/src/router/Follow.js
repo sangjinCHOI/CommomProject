@@ -48,7 +48,7 @@ export default function Follow() {
               setIsFollowerTab(false);
             }}
           >
-            팔로잉
+            팔로우
           </Button>
         </div>
         <div className="relative flex justify-center items-center p-2">
