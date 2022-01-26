@@ -35,5 +35,7 @@ public class User {
 	private LocalDateTime userCreatedDate;
 	@Column
 	private LocalDateTime userModifiedDate;
+	@Column
+	private int userCreatableCount;
 	
 }
