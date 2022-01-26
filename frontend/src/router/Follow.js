@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { shuffle } from "lodash";
 import MainCard from "../components/MainCard";
+import Search from "../assets/images/search.png";
 
 export default function Follow() {
   const nicknameList = [
@@ -19,15 +20,15 @@ export default function Follow() {
 
   const [isFollower, setIsFollower] = useState(true);
 
-  const follow = (event) => {
-    event.preventDefault();
-    console.log(event);
+  const follow = (e) => {
+    e.preventDefault();
+    console.log(e);
   };
 
   return (
     <div className="px-16">
       <MainCard>
-        <div className="flex justify-center items-center mb-4">
+        <div className="flex justify-center items-center">
           <Button
             className={`px-20 py-5 w-60 text-center text-xl border-2 border-white ${
               isFollower ? "bg-sky-500" : "bg-gray-300 text-gray-300"
@@ -50,6 +51,14 @@ export default function Follow() {
           >
             팔로잉
           </Button>
+        </div>
+        <div className="relative flex justify-center items-center p-2">
+          <input
+            className="w-96 border rounded-lg px-4 py-2"
+            type="text"
+            placeholder="캐릭터 검색"
+          />
+          <span class="material-icons absolute right-12">search</span>
         </div>
         {isFollower
           ? shuffle(nicknameList).map((nickname) => (
