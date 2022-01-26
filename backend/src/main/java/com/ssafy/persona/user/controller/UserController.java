@@ -72,8 +72,12 @@ public class UserController {
 	@GetMapping("mail/verify")
 	public void verifyEmail(MailVerifyRequest mailRequest){
 		
-		if(mailService.verifyEmail(mailRequest) > 0)
+		if(mailService.verifyEmail(mailRequest) > 0) {
+			// 허가 받았다고 user 업데이트 해야함
+			userService.emailIsValid(mailRequest.getUserId());
 			System.out.println("성공");
+			
+		}
 		else
 			System.out.println("실패");
 		//return null;

@@ -19,4 +19,5 @@ public interface UserMapper {
 	int userActive(String userEmail);
 	int userLogin(User user);
 	int getUserSeq(String userId);
+	int emailIsValid(String userId);
 }

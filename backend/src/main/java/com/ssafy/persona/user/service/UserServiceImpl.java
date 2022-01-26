@@ -82,6 +82,11 @@ public class UserServiceImpl implements UserService{
 	public int getUserSeq(String userId) {
 		return (userMapper.getUserSeq(userId));
 	}
+
+	@Override
+	public int emailIsValid(String userId) {
+		return (userMapper.emailIsValid(userId));
+	}
 	
 	
 
