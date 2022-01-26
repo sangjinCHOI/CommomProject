@@ -24,4 +24,5 @@ public interface ContentService {
 	boolean contentReport(ContentReportRequest contentReportRequest);
 	
 	List<ContentGetResponse> contentPersonalList(int characterSeq);
+	List<ContentGetResponse> contentTagList(String tagText);
 }
