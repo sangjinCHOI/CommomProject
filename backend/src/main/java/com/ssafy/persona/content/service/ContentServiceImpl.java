@@ -1,5 +1,7 @@
 package com.ssafy.persona.content.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,7 @@ import com.ssafy.persona.content.model.dto.ContentCreateRequest;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
+import com.ssafy.persona.content.model.dto.ReplyGetResponse;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
 
 @Service
@@ -52,6 +55,11 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public boolean contentReport(ContentReportRequest contentReportRequest) {
 		return contentMapper.contentReport(contentReportRequest) == 1;
+	}
+
+	@Override
+	public List<ReplyGetResponse> replyList(int contentSeq) {
+		return replyMapper.replyList(contentSeq);
 	}
 	
 }
