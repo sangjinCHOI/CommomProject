@@ -1,4 +1,5 @@
 import { Label } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 import CharacterImg from "./CharacterImg";
 
 export default function CharacterProfile({ nickname }) {
@@ -6,7 +7,7 @@ export default function CharacterProfile({ nickname }) {
     <>
       <div className="flex justify-center items-center p-4 mb-4">
         <CharacterImg />
-        <div>
+        <div className="ml-10">
           <div>
             <div className="inline-block bg-red-500 px-1 mr-2 rounded-full">
               <img
@@ -21,26 +22,36 @@ export default function CharacterProfile({ nickname }) {
           </div>
           <div className="py-1">
             <div className="inline-block w-20">
-              <span>게시물: 55 </span>
+              <span>
+                게시물 <span className="font-bold">55</span>
+              </span>
             </div>
             <div className="inline-block w-28">
-              <span>팔로워: 10,000 </span>
+              <span>
+                팔로워 <span className="font-bold">16,314</span>
+              </span>
             </div>
             <div className="inline-block w-24">
-              <span>팔로잉: 234</span>
+              <span>
+                팔로잉 <span className="font-bold">234</span>
+              </span>
             </div>
           </div>
 
           <div className="text-sm">킹왕짱 나가신다!</div>
           <div className="py-1">
-            <div className="inline-block">
-              <Label>업적 보기</Label>
+            <div className="inline-block px-1">
+              <Label color="blueGray">업적 보기</Label>
             </div>
-            <div className="inline-block">
-              <Label>프로필 편집 </Label>
+            <div className="inline-block px-1">
+              <Link to="../characters/update">
+                <Label color="blueGray">프로필 편집</Label>
+              </Link>
             </div>
-            <div className="inline-block">
-              <Label>부캐 보기</Label>
+            <div className="inline-block px-1">
+              <Link to="../characters/select">
+                <Label color="blueGray">부캐 보기</Label>
+              </Link>
             </div>
           </div>
         </div>

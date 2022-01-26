@@ -1,13 +1,14 @@
 import "@material-tailwind/react/tailwind.css";
-import CardFooter from "@material-tailwind/react/CardFooter";
-import InputIcon from "@material-tailwind/react/InputIcon";
-import Button from "@material-tailwind/react/Button";
-import Logo from "../assets/images/main_logo.png";
-import styles from "./Signup.module.css";
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import styles from "./Signup.module.css";
+import Logo from "../assets/images/main_logo.png";
+import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
 
 export default function Login() {
+  // const dispatch = useDispatch();
+
   const [_id, setId] = useState("");
   const [password, setPassword] = useState("");
   let [passShow, setPassShow] = useState(false);
@@ -32,7 +33,7 @@ export default function Login() {
   };
 
   const onSubmit = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     console.log("로그인");
   };
 

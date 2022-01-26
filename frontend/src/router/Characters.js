@@ -23,41 +23,49 @@ export default function Characters() {
       </div>
       <div className="flex justify-center m-8">
         <Link to={isManagement ? "../characters/update" : ""}>
+          <div className="mt-8 mx-12">
+            <CharacterImg
+              nickname={"개발왕"}
+              imgSrc={
+                isManagement
+                  ? require("../assets/images/character_edit.png")
+                  : require("../assets/images/default_user.png")
+              }
+            />
+          </div>
+        </Link>
+        <div className="mt-8 mx-12">
           <CharacterImg
-            nickname={"개발왕"}
+            nickname={"요리왕"}
             imgSrc={
               isManagement
                 ? require("../assets/images/character_edit.png")
                 : require("../assets/images/default_user.png")
             }
           />
-        </Link>
-        <CharacterImg
-          nickname={"요리왕"}
-          imgSrc={
-            isManagement
-              ? require("../assets/images/character_edit.png")
-              : require("../assets/images/default_user.png")
-          }
-        />
+        </div>
       </div>
       <div className="flex justify-center m-8">
-        <CharacterImg
-          nickname={"운동왕"}
-          imgSrc={
-            isManagement
-              ? require("../assets/images/character_edit.png")
-              : require("../assets/images/default_user.png")
-          }
-        />
-        <CharacterImg
-          nickname={"코인왕"}
-          imgSrc={
-            isManagement
-              ? require("../assets/images/character_edit.png")
-              : require("../assets/images/default_user.png")
-          }
-        />
+        <div className="mt-8 mx-12">
+          <CharacterImg
+            nickname={"운동왕"}
+            imgSrc={
+              isManagement
+                ? require("../assets/images/character_edit.png")
+                : require("../assets/images/default_user.png")
+            }
+          />
+        </div>
+        <div className="mt-8 mx-12">
+          <CharacterImg
+            nickname={"코인왕"}
+            imgSrc={
+              isManagement
+                ? require("../assets/images/character_edit.png")
+                : require("../assets/images/default_user.png")
+            }
+          />
+        </div>
       </div>
       <div className="text-center text-2xl mt-24">
         <Link to="" onClick={management}>

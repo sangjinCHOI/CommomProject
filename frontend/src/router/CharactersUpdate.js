@@ -1,4 +1,4 @@
-import { InputIcon, Dropdown, DropdownItem, Textarea } from "@material-tailwind/react";
+import { InputIcon, Textarea } from "@material-tailwind/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
@@ -34,7 +34,7 @@ export default function CharactersCreate() {
         className="mx-auto my-24 w-96"
       />
       <CharacterImg updateUserImg={"변경"} />
-      <div className="w-96 mx-auto">
+      <div className="w-96 mx-auto mt-8">
         <div className="bg-white rounded-lg">
           <InputIcon
             type="text"
@@ -44,7 +44,7 @@ export default function CharactersCreate() {
             placeholder="닉네임을 입력하세요."
           />
         </div>
-        <div className="bg-white rounded-lg text-gray-400">
+        <div className="bg-white rounded-lg text-gray-400 my-8">
           <input
             type="text"
             value="요리"
