@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.ssafy.persona.content.model.dto.ContentLikeListResponse;
+import com.ssafy.persona.content.model.dto.LikeListResponse;
 
 @Mapper
 public interface LikeMapper {
 
-	List<ContentLikeListResponse> contentLikeList(int contentSeq);
+	List<LikeListResponse> contentLikeList(int contentSeq);
+
+	List<LikeListResponse> replyLikeList(int replySeq);
 
 }

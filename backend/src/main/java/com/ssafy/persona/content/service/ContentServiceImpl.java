@@ -10,7 +10,7 @@ import com.ssafy.persona.content.mapper.LikeMapper;
 import com.ssafy.persona.content.mapper.ReplyMapper;
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
 import com.ssafy.persona.content.model.dto.ContentGetResponse;
-import com.ssafy.persona.content.model.dto.ContentLikeListResponse;
+import com.ssafy.persona.content.model.dto.LikeListResponse;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
@@ -83,8 +83,13 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public List<ContentLikeListResponse> contentLikeList(int contentSeq) {
+	public List<LikeListResponse> contentLikeList(int contentSeq) {
 		return likeMapper.contentLikeList(contentSeq);
+	}
+
+	@Override
+	public List<LikeListResponse> replyLikeList(int replySeq) {
+		return likeMapper.replyLikeList(replySeq);
 	}
 	
 }
