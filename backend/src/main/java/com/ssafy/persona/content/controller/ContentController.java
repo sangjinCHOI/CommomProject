@@ -56,8 +56,8 @@ public class ContentController {
 	}
 	
 	@ApiOperation(value = "content delete", notes = "content 삭제, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@DeleteMapping("/content/{contentSeq}")
-	public ResponseEntity<String> contentDelete(@PathVariable("contentSeq") @ApiParam(value = "삭제할 글의 글번호.", required = true) int contentSeq) {
+	@DeleteMapping("/content")
+	public ResponseEntity<String> contentDelete(@RequestBody @ApiParam(value = "삭제할 글의 글번호.", required = true) int contentSeq) {
 		if (contentService.contentDelete(contentSeq)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
@@ -101,8 +101,8 @@ public class ContentController {
 	}
 	
 	@ApiOperation(value = "reply delete", notes = "reply 삭제, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@DeleteMapping("/content/reply/{replySeq}")
-	public ResponseEntity<String> replyDelete(@PathVariable("replySeq") @ApiParam(value = "삭제할 댓글의 댓글번호.", required = true) int replySeq) {
+	@DeleteMapping("/content/reply")
+	public ResponseEntity<String> replyDelete(@RequestBody @ApiParam(value = "삭제할 댓글의 댓글번호.", required = true) int replySeq) {
 		if (contentService.replyDelete(replySeq)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
