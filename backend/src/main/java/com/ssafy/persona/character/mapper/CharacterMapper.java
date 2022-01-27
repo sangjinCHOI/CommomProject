@@ -22,6 +22,8 @@ public interface CharacterMapper {
 
 	CharacterGetResponse detail(int characterSeq);
 
+	int getCharacterCount(int userSeq);
+	
 	List<CharacterGetResponse> list(int userSeq);
 
 	int createAlarm(AlarmCreateRequest request);

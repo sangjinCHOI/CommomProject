@@ -61,6 +61,13 @@
 		where user_seq= #{userSeq}
 	</select>
 
-
+	<select id="getCharacterCount"	resultType="int">
+		select 
+			count(*)
+		from
+			tb_character
+		where user_seq=#{userSeq}
+		and character_active = 1
+	</select>
 
 </mapper>
