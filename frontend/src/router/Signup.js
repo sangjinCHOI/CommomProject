@@ -13,31 +13,39 @@ export default function Signup() {
   const [email, setEmail] = useState("");
 
   const [showIdConfirm, setShowIdConfirm] = useState(false);
+  const [showIdDuplicate, setShowIdDuplicate] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
   const [showPassCheckConfirm, setShowIdCheckConfirm] = useState(false);
   const [showEmailConfirm, setShowEmailConfirm] = useState(false);
+  const [showEmailDuplicate, setShowEmailDuplicate] = useState(false);
 
   const onIdHandler = (e) => {
-    console.log("id : " + _id);
+    console.log("id : " + e.target.value);
     setId(e.target.value);
 
-    var RegId = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
+    var RegId = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/; //ID 우효성 검사 알파벳 대,소문자, 숫자만 가능
 
-    if (!RegId.test(_id)) {
+    var valId = RegId.test(e.target.value);
+    if (!RegId.test(e.target.value)) {
       setShowIdConfirm(true);
     } else {
       setShowIdConfirm(false);
     }
 
     axios
-      .get("http://localhost:8080/user/valid", {
-        params: {
-          userId: e.target.value,
-        },
+      .get("http://localhost:8080/user/valid/" + e.target.value, {
+        // params: {
+        //   userId: e.target.value,
+        // },
       })
-      .then(({ data }) => {
+      .then((data) => {
+        console.log(data);
+
         if (data.valid == 2) {
-          console.log("중복");
+          setShowIdDuplicate(true);
+          console.log("valid : " + data.valid);
+        } else if (data.valid == 1) {
+          setShowIdDuplicate(false);
         }
       });
   };
@@ -46,10 +54,10 @@ export default function Signup() {
     // console.log("id : " + _id);
     // const RegPass = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
 
-    const specialLetter = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-    const isValidPassword = password.length >= 8 && specialLetter >= 1;
+    const specialLetter = e.target.value.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+    const isValidPassword = e.target.value.length >= 8 && specialLetter >= 1;
 
-    console.log("pass : " + password);
+    console.log("pass : " + e.target.value);
     setPassword(e.target.value);
 
     if (!isValidPassword) {
@@ -60,24 +68,41 @@ export default function Signup() {
   };
 
   const onPasswordCheckHandler = (e) => {
-    console.log("passcheck : " + passwordCheck);
+    console.log("passcheck : " + e.target.value);
     setpasswordCheck(e.target.value);
 
-    if (password == e.target.value) {
-      setShowIdCheckConfirm(true);
-    } else {
+    if (password === e.target.value) {
       setShowIdCheckConfirm(false);
+    } else {
+      setShowIdCheckConfirm(true);
     }
   };
 
   const onEmailHandler = (e) => {
-    const isValidEmail = email.includes("@") && email.includes(".");
+    const isValidEmail = e.target.value.includes("@") && e.target.value.includes("."); //email 유효성 검사 @와 .포함
     if (!isValidEmail) {
       setShowEmailConfirm(true);
     } else setShowEmailConfirm(false);
 
-    console.log("email : " + email);
+    console.log("email : " + e.target.value);
     setEmail(e.target.value);
+
+    axios
+      .get("http://localhost:8080/user/email/valid/" + e.target.value, {
+        // params: {
+        //   userId: e.target.value,
+        // },
+      })
+      .then(({ data }) => {
+        console.log(data);
+
+        if (data.valid == 0) {
+          setShowEmailDuplicate(true);
+          console.log("valid : " + data.valid);
+        } else if (data.valid == 1) {
+          setShowEmailDuplicate(false);
+        }
+      });
   };
 
   const onSubmit = (e) => {
@@ -89,30 +114,26 @@ export default function Signup() {
     //   console.log();
     // }
 
-    // axios({
-    //   method: "post",
-    //   url: "http://localhost:8080/user",
-    //   data: {
-    //     userEmail: email.toString,
-    //     userId: _id.toString,
-    //     userPw: passwordCheck.toString,
-    //   },
-    axios
-      .post("http://localhost:8080/user", {
-        userEmail: " ",
-        userId: " ",
-        userPw: " ",
-      })
-      .then((Response) => console.log(Response.data));
-    // .then((document.location.href = "/accounts/login"));
+    const data = {
+      userId: _id,
+      userEmail: email,
+      userPw: passwordCheck,
+    };
 
     axios
-      .get("http://localhost:8080/user", {
-        params: {
-          userSeq: 1,
+      .post("http://localhost:8080/user", JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
         },
       })
-      .then((Response) => console.log(Response.data));
+      .then((data) => {
+        console.log(data);
+        console.log("test");
+        document.location.href = "./signup/email";
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
@@ -136,6 +157,7 @@ export default function Signup() {
           />
         </div>
         {showIdConfirm ? <IdConf></IdConf> : null}
+        {showIdDuplicate ? <IdDupl></IdDupl> : null}
       </div>
 
       <div className="mb-5 px-11">
@@ -178,6 +200,7 @@ export default function Signup() {
           />
         </div>
         {showEmailConfirm ? <EmailConf></EmailConf> : null}
+        {showEmailDuplicate ? <EmailDupl></EmailDupl> : null}
       </div>
 
       <CardFooter>
@@ -204,11 +227,18 @@ function IdConf(props) {
     </div>
   );
 }
+function IdDupl(props) {
+  return (
+    <div className="mb-5">
+      <p>이미 사용 중인 아이디입니다.</p>
+    </div>
+  );
+}
 
 function PassConf(props) {
   return (
     <div className="mb-5">
-      <p>비밀번호는 문자와 숫자를 섞어 8자 이상 16자리 이하로 만들어 주세요.(특수문자 제외)</p>
+      <p>비밀번호는 문자와 숫자, 특수문자를 섞어 8자 이상 16자리 이하로 만들어 주세요.</p>
     </div>
   );
 }
@@ -219,10 +249,18 @@ function PassCheckConf(props) {
     </div>
   );
 }
+
 function EmailConf(props) {
   return (
     <div className="mb-5">
       <p>이메일 형식이 잘못 되었습니다.</p>
+    </div>
+  );
+}
+function EmailDupl(props) {
+  return (
+    <div className="mb-5">
+      <p>이미 사용 중인 이메일입니다.</p>
     </div>
   );
 }

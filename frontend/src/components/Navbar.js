@@ -29,6 +29,7 @@ export default function Example() {
         position: "sticky",
         top: 0,
         marginTop: 15,
+        zIndex: 1000,
       }}
     >
       <ContentCreate isOpen={contentCreateModal} onCancel={handleClose} />
@@ -93,7 +94,7 @@ export default function Example() {
                   </div>
                   <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white">
                     <Menu.Item>
-                      <Link to="/" className="block md:hidden px-4 py-2 text-sm text-gray-700">
+                      <Link to="/" className="block md:hidden px-4 py-2 text-sm text-gray-700" onClick={() => setContentCreateModal(true)}>
                         게시글 작성
                       </Link>
                     </Menu.Item>
