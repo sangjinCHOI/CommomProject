@@ -1,5 +1,5 @@
 import MainCard from "../components/MainCard";
-import StorageCard from "../components/StorageCard";
+import StorageCardLarge from "../components/StorageCardLarge";
 
 export default function SearchCharacters({ location }) {
   const queryString = location.search;
@@ -10,17 +10,17 @@ export default function SearchCharacters({ location }) {
     <div>
       <div className="my-4">'{query}' 저장소 검색 결과</div>
       <MainCard classes="border rounded py-2">
-        <StorageCard
+        <StorageCardLarge
           storageName="요리하는 부부 저장소"
-          imgSrc="../assets/images/storageImg_sample_1.jpg"
+          imgSrc="https://cdn2.thecatapi.com/images/MTYxMzc1Nw.jpg"
         />
-        <StorageCard
+        <StorageCardLarge
           storageName="맛있는 요리 모음"
-          imgSrc="../assets/images/storageImg_sample_2.jpg"
+          imgSrc="https://cdn2.thecatapi.com/images/dnz0xXA6a.jpg"
         />
-        <StorageCard
+        <StorageCardLarge
           storageName="불타는 요리 맛집"
-          imgSrc="../assets/images/storageImg_sample_3.jpg"
+          imgSrc="https://cdn2.thecatapi.com/images/cna.jpg"
         />
       </MainCard>
     </div>
