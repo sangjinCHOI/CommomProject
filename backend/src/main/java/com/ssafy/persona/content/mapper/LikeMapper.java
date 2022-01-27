@@ -15,5 +15,7 @@ public interface LikeMapper {
 
 	int contentLike(ContentLikeRequest contentLikeRequest);
 	void contentLikeUpdate(int contentSeq);
+	int contentDislike(ContentLikeRequest contentLikeRequest);
+	void contentDislikeUpdate(int contentSeq);
 
 }

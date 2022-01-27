@@ -25,5 +25,18 @@
 		set content_like = content_like + 1
 		where content_seq = #{contentSeq}
 	</update>
+	
+	<insert id="contentDislike" parameterType="contentLikeRequest">
+		delete from tb_content_like
+		where content_seq = #{contentSeq} and character_seq = #{characterSeq}
+	</insert>
+	
+	<update id="contentDislikeUpdate" parameterType="int">
+		update tb_content
+		set content_like = content_like - 1
+		where content_seq = #{contentSeq}
+	</update>
+	
+	
 
 </mapper>
