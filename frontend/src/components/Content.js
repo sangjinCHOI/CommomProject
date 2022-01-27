@@ -11,7 +11,7 @@ export default function Content() {
           <div className="text-xl">
             <p>초밥왕김탁구</p>
           </div>
-          <Menu as="div" className="mx-2">
+          <Menu as="div" className="mx-2 relative">
             <Menu.Button className="flex text-sm">
               <span className="material-icons">more_horiz</span>
             </Menu.Button>
@@ -48,7 +48,7 @@ export default function Content() {
             </div>
           </div>
           <div className="flex items-center">
-            <Menu as="div" className="mx-2">
+            <Menu as="div" className="mx-2 relative">
               <Menu.Button className="flex text-sm">
                 <span className="material-icons">library_add_check</span>
               </Menu.Button>
