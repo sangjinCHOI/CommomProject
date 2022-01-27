@@ -208,7 +208,7 @@ public class CharacterController {
 		return new ResponseEntity<Map<String, String>>(result, status);
 	}
 	
-	@PostMapping("alarm")
+	@PutMapping("alarm")
 	public ResponseEntity<Map<String, String>> updateAlarmStatus(@RequestBody AlarmUpdateRequest request) {
 		logger.info("알람 설정 변경 - 변경 요청: "+request.getCharacterSeq());
 		String message = "";
