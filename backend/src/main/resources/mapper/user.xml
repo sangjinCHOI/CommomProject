@@ -86,5 +86,17 @@ values (#{userId}, #{userPw}, #{userEmail}, now())
 		from tb_user
 		where user_id=#{userId}
 	</select>
+		
+	<select id="getCreatableCount" resultType="int">
+		select user_creatable_count
+		from tb_user
+		where user_seq=#{userSeq}
+	</select>
+	
+	<update id="updateCreatableCount">
+		update tb_user
+		set user_creatable_count=#{userCreatableCount}
+		where user_seq=#{userSeq}
+	</update>
 	
 </mapper>
