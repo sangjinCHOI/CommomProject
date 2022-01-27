@@ -1,5 +1,6 @@
 import React from "react";
-import { Menu } from "@headlessui/react";
+import { Menu, Popover } from "@headlessui/react";
+import { Label } from "@material-tailwind/react";
 import MainCard from "../components/MainCard";
 
 export default function Home() {
@@ -14,18 +15,25 @@ export default function Home() {
             <Menu.Button className="flex text-sm">
               <span className="material-icons">more_horiz</span>
             </Menu.Button>
-            <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md border shadow-lg py-1 bg-white">
+            <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white flex flex-col border-2">
               <Menu.Item>
                 <button className="mx-4">게시글 신고</button>
+              </Menu.Item>
+              <Menu.Item>
+                <button className="mx-4">팔로우</button>
               </Menu.Item>
             </Menu.Items>
           </Menu>
         </div>
-        <div style={{ height: 600 }}>
-          <img style={{ width: 600, height: 600 }} src="https://url.kr/uhmypw" alt="" />
+        <div className="flex justify-center bg-slate-100" style={{ height: 600 }}>
+          <img style={{ maxWidth: 600, maxHeight: 600, objectFit: "cover" }} src="https://url.kr/4ce1sl" alt="" />
         </div>
         <div className="px-4 py-2">오늘 초밥을 점심으로 먹었다. 사실 만든게 아니라 사먹은거다.</div>
-        <div className="px-4 pt-2">태그</div>
+        <div className="px-4 pt-2 flex flex-wrap">
+          <Label className="mb-1" color="lightGreen">
+            초밥
+          </Label>
+        </div>
         <div className="text-slate-400 px-4">2022.01.26</div>
         <div className="px-4 py-2 flex justify-between">
           <div className="flex items-center">
@@ -44,7 +52,7 @@ export default function Home() {
               <Menu.Button className="flex text-sm">
                 <span className="material-icons">library_add_check</span>
               </Menu.Button>
-              <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md border shadow-lg py-1 bg-white">
+              <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md border-2 shadow-lg py-1 bg-white flex flex-col">
                 <Menu.Item>
                   <button className="mx-4">새 저장목록 생성</button>
                 </Menu.Item>
