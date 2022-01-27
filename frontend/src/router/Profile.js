@@ -9,16 +9,16 @@ export default function Profile() {
     <div>
       <MainCard>
         <CharacterProfile nickname={nickname} />
-        <div className="flex justify-center items-center">
-          <Content />
-        </div>
-        <div className="flex justify-center items-center">
-          <Content />
-        </div>
-        <div className="flex justify-center items-center">
-          <Content />
-        </div>
       </MainCard>
+      <div className="flex justify-center items-center">
+        <Content />
+      </div>
+      <div className="flex justify-center items-center">
+        <Content />
+      </div>
+      <div className="flex justify-center items-center">
+        <Content />
+      </div>
     </div>
   );
 }
