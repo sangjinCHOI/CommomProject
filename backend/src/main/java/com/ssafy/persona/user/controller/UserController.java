@@ -57,7 +57,7 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<HttpStatus> signupUser(@RequestBody UserSignupRequest user) {
+	public ResponseEntity signupUser(@RequestBody UserSignupRequest user) {
 		if(userService.userSignup(user.toUser()) > 0) {
 			
 			Mail mail = new Mail();
