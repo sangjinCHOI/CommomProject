@@ -33,7 +33,7 @@ export default function CharactersCreate() {
         alt="main_logo"
         className="mx-auto my-24 w-96"
       />
-      <CharacterImg updateUserImg={"변경"} />
+      <CharacterImg underText="변경" />
       <div className="w-96 mx-auto mt-8">
         <div className="bg-white rounded-lg">
           <InputIcon

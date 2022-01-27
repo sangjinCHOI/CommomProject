@@ -1,5 +1,15 @@
 import React, { useState } from "react";
-import { Button, Input, Textarea, Modal, ModalHeader, ModalBody, ModalFooter, Dropdown, DropdownItem } from "@material-tailwind/react";
+import {
+  Button,
+  Input,
+  Textarea,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Dropdown,
+  DropdownItem,
+} from "@material-tailwind/react";
 import CharacterImg from "../components/CharacterImg";
 
 export default function SettingsCharacter() {
@@ -9,7 +19,7 @@ export default function SettingsCharacter() {
     <>
       <div className="flex mx-10 mt-10">
         <div className="text-center text-md flex flex-col justify-evenly">
-          <CharacterImg updateUserImg={"변경 삭제"} />
+          <CharacterImg underText="변경" />
           <button onClick={(e) => setShowModal(true)}>캐릭터 삭제</button>
         </div>
         <div className="w-96 mx-auto mt-10 flex flex-col justify-center">
@@ -35,19 +45,33 @@ export default function SettingsCharacter() {
         </ModalHeader>
         <hr className="mb-5" />
         <ModalBody>
-          <p className="text-base leading-relaxed text-gray-600 font-normal">캐릭터를 삭제하려는 이유가 무엇인가요?</p>
-          <Dropdown color={"blueGray"} buttonType={"outline"} buttonText={"이유 선택"} className="w-96 my-8">
+          <p className="text-base leading-relaxed text-gray-600 font-normal">
+            캐릭터를 삭제하려는 이유가 무엇인가요?
+          </p>
+          <Dropdown
+            color={"blueGray"}
+            buttonType={"outline"}
+            buttonText={"이유 선택"}
+            className="w-96 my-8"
+          >
             <DropdownItem children={"개인정보 보호 문제"} />
             <DropdownItem children={"캐릭터 슬롯이 부족함"} />
             <DropdownItem children={"다른 카테고리로 변경하고 싶음"} />
             <DropdownItem children={"기타 사유"} />
           </Dropdown>
           <br />
-          <p className="text-base leading-relaxed text-gray-600 font-normal">비밀번호를 다시 입력하세요.</p>
+          <p className="text-base leading-relaxed text-gray-600 font-normal">
+            비밀번호를 다시 입력하세요.
+          </p>
           <Input type="password" placeholder=""></Input>
         </ModalBody>
         <ModalFooter>
-          <Button color="black" buttonType="link" onClick={(e) => setShowModal(false)} ripple="dark">
+          <Button
+            color="black"
+            buttonType="link"
+            onClick={(e) => setShowModal(false)}
+            ripple="dark"
+          >
             Close
           </Button>
 

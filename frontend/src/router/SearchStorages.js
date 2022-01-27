@@ -8,7 +8,7 @@ export default function SearchCharacters({ location }) {
   return (
     <div>
       <div className="my-4">'{query}' 저장소 검색 결과</div>
-      <MainCard>
+      <MainCard border="border" rounded="rounded">
         <div
           className="relative flex justify-center items-center px-4 py-2"
           style={{ height: "200px" }}
@@ -16,7 +16,7 @@ export default function SearchCharacters({ location }) {
           <img
             src={require("../assets/images/storageImg_sample_1.jpg")}
             alt="storage_img"
-            className={`${styles.test} w-80 h-40 border border-gray-500`}
+            className={`${styles.test} w-80 h-40 border border-gray-500 rounded`}
             style={{
               width: "100%",
               height: "100%",
@@ -33,7 +33,7 @@ export default function SearchCharacters({ location }) {
           <img
             src={require("../assets/images/storageImg_sample_2.jpg")}
             alt="storage_img"
-            className={`${styles.test} w-80 h-40 border border-gray-500`}
+            className={`${styles.test} w-80 h-40 border border-gray-500 rounded`}
             style={{
               width: "100%",
               height: "100%",
@@ -50,7 +50,7 @@ export default function SearchCharacters({ location }) {
           <img
             src={require("../assets/images/storageImg_sample_3.jpg")}
             alt="storage_img"
-            className={`${styles.test} w-80 h-40 border border-gray-500`}
+            className={`${styles.test} w-80 h-40 border border-gray-500 rounded`}
             style={{
               width: "100%",
               height: "100%",

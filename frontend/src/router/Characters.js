@@ -25,7 +25,7 @@ export default function Characters() {
         <Link to={isManagement ? "../characters/update" : ""}>
           <div className="mt-8 mx-12">
             <CharacterImg
-              nickname={"개발왕"}
+              underText={"개발왕"}
               imgSrc={
                 isManagement
                   ? require("../assets/images/character_edit.png")
@@ -36,7 +36,7 @@ export default function Characters() {
         </Link>
         <div className="mt-8 mx-12">
           <CharacterImg
-            nickname={"요리왕"}
+            underText={"요리왕"}
             imgSrc={
               isManagement
                 ? require("../assets/images/character_edit.png")
@@ -48,7 +48,7 @@ export default function Characters() {
       <div className="flex justify-center m-8">
         <div className="mt-8 mx-12">
           <CharacterImg
-            nickname={"운동왕"}
+            underText={"운동왕"}
             imgSrc={
               isManagement
                 ? require("../assets/images/character_edit.png")
@@ -58,7 +58,7 @@ export default function Characters() {
         </div>
         <div className="mt-8 mx-12">
           <CharacterImg
-            nickname={"코인왕"}
+            underText={"코인왕"}
             imgSrc={
               isManagement
                 ? require("../assets/images/character_edit.png")

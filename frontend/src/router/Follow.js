@@ -26,7 +26,7 @@ export default function Follow() {
 
   return (
     <div className="px-16">
-      <MainCard>
+      <MainCard border="border" rounded="rounded">
         <div className="flex justify-center items-center">
           <Button
             className={`px-20 py-5 w-60 text-center text-xl border-2 border-white ${

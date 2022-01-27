@@ -23,18 +23,18 @@ export default function Search({ location }) {
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard>
+        <MainCard border="border" rounded="rounded">
           <div className="flex justify-center">
             <Link to="../요리킹">
               <div className="mx-8 my-6">
-                <CharacterImg nickname="요리킹" />
+                <CharacterImg underText="요리킹" />
               </div>
             </Link>
             <div className="mx-8 my-6">
-              <CharacterImg nickname="난요리만해" />
+              <CharacterImg underText="난요리만해" />
             </div>
             <div className="mx-8 my-6">
-              <CharacterImg nickname="내요리먹어볼사람" />
+              <CharacterImg underText="내요리먹어볼사람" />
             </div>
           </div>
         </MainCard>
@@ -49,7 +49,7 @@ export default function Search({ location }) {
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard>
+        <MainCard border="border" rounded="rounded">
           <div className="flex justify-center items-center text-xl h-16">
             <Label>#요리</Label>
             <Label>#요리법</Label>
@@ -68,7 +68,7 @@ export default function Search({ location }) {
           </div>
           <div className="text-lg">더 보기</div>
         </div>
-        <MainCard>
+        <MainCard border="border" rounded="rounded">
           {nicknameList.map((nickname) => (
             <div className="flex justify-center items-center">
               <Link to={`../${nickname}`}>
@@ -96,9 +96,9 @@ export default function Search({ location }) {
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard>
+        <MainCard border="border" rounded="rounded">
           <div className="flex justify-center">
-            <div className="relative border border-gray-400">
+            <div className="relative border border-gray-400 rounded">
               <img
                 src={require("../assets/images/storageImg_sample_1.jpg")}
                 alt="sample_1"
@@ -110,7 +110,7 @@ export default function Search({ location }) {
               />
               <div className="absolute top-4 left-4 text-xl w-40">요리하는 부부 저장소</div>
             </div>
-            <div className="relative border border-gray-400">
+            <div className="relative border border-gray-400 rounded">
               <img
                 src={require("../assets/images/storageImg_sample_2.jpg")}
                 alt="sample_1"
@@ -122,7 +122,7 @@ export default function Search({ location }) {
               />
               <div className="absolute top-4 left-4 text-xl w-40">맛있는 요리 모음</div>
             </div>
-            <div className="relative border border-gray-400">
+            <div className="relative border border-gray-400 rounded">
               <img
                 src={require("../assets/images/storageImg_sample_3.jpg")}
                 alt="sample_1"

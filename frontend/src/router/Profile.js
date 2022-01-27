@@ -7,16 +7,16 @@ export default function Profile() {
   const { nickname } = useParams();
   return (
     <div>
-      <MainCard>
+      <MainCard border="border">
         <CharacterProfile nickname={nickname} />
       </MainCard>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center border">
         <Content />
       </div>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center border">
         <Content />
       </div>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center border">
         <Content />
       </div>
     </div>

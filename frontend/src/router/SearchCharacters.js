@@ -9,7 +9,7 @@ export default function SearchCharacters({ location }) {
   return (
     <div>
       <div className="my-4">'{query}' 캐릭터 검색 결과</div>
-      <MainCard>
+      <MainCard border="border" rounded="rounded">
         {nicknameList.map((nickname) => (
           <CharacterProfile nickname={nickname} />
         ))}
