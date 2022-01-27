@@ -10,7 +10,14 @@ export default function SettingsCharacter() {
       <ModalBody>
         <div className="bg-slate-100 rounded mb-1">캐릭터</div>
         <div className="bg-slate-100 rounded mb-1">태그</div>
-        <textarea className="bg-slate-100 rounded" name="" id="" cols="70" rows="10" placeholder="이 곳에 게시글을 작성해주세요."></textarea>
+        <textarea
+          className="bg-slate-100 rounded"
+          name=""
+          id=""
+          cols="70"
+          rows="10"
+          placeholder="이 곳에 게시글을 작성해주세요."
+        ></textarea>
         <div className="bg-slate-100 rounded mb-1">파일첨부</div>
       </ModalBody>
       <ModalFooter>
