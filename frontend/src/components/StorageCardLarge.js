@@ -16,6 +16,7 @@ export default function StorageCardLarge({ storageName, imgSrc }) {
           width: "100%",
           height: "100%",
           objectFit: "cover",
+          boxShadow: "rgba(0, 0, 0, 0.8) 0px 4px 4px",
         }}
         onMouseOver={() => setIsMouseOver(true)}
         onMouseOut={() => setIsMouseOver(false)}
@@ -24,6 +25,9 @@ export default function StorageCardLarge({ storageName, imgSrc }) {
         className={`absolute top-8 left-8 text-xl bg-gray-100 px-2 border-gray-400 border-y ${
           isMouseOver ? `text-2xl opacity-80` : `opacity-40`
         }`}
+        style={{
+          cursor: "pointer",
+        }}
         onMouseOver={() => setIsMouseOver(true)}
         onMouseOut={() => setIsMouseOver(false)}
       >
