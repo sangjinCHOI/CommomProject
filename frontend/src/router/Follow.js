@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { shuffle } from "lodash";
 import MainCard from "../components/MainCard";
-import Search from "../assets/images/search.png";
 
 export default function Follow() {
   const nicknameList = [
@@ -26,7 +25,7 @@ export default function Follow() {
 
   return (
     <div className="px-16">
-      <MainCard border="border" rounded="rounded">
+      <MainCard classes="border rounded">
         <div className="flex justify-center items-center">
           <Button
             className={`px-20 py-5 w-60 text-center text-xl border-2 border-white ${

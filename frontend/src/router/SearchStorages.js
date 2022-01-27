@@ -8,7 +8,7 @@ export default function SearchCharacters({ location }) {
   return (
     <div>
       <div className="my-4">'{query}' 저장소 검색 결과</div>
-      <MainCard border="border" rounded="rounded">
+      <MainCard classes="border rounded">
         <div
           className="relative flex justify-center items-center px-4 py-2"
           style={{ height: "200px" }}

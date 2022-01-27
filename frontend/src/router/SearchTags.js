@@ -7,7 +7,7 @@ export default function SearchTags({ location }) {
   return (
     <div>
       <div className="my-4">'{query}' 태그 검색 결과</div>
-      <MainCard border="border" rounded="rounded">
+      <MainCard classes="border rounded">
         <div className="flex items-center mx-28 py-3">
           <div className="material-icons rounded-full border p-2 mr-4">tag</div>
           <div className="mx-4" style={{ width: "126px" }}>

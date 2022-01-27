@@ -23,7 +23,7 @@ export default function Search({ location }) {
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard border="border" rounded="rounded">
+        <MainCard classes="border rounded">
           <div className="flex justify-center">
             <Link to="../요리킹">
               <div className="mx-8 my-6">
@@ -49,7 +49,7 @@ export default function Search({ location }) {
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard border="border" rounded="rounded">
+        <MainCard classes="border rounded">
           <div className="flex justify-center items-center text-xl h-16">
             <Label>#요리</Label>
             <Label>#요리법</Label>
@@ -68,7 +68,7 @@ export default function Search({ location }) {
           </div>
           <div className="text-lg">더 보기</div>
         </div>
-        <MainCard border="border" rounded="rounded">
+        <MainCard classes="border rounded">
           {nicknameList.map((nickname) => (
             <div className="flex justify-center items-center">
               <Link to={`../${nickname}`}>
@@ -96,7 +96,7 @@ export default function Search({ location }) {
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard border="border" rounded="rounded">
+        <MainCard classes="border rounded">
           <div className="flex justify-center">
             <div className="relative border border-gray-400 rounded">
               <img
