@@ -2,6 +2,7 @@ import { Label } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
 import MainCard from "../components/MainCard";
+import StorageCardSmall from "../components/StorageCardSmall";
 
 export default function Search({ location }) {
   const queryString = location.search;
@@ -11,6 +12,29 @@ export default function Search({ location }) {
   const tempText =
     "맛있는 김치찌개 만드는 방법을 알아봅시다. 요리를 처음 하시는 분들은 그냥 따라만 오셔도 됩니다!!";
   const nicknameList = ["닉네임은여덟글자", "테스트1", "TEST2", "테3"];
+
+  const colorList = [
+    "blueGray",
+    "gray",
+    "brown",
+    "deepOrange",
+    "orange",
+    "amber",
+    "yellow",
+    "lime",
+    "lightGreen",
+    "green",
+    "teal",
+    "cyan",
+    "lightBlue",
+    "blue",
+    "indigo",
+    "deepPurple",
+    "purple",
+    "pink",
+    "red",
+  ];
+
   return (
     <>
       <div className="mt-4">'{query}' 전체 검색 결과</div>
@@ -23,7 +47,7 @@ export default function Search({ location }) {
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard classes="border rounded">
+        <MainCard classes="border rounded-2xl">
           <div className="flex justify-center">
             <Link to="../요리킹">
               <div className="mx-8 my-6">
@@ -49,14 +73,22 @@ export default function Search({ location }) {
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard classes="border rounded">
+        <MainCard classes="border rounded-2xl">
           <div className="flex justify-center items-center text-xl h-16">
-            <Label>#요리</Label>
-            <Label>#요리법</Label>
-            <Label>#계란 요리</Label>
-            <Label>#요리보고</Label>
-            <Label>#요리조리</Label>
-            <Label>#맛있는 요리</Label>
+            <Label color={colorList[Math.floor(Math.random() * colorList.length)]}>
+              <span>
+                {"열 글자 이상 요리에요".length >= 10
+                  ? "열 글자 이상 요리에요".slice(0, 9) + ".."
+                  : "열 글자 이상 요리에요"}
+              </span>
+            </Label>
+            <Label color={colorList[Math.floor(Math.random() * colorList.length)]}>요리법</Label>
+            <Label color={colorList[Math.floor(Math.random() * colorList.length)]}>계란 요리</Label>
+            <Label color={colorList[Math.floor(Math.random() * colorList.length)]}>요리보고</Label>
+            <Label color={colorList[Math.floor(Math.random() * colorList.length)]}>요리조리</Label>
+            <Label color={colorList[Math.floor(Math.random() * colorList.length)]}>
+              맛있는 요리
+            </Label>
           </div>
         </MainCard>
       </div>
@@ -68,9 +100,9 @@ export default function Search({ location }) {
           </div>
           <div className="text-lg">더 보기</div>
         </div>
-        <MainCard classes="border rounded">
+        <MainCard classes="border rounded-2xl py-2">
           {nicknameList.map((nickname) => (
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center" key={nickname}>
               <Link to={`../${nickname}`}>
                 <div className="m-3">
                   <CharacterImg imgWidth="50px" />
@@ -96,44 +128,20 @@ export default function Search({ location }) {
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard classes="border rounded">
+        <MainCard classes="border">
           <div className="flex justify-center">
-            <div className="relative border border-gray-400 rounded">
-              <img
-                src={require("../assets/images/storageImg_sample_1.jpg")}
-                alt="sample_1"
-                style={{
-                  width: "200px",
-                  height: "150px",
-                  opacity: 0.4,
-                }}
-              />
-              <div className="absolute top-4 left-4 text-xl w-40">요리하는 부부 저장소</div>
-            </div>
-            <div className="relative border border-gray-400 rounded">
-              <img
-                src={require("../assets/images/storageImg_sample_2.jpg")}
-                alt="sample_1"
-                style={{
-                  width: "200px",
-                  height: "150px",
-                  opacity: 0.4,
-                }}
-              />
-              <div className="absolute top-4 left-4 text-xl w-40">맛있는 요리 모음</div>
-            </div>
-            <div className="relative border border-gray-400 rounded">
-              <img
-                src={require("../assets/images/storageImg_sample_3.jpg")}
-                alt="sample_1"
-                style={{
-                  width: "200px",
-                  height: "150px",
-                  opacity: 0.4,
-                }}
-              />
-              <div className="absolute top-4 left-4 text-xl w-40">불타는 요리 맛집</div>
-            </div>
+            <StorageCardSmall
+              storageName="요리하는 부부 저장소"
+              imgSrc="https://cdn2.thecatapi.com/images/43n.png"
+            />
+            <StorageCardSmall
+              storageName="맛있는 요리 모음"
+              imgSrc="https://cdn2.thecatapi.com/images/1tt.jpg"
+            />
+            <StorageCardSmall
+              storageName="불타는 요리 맛집"
+              imgSrc="https://cdn2.thecatapi.com/images/d5q.jpg"
+            />
           </div>
         </MainCard>
       </div>

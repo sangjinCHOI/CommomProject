@@ -1,4 +1,4 @@
-.expand:hover {
+.highlight:hover {
   transform: scalex(1.06) scaley(1.17);
   /* transition: transform 0.1s ease-in-out; */
 }

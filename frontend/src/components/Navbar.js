@@ -68,12 +68,18 @@ export default function Example() {
                   add_circle_outline
                 </button>
                 <Link to="/alarm">
-                  <span className="hidden md:block material-icons h-10 w-10 mt-1 mx-2" style={{ fontSize: 40 }}>
+                  <span
+                    className="hidden md:block material-icons h-10 w-10 mt-1 mx-2"
+                    style={{ fontSize: 40 }}
+                  >
                     notifications_none
                   </span>
                 </Link>
                 <Link to="">
-                  <span className="hidden md:block material-icons h-10 w-10 mt-1 mx-2" style={{ fontSize: 40 }}>
+                  <span
+                    className="hidden md:block material-icons h-10 w-10 mt-1 mx-2"
+                    style={{ fontSize: 40 }}
+                  >
                     person_outline
                   </span>
                 </Link>
@@ -108,7 +114,10 @@ export default function Example() {
                       </Link>
                     </Menu.Item>
                     <Menu.Item>
-                      <Link to="/settings/character" className="block px-4 py-2 text-sm text-gray-700">
+                      <Link
+                        to="/settings/character"
+                        className="block px-4 py-2 text-sm text-gray-700"
+                      >
                         설정
                       </Link>
                     </Menu.Item>
