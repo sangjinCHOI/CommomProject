@@ -7,39 +7,54 @@ import Button from "@material-tailwind/react/Button";
 import Logo from "../assets/images/main_logo.png";
 import styles from "./Signup.module.css";
 import { Link } from "react-router-dom";
+import userStore from "../userStore";
+import { Component } from "react/cjs/react.production.min";
 
-export default function IdInquiryResult() {
-  return (
-    <div className={`${styles.center}`}>
-      <div id="logo" className={`${styles.logo}`}>
-        <img src={Logo} />
-      </div>
+export default class IdInquiryResult extends Component {
+  state = { data: userStore.getState().data };
+  constructor(props) {
+    super(props);
+    userStore.subscribe(
+      function () {
+        console.log(userStore.getState().data);
+        this.setState({ data: userStore.getState().data });
+      }.bind(this)
+    );
+  }
 
-      <Card>
-        <CardBody>
-          <p align="center">귀하의 아이디는 {} 입니다.</p>
-
-          <div align="center" className="mt-3 mb-5 px-4">
-            <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
-              전체 아이디를 이메일러 전송
-            </Button>
-          </div>
-        </CardBody>
-      </Card>
-
-      <CardFooter>
-        {/* <div className="flex justify-center">
-          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
-            로그인
-          </Button>
-        </div> */}
-
-        <div>
-          <Link className="flex justify-center" to="../login">
-            Login
-          </Link>
+  render() {
+    return (
+      <div className={`${styles.center}`}>
+        <div id="logo" className={`${styles.logo}`}>
+          <img src={Logo} />
         </div>
-      </CardFooter>
-    </div>
-  );
+
+        <Card>
+          <CardBody>
+            <p align="center">귀하의 아이디는 {this.state._id} 입니다.</p>
+            <div align="center" className="mt-3 mb-5 px-4">
+              <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
+                전체 아이디를 이메일러 전송
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+
+        <CardFooter>
+          {/* <div className="flex justify-center">
+            <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
+            로그인
+            </Button>
+          </div> */}
+
+          <div>
+            <input type="text" value={this.state._id} readOnly></input>
+            <Link className="flex justify-center" to="../login">
+              Login
+            </Link>
+          </div>
+        </CardFooter>
+      </div>
+    );
+  }
 }
