@@ -47,9 +47,6 @@
 		where content_seq In (select content_seq from tb_tag where tag_text = #{tagText});
 	</select>
 	
-	<insert id="contentReport" parameterType="contentReportRequest">
-		insert into tb_report (reporting_character, reported_character, report_type, report_content_type, report_seq, reported_date)
-		values (#{reportingCharacter}, #{reportedCharacter}, #{reportType}, #{reportContentType}, #{reportSeq}, now())
-	</insert>
+	
 	
 </mapper>

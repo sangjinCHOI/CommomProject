@@ -14,7 +14,6 @@ public interface ContentMapper {
 	int contentCreate(ContentCreateRequest createContentRequest);
 	int contentModify(ContentModifyRequest contentModifyRequest);
 	int contentDelete(int contentSeq);
-	int contentReport(ContentReportRequest contentReportRequest);
 	ContentGetResponse contentGet(int contentSeq);
 	List<ContentGetResponse> contentPersonalList(int characterSeq);
 	List<ContentGetResponse> contentTagList(String tagText);

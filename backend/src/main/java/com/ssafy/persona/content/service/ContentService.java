@@ -23,6 +23,8 @@ public interface ContentService {
 	List<ReplyGetResponse> replyList(int contentSeq);
 	
 	boolean contentReport(ContentReportRequest contentReportRequest);
+	void contentReportUpdate(int reportedContent);
+	void characterReportUpdate(int reportedContent);
 	
 	List<ContentGetResponse> contentPersonalList(int characterSeq);
 	List<ContentGetResponse> contentTagList(String tagText);
