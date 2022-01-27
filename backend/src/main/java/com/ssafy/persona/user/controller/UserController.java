@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,8 +44,8 @@ public class UserController {
 	@Autowired
 	private SecurityService securityService;
 	
-	@GetMapping
-	public ResponseEntity<UserGetResponse> getUser(int userSeq) {
+	@GetMapping("/{userSeq}")
+	public ResponseEntity<UserGetResponse> getUser(@PathVariable int userSeq) {
 		
 		UserGetResponse user = userService.getUser(userSeq);
 		if (user != null) {
@@ -71,7 +72,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/email")
-	public ResponseEntity updateUser(String userId) {
+	public ResponseEntity updateUser(@RequestBody String userId) {
 
 		Mail mail = new Mail();
 
@@ -83,7 +84,7 @@ public class UserController {
 	}
 	
 	@PutMapping("email")
-	public ResponseEntity updateAuth(UpdateAuthRequest request) {
+	public ResponseEntity updateAuth(@RequestBody UpdateAuthRequest request) {
 		
 		String tmpPw = mailService.makePw();
 		
@@ -102,7 +103,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/email/id")
-	public ResponseEntity findId(String userEmail) {
+	public ResponseEntity findId(@RequestBody String userEmail) {
 		Mail mail = new Mail();
 
 		mail.setUserEmail(userEmail);
@@ -115,7 +116,7 @@ public class UserController {
 	
 	// 이메일에서 인증 눌렀을 때 반응
 	@GetMapping("/mail/verify")
-	public void verifyEmail(MailVerifyRequest mailRequest){
+	public void verifyEmail(@RequestParam MailVerifyRequest mailRequest){
 		
 		if(mailService.verifyEmail(mailRequest) > 0) {
 			// 허가 받았다고 user 업데이트 해야함
@@ -129,7 +130,7 @@ public class UserController {
 	}
 
 	@GetMapping("/login")
-	public ResponseEntity<Map<String,String>> createToken(UserLoginRequest request){
+	public ResponseEntity<Map<String,String>> createToken(@RequestBody UserLoginRequest request){
 
 		Map<String, String>map = new HashMap<>();
 		// 로그인 매칭 정보 없음
@@ -145,8 +146,8 @@ public class UserController {
 		return (new ResponseEntity<Map<String,String>>(map, HttpStatus.OK));
 	}
 
-	@GetMapping("/valid")
-	public ResponseEntity<Map<String,Character>> userValid(String userId){
+	@GetMapping("/valid/{userId}")
+	public ResponseEntity<Map<String,Character>> userValid(@PathVariable String userId){
 		Map<String, Character>map = new HashMap<>();
 		if(userService.userValid(userId)) {
 			map.put("valid", '2');
@@ -156,8 +157,8 @@ public class UserController {
 		return (new ResponseEntity<Map<String,Character>>(map,HttpStatus.ACCEPTED));
 	}
 	
-	@GetMapping("/email")
-	public ResponseEntity<Map<String,String>> emailGet(String userEmail){
+	@GetMapping("/email/{userEmail}")
+	public ResponseEntity<Map<String,String>> emailGet(@PathVariable String userEmail){
 		Map<String, String>map = new HashMap<>();
 		
 		if (userService.checkEmail(userEmail) < 1) {
@@ -168,8 +169,8 @@ public class UserController {
 		return (new ResponseEntity<Map<String,String>>(map,HttpStatus.OK));
 	}
 	
-	@GetMapping("/email/valid")
-	public ResponseEntity<Map<String,Character>> emailValid(String userEmail){
+	@GetMapping("/email/valid/{userEmail}")
+	public ResponseEntity<Map<String,Character>> emailValid(@PathVariable String userEmail){
 		Map<String, Character>map = new HashMap<>();
 		
 		if(userService.checkEmail(userEmail) > 0) {
@@ -181,7 +182,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/setting/account")
-	public ResponseEntity updateUser(UserUpdateRequest user) {
+	public ResponseEntity updateUser(@RequestBody UserUpdateRequest user) {
 		User tmpu = user.toUser();
 		if(tmpu.getUserBirth() == null && tmpu.getUserPw() == null) {
 			return (new ResponseEntity(HttpStatus.BAD_REQUEST));
@@ -203,7 +204,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/setting/verification")
-	public ResponseEntity checkPw(UserLoginRequest user) {
+	public ResponseEntity checkPw(@RequestBody UserLoginRequest user) {
 		if(userService.checkPw(user.toUser()) > 0)
 			return (new ResponseEntity(HttpStatus.OK));
 		return (new ResponseEntity(HttpStatus.ACCEPTED));
