@@ -28,70 +28,32 @@ export default function SearchTags({ location }) {
     "red",
   ];
 
+  const tagList = [
+    ["태그는띄어쓰기안돼요그리고태그검색결과페이지에서는열글자까지보여줍니다", 1028932],
+    ["요리법", 123456],
+    ["계란요리", 95643],
+    ["요리보고", 8324],
+    ["요리조리", 312],
+    ["맛있는요리", 4],
+  ];
+
   return (
-    <div>
+    <div className="px-16">
       <div className="my-4">'{query}' 태그 검색 결과</div>
-      <MainCard classes="border rounded">
-        <div className="flex items-center mx-28 py-3">
-          <div className="material-icons rounded-full border p-2 mr-4">tag</div>
-          <div className="mx-4" style={{ width: "126px" }}>
-            <Label color={colorList[Math.floor(Math.random() * colorList.length)]}>
-              <span>
-                {"열 글자 이상 요리에요".length >= 10
-                  ? "열 글자 이상 요리에요".slice(0, 9) + ".."
-                  : "열 글자 이상 요리에요"}
-              </span>
-            </Label>
+      <MainCard classes="border rounded py-4">
+        {tagList.map((tagText) => (
+          <div className="flex items-center mx-10 py-4" key={tagText}>
+            <div className="material-icons rounded-full border p-2 ml-2">tag</div>
+            <div className="ml-6 text-lg" style={{ width: "180px" }}>
+              {tagText[0].length > 10 ? tagText[0].slice(0, 10) + ".." : tagText[0]}
+            </div>
+            <div className="ml-14 text-gray-400 text-sm text-center">
+              <span>게시글 수</span>
+              <br />
+              <span>{tagText[1].toLocaleString()}</span>
+            </div>
           </div>
-          <div className="ml-8 text-gray-400 text-sm">
-            게시글 수 <span>1,028,932</span>
-          </div>
-        </div>
-        <div className="flex items-center mx-28 py-3">
-          <div className="material-icons rounded-full border p-2 mr-4">tag</div>
-          <div className="mx-4" style={{ width: "126px" }}>
-            요리법
-          </div>
-          <div className="ml-8 text-gray-400 text-sm">
-            게시글 수 <span>182,893</span>
-          </div>
-        </div>
-        <div className="flex items-center mx-28 py-3">
-          <div className="material-icons rounded-full border p-2 mr-4">tag</div>
-          <div className="mx-4" style={{ width: "126px" }}>
-            계란 요리
-          </div>
-          <div className="ml-8 text-gray-400 text-sm">
-            게시글 수 <span>32,893</span>
-          </div>
-        </div>
-        <div className="flex items-center mx-28 py-3">
-          <div className="material-icons rounded-full border p-2 mr-4">tag</div>
-          <div className="mx-4" style={{ width: "126px" }}>
-            요리보고
-          </div>
-          <div className="ml-8 text-gray-400 text-sm">
-            게시글 수 <span>5,713</span>
-          </div>
-        </div>
-        <div className="flex items-center mx-28 py-3">
-          <div className="material-icons rounded-full border p-2 mr-4">tag</div>
-          <div className="mx-4" style={{ width: "126px" }}>
-            요리조리
-          </div>
-          <div className="ml-8 text-gray-400 text-sm">
-            게시글 수 <span>948</span>
-          </div>
-        </div>
-        <div className="flex items-center mx-28 py-3">
-          <div className="material-icons rounded-full border p-2 mr-4">tag</div>
-          <div className="mx-4" style={{ width: "126px" }}>
-            맛있는 요리
-          </div>
-          <div className="ml-8 text-gray-400 text-sm">
-            게시글 수 <span>27,751</span>
-          </div>
-        </div>
+        ))}
       </MainCard>
     </div>
   );

@@ -10,13 +10,13 @@ export default function Profile() {
       <MainCard classes="border">
         <CharacterProfile nickname={nickname} />
       </MainCard>
-      <div className="flex justify-center items-center border">
+      <div className="border">
         <Content />
       </div>
-      <div className="flex justify-center items-center border">
+      <div className="border">
         <Content />
       </div>
-      <div className="flex justify-center items-center border">
+      <div className="border">
         <Content />
       </div>
     </div>

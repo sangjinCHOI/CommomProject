@@ -12,7 +12,7 @@ export default function SearchCharacters({ location }) {
       <MainCard classes="border rounded py-2">
         <StorageCardLarge
           storageName="요리하는 부부 저장소"
-          imgSrc="https://cdn2.thecatapi.com/images/MTYxMzc1Nw.jpg"
+          imgSrc="https://cdn2.thecatapi.com/images/43n.png"
         />
         <StorageCardLarge
           storageName="맛있는 요리 모음"
