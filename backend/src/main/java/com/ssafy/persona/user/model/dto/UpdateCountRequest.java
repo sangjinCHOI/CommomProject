@@ -7,19 +7,17 @@ import lombok.Getter;
 import lombok.ToString;
 
 @Getter
-@ToString
 @AllArgsConstructor
-public class UserSignupRequest {
-	private String userId;
-	private String userPw;
-	private String userEmail;
+@ToString
+public class UpdateCountRequest {
+
+	private int userSeq;
+	private int userCreatableCount;
 	
 	public User toUser() {
-		return (User.builder()
-					.userId(userId)
-					.userPw(userPw)
-					.userEmail(userEmail).build());
-		
-
+		return User.builder()
+				.userSeq(userSeq)
+				.userCreatableCount(userCreatableCount)
+				.build();
 	}
 }

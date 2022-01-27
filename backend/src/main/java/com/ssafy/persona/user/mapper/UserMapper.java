@@ -2,6 +2,7 @@ package com.ssafy.persona.user.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ssafy.persona.user.model.dto.UpdateCountRequest;
 import com.ssafy.persona.user.model.dto.UserGetResponse;
 import com.ssafy.persona.user.model.entity.User;
 
@@ -21,4 +22,6 @@ public interface UserMapper {
 	int getUserSeq(String userId);
 	int emailIsValid(String userId);
 	String getUserEmail(String userId);
+	int getCreatableCount(int userSeq);
+	int updateCreatableCount(UpdateCountRequest request);
 }
