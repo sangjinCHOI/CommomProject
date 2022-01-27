@@ -57,7 +57,7 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity signupUser(@RequestBody UserSignupRequest user) {
+	public ResponseEntity<HttpStatus> signupUser(@RequestBody UserSignupRequest user) {
 		if(userService.userSignup(user.toUser()) > 0) {
 			
 			Mail mail = new Mail();
@@ -65,14 +65,14 @@ public class UserController {
 			mail.setMailText("위 인증완료를 누르면 인증이 진행됩니다");
 			
 			mailService.sendMail(mail, user.getUserId());
-			return (new ResponseEntity(HttpStatus.OK));
+			return (new ResponseEntity<HttpStatus>(HttpStatus.OK));
 		}
 			
-		return (new ResponseEntity(HttpStatus.ACCEPTED));
+		return (new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED));
 	}
 	
-	@PostMapping("/email")
-	public ResponseEntity updateUser(@RequestBody String userId) {
+	@GetMapping("/email")
+	public ResponseEntity updateUser(@RequestParam String userId) {
 
 		Mail mail = new Mail();
 
