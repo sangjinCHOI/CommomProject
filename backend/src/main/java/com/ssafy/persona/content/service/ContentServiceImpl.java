@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.persona.content.mapper.ContentMapper;
+import com.ssafy.persona.content.mapper.LikeMapper;
 import com.ssafy.persona.content.mapper.ReplyMapper;
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
 import com.ssafy.persona.content.model.dto.ContentGetResponse;
+import com.ssafy.persona.content.model.dto.LikeListResponse;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
@@ -21,6 +23,8 @@ public class ContentServiceImpl implements ContentService {
 	ContentMapper contentMapper;
 	@Autowired
 	ReplyMapper replyMapper;
+	@Autowired
+	LikeMapper likeMapper;
 	
 	@Override
 	public boolean contentCreate(ContentCreateRequest contentCreateRequest) {
@@ -76,6 +80,16 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public List<ContentGetResponse> contentTagList(String tagText) {
 		return contentMapper.contentTagList(tagText);
+	}
+
+	@Override
+	public List<LikeListResponse> contentLikeList(int contentSeq) {
+		return likeMapper.contentLikeList(contentSeq);
+	}
+
+	@Override
+	public List<LikeListResponse> replyLikeList(int replySeq) {
+		return likeMapper.replyLikeList(replySeq);
 	}
 	
 }

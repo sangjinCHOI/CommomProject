@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.persona.user.model.dto.MailVerifyRequest;
+import com.ssafy.persona.user.model.dto.UpdateAuthRequest;
 import com.ssafy.persona.user.model.dto.UserGetResponse;
 import com.ssafy.persona.user.model.dto.UserLoginRequest;
 import com.ssafy.persona.user.model.dto.UserSignupRequest;
@@ -54,7 +56,7 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity signupUser(UserSignupRequest user) {
+	public ResponseEntity signupUser(@RequestBody UserSignupRequest user) {
 		if(userService.userSignup(user.toUser()) > 0) {
 			
 			Mail mail = new Mail();
@@ -77,6 +79,25 @@ public class UserController {
 		mail.setMailText("위 인증완료를 누르면 인증이 진행됩니다");
 		mailService.sendMail(mail, userId);
 
+		return (new ResponseEntity(HttpStatus.OK));
+	}
+	
+	@PutMapping("email")
+	public ResponseEntity updateAuth(UpdateAuthRequest request) {
+		
+		String tmpPw = mailService.makePw();
+		
+		// 비밀번호 변경
+		if(userService.changePw(request.toUser(tmpPw)) < 1) {
+			return (new ResponseEntity(HttpStatus.ACCEPTED));
+		}
+		
+		Mail mail = new Mail();
+
+		mail.setUserSeq(userService.getUserSeq(request.getUserId()));
+		mail.setMailText("임시 비밀번호로 접속하세요!");
+		mailService.sendPw(mail, userService.getUserEmail(request.getUserId()), tmpPw);
+		
 		return (new ResponseEntity(HttpStatus.OK));
 	}
 	

@@ -20,4 +20,5 @@ public interface UserMapper {
 	int userLogin(User user);
 	int getUserSeq(String userId);
 	int emailIsValid(String userId);
+	String getUserEmail(String userId);
 }

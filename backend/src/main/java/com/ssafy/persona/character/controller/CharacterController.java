@@ -191,22 +191,22 @@ public class CharacterController {
 
 	} // 예외처리 필요
 	
-	@PostMapping("alarm")
-	public ResponseEntity<Map<String, String>> createAlarm(@RequestBody AlarmCreateRequest request) {
-		String message = "";
-		HttpStatus status = null;
-
-		if (characterService.createAlarm(request) == 1) {
-			message = SUCCESS;
-			status = HttpStatus.OK;
-		} else {
-			message = FAIL;
-			status = HttpStatus.ACCEPTED;
-		}
-		Map<String, String> result = new HashMap<String, String>();
-		result.put("message", message);
-		return new ResponseEntity<Map<String, String>>(result, status);
-	}
+//	@PostMapping("alarm")
+//	public ResponseEntity<Map<String, String>> createAlarm(@RequestBody AlarmCreateRequest request) {
+//		String message = "";
+//		HttpStatus status = null;
+//
+//		if (characterService.createAlarm(request) == 1) {
+//			message = SUCCESS;
+//			status = HttpStatus.OK;
+//		} else {
+//			message = FAIL;
+//			status = HttpStatus.ACCEPTED;
+//		}
+//		Map<String, String> result = new HashMap<String, String>();
+//		result.put("message", message);
+//		return new ResponseEntity<Map<String, String>>(result, status);
+//	}
 	
 	@PutMapping("alarm")
 	public ResponseEntity<Map<String, String>> updateAlarmStatus(@RequestBody AlarmUpdateRequest request) {

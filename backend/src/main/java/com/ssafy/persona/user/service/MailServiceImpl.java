@@ -46,7 +46,7 @@ public class MailServiceImpl implements MailService{
 	
 	public void sendMail(Mail mail, String userId) {
 		
-		String authKey = getKey(8);
+		String authKey = getKey(16);
 		
 		System.out.println(authKey);
 		
@@ -114,6 +114,37 @@ public class MailServiceImpl implements MailService{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-	
 	}
+
+	@Override
+	public String makePw() {
+		return (getKey(16));
+	}
+
+	@Override
+	public void sendPw(Mail mail, String userEmail, String tmpPw) {
+		try {
+			MailHandler mailHandler = new MailHandler(mailSender);
+
+			// 받는 이메일 설정
+			mailHandler.setTo(userEmail);
+
+			// 메일 제목
+			mailHandler.setSubject("Persona 임시 비밀번호입니다.");
+
+			String imgContent = "<img src=\"https://ifh.cc/g/zKpgxC.png\" alt=\"img\" /><br/>";
+	
+			imgContent = "";
+			imgContent += tmpPw;
+			
+			mailHandler.setText(imgContent, true);	
+			
+			mailHandler.send();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+	}
+	
+	
 }
