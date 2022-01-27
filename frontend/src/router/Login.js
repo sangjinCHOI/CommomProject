@@ -1,5 +1,5 @@
 import "@material-tailwind/react/tailwind.css";
-
+import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
@@ -10,11 +10,10 @@ export default function Login() {
   // const dispatch = useDispatch();
 
   const [_id, setId] = useState("");
-  const [password, setPassword] = useState("");
   let [passShow, setPassShow] = useState(false);
 
   const onIdHandler = (e) => {
-    console.log("id : " + _id);
+    console.log("id : " + e.target.value);
 
     setId(e.target.value);
     if (e.target.value == "") {
@@ -26,16 +25,6 @@ export default function Login() {
   //   console.log("pass : " + password);
   //   setPassword(e.target.value);
   // };
-
-  const onPasswordHandler = (e) => {
-    console.log("pass : " + password);
-    setPassword(e.target.value);
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    console.log("로그인");
-  };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -64,11 +53,11 @@ export default function Login() {
           />
         </div>
         <Link to="../accounts/id_inquiry">아이디를 잊으셨나요?</Link>
-        {passShow ? <PassComp></PassComp> : null}
+        {passShow ? <PassComp value={_id}></PassComp> : null}
       </div>
       <CardFooter>
         <div className="flex justify-center">
-          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark" onClick={onSubmit}>
+          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
             로그인
           </Button>
           <Link to="../accounts/signup">
@@ -83,6 +72,42 @@ export default function Login() {
 }
 
 function PassComp(props) {
+  const [password, setPassword] = useState("");
+
+  const onPasswordHandler = (e) => {
+    console.log("pass : " + e.target.value);
+    setPassword(e.target.value);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      onSubmit();
+    }
+  };
+
+  const onSubmit = () => {
+    console.log("로그인");
+
+    const data = {
+      userId: props.value,
+      userPw: password,
+    };
+
+    axios
+      .get("http://localhost:8080/user/login", JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((data) => {
+        console.log("data : " + data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <div className="mb-5">
       <div className="bg-white rounded-lg">
@@ -92,12 +117,9 @@ function PassComp(props) {
           placeholder="Password를 입력해주세요"
           outline={true}
           iconName="pin"
-          value={props.password}
-          //onChange={props.onPasswordHandler}
-
-          onChange={() => {
-            props.onPasswordHandler(this.props.pass);
-          }}
+          value={password}
+          onChange={onPasswordHandler}
+          onKeyPress={handleKeyPress}
         />
       </div>
       <Link to="../accounts/pw_inquiry">비밀번호를 잊으셨나요?</Link>
