@@ -21,9 +21,20 @@
 		where character_seq IN (select character_seq from tb_content where content_seq = #{reportContent})
 	</update>
 	
+	<insert id="replyReport" parameterType="replyReportRequest">
+		insert into tb_reply_report (reporting_character, reported_reply, report_type, report_text, report_date)
+		values (#{reportingCharacter}, #{reportedReply}, #{reportType}, #{reportText}, now())
+	</insert>
 	
+	<update id="replyReportUpdate" parameterType="int">
+		update tb_reply 
+		set reply_is_report = reply_is_report + 1
+		where reply_seq = #{reportReply}
+	</update>
 	
-		
-		
-	
+	<update id="characterReplyReportUpdate" parameterType="int">
+		update tb_character
+		set reported_time = reported_time + 1
+		where character_seq IN (select character_seq from tb_reply where reply_seq = #{reportReply})
+	</update>
 </mapper>

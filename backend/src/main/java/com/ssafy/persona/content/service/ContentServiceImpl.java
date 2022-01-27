@@ -17,6 +17,7 @@ import com.ssafy.persona.content.model.dto.ContentReportRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
 import com.ssafy.persona.content.model.dto.ReplyGetResponse;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
+import com.ssafy.persona.content.model.dto.ReplyReportRequest;
 
 @Service
 public class ContentServiceImpl implements ContentService {
@@ -104,6 +105,23 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public void characterReportUpdate(int reportedContent) {
 		reportMapper.characterReportUpdate(reportedContent);
+	}
+
+	@Override
+	public boolean replyReport(ReplyReportRequest replyReportRequest) {
+		return reportMapper.replyReport(replyReportRequest) == 1;
+	}
+
+	@Override
+	public void replyReportUpdate(int reportedReply) {
+		reportMapper.replyReportUpdate(reportedReply);
+		
+	}
+
+	@Override
+	public void characterReplyReportUpdate(int reportedReply) {
+		reportMapper.characterReplyReportUpdate(reportedReply);
+		
 	}
 	
 }
