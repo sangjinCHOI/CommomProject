@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, CardBody, Button, Input, Modal, ModalHeader, ModalBody, ModalFooter } from "@material-tailwind/react";
 
 export default function SettingsAccount() {
