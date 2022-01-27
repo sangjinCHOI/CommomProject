@@ -1,4 +1,4 @@
-package com.ssafy.persona.character.model.Entity;
+package com.ssafy.persona.content.model.entity;
 
 import java.time.LocalDateTime;
 
@@ -14,19 +14,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Report {
+public class ContentReport {
 	@Id
-	private int reportSeq;
+	private int reportContentSeq;
 	@Column
 	private int reportingCharacter;
 	@Column
-	private int reportedCharacter;
+	private int reportedContent;
 	@Column
 	private int reportType;
 	@Column
-	private String reportContentType;
+	private String reportText;
 	@Column
-	private int reportRelationSeq;
-	@Column
-	private LocalDateTime reporedDate;
+	private LocalDateTime reportDate;
 }

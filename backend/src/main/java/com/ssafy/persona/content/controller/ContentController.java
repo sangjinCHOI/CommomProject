@@ -21,6 +21,7 @@ import com.ssafy.persona.content.model.dto.ContentReportRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
 import com.ssafy.persona.content.model.dto.ReplyGetResponse;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
+import com.ssafy.persona.content.model.dto.ReplyReportRequest;
 import com.ssafy.persona.content.service.ContentService;
 
 import io.swagger.annotations.Api;
@@ -114,15 +115,6 @@ public class ContentController {
 		return new ResponseEntity<List<ReplyGetResponse>>(contentService.replyList(contentSeq), HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "content report", notes = "content 신고, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PostMapping("/content/report")
-	public ResponseEntity<String> contentReport(@RequestBody @ApiParam(value = "게시글 신고.", required = true) ContentReportRequest contentReportRequest) {
-		if (contentService.contentReport(contentReportRequest)) {
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-		}
-		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-	}
-	
 	@ApiOperation(value = "content like list", notes = "게시글 좋아요 누른 유저 리스트", response = List.class)
 	@GetMapping("/content/likes/{contentSeq}")
 	public ResponseEntity<List<LikeListResponse>> contentLikeList(@PathVariable("contentSeq") @ApiParam(value = "리스트를 조회할 글번호.", required = true) int contentSeq){
@@ -130,9 +122,40 @@ public class ContentController {
 	}
 	
 	@ApiOperation(value = "reply like list", notes = "댓글 좋아요 누른 유저 리스트", response = List.class)
-	@GetMapping("/content/reply/likes/{contentSeq}")
-	public ResponseEntity<List<LikeListResponse>> replyLikeList(@PathVariable("replySeq") @ApiParam(value = "리스트를 조회할 글번호.", required = true) int replySeq){
+	@GetMapping("/content/reply/likes/{replySeq}")
+	public ResponseEntity<List<LikeListResponse>> replyLikeList(@PathVariable("replySeq") @ApiParam(value = "리스트를 조회할 댓글번호.", required = true) int replySeq){
 		return new ResponseEntity<List<LikeListResponse>>(contentService.replyLikeList(replySeq), HttpStatus.OK);
+	}
+	
+
+	@ApiOperation(value = "content report", notes = "content 신고, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping("/content/report")
+	public ResponseEntity<String> contentReport(@RequestBody @ApiParam(value = "게시글 신고.", required = true) ContentReportRequest contentReportRequest) {
+		int reportedContent = contentReportRequest.getReportedContent();
+		
+		contentService.contentReportUpdate(reportedContent);
+		contentService.characterReportUpdate(reportedContent);
+		
+		if (contentService.contentReport(contentReportRequest)) {
+			
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value = "reply report", notes = "reply 신고, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping("/content/reply/report")
+	public ResponseEntity<String> replyReport(@RequestBody @ApiParam(value = "댓글 신고.", required = true) ReplyReportRequest replyReportRequest) {
+		int reportedReply = replyReportRequest.getReportedReply();
+		
+		contentService.replyReportUpdate(reportedReply);
+		contentService.characterReplyReportUpdate(reportedReply);
+		
+		if (contentService.replyReport(replyReportRequest)) {
+			
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 
 

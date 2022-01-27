@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.persona.content.mapper.ContentMapper;
 import com.ssafy.persona.content.mapper.LikeMapper;
 import com.ssafy.persona.content.mapper.ReplyMapper;
+import com.ssafy.persona.content.mapper.ReportMapper;
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
 import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
@@ -16,6 +17,7 @@ import com.ssafy.persona.content.model.dto.ContentReportRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
 import com.ssafy.persona.content.model.dto.ReplyGetResponse;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
+import com.ssafy.persona.content.model.dto.ReplyReportRequest;
 
 @Service
 public class ContentServiceImpl implements ContentService {
@@ -25,6 +27,8 @@ public class ContentServiceImpl implements ContentService {
 	ReplyMapper replyMapper;
 	@Autowired
 	LikeMapper likeMapper;
+	@Autowired
+	ReportMapper reportMapper;
 	
 	@Override
 	public boolean contentCreate(ContentCreateRequest contentCreateRequest) {
@@ -58,11 +62,6 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public boolean contentReport(ContentReportRequest contentReportRequest) {
-		return contentMapper.contentReport(contentReportRequest) == 1;
-	}
-
-	@Override
 	public List<ReplyGetResponse> replyList(int contentSeq) {
 		return replyMapper.replyList(contentSeq);
 	}
@@ -90,6 +89,39 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public List<LikeListResponse> replyLikeList(int replySeq) {
 		return likeMapper.replyLikeList(replySeq);
+	}
+
+	@Override
+	public boolean contentReport(ContentReportRequest contentReportRequest) {
+		return reportMapper.contentReport(contentReportRequest) == 1;
+	}
+	
+	@Override
+	public void contentReportUpdate(int reportedContent) {
+		reportMapper.contentReportUpdate(reportedContent);
+		
+	}
+
+	@Override
+	public void characterReportUpdate(int reportedContent) {
+		reportMapper.characterReportUpdate(reportedContent);
+	}
+
+	@Override
+	public boolean replyReport(ReplyReportRequest replyReportRequest) {
+		return reportMapper.replyReport(replyReportRequest) == 1;
+	}
+
+	@Override
+	public void replyReportUpdate(int reportedReply) {
+		reportMapper.replyReportUpdate(reportedReply);
+		
+	}
+
+	@Override
+	public void characterReplyReportUpdate(int reportedReply) {
+		reportMapper.characterReplyReportUpdate(reportedReply);
+		
 	}
 	
 }

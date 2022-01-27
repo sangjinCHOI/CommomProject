@@ -10,6 +10,7 @@ import com.ssafy.persona.content.model.dto.ContentReportRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
 import com.ssafy.persona.content.model.dto.ReplyGetResponse;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
+import com.ssafy.persona.content.model.dto.ReplyReportRequest;
 
 public interface ContentService {
 	boolean contentCreate(ContentCreateRequest contentCreateRequest);
@@ -23,10 +24,18 @@ public interface ContentService {
 	List<ReplyGetResponse> replyList(int contentSeq);
 	
 	boolean contentReport(ContentReportRequest contentReportRequest);
+	void contentReportUpdate(int reportedContent);
+	void characterReportUpdate(int reportedContent);
+	
+	boolean replyReport(ReplyReportRequest replyReportRequest);
+	void replyReportUpdate(int reportedReply);
+	void characterReplyReportUpdate(int reportedReply);
 	
 	List<ContentGetResponse> contentPersonalList(int characterSeq);
 	List<ContentGetResponse> contentTagList(String tagText);
 	
 	List<LikeListResponse> contentLikeList(int contentSeq);
 	List<LikeListResponse> replyLikeList(int replySeq);
+	
+	
 }
