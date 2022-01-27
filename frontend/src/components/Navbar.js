@@ -4,8 +4,9 @@ import { Disclosure, Menu } from "@headlessui/react";
 import Logo from "../assets/images/main_logo.png";
 import ShortLogo from "../assets/images/short_logo.png";
 import Search from "../assets/images/search.png";
+import ContentCreate from "./ContentCreate";
 
-export default function Example(ContentCreate) {
+export default function Example() {
   const [word, setWord] = React.useState("");
   const history = useHistory();
   const onChange = (event) => {
@@ -15,6 +16,10 @@ export default function Example(ContentCreate) {
     if (event.key === "Enter") {
       history.push(`/search?query=${word}`);
     }
+  };
+  const [contentCreateModal, setContentCreateModal] = React.useState(false);
+  const handleClose = () => {
+    setContentCreateModal(false);
   };
 
   return (
@@ -26,6 +31,7 @@ export default function Example(ContentCreate) {
         marginTop: 15,
       }}
     >
+      <ContentCreate isOpen={contentCreateModal} onCancel={handleClose} />
       <Disclosure as="nav" className="bg-black-800">
         <>
           <div className="mx-auto px-2 lg:px-8">
@@ -53,7 +59,11 @@ export default function Example(ContentCreate) {
               </div>
 
               <div className="flex items-center static inset-auto ml-6 pr-0">
-                <button className="hidden md:block material-icons h-10 w-10 mt-1 mx-2" style={{ fontSize: 40 }}>
+                <button
+                  className="hidden md:block material-icons h-10 w-10 mt-1 mx-2"
+                  style={{ fontSize: 40 }}
+                  onClick={() => setContentCreateModal(true)}
+                >
                   add_circle_outline
                 </button>
                 <Link to="/alarm">
