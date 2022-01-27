@@ -5,7 +5,7 @@ import Logo from "../assets/images/main_logo.png";
 import ShortLogo from "../assets/images/short_logo.png";
 import Search from "../assets/images/search.png";
 
-export default function Example() {
+export default function Example(ContentCreate) {
   const [word, setWord] = React.useState("");
   const history = useHistory();
   const onChange = (event) => {
