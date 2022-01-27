@@ -13,7 +13,6 @@ public class UserSignupRequest {
 	private String userId;
 	private String userPw;
 	private String userEmail;
-	private String time;
 	
 	public User toUser() {
 		return (User.builder()
