@@ -16,6 +16,9 @@ public class UserLoginRequest {
 	@NonNull
 	private String userPw;
 	
+	public void setUserPw(String userPw) {
+		this.userPw = userPw;
+	}
 	public User toUser() {
 		return (User.builder()
 					.userId(userId)
