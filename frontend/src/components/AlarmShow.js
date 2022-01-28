@@ -30,7 +30,7 @@ export default function AlarmShow() {
               <CharacterImg imgWidth="40px" classes="mr-4" />
               <div style={{ width: "220px" }}>초밥왕님이 회원님을 팔로우하기 시작했습니다.</div>
             </Link>
-            <div className="flex justify-end text-sm mr-2" style={{ fontSize: "12px" }}>
+            <div className="flex justify-end mr-2" style={{ fontSize: "12px" }}>
               1시간 전
             </div>
           </div>
