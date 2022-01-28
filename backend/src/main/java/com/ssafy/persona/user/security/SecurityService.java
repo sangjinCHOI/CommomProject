@@ -23,6 +23,9 @@ public class SecurityService {
 	@Value("${jwt.secret}")
 	private String SECRET_KEY;
 	
+	@Value("${sha.salt}")
+	private String SHA_SALT;
+	
 	public String createToken(String subject, long expTime) {
 		if(expTime<=0) {
 			throw new RuntimeException("만료됨");
@@ -55,6 +58,7 @@ public class SecurityService {
 	// SHA-256 암호화 사용
     public String encrypt(String text) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(SHA_SALT.getBytes());
         md.update(text.getBytes());
 
         return bytesToHex(md.digest());
