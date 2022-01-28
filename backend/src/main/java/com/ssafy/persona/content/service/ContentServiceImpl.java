@@ -17,6 +17,7 @@ import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
 import com.ssafy.persona.content.model.dto.ReplyGetResponse;
+import com.ssafy.persona.content.model.dto.ReplyLikeRequest;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
 import com.ssafy.persona.content.model.dto.ReplyReportRequest;
 
@@ -145,6 +146,16 @@ public class ContentServiceImpl implements ContentService {
 	public void contentDislikeUpdate(int contentSeq) {
 		likeMapper.contentDislikeUpdate(contentSeq);
 		
+	}
+
+	@Override
+	public boolean replyLike(ReplyLikeRequest replyLikeRequest) {
+		return likeMapper.replyLike(replyLikeRequest) == 1;
+	}
+
+	@Override
+	public void replyLikeUpdate(int replySeq) {
+		likeMapper.replyLikeUpdate(replySeq);
 	}
 	
 }

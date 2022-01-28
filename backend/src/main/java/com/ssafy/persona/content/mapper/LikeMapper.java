@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.persona.content.model.dto.ContentLikeRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
+import com.ssafy.persona.content.model.dto.ReplyLikeRequest;
 
 @Mapper
 public interface LikeMapper {
@@ -17,5 +18,8 @@ public interface LikeMapper {
 	void contentLikeUpdate(int contentSeq);
 	int contentDislike(ContentLikeRequest contentLikeRequest);
 	void contentDislikeUpdate(int contentSeq);
+	int replyLike(ReplyLikeRequest replyLikeRequest);
+	void replyLikeUpdate(int replySeq);
+	
 
 }

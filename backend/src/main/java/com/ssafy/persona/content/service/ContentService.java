@@ -10,6 +10,7 @@ import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
 import com.ssafy.persona.content.model.dto.ReplyGetResponse;
+import com.ssafy.persona.content.model.dto.ReplyLikeRequest;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
 import com.ssafy.persona.content.model.dto.ReplyReportRequest;
 
@@ -43,6 +44,9 @@ public interface ContentService {
 	
 	List<LikeListResponse> contentLikeList(int contentSeq);
 	List<LikeListResponse> replyLikeList(int replySeq);
+	
+	boolean replyLike(ReplyLikeRequest replyLikeRequest);
+	void replyLikeUpdate(int replySeq);
 	
 	
 	

@@ -21,6 +21,7 @@ import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
 import com.ssafy.persona.content.model.dto.ReplyGetResponse;
+import com.ssafy.persona.content.model.dto.ReplyLikeRequest;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
 import com.ssafy.persona.content.model.dto.ReplyReportRequest;
 import com.ssafy.persona.content.service.ContentService;
@@ -185,6 +186,18 @@ public class ContentController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
+	@ApiOperation(value = "reply like", notes = "댓글 좋아요, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping("/content/reply/like")
+	public ResponseEntity<String> replyLike(@RequestBody @ApiParam(value = "댓글 좋아요.", required = true) ReplyLikeRequest replyLikeRequest) {
+		int replySeq = replyLikeRequest.getReplySeq();
+		
+		contentService.replyLikeUpdate(replySeq);
+		
+		if (contentService.replyLike(replyLikeRequest)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
 	
 
 }

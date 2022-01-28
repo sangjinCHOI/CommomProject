@@ -37,6 +37,19 @@
 		where content_seq = #{contentSeq}
 	</update>
 	
+	<insert id="replyLike" parameterType="replyLikeRequest">
+		insert into tb_reply_like (reply_seq, character_seq)
+		values (#{replySeq}, #{characterSeq})
+	</insert>
+	
+	<update id="replyLikeUpdate" parameterType="int">
+		update tb_reply
+		set reply_like = reply_like + 1
+		where reply_seq = #{replySeq}
+	</update>
+	
+	
+	
 	
 
 </mapper>
