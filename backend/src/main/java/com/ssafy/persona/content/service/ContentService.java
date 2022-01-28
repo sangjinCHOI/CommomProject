@@ -3,6 +3,7 @@ package com.ssafy.persona.content.service;
 import java.util.List;
 
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
+import com.ssafy.persona.content.model.dto.ContentGetRequest;
 import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.content.model.dto.ContentLikeRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
@@ -18,7 +19,7 @@ public interface ContentService {
 	boolean contentCreate(ContentCreateRequest contentCreateRequest);
 	boolean contentModify(ContentModifyRequest contentModifyRequest);
 	boolean contentDelete(int contentSeq);
-	ContentGetResponse contentGet(int contentSeq);
+	ContentGetResponse contentGet(ContentGetRequest contentGetRequest);
 	
 	boolean replyCreate(ReplyCreateRequest replyCreateRequest);
 	boolean replyModify(ReplyModifyRequest replyModifyRequest);
