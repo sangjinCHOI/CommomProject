@@ -6,8 +6,11 @@ import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
 import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
+import { useHistory } from "react-router";
 
 export default function IdInquiry() {
+  const history = useHistory();
+
   const [email, setEmail] = useState("");
   const [showEmailConfirm, setShowEmailConfirm] = useState(false);
   // const [mode, setMode] = useState("id");
@@ -20,7 +23,7 @@ export default function IdInquiry() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("이메일 보내기");
+    console.log("아이디 찾기");
 
     axios
       .get("http://localhost:8080/user/email/" + email, {})
@@ -28,10 +31,10 @@ export default function IdInquiry() {
         console.log(data.userId);
 
         userStore.dispatch({ type: "idtrans", iddata: data.userId });
-        // document.location.href = "./id_inquiry/result";
+        userStore.dispatch({ type: "emailtrans", emaildata: email });
+        history.push("./id_inquiry/result");
       })
       .catch((e) => {});
-    return;
   };
 
   const onEmailHandler = (e) => {
