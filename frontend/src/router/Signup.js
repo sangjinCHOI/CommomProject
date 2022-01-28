@@ -129,7 +129,7 @@ export default function Signup() {
       .then((data) => {
         console.log(data);
         console.log("test");
-        document.location.href = "./signup/email";
+        // document.location.href = "./signup/email";
       })
       .catch((e) => {
         console.log(e);
@@ -253,7 +253,7 @@ function PassCheckConf(props) {
 function EmailConf(props) {
   return (
     <div className="mb-5">
-      <p>이메일 형식이 잘못 되었습니다.</p>
+      <p>올바른 이메일 형식이 아닙니다.</p>
     </div>
   );
 }

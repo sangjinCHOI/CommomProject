@@ -15,12 +15,16 @@ export default function StorageCardSmall({ storageName, imgSrc }) {
         style={{
           width: "200px",
           height: "150px",
+          cursor: "pointer",
         }}
       />
       <div
         className={`absolute top-4 left-4 text-xl w-40 bg-gray-100 px-2 border-gray-400 border-y ${
           isMouseOver ? `opacity-80` : `opacity-40`
         }`}
+        style={{
+          cursor: "pointer",
+        }}
       >
         {storageName}
       </div>
