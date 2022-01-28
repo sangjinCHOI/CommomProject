@@ -68,14 +68,6 @@ export default function Example() {
                 >
                   add_circle_outline
                 </button>
-                {/* <Link to="/alarm">
-                  <span
-                    className="hidden md:block material-icons h-10 w-10 mt-1 mx-2"
-                    style={{ fontSize: 40 }}
-                  >
-                    notifications_none
-                  </span>
-                </Link> */}
                 <AlarmShow />
                 <Link to="">
                   <span
