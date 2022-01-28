@@ -15,7 +15,7 @@ export default function CharacterProfile({ nickname, classes }) {
               width="16px"
               className="inline-block mr-1"
             />
-            <span className="text-xs text-yellow-300">킹왕짱</span>
+            <span className="text-xs text-yellow-300">요리왕</span>
           </div>
           {nickname}
         </div>
@@ -37,9 +37,7 @@ export default function CharacterProfile({ nickname, classes }) {
           </div>
         </div>
 
-        <div className="text-sm w-72 h-7">
-          킹왕짱 나가신다!ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
-        </div>
+        <div className="text-sm w-72 h-7">안녕하세요!</div>
         <div className="my-4">
           <div className="inline-block px-2">
             <Label color="blueGray">업적 보기</Label>
