@@ -1,11 +1,24 @@
 import { createStore } from "redux";
+// import persistedReducer from "./_reducers";
+// import { persistStore } from "redux-persist"; // 추가
+// import { PersistGate } from "redux-persist/integration/react"; // 추가
 
 export default createStore(function (state, action) {
   if (state === undefined) {
     return { iddata: "test" };
   }
+
   if (action.type === "idtrans") {
-    return { iddata: action.iddata };
+    return {
+      iddata: action.iddata,
+    };
   }
+
+  if (action.type === "passtrans") {
+    return {
+      passdata: action.passdata,
+    };
+  }
+
   return state;
 }, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
