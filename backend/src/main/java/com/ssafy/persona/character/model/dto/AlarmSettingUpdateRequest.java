@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @ToString
-public class AlarmUpdateRequest {
+public class AlarmSettingUpdateRequest {
 	private int characterSeq;
 	private boolean alarmAllow;
 	private boolean likeAlarm;

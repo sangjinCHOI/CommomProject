@@ -16,6 +16,9 @@ public class AlarmCreateRequest {
 	private int characterSeq;
 	private int alarmType;
 	private String alarmText;
+	private String relationTb;
+	private int targetSeq;
+	private boolean alarmIsRead;
 	private LocalDateTime alarmDate;
 	
 
@@ -25,6 +28,9 @@ public class AlarmCreateRequest {
 				.characterSeq(characterSeq)
 				.alarmType(alarmType)
 				.alarmText(alarmText)
+				.relationTb(relationTb)
+				.targetSeq(targetSeq)
+				.alarmIsRead(alarmIsRead)
 				.alarmDate(alarmDate)
 				.build();
 	}

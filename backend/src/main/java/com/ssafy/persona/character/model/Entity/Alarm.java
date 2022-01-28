@@ -28,5 +28,11 @@ public class Alarm {
 	@Column
 	private String alarmText;
 	@Column
+	private String relationTb;
+	@Column
+	private int targetSeq;
+	@Column
+	private boolean alarmIsRead;
+	@Column
 	private LocalDateTime alarmDate;
 }
