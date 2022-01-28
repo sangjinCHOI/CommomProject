@@ -199,5 +199,18 @@ public class ContentController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
+	@ApiOperation(value = "reply dislike", notes = "댓글 좋아요 취소, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@DeleteMapping("/content/reply/like")
+	public ResponseEntity<String> replyDislike(@RequestBody @ApiParam(value = "댓글 좋아요 취소.", required = true) ReplyLikeRequest replyLikeRequest) {
+		int replySeq = replyLikeRequest.getReplySeq();
+		
+		contentService.replyDislikeUpdate(replySeq);
+		
+		if (contentService.replyDislike(replyLikeRequest)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
 
 }

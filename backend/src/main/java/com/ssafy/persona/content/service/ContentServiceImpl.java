@@ -157,5 +157,16 @@ public class ContentServiceImpl implements ContentService {
 	public void replyLikeUpdate(int replySeq) {
 		likeMapper.replyLikeUpdate(replySeq);
 	}
+
+	@Override
+	public boolean replyDislike(ReplyLikeRequest replyLikeRequest) {
+		return likeMapper.replyDislike(replyLikeRequest) == 1;
+	}
+
+	@Override
+	public void replyDislikeUpdate(int replySeq) {
+		likeMapper.replyDislikeUpdate(replySeq);
+		
+	}
 	
 }

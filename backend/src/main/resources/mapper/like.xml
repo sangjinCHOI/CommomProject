@@ -48,8 +48,15 @@
 		where reply_seq = #{replySeq}
 	</update>
 	
+	<insert id="replyDislike" parameterType="contentLikeRequest">
+		delete from tb_reply_like
+		where reply_seq = #{replySeq} and character_seq = #{characterSeq}
+	</insert>
 	
+	<update id="replyDislikeUpdate" parameterType="int">
+		update tb_reply
+		set reply_like = reply_like - 1
+		where reply_seq = #{replySeq}
+	</update>
 	
-	
-
 </mapper>
