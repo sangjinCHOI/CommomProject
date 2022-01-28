@@ -14,6 +14,10 @@ public class UserSignupRequest {
 	private String userPw;
 	private String userEmail;
 	
+	public void setUserPw(String userPw) {
+		this.userPw = userPw;
+	}
+	
 	public User toUser() {
 		return (User.builder()
 					.userId(userId)

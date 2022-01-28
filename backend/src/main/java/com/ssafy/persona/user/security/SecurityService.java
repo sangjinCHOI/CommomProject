@@ -1,6 +1,8 @@
 package com.ssafy.persona.user.security;
 
 import java.security.Key;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +22,9 @@ public class SecurityService {
 
 	@Value("${jwt.secret}")
 	private String SECRET_KEY;
+	
+	@Value("${sha.salt}")
+	private String SHA_SALT;
 	
 	public String createToken(String subject, long expTime) {
 		if(expTime<=0) {
@@ -49,5 +54,22 @@ public class SecurityService {
 		
 		return (claims.getSubject());
 	}
+	
+	// SHA-256 암호화 사용
+    public String encrypt(String text) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(SHA_SALT.getBytes());
+        md.update(text.getBytes());
+
+        return bytesToHex(md.digest());
+    }
+
+    private String bytesToHex(byte[] bytes) {
+        StringBuilder builder = new StringBuilder();
+        for (byte b : bytes) {
+            builder.append(String.format("%02x", b));
+        }
+        return builder.toString();
+    }
 	
 }

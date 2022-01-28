@@ -4,11 +4,13 @@ import java.util.List;
 
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
 import com.ssafy.persona.content.model.dto.ContentGetResponse;
+import com.ssafy.persona.content.model.dto.ContentLikeRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
 import com.ssafy.persona.content.model.dto.ReplyGetResponse;
+import com.ssafy.persona.content.model.dto.ReplyLikeRequest;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
 import com.ssafy.persona.content.model.dto.ReplyReportRequest;
 
@@ -34,8 +36,19 @@ public interface ContentService {
 	List<ContentGetResponse> contentPersonalList(int characterSeq);
 	List<ContentGetResponse> contentTagList(String tagText);
 	
+	boolean contentLike(ContentLikeRequest contentLikeRequest);
+	void contentLikeUpdate(int contentSeq);
+	
+	boolean contentDislike(ContentLikeRequest contentLikeRequest);
+	void contentDislikeUpdate(int contentSeq);
+	
 	List<LikeListResponse> contentLikeList(int contentSeq);
 	List<LikeListResponse> replyLikeList(int replySeq);
 	
+	boolean replyLike(ReplyLikeRequest replyLikeRequest);
+	void replyLikeUpdate(int replySeq);
 	
+	boolean replyDislike(ReplyLikeRequest replyLikeRequest);
+	void replyDislikeUpdate(int replySeq);
+
 }

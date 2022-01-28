@@ -1,5 +1,6 @@
 package com.ssafy.persona.user.controller;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -42,7 +43,49 @@ public class UserController {
 	MailService mailService;
 	
 	@Autowired
+	SecurityService securityservice;
+	
+	@Autowired
 	private SecurityService securityService;
+	
+	@PostMapping("/login")
+	public ResponseEntity<Map<String,String>> createToken(@RequestBody UserLoginRequest request) throws NoSuchAlgorithmException{
+
+		Map<String, String>map = new HashMap<>();
+		
+		request.setUserPw(securityservice.encrypt(request.getUserPw()));
+		
+		// 로그인 매칭 정보 없음
+		if(userService.userLogin(request.toUser()) < 1) {
+			map.put("token", "");
+			return (new ResponseEntity<Map<String,String>>(map,HttpStatus.ACCEPTED));
+		}
+		
+		// 만료기간 1분
+		String token = securityService.createToken(request.getUserId(), (1*1000*60));
+
+		map.put("token", token);
+		System.out.println(token);
+		return (new ResponseEntity<Map<String,String>>(map, HttpStatus.OK));
+	}
+	
+	@PostMapping
+	public ResponseEntity signupUser(@RequestBody UserSignupRequest user) throws NoSuchAlgorithmException {
+		
+		user.setUserPw(securityservice.encrypt(user.getUserPw()));
+		
+		if(userService.userSignup(user.toUser()) > 0) {
+			
+			Mail mail = new Mail();
+			mail.setUserSeq(userService.getUserSeq(user.getUserId()));
+			mail.setMailText("위 인증완료를 누르면 인증이 진행됩니다");
+			
+			mailService.sendMail(mail, user.getUserId());
+			return (new ResponseEntity<HttpStatus>(HttpStatus.OK));
+		}
+			
+		return (new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED));
+	}
 	
 	@GetMapping("/{userSeq}")
 	public ResponseEntity<UserGetResponse> getUser(@PathVariable int userSeq) {
@@ -56,23 +99,8 @@ public class UserController {
 		}
 	}
 	
-	@PostMapping
-	public ResponseEntity signupUser(@RequestBody UserSignupRequest user) {
-		if(userService.userSignup(user.toUser()) > 0) {
-			
-			Mail mail = new Mail();
-			mail.setUserSeq(userService.getUserSeq(user.getUserId()));
-			mail.setMailText("위 인증완료를 누르면 인증이 진행됩니다");
-			
-			mailService.sendMail(mail, user.getUserId());
-			return (new ResponseEntity(HttpStatus.OK));
-		}
-			
-		return (new ResponseEntity(HttpStatus.ACCEPTED));
-	}
-	
-	@PostMapping("/email")
-	public ResponseEntity updateUser(@RequestBody String userId) {
+	@GetMapping("/email")
+	public ResponseEntity updateUser(@RequestParam String userId) {
 
 		Mail mail = new Mail();
 
@@ -83,7 +111,7 @@ public class UserController {
 		return (new ResponseEntity(HttpStatus.OK));
 	}
 	
-	@PutMapping("email")
+	@PutMapping("/email")
 	public ResponseEntity updateAuth(@RequestBody UpdateAuthRequest request) {
 		
 		String tmpPw = mailService.makePw();
@@ -102,61 +130,6 @@ public class UserController {
 		return (new ResponseEntity(HttpStatus.OK));
 	}
 	
-	@PostMapping("/email/id")
-	public ResponseEntity findId(@RequestBody String userEmail) {
-		Mail mail = new Mail();
-
-		mail.setUserEmail(userEmail);
-		//mail.setUserSeq(userService.getUserSeq(userId));
-		mail.setMailText("가입하신 아이디는 위와 같습니다.");
-		mailService.findId(mail, userEmail);
-
-		return (new ResponseEntity(HttpStatus.OK));
-	}
-	
-	// 이메일에서 인증 눌렀을 때 반응
-	@GetMapping("/mail/verify")
-	public void verifyEmail(@RequestParam MailVerifyRequest mailRequest){
-		
-		if(mailService.verifyEmail(mailRequest) > 0) {
-			// 허가 받았다고 user 업데이트 해야함
-			userService.emailIsValid(mailRequest.getUserId());
-			System.out.println("성공");
-			
-		}
-		else
-			System.out.println("실패");
-		//return null;
-	}
-
-	@GetMapping("/login")
-	public ResponseEntity<Map<String,String>> createToken(@RequestBody UserLoginRequest request){
-
-		Map<String, String>map = new HashMap<>();
-		// 로그인 매칭 정보 없음
-		if(userService.userLogin(request.toUser()) < 1) {
-			map.put("token", "");
-			return (new ResponseEntity<Map<String,String>>(map,HttpStatus.ACCEPTED));
-		}
-		
-		// 만료기간 1분
-		String token = securityService.createToken(request.getUserId(), (1*1000*60));
-
-		map.put("token", token);
-		return (new ResponseEntity<Map<String,String>>(map, HttpStatus.OK));
-	}
-
-	@GetMapping("/valid/{userId}")
-	public ResponseEntity<Map<String,Character>> userValid(@PathVariable String userId){
-		Map<String, Character>map = new HashMap<>();
-		if(userService.userValid(userId)) {
-			map.put("valid", '2');
-			return (new ResponseEntity<Map<String,Character>>(map,HttpStatus.OK));
-		}
-		map.put("valid", '1');
-		return (new ResponseEntity<Map<String,Character>>(map,HttpStatus.ACCEPTED));
-	}
-	
 	@GetMapping("/email/{userEmail}")
 	public ResponseEntity<Map<String,String>> emailGet(@PathVariable String userEmail){
 		Map<String, String>map = new HashMap<>();
@@ -169,26 +142,66 @@ public class UserController {
 		return (new ResponseEntity<Map<String,String>>(map,HttpStatus.OK));
 	}
 	
+	@GetMapping("/email/id")
+	public ResponseEntity findId(@RequestParam String userEmail) {
+		Mail mail = new Mail();
+
+		mail.setUserEmail(userEmail);
+		mail.setMailText("가입하신 아이디는 위와 같습니다.");
+		mailService.findId(mail, userEmail);
+
+		return (new ResponseEntity(HttpStatus.OK));
+	}
+	
+	// 이메일에서 인증 눌렀을 때 반응
+	@GetMapping("/email/verify")
+	public ResponseEntity verifyEmail(MailVerifyRequest mailRequest){
+		
+		if(mailService.verifyEmail(mailRequest) > 0) {
+			// 허가 받았다고 user 업데이트 해야함
+			userService.emailIsValid(mailRequest.getUserId());
+			System.out.println("성공");
+			return (new ResponseEntity(HttpStatus.OK));
+		}
+		else
+			System.out.println("실패");
+		return (new ResponseEntity(HttpStatus.BAD_REQUEST));
+	}
+	
 	@GetMapping("/email/valid/{userEmail}")
 	public ResponseEntity<Map<String,Character>> emailValid(@PathVariable String userEmail){
 		Map<String, Character>map = new HashMap<>();
 		
 		if(userService.checkEmail(userEmail) > 0) {
 			map.put("valid", '0');
-			return (new ResponseEntity<Map<String,Character>>(map,HttpStatus.OK));
+			return (new ResponseEntity<Map<String,Character>>(map,HttpStatus.ACCEPTED));
 		}
 		map.put("valid", '1');
-		return (new ResponseEntity<Map<String,Character>>(map,HttpStatus.ACCEPTED));
+		return (new ResponseEntity<Map<String,Character>>(map,HttpStatus.OK));
 	}
+
+	@GetMapping("/valid/{userId}")
+	public ResponseEntity<Map<String,Character>> userValid(@PathVariable String userId){
+		Map<String, Character>map = new HashMap<>();
+		if(userService.userValid(userId)) {
+			map.put("valid", '2');
+			return (new ResponseEntity<Map<String,Character>>(map,HttpStatus.ACCEPTED));
+		}
+		map.put("valid", '1');
+		return (new ResponseEntity<Map<String,Character>>(map,HttpStatus.OK));
+	}
+
 	
 	@PutMapping("/setting/account")
-	public ResponseEntity updateUser(@RequestBody UserUpdateRequest user) {
+	public ResponseEntity updateUser(@RequestBody UserUpdateRequest user) throws NoSuchAlgorithmException {
+		//user.setUserPw(securityservice.encrypt(user.getUserPw()));
 		User tmpu = user.toUser();
 		if(tmpu.getUserBirth() == null && tmpu.getUserPw() == null) {
 			return (new ResponseEntity(HttpStatus.BAD_REQUEST));
 		}
 		// pw 변경
 		else if(tmpu.getUserBirth() == null) {
+			tmpu.setUserPw(securityservice.encrypt(user.getUserPw()));
 			if(userService.changePw(tmpu) > 0)
 				return (new ResponseEntity(HttpStatus.OK));
 			return (new ResponseEntity(HttpStatus.ACCEPTED));
@@ -203,8 +216,9 @@ public class UserController {
 		return (new ResponseEntity(HttpStatus.BAD_REQUEST));
 	}
 	
-	@GetMapping("/setting/verification")
-	public ResponseEntity checkPw(@RequestBody UserLoginRequest user) {
+	@PostMapping("/setting/verification")
+	public ResponseEntity checkPw(@RequestBody UserLoginRequest user) throws NoSuchAlgorithmException {
+		user.setUserPw(securityservice.encrypt(user.getUserPw()));
 		if(userService.checkPw(user.toUser()) > 0)
 			return (new ResponseEntity(HttpStatus.OK));
 		return (new ResponseEntity(HttpStatus.ACCEPTED));

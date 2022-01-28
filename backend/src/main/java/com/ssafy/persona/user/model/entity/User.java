@@ -38,4 +38,7 @@ public class User {
 	@Column
 	private int userCreatableCount;
 	
+	public void setUserPw(String userPw) {
+		this.userPw = userPw;
+	}
 }

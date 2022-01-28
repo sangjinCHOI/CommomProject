@@ -11,11 +11,13 @@ import com.ssafy.persona.content.mapper.ReplyMapper;
 import com.ssafy.persona.content.mapper.ReportMapper;
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
 import com.ssafy.persona.content.model.dto.ContentGetResponse;
+import com.ssafy.persona.content.model.dto.ContentLikeRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
 import com.ssafy.persona.content.model.dto.ReplyGetResponse;
+import com.ssafy.persona.content.model.dto.ReplyLikeRequest;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
 import com.ssafy.persona.content.model.dto.ReplyReportRequest;
 
@@ -121,6 +123,49 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public void characterReplyReportUpdate(int reportedReply) {
 		reportMapper.characterReplyReportUpdate(reportedReply);
+		
+	}
+	
+	@Override
+	public boolean contentLike(ContentLikeRequest contentLikeRequest) {
+		return likeMapper.contentLike(contentLikeRequest) == 1;
+	}
+
+	@Override
+	public void contentLikeUpdate(int contentSeq) {
+		likeMapper.contentLikeUpdate(contentSeq);
+		
+	}
+
+	@Override
+	public boolean contentDislike(ContentLikeRequest contentLikeRequest) {
+		return likeMapper.contentDislike(contentLikeRequest) == 1;
+	}
+
+	@Override
+	public void contentDislikeUpdate(int contentSeq) {
+		likeMapper.contentDislikeUpdate(contentSeq);
+		
+	}
+
+	@Override
+	public boolean replyLike(ReplyLikeRequest replyLikeRequest) {
+		return likeMapper.replyLike(replyLikeRequest) == 1;
+	}
+
+	@Override
+	public void replyLikeUpdate(int replySeq) {
+		likeMapper.replyLikeUpdate(replySeq);
+	}
+
+	@Override
+	public boolean replyDislike(ReplyLikeRequest replyLikeRequest) {
+		return likeMapper.replyDislike(replyLikeRequest) == 1;
+	}
+
+	@Override
+	public void replyDislikeUpdate(int replySeq) {
+		likeMapper.replyDislikeUpdate(replySeq);
 		
 	}
 	
