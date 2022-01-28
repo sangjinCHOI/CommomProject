@@ -30,7 +30,7 @@ export default function AlarmShow() {
               <CharacterImg imgWidth="40px" classes="mr-4" />
               <div style={{ width: "220px" }}>초밥왕님이 회원님을 팔로우하기 시작했습니다.</div>
             </Link>
-            <div className="flex justify-end text-sm mr-2" style={{ fontSize: "12px" }}>
+            <div className="flex justify-end mr-2" style={{ fontSize: "12px" }}>
               1시간 전
             </div>
           </div>
@@ -38,8 +38,14 @@ export default function AlarmShow() {
         <Menu.Item>
           <div className="px-4 py-2">
             <Link to="" className="text-sm text-gray-700 flex justify-center items-center">
-              <CharacterImg imgWidth="40px" classes="mr-4" />
-              <div style={{ width: "220px" }}>짜왕님이 회원님의 게시글에 댓글을 남겼습니다.</div>
+              <CharacterImg
+                imgSrc="https://cdn2.thecatapi.com/images/cna.jpg"
+                imgWidth="40px"
+                classes="mr-4"
+              />
+              <div style={{ width: "220px" }}>
+                저장소 '불타는 요리 맛집'에 게시물이 삭제되었습니다.
+              </div>
             </Link>
             <div className="flex justify-end text-sm mr-2" style={{ fontSize: "12px" }}>
               11시간 전
@@ -55,7 +61,24 @@ export default function AlarmShow() {
                 classes="mr-4"
               />
               <div style={{ width: "220px" }}>
-                저장소 '불타는 요리 맛집'에 상태가 변동된 게시물이 있습니다.
+                저장소 '불타는 요리 맛집'에 게시물이 수정되었습니다.
+              </div>
+            </Link>
+            <div className="flex justify-end text-sm mr-2" style={{ fontSize: "12px" }}>
+              14시간 전
+            </div>
+          </div>
+        </Menu.Item>
+        <Menu.Item>
+          <div className="px-4 py-2">
+            <Link to="" className="text-sm text-gray-700 flex justify-center items-center">
+              <CharacterImg
+                imgSrc="https://cdn2.thecatapi.com/images/cna.jpg"
+                imgWidth="40px"
+                classes="mr-4"
+              />
+              <div style={{ width: "220px" }}>
+                저장소 '불타는 요리 맛집'에 게시물이 추가되었습니다.
               </div>
             </Link>
             <div className="flex justify-end text-sm mr-2" style={{ fontSize: "12px" }}>

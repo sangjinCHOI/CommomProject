@@ -29,7 +29,7 @@ export default function Characters() {
               imgSrc={
                 isManagement
                   ? require("../assets/images/character_edit.png")
-                  : require("../assets/images/default_user.png")
+                  : require("../assets/images/codingImg_sample.jpg")
               }
             />
           </div>
@@ -40,7 +40,7 @@ export default function Characters() {
             imgSrc={
               isManagement
                 ? require("../assets/images/character_edit.png")
-                : require("../assets/images/default_user.png")
+                : require("../assets/images/cookingImg_sample.jpg")
             }
           />
         </div>
@@ -52,19 +52,12 @@ export default function Characters() {
             imgSrc={
               isManagement
                 ? require("../assets/images/character_edit.png")
-                : require("../assets/images/default_user.png")
+                : require("../assets/images/healthImg_sample.jpg")
             }
           />
         </div>
         <div className="mt-8 mx-12">
-          <CharacterImg
-            underText={"코인왕"}
-            imgSrc={
-              isManagement
-                ? require("../assets/images/character_edit.png")
-                : require("../assets/images/default_user.png")
-            }
-          />
+          <CharacterImg imgSrc={require("../assets/images/character_lock.png")} />
         </div>
       </div>
       <div className="text-center text-2xl mt-24">

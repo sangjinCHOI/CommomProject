@@ -11,13 +11,16 @@ export default function CharacterImg({
 }) {
   return (
     <div>
-      <div className={`${styles.center} ${classes}`}>
+      <div className={`${styles.center} ${classes}`} style={{ height: imgWidth }}>
         <Image
           src={imgSrc}
           alt="user_img"
           width={imgWidth}
           rounded={true}
           className={(`${styles.profileWrapper}`, `${styles.ProfileImg}`)}
+          style={{
+            border: "1px solid gray",
+          }}
         />
       </div>
       <div className={`${styles.center}`}>{underText}</div>

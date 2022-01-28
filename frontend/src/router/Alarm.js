@@ -20,50 +20,77 @@ export default function Alarm() {
   return (
     <div className="px-16">
       <MainCard classes="border rounded pb-8">
-        <div className="text-2xl px-4 py-2">알림</div>
+        <div className="text-2xl px-4 py-4 text-center">알림</div>
         <hr className="mb-1 mx-2" />
-        <div className="px-4 py-2">신규 알림</div>
-        {shuffle(nicknameList).map((nickname) => (
-          <div className="flex justify-center items-center" key={nickname}>
-            <Link to={`../${nickname}`}>
-              <div className="m-3">
-                <CharacterImg imgWidth="50px" />
-              </div>
-            </Link>
-            <Link to={`../${nickname}`}>
-              <div className="w-44">{nickname}</div>
-            </Link>
-            <div className="m-2">
-              <Link to="">
-                <Label color="lightBlue">팔로우</Label>
-              </Link>
-            </div>
-            <div className="mr-3">
-              <Label color="blueGray">삭제</Label>
-            </div>
+        <div className="px-4 py-2 ml-4">신규 알림</div>
+        <div className="px-4 py-2">
+          <Link to="" className="text-sm text-gray-700 flex justify-center items-center">
+            <CharacterImg imgWidth="50px" classes="mr-4" />
+            <div style={{ width: "292px" }}>초밥왕님이 회원님을 팔로우하기 시작했습니다.</div>
+          </Link>
+          <div className="flex justify-end mr-10" style={{ fontSize: "12px" }}>
+            1시간 전
           </div>
-        ))}
-        <div className="px-4 py-2">기존 알림</div>
-        {shuffle(nicknameList).map((nickname) => (
-          <div className="flex justify-center items-center" key={nickname}>
-            <Link to={`../${nickname}`}>
-              <div className="m-3">
-                <CharacterImg imgWidth="50px" />
-              </div>
-            </Link>
-            <Link to={`../${nickname}`}>
-              <div className="w-44">{nickname}</div>
-            </Link>
-            <div className="m-2">
-              <Link to="">
-                <Label color="lightBlue">팔로우</Label>
-              </Link>
+        </div>
+        <div className="px-4 py-2">
+          <Link to="" className="text-sm text-gray-700 flex justify-center items-center">
+            <CharacterImg
+              imgSrc="https://cdn2.thecatapi.com/images/cna.jpg"
+              imgWidth="50px"
+              classes="mr-4"
+            />
+            <div style={{ width: "292px" }}>
+              저장소 '불타는 요리 맛집'에 게시물이 삭제되었습니다.
             </div>
-            <div className="mr-3">
-              <Label color="blueGray">삭제</Label>
-            </div>
+          </Link>
+          <div className="flex justify-end mr-10" style={{ fontSize: "12px" }}>
+            11시간 전
           </div>
-        ))}
+        </div>
+        <div className="px-4 py-2">
+          <Link to="" className="text-sm text-gray-700 flex justify-center items-center">
+            <CharacterImg
+              imgSrc="https://cdn2.thecatapi.com/images/cna.jpg"
+              imgWidth="50px"
+              classes="mr-4"
+            />
+            <div style={{ width: "292px" }}>
+              저장소 '불타는 요리 맛집'에 게시물이 수정되었습니다.
+            </div>
+          </Link>
+          <div className="flex justify-end mr-10" style={{ fontSize: "12px" }}>
+            14시간 전
+          </div>
+        </div>
+        <div className="px-4 py-2">
+          <Link to="" className="text-sm text-gray-700 flex justify-center items-center">
+            <CharacterImg
+              imgSrc="https://cdn2.thecatapi.com/images/cna.jpg"
+              imgWidth="50px"
+              classes="mr-4"
+            />
+            <div style={{ width: "292px" }}>
+              저장소 '불타는 요리 맛집'에 게시물이 추가되었습니다.
+            </div>
+          </Link>
+          <div className="flex justify-end mr-10" style={{ fontSize: "12px" }}>
+            2일 전
+          </div>
+        </div>
+        <div className="px-4 py-2 ml-4">기존 알림</div>
+        <div className="px-4 py-2">
+          <Link to="" className="text-sm text-gray-700 flex justify-center items-center">
+            <CharacterImg
+              imgSrc="https://cdn2.thecatapi.com/images/43n.png"
+              imgWidth="50px"
+              classes="mr-4"
+            />
+            <div style={{ width: "292px" }}>저장소 '요리하는 부부 저장소'가 생성되었습니다.</div>
+          </Link>
+          <div className="flex justify-end mr-10" style={{ fontSize: "12px" }}>
+            01. 28
+          </div>
+        </div>
       </MainCard>
     </div>
   );

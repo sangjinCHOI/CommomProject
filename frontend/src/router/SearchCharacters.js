@@ -11,7 +11,7 @@ export default function SearchCharacters({ location }) {
       <div className="my-4">'{query}' 캐릭터 검색 결과</div>
       <MainCard classes="border rounded">
         {nicknameList.map((nickname) => (
-          <CharacterProfile nickname={nickname} key={nickname} classes="my-8" />
+          <CharacterProfile nickname={nickname} isMe={false} key={nickname} classes="my-8" />
         ))}
       </MainCard>
     </div>
