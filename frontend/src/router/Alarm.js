@@ -34,8 +34,14 @@ export default function Alarm() {
         </div>
         <div className="px-4 py-2">
           <Link to="" className="text-sm text-gray-700 flex justify-center items-center">
-            <CharacterImg imgWidth="50px" classes="mr-4" />
-            <div style={{ width: "292px" }}>짜왕님이 회원님의 게시글에 댓글을 남겼습니다.</div>
+            <CharacterImg
+              imgSrc="https://cdn2.thecatapi.com/images/cna.jpg"
+              imgWidth="50px"
+              classes="mr-4"
+            />
+            <div style={{ width: "292px" }}>
+              저장소 '불타는 요리 맛집'에 게시물이 삭제되었습니다.
+            </div>
           </Link>
           <div className="flex justify-end mr-10" style={{ fontSize: "12px" }}>
             11시간 전
@@ -49,7 +55,22 @@ export default function Alarm() {
               classes="mr-4"
             />
             <div style={{ width: "292px" }}>
-              저장소 '불타는 요리 맛집'에 상태가 변동된 게시물이 있습니다.
+              저장소 '불타는 요리 맛집'에 게시물이 수정되었습니다.
+            </div>
+          </Link>
+          <div className="flex justify-end mr-10" style={{ fontSize: "12px" }}>
+            14시간 전
+          </div>
+        </div>
+        <div className="px-4 py-2">
+          <Link to="" className="text-sm text-gray-700 flex justify-center items-center">
+            <CharacterImg
+              imgSrc="https://cdn2.thecatapi.com/images/cna.jpg"
+              imgWidth="50px"
+              classes="mr-4"
+            />
+            <div style={{ width: "292px" }}>
+              저장소 '불타는 요리 맛집'에 게시물이 추가되었습니다.
             </div>
           </Link>
           <div className="flex justify-end mr-10" style={{ fontSize: "12px" }}>
@@ -64,7 +85,7 @@ export default function Alarm() {
               imgWidth="50px"
               classes="mr-4"
             />
-            <div style={{ width: "292px" }}>저장소 '요리하는 부부 저장소'를 생성하였습니다.</div>
+            <div style={{ width: "292px" }}>저장소 '요리하는 부부 저장소'가 생성되었습니다.</div>
           </Link>
           <div className="flex justify-end mr-10" style={{ fontSize: "12px" }}>
             01. 28
