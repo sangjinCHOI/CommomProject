@@ -1,14 +1,53 @@
 import "@material-tailwind/react/tailwind.css";
-import CardFooter from "@material-tailwind/react/CardFooter";
-import InputIcon from "@material-tailwind/react/InputIcon";
-import Button from "@material-tailwind/react/Button";
 import Logo from "../assets/images/main_logo.png";
-import styles from "./Signup.module.css";
+import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import styles from "./Signup.module.css";
+import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
 
 export default function PwInquiry() {
   var [emailShow, setEmailShow] = useState(false);
+  const [_id, setId] = useState("");
+  const [email, setEmail] = useState("");
+
+  const onIdHandler = (e) => {
+    console.log("id : " + e.target.value);
+    setId(e.target.value);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      setEmail("test : " + e.target.value);
+      console.log(email);
+      setEmailShow(true);
+      onSubmit(e);
+    }
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log("비밀번호 찾기");
+
+    const data = {
+      userEmail: email,
+      userId: _id,
+    };
+
+    axios
+      .put("http://localhost:8080/user/email/", JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((data) => {
+        console.log(data);
+        alert("이메일을 확인해 주세요");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   return (
     <div className={`${styles.center}`}>
@@ -26,18 +65,17 @@ export default function PwInquiry() {
             placeholder="ID"
             outline={true}
             iconName="person"
-            onChange={function () {
-              setEmailShow(true);
-            }}
+            onChange={onIdHandler}
+            onKeyPress={handleKeyPress}
           />
         </div>
       </div>
 
-      {emailShow ? <EmailComp></EmailComp> : null}
+      {emailShow ? <EmailComp handleKeyPress={handleKeyPress}></EmailComp> : null}
 
       <CardFooter>
         <div className="flex justify-center">
-          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
+          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark" onClick={onSubmit}>
             비밀번호 찾기
           </Button>
         </div>
@@ -52,7 +90,7 @@ export default function PwInquiry() {
   );
 }
 
-function EmailComp() {
+const EmailComp = ({ handleKeyPress }) => {
   return (
     <>
       <p align="center">가입한 이메일을 입력해 주세요.</p>
@@ -65,9 +103,10 @@ function EmailComp() {
             placeholder="E-mail"
             outline={true}
             iconName="person"
+            onKeyPress={handleKeyPress}
           />
         </div>
       </div>
     </>
   );
-}
+};
