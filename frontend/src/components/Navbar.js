@@ -5,6 +5,7 @@ import Logo from "../assets/images/main_logo.png";
 import ShortLogo from "../assets/images/short_logo.png";
 import Search from "../assets/images/search.png";
 import ContentCreate from "./ContentCreate";
+import AlarmShow from "./AlarmShow";
 
 export default function Example() {
   const [word, setWord] = React.useState("");
@@ -67,14 +68,15 @@ export default function Example() {
                 >
                   add_circle_outline
                 </button>
-                <Link to="/alarm">
+                {/* <Link to="/alarm">
                   <span
                     className="hidden md:block material-icons h-10 w-10 mt-1 mx-2"
                     style={{ fontSize: 40 }}
                   >
                     notifications_none
                   </span>
-                </Link>
+                </Link> */}
+                <AlarmShow />
                 <Link to="">
                   <span
                     className="hidden md:block material-icons h-10 w-10 mt-1 mx-2"
@@ -94,7 +96,11 @@ export default function Example() {
                   </div>
                   <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white">
                     <Menu.Item>
-                      <Link to="/" className="block md:hidden px-4 py-2 text-sm text-gray-700" onClick={() => setContentCreateModal(true)}>
+                      <Link
+                        to="/"
+                        className="block md:hidden px-4 py-2 text-sm text-gray-700"
+                        onClick={() => setContentCreateModal(true)}
+                      >
                         게시글 작성
                       </Link>
                     </Menu.Item>

@@ -61,7 +61,7 @@ function App() {
             <Layout>
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route exact path="/alarm" component={Alarm} />
+                <Route exact path="/alarm/center" component={Alarm} />
                 <Route exact path="/search" component={Search} />
                 <Route exact path="/search/characters" component={SearchCharacters} />
                 <Route exact path="/search/storages" component={SearchStorages} />
