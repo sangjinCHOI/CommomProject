@@ -29,8 +29,11 @@
 		where content_seq = #{contentSeq}
 	</update>
 	
-	<select id="contentGet" parameterType="int" resultType="ContentGetResponse">
-		select content_seq as contentSeq, content_is_active as contentIsActive, content_is_public as contentIsPublic, character_seq as characterSeq, category_seq as categorySeq, content_text as contentText, content_like as contentLike, content_save as contentSave, content_is_media as contentIsMedia, content_created_date contentCreatedDate, content_modified_Date as contentModifiedDate
+	
+	<select id="contentGet" parameterType="contentGetRequest" resultType="ContentGetResponse">
+		select content_seq as contentSeq, content_is_active as contentIsActive, content_is_public as contentIsPublic, character_seq as characterSeq, category_seq as categorySeq, content_text as contentText, content_like as contentLike, content_save as contentSave, content_is_media as contentIsMedia, content_created_date contentCreatedDate, content_modified_Date as contentModifiedDate, (select count(*) 
+		from tb_content_like
+		where content_seq = #{contentSeq} and character_seq = #{characterSeq}) as contentIsLike
 		from tb_content
 		where content_seq = #{contentSeq}
 	</select>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
+import com.ssafy.persona.content.model.dto.ContentGetRequest;
 import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.content.model.dto.ContentLikeRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
@@ -64,12 +65,6 @@ public class ContentController {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-	}
-
-	@ApiOperation(value = "content detail", notes = "게시글 상세조회", response = ContentGetResponse.class)
-	@GetMapping("/content/{contentSeq}")
-	public ResponseEntity<ContentGetResponse> contentGet(@PathVariable("contentSeq") @ApiParam(value = "조회할 글의 글번호", required = true) int contentSeq) {
-		return new ResponseEntity<ContentGetResponse>(contentService.contentGet(contentSeq), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "content personal list", notes = "특정 인물의 게시물 리스트 조회", response = ContentGetResponse.class)
@@ -212,5 +207,11 @@ public class ContentController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
+
+	@ApiOperation(value = "content detail", notes = "게시글 상세조회", response = ContentGetResponse.class)
+	@PostMapping("/contentdetail")
+	public ResponseEntity<ContentGetResponse> contentGet(@RequestBody @ApiParam(value = "조회할 글의 글번호", required = true) ContentGetRequest contentGetRequest) {
+		return new ResponseEntity<ContentGetResponse>(contentService.contentGet(contentGetRequest), HttpStatus.OK);
+	}
 
 }

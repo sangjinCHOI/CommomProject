@@ -23,6 +23,7 @@ public class ContentGetResponse {
 	private boolean contentIsMedia;
 	private LocalDateTime contentCreatedDate;
 	private LocalDateTime contentModifiedDate;
+	private int contentIsLike;
 	
 	public ContentGetResponse(Content content) {
 		super();
@@ -36,6 +37,7 @@ public class ContentGetResponse {
 		this.contentSave = content.getContentSave();
 		this.contentIsMedia = content.isContentIsMedia();
 		this.contentCreatedDate = content.getContentCreatedDate();
-		this.contentModifiedDate = content.getContentModifiedDate();	
+		this.contentModifiedDate = content.getContentModifiedDate();
+		this.contentIsLike = content.getContentIsLike();
 	}
 }
