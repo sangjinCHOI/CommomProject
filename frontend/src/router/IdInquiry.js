@@ -1,16 +1,16 @@
-import "@material-tailwind/react/tailwind.css";
+import axios from "axios";
 import { useState } from "react";
+import userStore from "../store/userStore";
+import "@material-tailwind/react/tailwind.css";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
 import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
-import axios from "axios";
-import userStore from "../userStore";
 
 export default function IdInquiry() {
   const [email, setEmail] = useState("");
   const [showEmailConfirm, setShowEmailConfirm] = useState(false);
-  const [mode, setMode] = useState("id");
+  // const [mode, setMode] = useState("id");
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -24,14 +24,14 @@ export default function IdInquiry() {
 
     axios
       .get("http://localhost:8080/user/email/" + email, {})
-      .then((data) => {
-        console.log(data);
+      .then(({ data }) => {
+        console.log(data.userId);
 
-        userStore.dispatch({ type: "idInquiry", iddata: data });
-        console.log(userStore.iddata);
+        userStore.dispatch({ type: "idtrans", iddata: data.userId });
         // document.location.href = "./id_inquiry/result";
       })
       .catch((e) => {});
+    return;
   };
 
   const onEmailHandler = (e) => {
@@ -73,9 +73,11 @@ export default function IdInquiry() {
 
       <CardFooter>
         <div className="flex justify-center">
-          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark" onClick={onSubmit}>
-            아이디 찾기
-          </Button>
+          <Link to="./id_inquiry/result">
+            <Button color="lightBlue" buttonType="link" size="lg" ripple="dark" onClick={onSubmit}>
+              아이디 찾기
+            </Button>
+          </Link>
           <Link to="../accounts/pw_inquiry">
             <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
               비밀번호 찾기

@@ -7,17 +7,17 @@ import Button from "@material-tailwind/react/Button";
 import Logo from "../assets/images/main_logo.png";
 import styles from "./Signup.module.css";
 import { Link } from "react-router-dom";
-import userStore from "../userStore";
+import userStore from "../store/userStore";
 import { Component } from "react/cjs/react.production.min";
 
 export default class IdInquiryResult extends Component {
-  state = { data: userStore.getState().data };
+  state = { data: userStore.getState().iddata };
   constructor(props) {
     super(props);
     userStore.subscribe(
       function () {
-        console.log(userStore.getState().data);
-        this.setState({ data: userStore.getState().data });
+        console.log(userStore.getState().iddata);
+        this.setState({ data: userStore.getState().iddata });
       }.bind(this)
     );
   }
@@ -31,7 +31,7 @@ export default class IdInquiryResult extends Component {
 
         <Card>
           <CardBody>
-            <p align="center">귀하의 아이디는 {this.state._id} 입니다.</p>
+            <p align="center">귀하의 아이디는 {this.state.data} 입니다.</p>
             <div align="center" className="mt-3 mb-5 px-4">
               <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
                 전체 아이디를 이메일러 전송
@@ -48,7 +48,6 @@ export default class IdInquiryResult extends Component {
           </div> */}
 
           <div>
-            <input type="text" value={this.state._id} readOnly></input>
             <Link className="flex justify-center" to="../login">
               Login
             </Link>
