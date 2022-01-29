@@ -20,5 +20,11 @@ export default createStore(function (state, action) {
     };
   }
 
+  if (action.type === "emailtrans") {
+    return {
+      emaildata: action.emaildata,
+    };
+  }
+
   return state;
 }, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

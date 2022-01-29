@@ -1,15 +1,11 @@
-import "@material-tailwind/react/tailwind.css";
-import CardBody from "@material-tailwind/react/CardBody";
-import CardFooter from "@material-tailwind/react/CardFooter";
-import InputIcon from "@material-tailwind/react/InputIcon";
-import Card from "@material-tailwind/react/Card";
-import Button from "@material-tailwind/react/Button";
-import Logo from "../assets/images/main_logo.png";
-import styles from "./Signup.module.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import styles from "./Signup.module.css";
 import userStore from "../store/userStore";
+import "@material-tailwind/react/tailwind.css";
+import Logo from "../assets/images/main_logo.png";
 import { Component } from "react/cjs/react.production.min";
+import { Card, CardBody, CardFooter, Button } from "@material-tailwind/react";
 
 export default class IdInquiryResult extends Component {
   state = { data: userStore.getState().iddata };
