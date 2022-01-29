@@ -18,12 +18,14 @@ export default function Characters() {
       />
       <div className="text-center text-2xl mt-8 mb-4">
         <span>
-          {isManagement ? "수정할 캐릭터를 선택하세요." : "PERSONA를 사용할 캐릭터를 선택하세요."}
+          {isManagement
+            ? "수정할 캐릭터를 선택하세요."
+            : "PERSONA를 사용할 캐릭터를 선택하세요."}
         </span>
       </div>
       <div className="flex justify-center m-8">
         <Character
-          nickname="개발왕"
+          nickname="개발왕초보"
           isManagement={isManagement}
           isExist={true}
           isLock={false}
@@ -72,7 +74,13 @@ const Character = ({
   return (
     <Link
       to={
-        isLock ? "" : isManagement ? "../characters/update" : isExist ? "" : "../characters/create"
+        isLock
+          ? ""
+          : isManagement
+          ? "../characters/update"
+          : isExist
+          ? ""
+          : "../characters/create"
       }
       onClick={isLock ? (e) => e.preventDefault() : null}
     >
