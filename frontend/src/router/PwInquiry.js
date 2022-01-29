@@ -4,9 +4,12 @@ import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
+import { useHistory } from "react-router";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
 
 export default function PwInquiry() {
+  const history = useHistory();
+
   var [emailShow, setEmailShow] = useState(false);
   const [_id, setId] = useState("");
   const [email, setEmail] = useState("");
@@ -42,7 +45,8 @@ export default function PwInquiry() {
       })
       .then((data) => {
         console.log(data);
-        alert("이메일을 확인해 주세요");
+        // alert("이메일을 확인해 주세요");
+        history.push("./pw_inquiry/result");
       })
       .catch((e) => {
         console.log(e);
