@@ -217,8 +217,8 @@ public class ContentController {
 	
 	@ApiOperation(value = "content list", notes = "게시글 리스트(메인페이지)", response = List.class)
 	@GetMapping("/contents")
-	public ResponseEntity<List<ContentGetResponse>> contentList(@RequestParam @ApiParam(value = "리스트를 조회할 캐릭터번호.", required = true) int characterSeq) {
-		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentList(characterSeq), HttpStatus.OK);
+	public ResponseEntity<List<ContentGetResponse>> contentList(@RequestParam @ApiParam(value = "리스트를 조회할 캐릭터번호.", required = true) int characterNow) {
+		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentList(characterNow), HttpStatus.OK);
 	}
 	
 	

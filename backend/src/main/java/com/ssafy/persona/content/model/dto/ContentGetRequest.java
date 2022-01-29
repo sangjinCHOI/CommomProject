@@ -9,5 +9,5 @@ import lombok.ToString;
 @ToString
 public class ContentGetRequest {
 	private int contentSeq;
-	private int characterSeq;
+	private int characterNow;
 }

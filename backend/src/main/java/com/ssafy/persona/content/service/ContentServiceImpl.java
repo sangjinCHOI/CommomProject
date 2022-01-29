@@ -171,8 +171,8 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public List<ContentGetResponse> contentList(int characterSeq) {
-		return contentMapper.contentList(characterSeq);
+	public List<ContentGetResponse> contentList(int characterNow) {
+		return contentMapper.contentList(characterNow);
 	}
 	
 }
