@@ -8,6 +8,7 @@ export default function CharacterImg({
   imgWidth = "100px",
   imgSrc = defaultUserImg,
   classes,
+  lock = false,
 }) {
   return (
     <div>
@@ -17,13 +18,17 @@ export default function CharacterImg({
           alt="user_img"
           width={imgWidth}
           rounded={true}
-          className={(`${styles.profileWrapper}`, `${styles.ProfileImg}`)}
+          className={
+            (`${styles.profileWrapper}`, `${styles.ProfileImg} ${lock ? "bg-gray-400" : null}`)
+          }
           style={{
             border: "1px solid gray",
           }}
         />
       </div>
-      <div className={`${styles.center}`}>{underText}</div>
+      <div className={`${styles.center}`}>
+        <span className="w-32 text-center">{underText}</span>
+      </div>
     </div>
   );
 }
