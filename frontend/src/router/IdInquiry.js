@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
-import userStore from "../store/userStore";
-import "@material-tailwind/react/tailwind.css";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
+import { useHistory } from "react-router";
+import userStore from "../store/userStore";
+import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
-import { useHistory } from "react-router";
 
 export default function IdInquiry() {
   const history = useHistory();
