@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
@@ -213,5 +214,13 @@ public class ContentController {
 	public ResponseEntity<ContentGetResponse> contentGet(@RequestBody @ApiParam(value = "조회할 글의 글번호", required = true) ContentGetRequest contentGetRequest) {
 		return new ResponseEntity<ContentGetResponse>(contentService.contentGet(contentGetRequest), HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "content list", notes = "게시글 리스트(메인페이지)", response = List.class)
+	@GetMapping("/contents")
+	public ResponseEntity<List<ContentGetResponse>> contentList(@RequestParam @ApiParam(value = "리스트를 조회할 캐릭터번호.", required = true) int characterSeq) {
+		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentList(characterSeq), HttpStatus.OK);
+	}
+	
+	
 
 }

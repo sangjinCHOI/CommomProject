@@ -17,4 +17,5 @@ public interface ContentMapper {
 	List<ContentGetResponse> contentPersonalList(int characterSeq);
 	List<ContentGetResponse> contentTagList(String tagText);
 	ContentGetResponse contentGet(ContentGetRequest contentGetRequest);
+	List<ContentGetResponse> contentList(int characterSeq);
 }

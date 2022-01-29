@@ -169,5 +169,10 @@ public class ContentServiceImpl implements ContentService {
 	public ContentGetResponse contentGet(ContentGetRequest contentGetRequest) {
 		return contentMapper.contentGet(contentGetRequest);
 	}
+
+	@Override
+	public List<ContentGetResponse> contentList(int characterSeq) {
+		return contentMapper.contentList(characterSeq);
+	}
 	
 }

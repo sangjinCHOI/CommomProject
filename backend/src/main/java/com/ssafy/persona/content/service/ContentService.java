@@ -20,6 +20,7 @@ public interface ContentService {
 	boolean contentModify(ContentModifyRequest contentModifyRequest);
 	boolean contentDelete(int contentSeq);
 	ContentGetResponse contentGet(ContentGetRequest contentGetRequest);
+	List<ContentGetResponse> contentList(int characterSeq);
 	
 	boolean replyCreate(ReplyCreateRequest replyCreateRequest);
 	boolean replyModify(ReplyModifyRequest replyModifyRequest);
