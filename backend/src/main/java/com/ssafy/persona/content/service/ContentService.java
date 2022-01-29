@@ -25,7 +25,7 @@ public interface ContentService {
 	boolean replyCreate(ReplyCreateRequest replyCreateRequest);
 	boolean replyModify(ReplyModifyRequest replyModifyRequest);
 	boolean replyDelete(int replySeq);
-	List<ReplyGetResponse> replyList(int contentSeq);
+	List<ReplyGetResponse> replyList(ContentGetRequest contentGetRequest);
 	
 	boolean contentReport(ContentReportRequest contentReportRequest);
 	void contentReportUpdate(int reportedContent);

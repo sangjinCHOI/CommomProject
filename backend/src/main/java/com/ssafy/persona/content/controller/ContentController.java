@@ -109,9 +109,9 @@ public class ContentController {
 	}
 
 	@ApiOperation(value = "reply list", notes = "댓글조회", response = List.class)
-	@GetMapping("/content/reply/{contentSeq}")
-	public ResponseEntity<List<ReplyGetResponse>> replylist(@PathVariable("contentSeq") @ApiParam(value = "댓글을 조회할 글번호.", required = true) int contentSeq) {
-		return new ResponseEntity<List<ReplyGetResponse>>(contentService.replyList(contentSeq), HttpStatus.OK);
+	@PostMapping("/content/replys")
+	public ResponseEntity<List<ReplyGetResponse>> replylist(@RequestBody @ApiParam(value = "댓글을 조회할 글번호.", required = true) ContentGetRequest contentGetRequest) {
+		return new ResponseEntity<List<ReplyGetResponse>>(contentService.replyList(contentGetRequest), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "content like list", notes = "게시글 좋아요 누른 유저 리스트", response = List.class)

@@ -33,4 +33,6 @@ public class Reply {
 	private LocalDateTime replyCreatedDate;
 	@Column
 	private LocalDateTime replyModifiedDate;
+	@Column
+	private int replyIsLike;
 }

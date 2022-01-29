@@ -18,6 +18,7 @@ public class ReplyGetResponse {
 	private int replyLike;
 	private LocalDateTime replyCreatedDate;
 	private LocalDateTime replyModifiedDate;
+	private int replyIsLike;
 	
 	public ReplyGetResponse(Reply reply) {
 		super();
@@ -27,5 +28,6 @@ public class ReplyGetResponse {
 		this.replyLike = reply.getReplyLike();
 		this.replyCreatedDate = reply.getReplyCreatedDate();
 		this.replyModifiedDate = reply.getReplyModifiedDate();
+		this.replyIsLike = reply.getReplyIsLike();
 	}
 }

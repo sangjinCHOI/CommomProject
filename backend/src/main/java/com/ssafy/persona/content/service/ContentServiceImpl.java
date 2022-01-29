@@ -65,8 +65,8 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public List<ReplyGetResponse> replyList(int contentSeq) {
-		return replyMapper.replyList(contentSeq);
+	public List<ReplyGetResponse> replyList(ContentGetRequest contentGetRequest) {
+		return replyMapper.replyList(contentGetRequest);
 	}
 
 	@Override
