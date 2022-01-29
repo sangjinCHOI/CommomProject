@@ -1,11 +1,10 @@
+import styles from "./Signup.module.css";
 import "@material-tailwind/react/tailwind.css";
+import Card from "@material-tailwind/react/Card";
+import Logo from "../assets/images/main_logo.png";
+import Button from "@material-tailwind/react/Button";
 import CardBody from "@material-tailwind/react/CardBody";
 import CardFooter from "@material-tailwind/react/CardFooter";
-import InputIcon from "@material-tailwind/react/InputIcon";
-import Card from "@material-tailwind/react/Card";
-import Button from "@material-tailwind/react/Button";
-import Logo from "../assets/images/main_logo.png";
-import styles from "./Signup.module.css";
 
 export default function PwInquiryResult() {
   return (
