@@ -1,4 +1,5 @@
 import { InputIcon, Textarea } from "@material-tailwind/react";
+import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
@@ -22,7 +23,35 @@ const useInput = (initialValue, validator) => {
 
 export default function CharactersCreate() {
   const maxLen = (value) => value.length <= 50;
-  const introduction = useInput("", maxLen);
+  const introductionInput = useInput("", maxLen);
+
+  const [userSeq, setUserSeq] = useState(0);
+  const [fileName, setFileName] = useState("");
+  const [fileSize, setFileSize] = useState(0);
+  const [categorySeq, setCategorySeq] = useState(0);
+  const [nickname, setNickname] = useState("");
+  const [introduction, setIntroduction] = useState("");
+
+  const characterSave = (e) => {
+    e.preventDefault();
+    const data = {
+      userSeq: 58, // 현재 DB상에서 id: character123인 유저
+      fileName: "test.png",
+      fileSize: 10,
+      categorySeq: 1,
+      nickname: "아이유",
+      introduction: "안녕하세요. 아이유입니다.",
+    };
+    axios
+      .post("http://localhost:8080/character", JSON.stringify(data), {
+        headers: { "Content-type": "application/json" },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <>
       <Link to="../characters/select">
@@ -59,15 +88,15 @@ export default function CharactersCreate() {
             outline={true}
             color="lightBlue"
             className="mt-8"
-            {...introduction}
+            {...introductionInput}
           />
           <div className="absolute right-5 bottom-3 text-gray-400">
-            {introduction.value.length} / 50
+            {introductionInput.value.length} / 50
           </div>
         </div>
       </div>
       <div className="text-center text-2xl mt-16 flex justify-center">
-        <Link to="../characters/select">
+        <Link to="../characters/select" onClick={characterSave}>
           <span>캐릭터 저장</span>
         </Link>
       </div>
