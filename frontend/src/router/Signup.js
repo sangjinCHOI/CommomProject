@@ -112,10 +112,6 @@ export default function Signup() {
       userPw: passwordCheck,
     };
 
-    const email_data = {
-      userId: _id,
-    };
-
     axios
       .post("http://localhost:8080/user", JSON.stringify(data), {
         headers: {
@@ -133,6 +129,7 @@ export default function Signup() {
             },
           })
           .then((data) => {
+            userStore.dispatch({ type: "idtrans", iddata: _id });
             userStore.dispatch({ type: "emailtrans", emaildata: email });
 
             history.push("../accounts/signup/email");
