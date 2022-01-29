@@ -5,12 +5,13 @@ import { createStore } from "redux";
 
 export default createStore(function (state, action) {
   if (state === undefined) {
-    return { iddata: "test" };
+    return { iddata: "first", emaildata: "first" };
   }
 
   if (action.type === "idtrans") {
     return {
       iddata: action.iddata,
+      emaildata: action.emaildata,
     };
   }
 
@@ -20,11 +21,11 @@ export default createStore(function (state, action) {
     };
   }
 
-  if (action.type === "emailtrans") {
-    return {
-      emaildata: action.emaildata,
-    };
-  }
+  // if (action.type === "emailtrans") {
+  //   return {
+  //     emaildata: action.emaildata,
+  //   };
+  // }
 
   return state;
 }, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

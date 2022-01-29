@@ -31,7 +31,7 @@ export default function IdInquiry() {
         console.log(data.userId);
 
         userStore.dispatch({ type: "idtrans", iddata: data.userId });
-        userStore.dispatch({ type: "emailtrans", emaildata: email });
+
         history.push("./id_inquiry/result");
       })
       .catch((e) => {});
