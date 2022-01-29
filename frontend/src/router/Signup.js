@@ -2,11 +2,15 @@ import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
+import { useHistory } from "react-router";
+import userStore from "../store/userStore";
 import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
 
 export default function Signup() {
+  const history = useHistory();
+
   const [_id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setpasswordCheck] = useState("");
@@ -32,22 +36,16 @@ export default function Signup() {
       setShowIdConfirm(false);
     }
 
-    axios
-      .get("http://localhost:8080/user/valid/" + e.target.value, {
-        // params: {
-        //   userId: e.target.value,
-        // },
-      })
-      .then((data) => {
-        console.log(data);
+    axios.get("http://localhost:8080/user/valid/" + e.target.value, {}).then((data) => {
+      console.log(data);
 
-        if (data.valid == 2) {
-          setShowIdDuplicate(true);
-          console.log("valid : " + data.valid);
-        } else if (data.valid == 1) {
-          setShowIdDuplicate(false);
-        }
-      });
+      if (data.valid == 2) {
+        setShowIdDuplicate(true);
+        console.log("valid : " + data.valid);
+      } else if (data.valid == 1) {
+        setShowIdDuplicate(false);
+      }
+    });
   };
 
   const onPasswordHandler = (e) => {
@@ -87,22 +85,16 @@ export default function Signup() {
     console.log("email : " + e.target.value);
     setEmail(e.target.value);
 
-    axios
-      .get("http://localhost:8080/user/email/valid/" + e.target.value, {
-        // params: {
-        //   userId: e.target.value,
-        // },
-      })
-      .then(({ data }) => {
-        console.log(data);
+    axios.get("http://localhost:8080/user/email/valid/" + e.target.value, {}).then(({ data }) => {
+      console.log(data);
 
-        if (data.valid == 0) {
-          setShowEmailDuplicate(true);
-          console.log("valid : " + data.valid);
-        } else if (data.valid == 1) {
-          setShowEmailDuplicate(false);
-        }
-      });
+      if (data.valid == 0) {
+        setShowEmailDuplicate(true);
+        console.log("valid : " + data.valid);
+      } else if (data.valid == 1) {
+        setShowEmailDuplicate(false);
+      }
+    });
   };
 
   const onSubmit = (e) => {
@@ -120,6 +112,10 @@ export default function Signup() {
       userPw: passwordCheck,
     };
 
+    const email_data = {
+      userId: _id,
+    };
+
     axios
       .post("http://localhost:8080/user", JSON.stringify(data), {
         headers: {
@@ -129,7 +125,18 @@ export default function Signup() {
       .then((data) => {
         console.log(data);
         console.log("test");
-        // document.location.href = "./signup/email";
+
+        axios
+          .get("http://localhost:8080/user/email/", {
+            params: {
+              userId: _id,
+            },
+          })
+          .then((data) => {
+            userStore.dispatch({ type: "emailtrans", emaildata: email });
+
+            history.push("../accounts/signup/email");
+          });
       })
       .catch((e) => {
         console.log(e);
