@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.persona.character.model.dto.AlarmCreateRequest;
 import com.ssafy.persona.character.model.dto.AlarmGetResponse;
-import com.ssafy.persona.character.model.dto.AlarmUpdateRequest;
+import com.ssafy.persona.character.model.dto.AlarmSettingUpdateRequest;
 import com.ssafy.persona.character.model.dto.CharacterCreatRequest;
 import com.ssafy.persona.character.model.dto.CharacterDeleteRequest;
 import com.ssafy.persona.character.model.dto.CharacterGetResponse;
@@ -30,6 +30,7 @@ import com.ssafy.persona.character.model.dto.FollowRequest;
 import com.ssafy.persona.character.model.dto.FolloweeListRequest;
 import com.ssafy.persona.character.model.dto.FollowerListRequest;
 import com.ssafy.persona.character.model.dto.FollowerListResponse;
+import com.ssafy.persona.character.service.AlarmService;
 import com.ssafy.persona.character.service.CharacterService;
 import com.ssafy.persona.character.service.FollowService;
 
@@ -46,6 +47,9 @@ public class CharacterController {
 
 	@Autowired
 	private FollowService followService;
+	
+	@Autowired
+	private AlarmService alarmService;
 
 	@PostMapping("/")
 	public ResponseEntity<Map<String, String>> createCharacter(@RequestBody CharacterCreatRequest request) {
@@ -72,6 +76,24 @@ public class CharacterController {
 		HttpStatus status = null;
 
 		if (characterService.update(request) == 1) {
+			message = SUCCESS;
+			status = HttpStatus.OK;
+		} else {
+			message = FAIL;
+			status = HttpStatus.ACCEPTED;
+		}
+		Map<String, String> result = new HashMap<String, String>();
+		result.put("message", message);
+		return new ResponseEntity<Map<String, String>>(result, status);
+	}
+	
+	@PutMapping("alarmStatus")
+	public ResponseEntity<Map<String, String>> updateAlarmStatus(@RequestBody AlarmSettingUpdateRequest request) {
+		logger.info("알람 설정 변경 - 변경 요청: "+request.getCharacterSeq());
+		String message = "";
+		HttpStatus status = null;
+
+		if (characterService.updateAlarmStatus(request) == 1) {
 			message = SUCCESS;
 			status = HttpStatus.OK;
 		} else {
@@ -196,7 +218,7 @@ public class CharacterController {
 		String message = "";
 		HttpStatus status = null;
 
-		if (characterService.createAlarm(request) == 1) {
+		if (alarmService.createAlarm(request) == 1) {
 			message = SUCCESS;
 			status = HttpStatus.OK;
 		} else {
@@ -208,29 +230,18 @@ public class CharacterController {
 		return new ResponseEntity<Map<String, String>>(result, status);
 	}
 	
-	@PutMapping("alarm")
-	public ResponseEntity<Map<String, String>> updateAlarmStatus(@RequestBody AlarmUpdateRequest request) {
-		logger.info("알람 설정 변경 - 변경 요청: "+request.getCharacterSeq());
-		String message = "";
-		HttpStatus status = null;
+	@GetMapping("alarm/{alarmSeq}")
+	public ResponseEntity<AlarmGetResponse> alarmRead(@PathVariable int alarmSeq) {
+		logger.info("알람 클릭 - 호출번호: "+alarmSeq);
 
-		if (characterService.updateAlarmStatus(request) == 1) {
-			message = SUCCESS;
-			status = HttpStatus.OK;
-		} else {
-			message = FAIL;
-			status = HttpStatus.ACCEPTED;
-		}
-		Map<String, String> result = new HashMap<String, String>();
-		result.put("message", message);
-		return new ResponseEntity<Map<String, String>>(result, status);
+		return new ResponseEntity<AlarmGetResponse>(alarmService.alarmRead(alarmSeq), HttpStatus.OK);
 	}
 	
 	@GetMapping("alarms/{characterSeq}")
 	public ResponseEntity<List<AlarmGetResponse>> alarmList(@PathVariable int characterSeq) {
 		logger.info("알람 리스트 요청 - 캐릭터 번호: " + characterSeq);
 
-		return new ResponseEntity<List<AlarmGetResponse>>(characterService.getAlarmList(characterSeq), HttpStatus.OK);
+		return new ResponseEntity<List<AlarmGetResponse>>(alarmService.getAlarmList(characterSeq), HttpStatus.OK);
 	} // 예외처리 필요
 
 	
