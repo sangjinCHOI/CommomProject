@@ -9,6 +9,7 @@ import com.ssafy.persona.content.model.dto.ContentLikeRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
+import com.ssafy.persona.content.model.dto.ContentTagListRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
 import com.ssafy.persona.content.model.dto.ReplyGetResponse;
 import com.ssafy.persona.content.model.dto.ReplyLikeRequest;
@@ -36,7 +37,7 @@ public interface ContentService {
 	void characterReplyReportUpdate(int reportedReply);
 	
 	List<ContentGetResponse> contentPersonalList(int characterSeq);
-	List<ContentGetResponse> contentTagList(String tagText);
+	List<ContentGetResponse> contentTagList(ContentTagListRequest contentTagListRequest);
 	
 	boolean contentLike(ContentLikeRequest contentLikeRequest);
 	void contentLikeUpdate(int contentSeq);

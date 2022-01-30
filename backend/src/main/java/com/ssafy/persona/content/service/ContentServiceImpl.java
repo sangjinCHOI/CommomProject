@@ -16,6 +16,7 @@ import com.ssafy.persona.content.model.dto.ContentLikeRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
+import com.ssafy.persona.content.model.dto.ContentTagListRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
 import com.ssafy.persona.content.model.dto.ReplyGetResponse;
 import com.ssafy.persona.content.model.dto.ReplyLikeRequest;
@@ -75,8 +76,8 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public List<ContentGetResponse> contentTagList(String tagText) {
-		return contentMapper.contentTagList(tagText);
+	public List<ContentGetResponse> contentTagList(ContentTagListRequest contentTagListRequest) {
+		return contentMapper.contentTagList(contentTagListRequest);
 	}
 
 	@Override

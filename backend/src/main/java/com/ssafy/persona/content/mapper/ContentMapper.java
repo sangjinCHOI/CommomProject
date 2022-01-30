@@ -8,6 +8,7 @@ import com.ssafy.persona.content.model.dto.ContentCreateRequest;
 import com.ssafy.persona.content.model.dto.ContentGetRequest;
 import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
+import com.ssafy.persona.content.model.dto.ContentTagListRequest;
 
 @Mapper
 public interface ContentMapper {
@@ -15,7 +16,7 @@ public interface ContentMapper {
 	int contentModify(ContentModifyRequest contentModifyRequest);
 	int contentDelete(int contentSeq);
 	List<ContentGetResponse> contentPersonalList(int characterSeq);
-	List<ContentGetResponse> contentTagList(String tagText);
+	List<ContentGetResponse> contentTagList(ContentTagListRequest contentTagListRequest);
 	ContentGetResponse contentGet(ContentGetRequest contentGetRequest);
 	List<ContentGetResponse> contentList(int characterNow);
 }
