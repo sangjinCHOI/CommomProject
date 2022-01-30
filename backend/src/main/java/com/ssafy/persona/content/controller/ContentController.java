@@ -20,6 +20,7 @@ import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.content.model.dto.ContentLikeRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
+import com.ssafy.persona.content.model.dto.ContentPersonListRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
 import com.ssafy.persona.content.model.dto.ContentTagListRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
@@ -70,10 +71,9 @@ public class ContentController {
 	}
 
 	@ApiOperation(value = "content personal list", notes = "특정 인물의 게시물 리스트 조회", response = ContentGetResponse.class)
-	@GetMapping("/content/person/{characterSeq}")
-	public ResponseEntity<List<ContentGetResponse>> contentPersonalList(@PathVariable("characterSeq") @ApiParam(value = "특정 인물을 조회할 캐릭터 번호.", required = true) int characterSeq) {
-		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentPersonalList(characterSeq),
-				HttpStatus.OK);
+	@PostMapping("/content/person")
+	public ResponseEntity<List<ContentGetResponse>> contentPersonalList(@RequestBody @ApiParam(value = "특정 인물을 조회할 캐릭터 번호.", required = true) ContentPersonListRequest contentPersonListRequest) {
+		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentPersonalList(contentPersonListRequest), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "content tag list", notes = "특정 태그의 게시물 리스트 조회", response = ContentGetResponse.class)

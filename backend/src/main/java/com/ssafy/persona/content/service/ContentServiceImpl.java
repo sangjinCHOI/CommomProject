@@ -15,6 +15,7 @@ import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.content.model.dto.ContentLikeRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
+import com.ssafy.persona.content.model.dto.ContentPersonListRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
 import com.ssafy.persona.content.model.dto.ContentTagListRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
@@ -71,8 +72,8 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public List<ContentGetResponse> contentPersonalList(int characterSeq) {
-		return contentMapper.contentPersonalList(characterSeq);
+	public List<ContentGetResponse> contentPersonalList(ContentPersonListRequest contentPersonListRequest) {
+		return contentMapper.contentPersonalList(contentPersonListRequest);
 	}
 
 	@Override
