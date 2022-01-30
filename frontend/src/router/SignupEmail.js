@@ -8,18 +8,16 @@ import axios from "axios";
 
 export default class SignupEmail extends Component {
   state = {
-    emaildata: userStore.getState().emaildata,
     iddata: userStore.getState().iddata,
+    emaildata: userStore.getState().emaildata,
   };
 
   constructor(props) {
     super(props);
     userStore.subscribe(
       function () {
-        this.setState({ data: userStore.getState().emaildata });
         this.setState({ iddata: userStore.getState().iddata });
-        console.log("아이디 데이터" + this.state.iddata);
-        console.log("아이디 데이터" + this.state.emaildata);
+        this.setState({ emaildata: userStore.getState().emaildata });
       }.bind(this)
     );
   }
@@ -28,7 +26,7 @@ export default class SignupEmail extends Component {
     e.preventDefault();
     console.log("이메일 재전송");
     console.log("아이디 : " + this.state.iddata);
-    console.log("이메일 : " + this.state.data);
+    console.log("이메일 : " + this.state.emaildata);
 
     axios
       .get("http://localhost:8080/user/email/", {
@@ -38,6 +36,9 @@ export default class SignupEmail extends Component {
       })
       .then((data) => {
         userStore.dispatch({ type: "idtrans", iddata: this.state.iddata });
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -63,7 +64,7 @@ export default class SignupEmail extends Component {
               buttonType="link"
               size="lg"
               ripple="dark"
-              onClick={() => window.open("https://" + this.state.data, "_blank")}
+              onClick={() => window.open("https://" + this.state.emaildata, "_blank")}
             >
               메일함 이동
             </Button>

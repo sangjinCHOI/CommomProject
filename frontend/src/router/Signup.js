@@ -129,8 +129,8 @@ export default function Signup() {
             },
           })
           .then((data) => {
-            userStore.dispatch({ type: "idtrans", iddata: _id });
-            userStore.dispatch({ type: "emailtrans", emaildata: email });
+            userStore.dispatch({ type: "idtrans", emaildata: email, iddata: _id });
+            // userStore.dispatch({ type: "idtrans", iddata: _id });
 
             history.push("../accounts/signup/email");
           });
