@@ -27,7 +27,9 @@ export default function CharacterImg({
         />
       </div>
       <div className={`${styles.center}`}>
-        <span className="w-32 text-center">{underText}</span>
+        <span className="text-center" style={{ maxWidth: "8rem" }}>
+          {underText}
+        </span>
       </div>
     </div>
   );

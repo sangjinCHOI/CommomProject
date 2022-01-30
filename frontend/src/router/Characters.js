@@ -76,7 +76,7 @@ const Character = ({
       }
       onClick={isLock ? (e) => e.preventDefault() : null}
     >
-      <div className="mt-8 mx-12">
+      <div className="mt-8 mx-12 w-32">
         <CharacterImg
           underText={nickname}
           // 캐릭터 관리 상태인지, 캐릭터가 존재하는지, 이미지가 있는지에 따라 분기

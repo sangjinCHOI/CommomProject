@@ -45,7 +45,7 @@ export default function CharactersCreate() {
     console.log(data);
     axios
       .post("http://localhost:8080/character", JSON.stringify(data), {
-        headers: { "Content-type": "application/json" },
+        headers: { "Content-Type": "application/json" },
       })
       .then((res) => {
         console.log(res);

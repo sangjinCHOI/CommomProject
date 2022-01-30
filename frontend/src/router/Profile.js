@@ -8,7 +8,11 @@ export default function Profile() {
   return (
     <div>
       <MainCard classes="border">
-        <CharacterProfile nickname={nickname} />
+        <CharacterProfile
+          nickname={nickname}
+          category="요리"
+          introduction="안녕하세요 반갑습니다 팔로우해주세요 감사합니다 수고하세요"
+        />
       </MainCard>
       <div className="border">
         <Content />

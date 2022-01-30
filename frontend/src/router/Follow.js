@@ -56,7 +56,7 @@ export default function Follow() {
             type="text"
             placeholder="캐릭터 검색"
           />
-          <span class="material-icons absolute right-12">search</span>
+          <span className="material-icons absolute right-12">search</span>
         </div>
         {isFollowerTab
           ? shuffle(nicknameList).map((nickname) => (

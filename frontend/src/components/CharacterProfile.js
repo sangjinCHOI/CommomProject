@@ -3,7 +3,14 @@ import { Link } from "react-router-dom";
 import CharacterImg from "./CharacterImg";
 import styles from "./CharacterProfile.module.css";
 
-export default function CharacterProfile({ nickname, classes, isMe = true }) {
+export default function CharacterProfile({
+  nickname,
+  category,
+  introduction,
+  representativeAchievement,
+  classes,
+  isMe = true,
+}) {
   return (
     <div className={`flex justify-center items-center p-4 my-4 ${classes}`}>
       <CharacterImg />
@@ -18,7 +25,7 @@ export default function CharacterProfile({ nickname, classes, isMe = true }) {
             />
             {/* <span className="text-xs text-yellow-300">요리왕</span> */}
           </div>
-          {nickname}
+          {nickname} ({category})
         </div>
         <div className="py-1">
           <div className="inline-block mr-8">
@@ -38,9 +45,9 @@ export default function CharacterProfile({ nickname, classes, isMe = true }) {
           </div>
         </div>
 
-        <div className="text-sm w-72 h-7">안녕하세요!</div>
+        <div className="text-sm w-72 h-7">{introduction}</div>
         {isMe ? (
-          <div className="mt-2">
+          <div className="mt-3">
             <div className="inline-block px-2">
               <Label color="blueGray" className={`${styles.customRadius}`}>
                 업적 보기
