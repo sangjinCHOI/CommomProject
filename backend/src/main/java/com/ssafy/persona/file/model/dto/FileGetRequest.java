@@ -12,5 +12,8 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class FileGetRequest {
-	private int fileSeq;
+	private int fileName;
+	private int fileSize;
+	private int filePath;
+	private int fileType;
 }
