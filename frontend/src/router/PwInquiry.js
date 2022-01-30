@@ -1,10 +1,11 @@
-import "@material-tailwind/react/tailwind.css";
-import Logo from "../assets/images/main_logo.png";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
 import { useHistory } from "react-router";
+import userStore from "../store/userStore";
+import "@material-tailwind/react/tailwind.css";
+import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
 
 export default function PwInquiry() {
@@ -22,11 +23,17 @@ export default function PwInquiry() {
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       setEmail("test : " + e.target.value);
-      console.log(email);
       setEmailShow(true);
-      onSubmit(e);
     }
   };
+
+  const emailHandleKeyPress = useCallback((e) => {
+    if (e.key === "Enter") {
+      setEmail(e.target.value);
+      console.log(e.target.value);
+      onSubmit();
+    }
+  });
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -44,9 +51,15 @@ export default function PwInquiry() {
         },
       })
       .then((data) => {
-        console.log(data);
-        // alert("이메일을 확인해 주세요");
-        history.push("./pw_inquiry/result");
+        // console.log(data);
+        userStore.dispatch({ type: "emailtrans", emaildata: email });
+        console.log("이메일" + email);
+
+        if (data.status === 200) {
+          history.push("./pw_inquiry/result");
+        } else {
+          alert("ID 또는 Email을 확인해 주세요.");
+        }
       })
       .catch((e) => {
         console.log(e);
@@ -75,7 +88,7 @@ export default function PwInquiry() {
         </div>
       </div>
 
-      {emailShow ? <EmailComp handleKeyPress={handleKeyPress}></EmailComp> : null}
+      {emailShow ? <EmailComp emailHandleKeyPress={emailHandleKeyPress}></EmailComp> : null}
 
       <CardFooter>
         <div className="flex justify-center">
@@ -94,7 +107,7 @@ export default function PwInquiry() {
   );
 }
 
-const EmailComp = ({ handleKeyPress }) => {
+const EmailComp = ({ emailHandleKeyPress }) => {
   return (
     <>
       <p align="center">가입한 이메일을 입력해 주세요.</p>
@@ -107,7 +120,7 @@ const EmailComp = ({ handleKeyPress }) => {
             placeholder="E-mail"
             outline={true}
             iconName="person"
-            onKeyPress={handleKeyPress}
+            onKeyPress={emailHandleKeyPress}
           />
         </div>
       </div>

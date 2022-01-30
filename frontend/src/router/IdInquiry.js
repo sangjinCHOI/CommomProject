@@ -28,9 +28,8 @@ export default function IdInquiry() {
     axios
       .get("http://localhost:8080/user/email/" + email, {})
       .then(({ data }) => {
-        console.log(data.userId);
-
-        userStore.dispatch({ type: "idtrans", iddata: data.userId });
+        // console.log(data.userId);
+        userStore.dispatch({ type: "idtrans", iddata: data.userId, emaildata: email });
 
         history.push("./id_inquiry/result");
       })
@@ -76,11 +75,11 @@ export default function IdInquiry() {
 
       <CardFooter>
         <div className="flex justify-center">
-          <Link to="./id_inquiry/result">
-            <Button color="lightBlue" buttonType="link" size="lg" ripple="dark" onClick={onSubmit}>
-              아이디 찾기
-            </Button>
-          </Link>
+          {/* <Link to="./id_inquiry/result"> */}
+          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark" onClick={onSubmit}>
+            아이디 찾기
+          </Button>
+          {/* </Link> */}
           <Link to="../accounts/pw_inquiry">
             <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
               비밀번호 찾기

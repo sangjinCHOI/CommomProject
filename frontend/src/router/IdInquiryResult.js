@@ -8,13 +8,20 @@ import { Component } from "react/cjs/react.production.min";
 import { Card, CardBody, CardFooter, Button } from "@material-tailwind/react";
 
 export default class IdInquiryResult extends Component {
-  state = { data: userStore.getState().iddata };
+  state = {
+    star: Math.round(String(userStore.getState().iddata).length / 2),
+    data:
+      userStore.getState().iddata.substr(0, String(userStore.getState().iddata).length / 2) +
+      "****",
+    emaildata: userStore.getState().emaildata,
+  };
   constructor(props) {
     super(props);
+
     userStore.subscribe(
       function () {
-        console.log(userStore.getState().iddata);
-        this.setState({ data: userStore.getState().iddata });
+        this.setState({ emaildata: userStore.getState().emaildata });
+        // console.log(blind_id);
       }.bind(this)
     );
   }
@@ -22,8 +29,20 @@ export default class IdInquiryResult extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     console.log("이메일 보내기");
-
-    axios.get().then();
+    console.log("asfaa" + this.state.emaildata);
+    axios
+      .get("http://localhost:8080/user/email/id", {
+        params: {
+          userEmail: this.state.emaildata,
+        },
+      })
+      .then((data) => {
+        console.log(data);
+        alert("이메일을 확인해 주세요!");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   render() {

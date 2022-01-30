@@ -7,18 +7,19 @@ import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
 
 export default function Login() {
-  // const dispatch = useDispatch();
-
+  // const history = useHistory();
   const [_id, setId] = useState("");
+  const [password, setPassword] = useState("");
+
   let [passShow, setPassShow] = useState(false);
 
   const onIdHandler = (e) => {
     console.log("id : " + e.target.value);
 
     setId(e.target.value);
-    if (e.target.value == "") {
-      setPassShow(false);
-    }
+    // if (e.target.value == "") {
+    //   setPassShow(false);
+    // }
   };
 
   // const onPasswordHandler = (e) => {
@@ -28,8 +29,37 @@ export default function Login() {
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
+      setPassword(e.target.value);
       setPassShow(true);
+      // onSubmit(e);
     }
+  };
+
+  // const pwHandleKeyPress = (e) => {
+  //   setPassword(e.target.value);
+  //   console.log("password : " + e.target.value);
+  // };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log("로그인");
+
+    const data = {
+      userId: _id,
+      userPw: password,
+    };
+
+    axios
+      .post("http://localhost:8080/user/login", JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((data) => {
+        console.log(data);
+
+        // history.push("./");
+      });
   };
 
   return (
@@ -57,7 +87,7 @@ export default function Login() {
       </div>
       <CardFooter>
         <div className="flex justify-center">
-          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
+          <Button color="lightBlue" buttonType="link" size="lg" ripple="dark" onClick={onSubmit}>
             로그인
           </Button>
           <Link to="../accounts/signup">
@@ -71,43 +101,7 @@ export default function Login() {
   );
 }
 
-function PassComp(props) {
-  const [password, setPassword] = useState("");
-
-  const onPasswordHandler = (e) => {
-    console.log("pass : " + e.target.value);
-    setPassword(e.target.value);
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      onSubmit();
-    }
-  };
-
-  const onSubmit = () => {
-    console.log("로그인");
-
-    const data = {
-      userId: props.value,
-      userPw: password,
-    };
-
-    axios
-      .get("http://localhost:8080/user/login", JSON.stringify(data), {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((data) => {
-        console.log("data : " + data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
+const PassComp = ({ pwHandleKeyPress }) => {
   return (
     <div className="mb-5">
       <div className="bg-white rounded-lg">
@@ -117,12 +111,12 @@ function PassComp(props) {
           placeholder="Password를 입력해주세요"
           outline={true}
           iconName="pin"
-          value={password}
-          onChange={onPasswordHandler}
-          onKeyPress={handleKeyPress}
+          // value={password}
+          // onChange={onPasswordHandler}
+          onKeyPress={pwHandleKeyPress}
         />
       </div>
       <Link to="../accounts/pw_inquiry">비밀번호를 잊으셨나요?</Link>
     </div>
   );
-}
+};
