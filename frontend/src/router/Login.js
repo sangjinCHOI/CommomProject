@@ -35,10 +35,10 @@ export default function Login() {
     }
   };
 
-  // const pwHandleKeyPress = (e) => {
-  //   setPassword(e.target.value);
-  //   console.log("password : " + e.target.value);
-  // };
+  const pwHandleKeyPress = (e) => {
+    setPassword(e.target.value);
+    console.log("password : " + e.target.value);
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -56,9 +56,15 @@ export default function Login() {
         },
       })
       .then((data) => {
-        console.log(data);
+        console.log(data.data);
+        // console.log("pass : " + password);
+
+        // window.localStorage.setItem()
 
         // history.push("./");
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -83,7 +89,7 @@ export default function Login() {
           />
         </div>
         <Link to="../accounts/id_inquiry">아이디를 잊으셨나요?</Link>
-        {passShow ? <PassComp value={_id}></PassComp> : null}
+        {passShow ? <PassComp pwHandleKeyPress={pwHandleKeyPress}></PassComp> : null}
       </div>
       <CardFooter>
         <div className="flex justify-center">
