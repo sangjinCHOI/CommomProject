@@ -15,10 +15,12 @@ public class FileUploadRequest {
 	private MultipartFile[] myfile;
 	private char fileType;
 	private String relationTb;
+	private int relationSeq;
 	
-	FileUploadRequest(MultipartFile[] files, char fileType, String relationTb){
+	FileUploadRequest(MultipartFile[] files, char fileType, String relationTb, int relationSeq){
 		this.myfile=files;
 		this.fileType=fileType;
 		this.relationTb=relationTb;
+		this.relationSeq = relationSeq;
 	}
 }

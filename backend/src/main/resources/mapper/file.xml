@@ -4,8 +4,8 @@
 
 <mapper namespace="com.ssafy.persona.file.mapper.FileMapper">
 	<insert id="uploadFile">
-		insert into tb_file(file_name, file_size, file_path, file_type, relation_tb, file_registered_date, file_modified_date)
-		values (#{fileName}, #{fileSize}, #{filePath}, #{fileType}, #{relationTb}, now(), now())
+		insert into tb_file(file_name, file_size, file_path, file_type, relation_tb, relation_seq, file_registered_date, file_modified_date)
+		values (#{fileName}, #{fileSize}, #{filePath}, #{fileType}, #{relationTb}, #{relationSeq}, now(), now())
 	</insert>
 
 </mapper>
