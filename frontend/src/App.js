@@ -19,6 +19,7 @@ import SettingsCharacter from "./router/SettingsCharacter";
 import SettingsAccount from "./router/SettingsAccout";
 import SettingsAlarm from "./router/SettingsAlarm";
 import SettingsHelp from "./router/SettingsHelp";
+import Achievement from "./router/Achievement";
 import Profile from "./router/Profile";
 import Follow from "./router/Follow";
 import CharactersUpdate from "./router/CharactersUpdate";
@@ -69,6 +70,7 @@ function App() {
                 {/* characters, login, signup같은 닉네임이 있다면 문제 발생 가능 주의 */}
                 <Route exact path="/:nickname" component={Profile} />
                 <Route exact path="/:nickname/follow" component={Follow} />
+                <Route exact path="/:nickname/achievement" component={Achievement} />
               </Switch>
             </Layout>
           </Route>
