@@ -17,9 +17,9 @@ export default function Login() {
     console.log("id : " + e.target.value);
 
     setId(e.target.value);
-    // if (e.target.value == "") {
-    //   setPassShow(false);
-    // }
+    if (e.target.value == "") {
+      setPassShow(false);
+    }
   };
 
   // const onPasswordHandler = (e) => {
@@ -42,7 +42,6 @@ export default function Login() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("로그인");
 
     const data = {
       userId: _id,
@@ -56,10 +55,11 @@ export default function Login() {
         },
       })
       .then((data) => {
-        console.log(data.data);
-        // console.log("pass : " + password);
+        // console.log(data.data);
 
-        // window.localStorage.setItem()
+        const token = data.data;
+        window.localStorage.setItem("idToken", JSON.stringify(data.data));
+        console.log(localStorage.getItem("idToken"));
 
         // history.push("./");
       })
