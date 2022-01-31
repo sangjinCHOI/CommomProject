@@ -79,14 +79,14 @@ const Character = ({
       <div className="mt-8 mx-12 w-32">
         <CharacterImg
           underText={nickname}
-          // 캐릭터 관리 상태인지, 캐릭터가 존재하는지, 이미지가 있는지에 따라 분기
+          // 캐릭터 잠금 상태인지, 캐릭터가 존재하는지, 캐릭터 관리 상태인지, 이미지가 있는지에 따라 분기(순서 중요)
           imgSrc={
             isLock
               ? require("../assets/images/character_lock.png")
-              : isManagement
-              ? require("../assets/images/character_edit.png")
               : isExist
-              ? imgSrc
+              ? isManagement
+                ? require("../assets/images/character_edit.png")
+                : imgSrc
                 ? imgSrc
                 : require("../assets/images/default_user.png")
               : require("../assets/images/character_plus.png")

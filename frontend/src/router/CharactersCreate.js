@@ -1,6 +1,7 @@
 import { InputIcon, Textarea } from "@material-tailwind/react";
 import axios from "axios";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
 
@@ -23,24 +24,20 @@ const useInput = (initialValue, validator) => {
 
 export default function CharactersCreate() {
   const maxLen = (value) => value.length <= 50;
-  const introductionInput = useInput("", maxLen);
+  const introduction = useInput("", maxLen);
 
   const [userSeq, setUserSeq] = useState(0);
-  const [fileName, setFileName] = useState("");
-  const [fileSize, setFileSize] = useState(0);
   const [categorySeq, setCategorySeq] = useState(0);
   const [nickname, setNickname] = useState("");
-  const [introduction, setIntroduction] = useState("");
+  const history = useHistory();
 
   const characterSave = (e) => {
     e.preventDefault();
     const data = {
-      userSeq: 53, // 현재 DB상에서 id: pjhq2pjhq2인 유저
-      fileName: "test.png",
-      fileSize: 10,
+      userSeq: 91, // 현재 DB상에서 id: qweqweqwe123인 유저
       categorySeq: parseInt(categorySeq),
       nickname,
-      introduction: introductionInput.value,
+      introduction: introduction.value,
     };
     console.log(data);
     axios
@@ -49,18 +46,18 @@ export default function CharactersCreate() {
       })
       .then((res) => {
         console.log(res);
+        alert("캐릭터 생성이 완료되었습니다.");
+        history.push("../characters/select");
       })
       .catch((err) => console.log(err));
   };
 
   const onNicknameHandler = (e) => {
     setNickname(e.target.value);
-    console.log(e.target.value);
   };
 
   const onCategorySeqHandler = (e) => {
     setCategorySeq(e.target.value);
-    console.log(e.target.value);
   };
 
   return (
@@ -109,10 +106,10 @@ export default function CharactersCreate() {
             outline={true}
             color="lightBlue"
             className="mt-8"
-            {...introductionInput} // value={introductionInput.value}
+            {...introduction} // value={introductionInput.value}
           />
           <div className="absolute right-5 bottom-3 text-gray-400">
-            {introductionInput.value.length} / 50
+            {introduction.value.length} / 50
           </div>
         </div>
       </div>

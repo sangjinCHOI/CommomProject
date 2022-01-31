@@ -1,5 +1,7 @@
 import { InputIcon, Textarea } from "@material-tailwind/react";
+import axios from "axios";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
 
@@ -23,10 +25,40 @@ const useInput = (initialValue, validator) => {
 export default function CharactersCreate() {
   const maxLen = (value) => value.length <= 50;
   const introduction = useInput("", maxLen);
+
+  const [userSeq, setUserSeq] = useState(0);
+  const [characterSeq, setCharacterSeq] = useState(0);
+  const [nickname, setNickname] = useState("");
+  const history = useHistory();
+
+  const characterUpdate = (e) => {
+    e.preventDefault();
+    const data = {
+      characterSeq: 9, // 링크연결갱신갱신 이었던 캐릭터
+      introduction: introduction.value,
+      nickname,
+    };
+    console.log(data);
+    axios
+      .put("http://localhost:8080/character", JSON.stringify(data), {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((res) => {
+        console.log(res);
+        alert("캐릭터 수정이 완료되었습니다.");
+        history.push("../characters/select");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const onNicknameHandler = (e) => {
+    setNickname(e.target.value);
+  };
+
   return (
     <>
       <Link to="../characters/select">
-        <span class="material-icons text-xl m-4 absolute top-0">arrow_back 취소</span>
+        <span className="material-icons text-xl m-4 absolute top-0">arrow_back 취소</span>
       </Link>
       <img
         src={require("../assets/images/main_logo.png")}
@@ -42,6 +74,7 @@ export default function CharactersCreate() {
             outline={true}
             iconName="edit"
             placeholder="닉네임을 입력하세요."
+            onChange={onNicknameHandler}
           />
         </div>
         <div className="bg-white rounded-lg text-gray-400 my-8">
@@ -66,7 +99,7 @@ export default function CharactersCreate() {
         </div>
       </div>
       <div className="text-center text-2xl mt-16 flex justify-center">
-        <Link to="../characters/select">
+        <Link to="../characters/select" onClick={characterUpdate}>
           <span>캐릭터 저장</span>
         </Link>
       </div>
