@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
 import { useHistory } from "react-router";
 import userStore from "../store/userStore";
+import { useState, useCallback } from "react";
 import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";

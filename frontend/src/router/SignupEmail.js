@@ -1,10 +1,10 @@
+import axios from "axios";
 import styles from "./Signup.module.css";
 import userStore from "../store/userStore";
 import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { Component } from "react/cjs/react.production.min";
 import { Card, CardBody, CardFooter, Button } from "@material-tailwind/react";
-import axios from "axios";
 
 export default class SignupEmail extends Component {
   state = {
