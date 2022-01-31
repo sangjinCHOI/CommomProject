@@ -1,3 +1,7 @@
 .customRadius {
   border-radius: 4px !important;
 }
+
+.textCenter {
+  text-align: center;
+}
