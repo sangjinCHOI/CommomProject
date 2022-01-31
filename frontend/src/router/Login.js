@@ -1,21 +1,20 @@
-import "@material-tailwind/react/tailwind.css";
 import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
+import { useHistory } from "react-router";
+import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
 
 export default function Login() {
-  // const history = useHistory();
+  const history = useHistory();
   const [_id, setId] = useState("");
   const [password, setPassword] = useState("");
 
   let [passShow, setPassShow] = useState(false);
 
   const onIdHandler = (e) => {
-    console.log("id : " + e.target.value);
-
     setId(e.target.value);
     if (e.target.value == "") {
       setPassShow(false);
@@ -31,13 +30,11 @@ export default function Login() {
     if (e.key === "Enter") {
       setPassword(e.target.value);
       setPassShow(true);
-      // onSubmit(e);
     }
   };
 
   const pwHandleKeyPress = (e) => {
     setPassword(e.target.value);
-    console.log("password : " + e.target.value);
   };
 
   const onSubmit = (e) => {
@@ -52,16 +49,15 @@ export default function Login() {
       .post("http://localhost:8080/user/login", JSON.stringify(data), {
         headers: {
           "Content-Type": "application/json",
+          //토큰값
         },
       })
       .then((data) => {
-        // console.log(data.data);
-
         const token = data.data;
         window.localStorage.setItem("idToken", JSON.stringify(data.data));
         console.log(localStorage.getItem("idToken"));
 
-        // history.push("./");
+        history.push("../characters/select");
       })
       .catch((e) => {
         console.log(e);
