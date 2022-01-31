@@ -53,7 +53,7 @@ public class CharacterController {
 	@Autowired
 	private AlarmService alarmService;
 
-	@PostMapping("/")
+	@PostMapping("")
 	public ResponseEntity<Map<String, String>> createCharacter(@RequestBody CharacterCreatRequest request) {
 		logger.info("캐릭터 생성 요청 - 요청 유저 번호: " + request.getUserSeq());
 		String message = "";
@@ -71,7 +71,7 @@ public class CharacterController {
 		return new ResponseEntity<Map<String, String>>(result, status);
 	}
 
-	@PutMapping("/")
+	@PutMapping("")
 	public ResponseEntity<Map<String, String>> modifyCharacter(@RequestBody CharacterUpdateRequest request) {
 		logger.info("캐릭터 정보 수정 요청 - 요청 캐릭터 번호: " + request.getCharacterSeq());
 		String message = "";
@@ -107,7 +107,7 @@ public class CharacterController {
 		return new ResponseEntity<Map<String, String>>(result, status);
 	}
 
-	@DeleteMapping("/")
+	@DeleteMapping("")
 	public ResponseEntity<Map<String, String>> deleteCharacter(@RequestBody CharacterDeleteRequest request) {
 		logger.info("캐릭터 삭제 요청 - 요청 캐릭터 번호: " + request.getCharacterSeq());
 		String message = "";
