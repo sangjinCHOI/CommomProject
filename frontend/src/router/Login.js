@@ -53,7 +53,7 @@ export default function Login() {
         },
       })
       .then((data) => {
-        const token = data.data;
+        // const token = data.data;
         window.localStorage.setItem("idToken", JSON.stringify(data.data));
         console.log(localStorage.getItem("idToken"));
 
