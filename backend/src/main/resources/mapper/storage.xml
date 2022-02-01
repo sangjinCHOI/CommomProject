@@ -7,5 +7,15 @@
 		insert into tb_storage (character_seq, storage_name, storage_public, storage_created_date)
 		values (#{characterSeq}, #{storageName}, #{storagePublic}, now())
 	</insert>
+	
+	<update id="storageModify" parameterType="storageModifyRequest">
+		update tb_storage
+		set <if test="storageName != null and storageName != ''">
+				storage_name = #{storageName},
+			</if>
+				storage_public = #{storagePublic},
+		   		storage_modified_date = now()
+		where storage_seq = #{storageSeq} and character_seq = #{characterSeq}
+	</update>
 
 </mapper>
