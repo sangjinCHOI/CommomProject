@@ -20,4 +20,6 @@ public interface CharacterService {
 	List<CharacterGetResponse> list(int userSeq);
 
 	int updateAlarmStatus(AlarmSettingUpdateRequest request);
+
+	int checkCharacterNickname(String nickname);
 }

@@ -62,4 +62,9 @@ public class CharacterServiceImpl implements CharacterService {
 		return characterMapper.updateAlarmStatus(request);
 	}
 
+	@Override
+	public int checkCharacterNickname(String nickname) {
+		return characterMapper.checkCharacterNickname(nickname);
+	}
+
 }

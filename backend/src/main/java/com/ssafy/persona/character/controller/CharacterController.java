@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.persona.character.model.dto.AlarmCreateRequest;
@@ -35,7 +36,7 @@ import com.ssafy.persona.character.service.AlarmService;
 import com.ssafy.persona.character.service.CharacterService;
 import com.ssafy.persona.character.service.FollowService;
 
-@CrossOrigin(origins = {"*"}, maxAge = 6000)
+@CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
 @RequestMapping("/character")
 public class CharacterController {
@@ -49,7 +50,7 @@ public class CharacterController {
 
 	@Autowired
 	private FollowService followService;
-	
+
 	@Autowired
 	private AlarmService alarmService;
 
@@ -88,10 +89,10 @@ public class CharacterController {
 		result.put("message", message);
 		return new ResponseEntity<Map<String, String>>(result, status);
 	}
-	
+
 	@PutMapping("alarmStatus")
 	public ResponseEntity<Map<String, String>> updateAlarmStatus(@RequestBody AlarmSettingUpdateRequest request) {
-		logger.info("알람 설정 변경 - 변경 요청: "+request.getCharacterSeq());
+		logger.info("알람 설정 변경 - 변경 요청: " + request.getCharacterSeq());
 		String message = "";
 		HttpStatus status = null;
 
@@ -139,8 +140,26 @@ public class CharacterController {
 		return new ResponseEntity<List<CharacterGetResponse>>(characterService.list(userSeq), HttpStatus.OK);
 	} // 예외처리 필요
 
+	@GetMapping("/nickname")
+	public ResponseEntity<Map<String, String>> checkNickname(@RequestParam String nickname) {
+		String message = "";
+		HttpStatus status = null;
+		if (characterService.checkCharacterNickname(nickname) == 1) {
+			message = "이미 존잴하는 닉네임 입니다.";
+			status = HttpStatus.BAD_REQUEST;
+		} else {
+			message = "해당 닉네임은 사용가능합니다. 사용하시겠습니까?";
+			status = HttpStatus.OK;
+		}
+		Map<String, String> result = new HashMap<String, String>();
+		result.put("message", message);
+		return new ResponseEntity<Map<String, String>>(result, status);
+
+	}
+
 	@PutMapping("/achievement")
-	public ResponseEntity<Map<String, String>> updateRepresentativeAchievement(@RequestBody CharacterUpdateRequest cur) {
+	public ResponseEntity<Map<String, String>> updateRepresentativeAchievement(
+			@RequestBody CharacterUpdateRequest cur) {
 		logger.info("대표 업적 변경 - 요청 캐릭터 번호: " + cur.getCharacterSeq());
 		String message = "";
 		HttpStatus status = null;
@@ -210,11 +229,11 @@ public class CharacterController {
 			tmpMap.put("followee", i);
 			result.add(tmpMap);
 		}
-		
+
 		return new ResponseEntity<List<Map<String, Integer>>>(result, HttpStatus.OK);
 
 	} // 예외처리 필요
-	
+
 	@PostMapping("alarm")
 	public ResponseEntity<Map<String, String>> createAlarm(@RequestBody AlarmCreateRequest request) {
 		String message = "";
@@ -231,14 +250,14 @@ public class CharacterController {
 		result.put("message", message);
 		return new ResponseEntity<Map<String, String>>(result, status);
 	}
-	
+
 	@GetMapping("alarm/{alarmSeq}")
 	public ResponseEntity<AlarmGetResponse> alarmRead(@PathVariable int alarmSeq) {
-		logger.info("알람 클릭 - 호출번호: "+alarmSeq);
+		logger.info("알람 클릭 - 호출번호: " + alarmSeq);
 
 		return new ResponseEntity<AlarmGetResponse>(alarmService.alarmRead(alarmSeq), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("alarms/{characterSeq}")
 	public ResponseEntity<List<AlarmGetResponse>> alarmList(@PathVariable int characterSeq) {
 		logger.info("알람 리스트 요청 - 캐릭터 번호: " + characterSeq);
@@ -246,5 +265,4 @@ public class CharacterController {
 		return new ResponseEntity<List<AlarmGetResponse>>(alarmService.getAlarmList(characterSeq), HttpStatus.OK);
 	} // 예외처리 필요
 
-	
 }

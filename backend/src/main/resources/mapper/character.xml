@@ -70,4 +70,13 @@
 		and character_active = 1
 	</select>
 
+	<select id="checkCharacterNickname"	resultType="int">
+		select 
+			count(*)
+		from
+			tb_character
+		where nickname=#{nickname}
+		and character_active = 1
+	</select>
+
 </mapper>

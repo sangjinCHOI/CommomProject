@@ -26,4 +26,5 @@ public interface CharacterMapper {
 
 	int updateAlarmStatus(AlarmSettingUpdateRequest request);
 	
+	int checkCharacterNickname(String nickname);
 }
