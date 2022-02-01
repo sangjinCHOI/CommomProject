@@ -1,9 +1,13 @@
 import { InputIcon, Textarea } from "@material-tailwind/react";
 import axios from "axios";
 import { useState } from "react";
+import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
+
+// characterStore의 update reducer를 import
+import { update } from "../store/characterStore";
 
 const useInput = (initialValue, validator) => {
   const [value, setValue] = useState(initialValue);
@@ -22,7 +26,7 @@ const useInput = (initialValue, validator) => {
   return { value, onChange };
 };
 
-export default function CharactersCreate() {
+function CharactersCreate({ characterSlice, updateCharacter }) {
   const maxLen = (value) => value.length <= 50;
   const introduction = useInput("", maxLen);
 
@@ -33,22 +37,27 @@ export default function CharactersCreate() {
 
   const characterUpdate = (e) => {
     e.preventDefault();
+
     const data = {
       characterSeq: 9, // 링크연결갱신갱신 이었던 캐릭터
       introduction: introduction.value,
       nickname,
     };
-    console.log(data);
-    axios
-      .put("http://localhost:8080/character", JSON.stringify(data), {
-        headers: { "Content-Type": "application/json" },
-      })
-      .then((res) => {
-        console.log(res);
-        alert("캐릭터 수정이 완료되었습니다.");
-        history.push("../characters/select");
-      })
-      .catch((err) => console.log(err));
+
+    // characterStore.js의 update reducer 실행
+    updateCharacter({ data });
+
+    // console.log(data);
+    // axios
+    //   .put("http://localhost:8080/character", JSON.stringify(data), {
+    //     headers: { "Content-Type": "application/json" },
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //     alert("캐릭터 수정이 완료되었습니다.");
+    //     history.push("../characters/select");
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   const onNicknameHandler = (e) => {
@@ -57,6 +66,11 @@ export default function CharactersCreate() {
 
   return (
     <>
+      {/* 테스트 */}
+      {characterSlice.nickname}
+      <br />
+      {characterSlice.introduction}
+
       <Link to="../characters/select">
         <span className="material-icons text-xl m-4 absolute top-0">arrow_back 취소</span>
       </Link>
@@ -106,3 +120,14 @@ export default function CharactersCreate() {
     </>
   );
 }
+
+// characterSlice를 return 함으로써 여기서 props로 받아올 수 있는듯?
+function mapStateToProps(state) {
+  return { characterSlice: state.character };
+}
+
+function mapDispatchToProps(dispatch) {
+  return { updateCharacter: (character) => dispatch(update(character)) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CharactersCreate);
