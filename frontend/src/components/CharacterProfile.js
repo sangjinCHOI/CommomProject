@@ -45,13 +45,15 @@ export default function CharacterProfile({
           </div>
         </div>
 
-        <div className="text-sm w-72 h-7">{introduction}</div>
+        <div className="text-sm w-80 h-7">{introduction}</div>
         {isMe ? (
           <div className="mt-3">
             <div className="inline-block px-2">
-              <Label color="blueGray" className={`${styles.customRadius}`}>
-                업적 보기
-              </Label>
+              <Link to={`../${nickname}/achievement`}>
+                <Label color="blueGray" className={`${styles.customRadius}`}>
+                  업적 보기
+                </Label>
+              </Link>
             </div>
             <div className="inline-block px-2">
               <Link to="../characters/select">
@@ -71,9 +73,11 @@ export default function CharacterProfile({
         ) : (
           <div className="mt-2">
             <div className="inline-block px-2">
-              <Label color="blueGray" className={`${styles.customRadius}`}>
-                업적 보기
-              </Label>
+              <Link to={`../${nickname}/achievement`}>
+                <Label color="blueGray" className={`${styles.customRadius}`}>
+                  업적 보기
+                </Label>
+              </Link>
             </div>
             <div className="inline-block px-2">
               <Label color="lightBlue" className={`${styles.customRadius}`}>
