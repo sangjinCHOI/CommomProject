@@ -22,7 +22,7 @@ export default function CharacterImg({
             (`${styles.profileWrapper}`, `${styles.ProfileImg} ${lock ? "bg-gray-400" : null}`)
           }
           style={{
-            border: "1px solid gray",
+            border: "1px solid lightgray",
           }}
         />
       </div>
