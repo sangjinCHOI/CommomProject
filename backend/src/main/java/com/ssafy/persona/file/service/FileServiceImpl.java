@@ -3,6 +3,7 @@ package com.ssafy.persona.file.service;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.persona.file.mapper.FileMapper;
-import com.ssafy.persona.file.model.dto.FileModifyDTO;
-import com.ssafy.persona.file.model.dto.FileModifyRequest;
+import com.ssafy.persona.file.model.dto.FileReadDTO;
 import com.ssafy.persona.file.model.dto.FileUploadDTO;
 import com.ssafy.persona.file.model.dto.FileUploadRequest;
 
@@ -80,7 +80,7 @@ public class FileServiceImpl implements FileService{
 	@Override
 	public int modifyFile(FileUploadRequest request) throws IllegalStateException, IOException {
 		
-		fileMapper.modifyFile(new FileModifyDTO(request.getRelationTb(), request.getRelationSeq()));
+		fileMapper.modifyFile(new FileReadDTO(request.getRelationTb(), request.getRelationSeq()));
 		
 		String path = makeFolder();
 
@@ -109,6 +109,12 @@ public class FileServiceImpl implements FileService{
 		}
 		
 		return (1);
+	}
+
+	@Override
+	public List<String> readFile(FileReadDTO request) {
+		
+		return fileMapper.readFile(request);
 	}
 
 }

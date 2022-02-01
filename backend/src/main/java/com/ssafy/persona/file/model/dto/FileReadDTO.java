@@ -9,11 +9,11 @@ import lombok.ToString;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class FileModifyDTO {
+public class FileReadDTO {
 	private String relationTb;
 	private int relationSeq;
 	
-	public FileModifyDTO(String relationTb, int relationSeq) {
+	public FileReadDTO(String relationTb, int relationSeq) {
 		this.relationTb = relationTb;
 		this.relationSeq = relationSeq;
 	}
