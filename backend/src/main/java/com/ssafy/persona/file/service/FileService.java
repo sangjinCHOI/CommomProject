@@ -6,4 +6,5 @@ import com.ssafy.persona.file.model.dto.FileUploadRequest;
 
 public interface FileService {
 	int uploadFile(FileUploadRequest request)throws IllegalStateException, IOException;
+	int modifyFile(FileUploadRequest request)throws IllegalStateException, IOException ;
 }

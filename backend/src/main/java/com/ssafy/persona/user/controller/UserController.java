@@ -1,5 +1,6 @@
 package com.ssafy.persona.user.controller;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -20,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.persona.file.model.dto.FileModifyRequest;
+import com.ssafy.persona.file.model.dto.FileUploadRequest;
+import com.ssafy.persona.file.service.FileService;
 import com.ssafy.persona.user.model.dto.MailVerifyRequest;
 import com.ssafy.persona.user.model.dto.UpdateAuthRequest;
 import com.ssafy.persona.user.model.dto.UserGetResponse;
@@ -231,5 +235,11 @@ public class UserController {
 		return (new ResponseEntity(HttpStatus.BAD_REQUEST));
 	}
 
+	@Autowired
+	FileService fileService;
 
+	@PostMapping("/test")
+	public void tmp(FileUploadRequest request) throws IllegalStateException, IOException {
+		fileService.modifyFile(request);
+	}
 }
