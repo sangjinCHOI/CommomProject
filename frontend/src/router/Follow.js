@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { shuffle } from "lodash";
 import MainCard from "../components/MainCard";
+import axios from "axios";
 
 export default function Follow() {
   const nicknameList = [
@@ -21,6 +22,30 @@ export default function Follow() {
 
   const follow = (e) => {
     e.preventDefault();
+    // data1로 팔로우 현황 확인
+    const data1 = {
+      followee: 12,
+      nickname: "유산슬",
+    };
+    // data2로 팔로우 요청
+    // 현재 중복 팔로우 가능
+    // 팔로우 했는지 여부 확인은 어떻게?
+    const data2 = {
+      followee: 13, // 유산슬
+      follower: 12, // 유야호 // 유야호(13)가 유산슬(12)을 팔로우
+    };
+    axios
+      .post("http://localhost:8080/character/followers", JSON.stringify(data1), {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((res) => {
+        console.log(res.data); // 계속 빈 배열 나옴
+        // axios
+        //   .post("http://localhost:8080/character/follow", JSON.stringify(data2), {
+        //     headers: { "Content-Type": "application/json" },
+        //   })
+        //   .then((res) => console.log(res));
+      });
   };
 
   return (
