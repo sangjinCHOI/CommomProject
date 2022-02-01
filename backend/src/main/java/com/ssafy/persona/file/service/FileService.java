@@ -1,7 +1,9 @@
 package com.ssafy.persona.file.service;
 
-import com.ssafy.persona.file.model.dto.FileUploadDTO;
+import java.io.IOException;
+
+import com.ssafy.persona.file.model.dto.FileUploadRequest;
 
 public interface FileService {
-	int uploadFile(FileUploadDTO file);
+	int uploadFile(FileUploadRequest request)throws IllegalStateException, IOException;
 }

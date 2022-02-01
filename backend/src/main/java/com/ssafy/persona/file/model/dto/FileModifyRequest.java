@@ -11,13 +11,15 @@ import lombok.ToString;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class FileUploadRequest {
+public class FileModifyRequest {
+	private int fileSeq;
 	private MultipartFile[] myfile;
 	private char fileType;
 	private String relationTb;
 	private int relationSeq;
 	
-	FileUploadRequest(MultipartFile[] files, char fileType, String relationTb, int relationSeq){
+	FileModifyRequest(int fileSeq, MultipartFile[] files, char fileType, String relationTb, int relationSeq){
+		this.fileSeq = fileSeq;
 		this.myfile=files;
 		this.fileType=fileType;
 		this.relationTb=relationTb;
