@@ -1,7 +1,17 @@
 import React from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "@material-tailwind/react";
+import { Listbox } from "@headlessui/react";
+import { Button, ClosingLabel, Modal, ModalHeader, ModalBody, ModalFooter } from "@material-tailwind/react";
+
+const people = [
+  { id: 1, name: "Durward Reynolds", unavailable: false },
+  { id: 2, name: "Kenton Towne", unavailable: false },
+  { id: 3, name: "Therese Wunsch", unavailable: false },
+  { id: 4, name: "Benedict Kessler", unavailable: true },
+  { id: 5, name: "Katelyn Rohan", unavailable: false },
+];
 
 export default function ContentCreate(props) {
+  const [selectedPerson, setSelectedPerson] = React.useState(people[0]);
   const [fileImage, setFileImage] = React.useState([]);
   const saveFileImage = (e) => {
     const nowImageList = e.target.files;
@@ -26,12 +36,33 @@ export default function ContentCreate(props) {
   return (
     <Modal size="regular" active={isOpen} toggler={() => handleClose(false)}>
       <ModalHeader className="text-center" toggler={() => handleClose(false)}>
-        게시글 작성
+        <span>게시글 작성</span>
+        <select className="bg-white rounded-lg w-24 h-9 mx-3 p-2 text-xs border border-gray-300 outline-sky-500 text-black">
+          <option className="rounded-lg h-10" value="0">
+            전체공개
+          </option>
+          <option className="rounded-lg h-10" value="1">
+            팔로워공개
+          </option>
+          <option className="rounded-lg h-10" value="2">
+            비공개
+          </option>
+        </select>
       </ModalHeader>
       <hr className="mb-5" />
       <ModalBody>
-        <div className="bg-slate-100 rounded mb-1">캐릭터</div>
-        <div className="bg-slate-100 rounded mb-1">태그</div>
+        <input
+          type="text"
+          placeholder="태그를 입력해주세요."
+          className="bg-white rounded-lg w-94 h-9 mx-3 mb-3 p-2 text-xs border border-gray-300 outline-sky-500 text-black"
+        />
+        <div className="bg-slate-100 h-9 rounded mb-1 h-fit flex flex-wrap items-center" style={{ width: 574 }}>
+          <ClosingLabel className="my-1" color="lightGreen">
+            Label
+          </ClosingLabel>
+          <ClosingLabel color="lightGreen">Label</ClosingLabel>
+          <ClosingLabel color="lightGreen">Label</ClosingLabel>
+        </div>
         <textarea className="bg-slate-100 rounded" name="" id="" cols="70" rows="10" placeholder="이 곳에 게시글을 작성해주세요."></textarea>
         <div>
           <img src="{{ fileImage }}" alt="" />
