@@ -1,4 +1,4 @@
-// redux, react-redux, @reduxjs/toolkit 예시 자료
+// redux, react-redux, @reduxjs/toolkit 예시 코드
 
 import { createSlice } from "@reduxjs/toolkit";
 

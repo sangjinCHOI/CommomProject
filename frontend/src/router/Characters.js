@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
 
-export default function Characters() {
+function Characters({ characterSlice }) {
   const [isManagement, setIsManagement] = useState(false);
   const management = (event) => {
     event.preventDefault();
@@ -23,7 +24,7 @@ export default function Characters() {
       </div>
       <div className="flex justify-center m-8">
         <Character
-          nickname="개발왕초보"
+          nickname={characterSlice.nickname}
           isManagement={isManagement}
           isExist={true}
           isLock={false}
@@ -96,3 +97,9 @@ const Character = ({
     </Link>
   );
 };
+
+function mapStateToProps(state) {
+  return { characterSlice: state.character };
+}
+
+export default connect(mapStateToProps, null)(Characters);

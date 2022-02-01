@@ -58,6 +58,7 @@ function CharactersCreate({ characterSlice, updateCharacter }) {
     //     history.push("../characters/select");
     //   })
     //   .catch((err) => console.log(err));
+    history.push("../characters/select");
   };
 
   const onNicknameHandler = (e) => {

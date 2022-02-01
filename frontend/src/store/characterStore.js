@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// 나중에는 서버에서 캐릭터 개수에 따라 각자 적절히 받아와야 할 듯?
 const initialCharacterState = {
-  nickname: "닉네임",
+  nickname: "initialNickname",
   categorySeq: 0,
-  introduction: "한 줄 소개를 입력하세요.",
+  introduction: "initialIntroduction",
 };
 
 const characterSlice = createSlice({
@@ -14,11 +15,6 @@ const characterSlice = createSlice({
       state.nickname = "현재 닉네임";
       state.introduction = "현재 한 줄 소개";
     },
-    // update: (state, action) => {
-    //   console.log(action);
-    //   state.nickname = action.payload.nickname;
-    //   state.introduction = action.payload.introduction;
-    // },
     update: (state, action) => {
       state.nickname = action.payload.data.nickname;
       state.introduction = action.payload.data.introduction;
