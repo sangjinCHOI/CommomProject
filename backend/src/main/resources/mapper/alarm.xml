@@ -35,15 +35,15 @@
 	</select>
 
 	<select id="makeAlarmTarget" resultType="String">
-		<if test="relation_tb == 'tb_character'">
+		<if test="relationTb == 'tb_character'">
 			select nickname from tb_character
 			where character_seq=#{targetSeq}
 		</if>
-		<if test="relation_tb == 'tb_storage'">
+		<if test="relationTb == 'tb_storage'">
 			select storage_name from tb_storage
 			where storage_seq=#{targetSeq}
 		</if>
-		<if test="relation_tb == 'tb_achievement'">
+		<if test="relationTb == 'tb_achievement'">
 			select achievement_name from tb_achievement
 			where achievement_seq=#{targetSeq}
 		</if>

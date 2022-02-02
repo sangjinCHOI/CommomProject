@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.persona.character.model.AlarmEnum;
+import com.ssafy.persona.character.model.dto.AchievementGetRequest;
+import com.ssafy.persona.character.model.dto.AchievementGetResponse;
 import com.ssafy.persona.character.model.dto.AlarmCreateRequest;
 import com.ssafy.persona.character.model.dto.AlarmGetResponse;
 import com.ssafy.persona.character.model.dto.AlarmSettingUpdateRequest;
@@ -33,6 +35,7 @@ import com.ssafy.persona.character.model.dto.FollowRequest;
 import com.ssafy.persona.character.model.dto.FolloweeListRequest;
 import com.ssafy.persona.character.model.dto.FollowerListRequest;
 import com.ssafy.persona.character.model.dto.FollowerListResponse;
+import com.ssafy.persona.character.service.AchievementService;
 import com.ssafy.persona.character.service.AlarmService;
 import com.ssafy.persona.character.service.CharacterService;
 import com.ssafy.persona.character.service.FollowService;
@@ -48,12 +51,12 @@ public class CharacterController {
 
 	@Autowired
 	private CharacterService characterService;
-
 	@Autowired
 	private FollowService followService;
-
 	@Autowired
 	private AlarmService alarmService;
+	@Autowired
+	private AchievementService achievementService;
 
 	@PostMapping("")
 	public ResponseEntity<Map<String, String>> createCharacter(@RequestBody CharacterCreatRequest request) {
@@ -158,7 +161,7 @@ public class CharacterController {
 
 	}
 
-	@PutMapping("/achievement")
+	@PutMapping("/achievement/representative")
 	public ResponseEntity<Map<String, String>> updateRepresentativeAchievement(
 			@RequestBody CharacterUpdateRequest cur) {
 		logger.info("대표 업적 변경 - 요청 캐릭터 번호: " + cur.getCharacterSeq());
@@ -302,5 +305,11 @@ public class CharacterController {
 
 		return new ResponseEntity<List<AlarmGetResponse>>(alarmService.getAlarmList(characterSeq), HttpStatus.OK);
 	} // 예외처리 필요
+	
+	@PostMapping("/achievement")
+	public ResponseEntity<List<AchievementGetResponse>> achievementList(@RequestBody AchievementGetRequest request) {
+		logger.info("업적 리스트 요청 - 캐릭터 번호: "+request.getCharacterSeq());
 
+		return new ResponseEntity<List<AchievementGetResponse>>(achievementService.getAchievementList(request), HttpStatus.OK);
+	} // 예외처리 필요
 }

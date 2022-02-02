@@ -2,14 +2,14 @@ package com.ssafy.persona.character.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ssafy.persona.character.mapper.AlarmMapper;
 import com.ssafy.persona.character.model.dto.AlarmCreateRequest;
 import com.ssafy.persona.character.model.dto.AlarmGetResponse;
 
-@Mapper
+@Service
 public class AlarmServiceImpl implements AlarmService{
 
 	@Autowired

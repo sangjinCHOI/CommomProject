@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 import com.ssafy.persona.character.model.dto.AlarmCreateRequest;
 import com.ssafy.persona.character.model.dto.AlarmGetResponse;
 
-@Mapper
 public interface AlarmService {
 
 	int createAlarm(AlarmCreateRequest request);

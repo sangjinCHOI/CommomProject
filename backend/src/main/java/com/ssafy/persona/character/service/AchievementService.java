@@ -1,14 +1,11 @@
-package com.ssafy.persona.character.mapper;
+package com.ssafy.persona.character.service;
 
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.persona.character.model.dto.AchievementGetRequest;
 import com.ssafy.persona.character.model.dto.AchievementGetResponse;
 
-@Mapper
-public interface AchievementMapper {
+public interface AchievementService {
 
 	List<AchievementGetResponse> getAchievementList(AchievementGetRequest request);
 	
