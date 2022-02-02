@@ -1,38 +1,11 @@
 import React from "react";
-import { Listbox } from "@headlessui/react";
 import { Button, ClosingLabel, Modal, ModalHeader, ModalBody, ModalFooter } from "@material-tailwind/react";
 
-const people = [
-  { id: 1, name: "Durward Reynolds", unavailable: false },
-  { id: 2, name: "Kenton Towne", unavailable: false },
-  { id: 3, name: "Therese Wunsch", unavailable: false },
-  { id: 4, name: "Benedict Kessler", unavailable: true },
-  { id: 5, name: "Katelyn Rohan", unavailable: false },
-];
-
 export default function ContentCreate(props) {
-  const [selectedPerson, setSelectedPerson] = React.useState(people[0]);
-  const [fileImage, setFileImage] = React.useState([]);
-  const saveFileImage = (e) => {
-    const nowImageList = e.target.files;
-    const nowImageURLList = [...fileImage];
-    for (let i = 0; i < nowImageList.length; i += 1) {
-      const nowImageURL = URL.createObjectURL(nowImageList[i]);
-      nowImageURLList.push(nowImageURL);
-    }
-    setFileImage(nowImageURLList);
-    console.log(fileImage);
-  };
-  const deleteFileImage = () => {
-    URL.revokeObjectURL(fileImage);
-    setFileImage("");
-  };
-
   const { isOpen, onCancel } = props;
   const handleClose = () => {
     onCancel();
   };
-
   return (
     <Modal size="regular" active={isOpen} toggler={() => handleClose(false)}>
       <ModalHeader className="text-center" toggler={() => handleClose(false)}>
@@ -68,10 +41,8 @@ export default function ContentCreate(props) {
           <img src="{{ fileImage }}" alt="" />
         </div>
         <div className="bg-slate-100 rounded mb-1 flex justify-between">
-          <input type="file" multiple="multiple" onChange={saveFileImage} />
-          <Button color="red" onClick={() => deleteFileImage()}>
-            파일삭제
-          </Button>
+          <input type="file" multiple="multiple" />
+          <Button color="red">파일삭제</Button>
         </div>
       </ModalBody>
       <ModalFooter>
