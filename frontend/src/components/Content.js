@@ -2,10 +2,17 @@ import React from "react";
 import { Menu } from "@headlessui/react";
 import { Label } from "@material-tailwind/react";
 import MainCard from "../components/MainCard";
+import Report from "../components/Report";
 
 export default function Content() {
+  const [reportModal, setReportModal] = React.useState(false);
+  const handleClose = () => {
+    setReportModal(false);
+  };
+
   return (
     <>
+      <Report isOpen={reportModal} onCancel={handleClose} />
       <MainCard max-height="900px">
         <div style={{ height: 60 }} className="p-4 flex justify-between">
           <div className="text-xl">
@@ -17,7 +24,9 @@ export default function Content() {
             </Menu.Button>
             <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white flex flex-col border-2">
               <Menu.Item>
-                <button className="mx-4">게시글 신고</button>
+                <button className="mx-4" onClick={() => setReportModal(true)}>
+                  게시글 신고
+                </button>
               </Menu.Item>
               <Menu.Item>
                 <button className="mx-4">팔로우</button>
