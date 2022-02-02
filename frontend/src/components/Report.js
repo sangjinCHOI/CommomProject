@@ -14,6 +14,7 @@ export default function Report(props) {
 
   return (
     <>
+      <ReportCompleted isOpen={reportCompletedModal} onCancel={handleReportCompletedClose} style={{ zIndex: 3 }} />
       <Modal size="regular" active={isOpen} toggler={() => handleReportClose(false)}>
         <ModalHeader className="text-center" toggler={() => handleReportClose(false)}>
           <span>신고</span>
@@ -38,11 +39,17 @@ export default function Report(props) {
           <textarea className="bg-slate-100 rounded" name="" id="" cols="70" rows="10" placeholder="신고 내용을 작성해주세요."></textarea>
         </ModalBody>
         <ModalFooter>
-          <Button color="red" ripple="light" onClick={() => setReportCompletedModal(true)}>
+          <Button
+            color="red"
+            ripple="light"
+            onClick={() => {
+              setReportCompletedModal(true);
+              handleReportClose(false);
+            }}
+          >
             신고하기
           </Button>
         </ModalFooter>
-        <ReportCompleted isOpen={reportCompletedModal} onCancel={handleReportCompletedClose} style={{ zIndex: 3 }} />
       </Modal>
     </>
   );
