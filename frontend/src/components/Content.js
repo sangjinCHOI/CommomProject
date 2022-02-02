@@ -3,16 +3,22 @@ import { Menu } from "@headlessui/react";
 import { Label } from "@material-tailwind/react";
 import MainCard from "../components/MainCard";
 import Report from "../components/Report";
+import NewStorage from "./NewStorage";
 
 export default function Content() {
   const [reportModal, setReportModal] = React.useState(false);
   const handleReportClose = () => {
     setReportModal(false);
   };
+  const [newStorageModal, setNewStorageModal] = React.useState(false);
+  const handleNewStorageClose = () => {
+    setNewStorageModal(false);
+  };
 
   return (
     <>
       <Report isOpen={reportModal} onCancel={handleReportClose} style={{ zIndex: 2 }} />
+      <NewStorage isOpen={newStorageModal} onCancel={handleNewStorageClose} style={{ zIndex: 2 }}></NewStorage>
       <MainCard max-height="900px">
         <div style={{ height: 60 }} className="p-4 flex justify-between">
           <div className="text-xl">
@@ -63,7 +69,9 @@ export default function Content() {
               </Menu.Button>
               <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md border-2 shadow-lg py-1 bg-white flex flex-col">
                 <Menu.Item>
-                  <button className="mx-4">새 저장목록 생성</button>
+                  <button className="mx-4" onClick={() => setNewStorageModal(true)}>
+                    새 저장목록 생성
+                  </button>
                 </Menu.Item>
                 <Menu.Item>
                   <button className="mx-4">요리</button>
