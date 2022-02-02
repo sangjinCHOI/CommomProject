@@ -71,13 +71,19 @@ const Character = ({
   imgSrc = null,
 }) => {
   return (
-    <Link
-      to={
-        isLock ? "" : isManagement ? "../characters/update" : isExist ? "" : "../characters/create"
-      }
-      onClick={isLock ? (e) => e.preventDefault() : null}
-    >
-      <div className="mt-8 mx-12 w-32">
+    <div className="mt-8 mx-12 w-32">
+      <Link
+        to={
+          isLock
+            ? ""
+            : isManagement
+            ? "../characters/update"
+            : isExist
+            ? ""
+            : "../characters/create"
+        }
+        onClick={isLock ? (e) => e.preventDefault() : null}
+      >
         <CharacterImg
           underText={nickname}
           // 캐릭터 잠금 상태인지, 캐릭터가 존재하는지, 캐릭터 관리 상태인지, 이미지가 있는지에 따라 분기(순서 중요)
@@ -93,8 +99,8 @@ const Character = ({
               : require("../assets/images/character_plus.png")
           }
         />
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 

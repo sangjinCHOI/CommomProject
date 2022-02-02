@@ -1,10 +1,11 @@
 import { useState } from "react";
+import styles from "./StorageCardSmall.module.css";
 
 export default function StorageCardSmall({ storageName, imgSrc }) {
   const [isMouseOver, setIsMouseOver] = useState(false);
   return (
     <div
-      className="relative"
+      className="relative flex justify-center items-center"
       onMouseOver={() => setIsMouseOver(true)}
       onMouseOut={() => setIsMouseOver(false)}
     >
@@ -19,8 +20,8 @@ export default function StorageCardSmall({ storageName, imgSrc }) {
         }}
       />
       <div
-        className={`absolute top-4 left-4 text-xl w-40 bg-gray-100 px-2 border-gray-400 border-y ${
-          isMouseOver ? `opacity-80` : `opacity-40`
+        className={`absolute top-auto left-auto text-lg w-auto bg-gray-100 px-2 ${
+          isMouseOver ? `${styles.textActive}` : `${styles.textInactive}`
         }`}
         style={{
           cursor: "pointer",
