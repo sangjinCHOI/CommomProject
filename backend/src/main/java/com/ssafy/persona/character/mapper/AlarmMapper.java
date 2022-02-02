@@ -17,4 +17,6 @@ public interface AlarmMapper {
 	List<AlarmGetResponse> getAlarmList(int characterSeq);
 
 	AlarmGetResponse alarmDetalForMove(int alarmSeq);
+
+	String makeAlarmTarget(AlarmCreateRequest request);
 }

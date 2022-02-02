@@ -32,4 +32,9 @@ public class AlarmServiceImpl implements AlarmService{
 		return alarmMapper.alarmDetalForMove(alarmSeq);
 	}
 
+	@Override
+	public String makeAlarmTarget(AlarmCreateRequest request) {
+		return alarmMapper.makeAlarmTarget(request);
+	}
+
 }

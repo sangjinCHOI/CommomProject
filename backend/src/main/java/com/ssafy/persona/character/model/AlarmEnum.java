@@ -1,4 +1,4 @@
-package com.ssafy.persona.user.model;
+package com.ssafy.persona.character.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

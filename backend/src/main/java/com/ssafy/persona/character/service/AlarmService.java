@@ -15,4 +15,6 @@ public interface AlarmService {
 	List<AlarmGetResponse> getAlarmList(int characterSeq);
 	
 	AlarmGetResponse alarmRead(int alarmSeq);
+	
+	String makeAlarmTarget(AlarmCreateRequest request);
 }

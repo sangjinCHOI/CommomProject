@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.persona.character.model.AlarmEnum;
 import com.ssafy.persona.character.model.dto.AlarmCreateRequest;
 import com.ssafy.persona.character.model.dto.AlarmGetResponse;
 import com.ssafy.persona.character.model.dto.AlarmSettingUpdateRequest;
@@ -239,6 +240,11 @@ public class CharacterController {
 		String message = "";
 		HttpStatus status = null;
 
+		AlarmEnum type = makeAlarmText(request.getAlarmType());
+		String target = getTarget(request);
+		String text = type.creatResultText(target);
+		request.setAlarmText(text);
+		
 		if (alarmService.createAlarm(request) == 1) {
 			message = SUCCESS;
 			status = HttpStatus.OK;
@@ -251,6 +257,38 @@ public class CharacterController {
 		return new ResponseEntity<Map<String, String>>(result, status);
 	}
 
+	private String getTarget(AlarmCreateRequest request) {
+		return alarmService.makeAlarmTarget(request);
+	}
+	
+	private AlarmEnum makeAlarmText(int alarmType) {
+		AlarmEnum result = null;
+		switch (alarmType) {
+		case 1:
+			result = AlarmEnum.ALARM_FOR_FOLLOW;
+			break;
+		case 2:
+			result = AlarmEnum.ALARM_STORAGE_CREATE;
+			break;
+		case 3:
+			result = AlarmEnum.ALARM_STORAGE_DELETE;
+			break;
+		case 4:
+			result = AlarmEnum.ALARM_STORAGE_CONTENT_ADD;
+			break;
+		case 5:
+			result = AlarmEnum.ALARM_STORAGE_CONTENT_DELETE;
+			break;
+		case 6:
+			result = AlarmEnum.ALARM_STORAGE_CONTENT_UPDATE;
+			break;
+		case 7:
+			result = AlarmEnum.ALARM_FOR_ACHIEVMENT;
+			break;
+		}
+		return result;
+	}
+	
 	@GetMapping("alarm/{alarmSeq}")
 	public ResponseEntity<AlarmGetResponse> alarmRead(@PathVariable int alarmSeq) {
 		logger.info("알람 클릭 - 호출번호: " + alarmSeq);

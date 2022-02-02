@@ -21,7 +21,6 @@ public class AlarmCreateRequest {
 	private boolean alarmIsRead;
 	private LocalDateTime alarmDate;
 	
-
 	public Alarm toCharacterEntity() {
 		return Alarm.builder()
 				.userSeq(userSeq)
@@ -33,5 +32,9 @@ public class AlarmCreateRequest {
 				.alarmIsRead(alarmIsRead)
 				.alarmDate(alarmDate)
 				.build();
+	}
+
+	public void setAlarmText(String alarmText) {
+		this.alarmText = alarmText;
 	}
 }
