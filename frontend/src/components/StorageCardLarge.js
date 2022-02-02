@@ -23,8 +23,8 @@ export default function StorageCardLarge({ storageName, imgSrc }) {
         }}
       />
       <div
-        className={`absolute top-auto left-auto w-auto text-xl bg-gray-100 px-2 ${
-          isMouseOver ? `${styles.textActive}` : `${styles.textInactive}`
+        className={`absolute top-auto left-auto w-auto px-2 ${
+          isMouseOver ? `${styles.textActive}` : `${styles.textInactive} text-xl`
         }`}
         style={{
           cursor: "pointer",
