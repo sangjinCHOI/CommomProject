@@ -6,13 +6,13 @@ import Report from "../components/Report";
 
 export default function Content() {
   const [reportModal, setReportModal] = React.useState(false);
-  const handleClose = () => {
+  const handleReportClose = () => {
     setReportModal(false);
   };
 
   return (
     <>
-      <Report isOpen={reportModal} onCancel={handleClose} />
+      <Report isOpen={reportModal} onCancel={handleReportClose} style={{ zIndex: 2 }} />
       <MainCard max-height="900px">
         <div style={{ height: 60 }} className="p-4 flex justify-between">
           <div className="text-xl">

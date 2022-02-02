@@ -6,6 +6,7 @@ export default function ContentCreate(props) {
   const handleClose = () => {
     onCancel();
   };
+
   return (
     <Modal size="regular" active={isOpen} toggler={() => handleClose(false)}>
       <ModalHeader className="text-center" toggler={() => handleClose(false)}>
