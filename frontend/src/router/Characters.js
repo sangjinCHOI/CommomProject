@@ -98,6 +98,7 @@ const Character = ({
                 : require("../assets/images/default_user.png")
               : require("../assets/images/character_plus.png")
           }
+          lock={isLock}
         />
       </Link>
     </div>
