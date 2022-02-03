@@ -118,17 +118,16 @@ const Character = ({
       <Link
         to={{
           pathname: isLock
-            ? ""
+            ? null
             : isManagement
             ? "../characters/update"
             : isExist
-            ? ""
+            ? "../"
             : "../characters/create",
           state: { characterSeq },
         }}
         onClick={isLock ? (e) => e.preventDefault() : null}
       >
-        {characterSeq}
         <CharacterImg
           underText={nickname}
           // 캐릭터 잠금 상태인지, 캐릭터가 존재하는지, 캐릭터 관리 상태인지, 이미지가 있는지에 따라 분기(순서 중요)
