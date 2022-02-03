@@ -4,6 +4,7 @@ import { Label } from "@material-tailwind/react";
 import MainCard from "../components/MainCard";
 import Report from "../components/Report";
 import NewStorage from "./NewStorage";
+import Comment from "./Comment";
 
 export default function Content() {
   const [reportModal, setReportModal] = React.useState(false);
@@ -14,11 +15,16 @@ export default function Content() {
   const handleNewStorageClose = () => {
     setNewStorageModal(false);
   };
+  const [commentModal, setCommentModal] = React.useState(false);
+  const handleCommentClose = () => {
+    setCommentModal(false);
+  };
 
   return (
     <>
+      <Comment isOpen={commentModal} onCancel={handleCommentClose} style={{ zIndex: 2 }} />
       <Report isOpen={reportModal} onCancel={handleReportClose} style={{ zIndex: 2 }} />
-      <NewStorage isOpen={newStorageModal} onCancel={handleNewStorageClose} style={{ zIndex: 2 }}></NewStorage>
+      <NewStorage isOpen={newStorageModal} onCancel={handleNewStorageClose} style={{ zIndex: 2 }} />
       <MainCard max-height="900px">
         <div style={{ height: 60 }} className="p-4 flex justify-between">
           <div className="text-xl">
@@ -52,15 +58,15 @@ export default function Content() {
         <div className="text-slate-400 px-4">2022.01.26</div>
         <div className="px-4 py-2 flex justify-between">
           <div className="flex items-center">
-            <div className="flex items-center">
+            <button className="flex items-center">
               <span className="material-icons">favorite_border</span>
               <span className="pb-1">456</span>
-            </div>
+            </button>
             <div className="invisible">---</div>
-            <div className="flex items-center">
+            <button className="flex items-center" onClick={() => setCommentModal(true)}>
               <span className="material-icons">chat_bubble_outline</span>
               <span className="pb-1">123</span>
-            </div>
+            </button>
           </div>
           <div className="flex items-center">
             <Menu as="div" className="mx-2 relative">
@@ -88,7 +94,7 @@ export default function Content() {
         <div className="px-4 py-2 flex justify-between self-center">
           <div className="flex">
             <div>프로필사진</div>
-            <input className="mx-4" type="text" size="40" placeholder="댓글 달기..." />
+            <textarea className="mx-4" type="text" placeholder="댓글 달기..." style={{ height: 25, width: 400 }} />
           </div>
           <button>작성</button>
         </div>

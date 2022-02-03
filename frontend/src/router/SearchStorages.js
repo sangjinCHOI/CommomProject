@@ -9,7 +9,7 @@ export default function SearchCharacters({ location }) {
   return (
     <div>
       <div className="my-4">'{query}' 저장소 검색 결과</div>
-      <MainCard classes="border rounded py-2">
+      <MainCard classes="border rounded-2xl py-5">
         <StorageCardLarge
           storageName="요리하는 부부 저장소"
           imgSrc="https://cdn2.thecatapi.com/images/43n.png"

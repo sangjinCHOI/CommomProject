@@ -26,38 +26,43 @@ const useInput = (initialValue, validator) => {
   return { value, onChange };
 };
 
-function CharactersCreate({ characterSlice, updateCharacter }) {
+function CharacterUpdate({ characterSlice, updateCharacter, location }) {
   const maxLen = (value) => value.length <= 50;
   const introduction = useInput("", maxLen);
 
-  const [userSeq, setUserSeq] = useState(0);
-  const [characterSeq, setCharacterSeq] = useState(0);
   const [nickname, setNickname] = useState("");
   const history = useHistory();
+
+  const characterSeq = location.state.characterSeq;
 
   const characterUpdate = (e) => {
     e.preventDefault();
 
-    const data = {
-      characterSeq: 9, // 링크연결갱신갱신 이었던 캐릭터
+    // const data = {
+    //   characterSeq: 9, // 링크연결갱신갱신 이었던 캐릭터
+    //   introduction: introduction.value,
+    //   nickname,
+    // };
+    // axios.get("http://localhost:8080/")
+
+    const character = {
+      characterSeq,
       introduction: introduction.value,
       nickname,
     };
 
     // characterStore.js의 update reducer 실행
-    updateCharacter({ data });
+    updateCharacter({ character });
 
-    // console.log(data);
-    // axios
-    //   .put("http://localhost:8080/character", JSON.stringify(data), {
-    //     headers: { "Content-Type": "application/json" },
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //     alert("캐릭터 수정이 완료되었습니다.");
-    //     history.push("../characters/select");
-    //   })
-    //   .catch((err) => console.log(err));
+    axios
+      .put("http://localhost:8080/character", JSON.stringify(character), {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then(() => {
+        alert("캐릭터 수정이 완료되었습니다.");
+        history.push("../characters/select");
+      })
+      .catch((err) => console.log(err));
     history.push("../characters/select");
   };
 
@@ -67,11 +72,6 @@ function CharactersCreate({ characterSlice, updateCharacter }) {
 
   return (
     <>
-      {/* 테스트 */}
-      {characterSlice.nickname}
-      <br />
-      {characterSlice.introduction}
-
       <Link to="../characters/select">
         <span className="material-icons text-xl m-4 absolute top-0">arrow_back 취소</span>
       </Link>
@@ -131,4 +131,4 @@ function mapDispatchToProps(dispatch) {
   return { updateCharacter: (character) => dispatch(update(character)) };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CharactersCreate);
+export default connect(mapStateToProps, mapDispatchToProps)(CharacterUpdate);
