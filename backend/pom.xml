@@ -13,6 +13,7 @@
 	<artifactId>persona</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>persona</name>
+	<packaging>jar</packaging>
 	<description>SSAFY Persona Project</description>
 	<properties>
 		<java.version>1.8</java.version>
