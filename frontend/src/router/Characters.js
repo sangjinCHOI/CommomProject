@@ -1,10 +1,33 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
 
 function Characters({ characterSlice }) {
   const [isManagement, setIsManagement] = useState(false);
+  const location = useLocation();
+  const { userSeq } = location.props;
+  const [characterList, setCharacterList] = useState([]);
+  const [characterLen, setCharacterLen] = useState(0);
+
+  const tempUserCreatableCount = 2;
+
+  const getCharacterList = () => {
+    axios
+      .get(`http://localhost:8080/character/characters/${userSeq}`)
+      .then((res) => {
+        setCharacterList(res.data);
+        console.log(res.data);
+        setCharacterLen(res.data.length);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getCharacterList();
+  }, []);
+
   const management = (event) => {
     event.preventDefault();
     setIsManagement(!isManagement);
@@ -23,23 +46,53 @@ function Characters({ characterSlice }) {
         </span>
       </div>
       <div className="flex justify-center m-8">
+        {/* 캐릭터가 1 ~ 4개일 때 각각 케이스 나눠서 하드코딩 뿐인가? */}
         <Character
+          nickname={characterLen >= 1 ? characterList[0].nickname : null}
+          isManagement={isManagement}
+          isExist={tempUserCreatableCount >= 1 ? true : false}
+          isLock={characterLen >= 1 ? false : true}
+          imgSrc="https://cdn2.thecatapi.com/images/ba2.jpg"
+        />
+        <Character
+          nickname={characterLen >= 2 ? characterList[1].nickname : null}
+          isManagement={isManagement}
+          isExist={tempUserCreatableCount >= 2 ? true : false}
+          isLock={characterLen >= 2 ? false : true}
+          imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
+        />
+
+        {/* <Character
           nickname={characterSlice.nickname}
           isManagement={isManagement}
           isExist={true}
           isLock={false}
           imgSrc="https://cdn2.thecatapi.com/images/ba2.jpg"
-        />
-        <Character
+        /> */}
+        {/* <Character
           nickname="닉네임은여덟글자"
           isManagement={isManagement}
           isExist={true}
           isLock={false}
           imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
-        />
+        /> */}
       </div>
       <div className="flex justify-center m-8">
         <Character
+          nickname={characterLen >= 3 ? characterList[2].nickname : null}
+          isManagement={isManagement}
+          isExist={tempUserCreatableCount >= 3 ? true : false}
+          isLock={tempUserCreatableCount < 3 ? false : true}
+          imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
+        />
+        <Character
+          nickname={characterLen >= 4 ? characterList[3].nickname : null}
+          isManagement={isManagement}
+          isExist={tempUserCreatableCount >= 4 ? true : false}
+          isLock={tempUserCreatableCount < 4 ? false : true}
+          imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
+        />
+        {/* <Character
           nickname=""
           isManagement={isManagement}
           isExist={false}
@@ -52,7 +105,7 @@ function Characters({ characterSlice }) {
           isExist={false}
           isLock={true}
           imgSrc=""
-        />
+        /> */}
       </div>
       <div className="text-center text-2xl mt-24">
         <Link to="" onClick={management}>

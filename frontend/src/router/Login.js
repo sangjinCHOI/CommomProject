@@ -52,12 +52,20 @@ export default function Login() {
           //토큰값
         },
       })
-      .then((data) => {
-        // const token = data.data;
-        window.localStorage.setItem("idToken", JSON.stringify(data.data));
+      .then((res) => {
+        // const token = res.data;
+        window.localStorage.setItem("idToken", JSON.stringify(res.data));
         console.log(localStorage.getItem("idToken"));
-
-        history.push("../characters/select");
+        console.log(data);
+        axios
+          .get(`http://localhost:8080/user/${data.userId}`)
+          .then((res) => {
+            history.push({
+              pathname: "../characters/select",
+              props: { userSeq: res.data.userSeq },
+            });
+          })
+          .catch((e) => console.log(e));
       })
       .catch((e) => {
         console.log(e);

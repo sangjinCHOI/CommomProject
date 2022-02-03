@@ -47,17 +47,17 @@ function CharactersCreate({ characterSlice, updateCharacter }) {
     // characterStore.js의 update reducer 실행
     updateCharacter({ data });
 
-    // console.log(data);
-    // axios
-    //   .put("http://localhost:8080/character", JSON.stringify(data), {
-    //     headers: { "Content-Type": "application/json" },
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //     alert("캐릭터 수정이 완료되었습니다.");
-    //     history.push("../characters/select");
-    //   })
-    //   .catch((err) => console.log(err));
+    console.log(data);
+    axios
+      .put("http://localhost:8080/character", JSON.stringify(data), {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((res) => {
+        console.log(res);
+        alert("캐릭터 수정이 완료되었습니다.");
+        history.push("../characters/select");
+      })
+      .catch((err) => console.log(err));
     history.push("../characters/select");
   };
 
