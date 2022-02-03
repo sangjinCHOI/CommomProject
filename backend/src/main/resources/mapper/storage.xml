@@ -22,4 +22,10 @@
 		delete from tb_storage
 		where storage_seq = #{storageSeq} and character_seq = #{characterSeq}
 	</delete>
+	
+	<select id="storageList" parameterType="int" resultType="StorageListResponse">
+		select storage_name as storageName
+		from tb_storage
+		where character_seq = #{characterSeq}
+	</select>
 </mapper>
