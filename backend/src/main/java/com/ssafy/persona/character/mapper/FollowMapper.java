@@ -12,6 +12,8 @@ import com.ssafy.persona.character.model.dto.FollowerListResponse;
 @Mapper
 public interface FollowMapper {
 
+	int followCheck(FollowRequest request);
+	
 	int follow(FollowRequest request);
 
 	int unFollow(FollowRequest request);

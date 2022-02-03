@@ -47,6 +47,18 @@ public class UserController {
 	@Autowired
 	private SecurityService securityService;
 	
+
+	@GetMapping("/{userId}")
+	public ResponseEntity<UserGetResponse> getUser(@PathVariable String userId) {
+		
+		UserGetResponse user = userService.getUser(userId);
+		if (user != null) {
+			return (new ResponseEntity<UserGetResponse>(user,HttpStatus.OK));
+		}
+		else {
+			return (new ResponseEntity<UserGetResponse>(user,HttpStatus.ACCEPTED));
+		}
+	}
 	@PostMapping("/login")
 	public ResponseEntity<Map<String,String>> createToken(@RequestBody UserLoginRequest request) throws NoSuchAlgorithmException{
 
@@ -85,18 +97,18 @@ public class UserController {
 			
 		return (new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED));
 	}
-	
-	@GetMapping("/{userSeq}")
-	public ResponseEntity<UserGetResponse> getUser(@PathVariable int userSeq) {
-		
-		UserGetResponse user = userService.getUser(userSeq);
-		if (user != null) {
-			return (new ResponseEntity<UserGetResponse>(user,HttpStatus.OK));
-		}
-		else {
-			return (new ResponseEntity<UserGetResponse>(user,HttpStatus.ACCEPTED));
-		}
-	}
+//	
+//	@GetMapping("/{userSeq}")
+//	public ResponseEntity<UserGetResponse> getUser(@PathVariable int userSeq) {
+//		
+//		UserGetResponse user = userService.getUser(userSeq);
+//		if (user != null) {
+//			return (new ResponseEntity<UserGetResponse>(user,HttpStatus.OK));
+//		}
+//		else {
+//			return (new ResponseEntity<UserGetResponse>(user,HttpStatus.ACCEPTED));
+//		}
+//	}
 	
 	@GetMapping("/email")
 	public ResponseEntity updateUser(@RequestParam String userId) {

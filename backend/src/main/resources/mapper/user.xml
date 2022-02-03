@@ -6,13 +6,13 @@
 	<select id="seqIsValid" resultType="Integer">
 		select count(*)
 		from tb_user
-		where user_seq=#{user_seq}
+		where user_id=#{userId}
 	</select>
 	
 	<select id="getUser" resultType="UserGetResponse">
 		select user_seq as userSeq, user_id as userId, user_email as userEmail, user_birth as userBirth
 		from tb_user
-		where user_seq=#{user_seq}
+		where user_id=#{userId}
 	</select>
 	
 	<select id="userValid" resultType="Integer">
