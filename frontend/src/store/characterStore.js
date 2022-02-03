@@ -23,6 +23,7 @@ const characterSlice = createSlice({
   name: "character",
   initialState: initialCharacterState,
   reducers: {
+    // 캐릭터 선택 화면에서 메인페이지로 이동할 때 해당 캐릭터 정보 저장
     save: (state, action) => {
       console.log("save 동작중!", action.payload);
       state.alarmAllow = action.payload.alarmAllow;
@@ -39,6 +40,7 @@ const characterSlice = createSlice({
       state.reportedTime = action.payload.reportedTime;
       state.representativeAchievement = action.payload.representativeAchievement;
     },
+    // 캐릭터 수정 화면에서 해당 캐릭터 정보 수정
     update: (state, action) => {
       state.introduction = action.payload.introduction;
       state.nickname = action.payload.nickname;

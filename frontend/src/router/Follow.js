@@ -56,7 +56,9 @@ export default function Follow() {
     };
     axios
       .delete("http://localhost:8080/character/follow", JSON.stringify(data3), {
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
       .then((res) => {
         console.log(res);
