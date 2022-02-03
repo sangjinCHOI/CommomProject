@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ssafy.persona.character.mapper.AlarmMapper">
+
+	<insert id="createAlarm">
+		insert into tb_alarm
+			(user_seq, character_seq, alarm_type, alarm_text, relation_tb, target_seq. alarm_is_read, alarm_date)
+		values
+			(#{userSeq}, #{characterSeq}, #{alarmType}, #{alarmText}, #{relationTb}, #{targetSeq}, 0, now())
+	</insert>
+
+	<update id="alarmReadHandling">
+		update tb_alarm set
+			alarm_is_read=1,
+		where alarm_seq=#{alarmSeq}
+	</update>
+
+	<select id="alarmDetalForMove" resultType="AlarmGetResponse">
+		select 
+			alarm_seq, user_seq, character_seq, alarm_type, alarm_text, relation_tb, target_seq. alarm_is_read, alarm_date		
+		from
+			tb_alarm
+		where alarm_seq=#{alarmSeq}
+	</select>
+
+	<select id="getAlarmList" resultType="AlarmGetResponse">
+		select 
+			alarm_seq, user_seq, character_seq, alarm_type, alarm_text, relation_tb, target_seq. alarm_is_read, alarm_date		
+		from
+			tb_alarm
+		where character_seq=#{characterSeq}
+	</select>
+
+	<select id="makeAlarmTarget" resultType="String">
+		<if test="relationTb == 'tb_character'">
+			select nickname from tb_character
+			where character_seq=#{targetSeq}
+		</if>
+		<if test="relationTb == 'tb_storage'">
+			select storage_name from tb_storage
+			where storage_seq=#{targetSeq}
+		</if>
+		<if test="relationTb == 'tb_achievement'">
+			select achievement_name from tb_achievement
+			where achievement_seq=#{targetSeq}
+		</if>
+	</select>
+
+</mapper>

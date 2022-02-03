@@ -11,16 +11,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
+import com.ssafy.persona.content.model.dto.ContentGetRequest;
 import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.content.model.dto.ContentLikeRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
+import com.ssafy.persona.content.model.dto.ContentPersonListRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
+import com.ssafy.persona.content.model.dto.ContentTagListRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
 import com.ssafy.persona.content.model.dto.ReplyGetResponse;
+import com.ssafy.persona.content.model.dto.ReplyLikeRequest;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
 import com.ssafy.persona.content.model.dto.ReplyReportRequest;
 import com.ssafy.persona.content.service.ContentService;
@@ -65,23 +70,16 @@ public class ContentController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 
-	@ApiOperation(value = "content detail", notes = "게시글 상세조회", response = ContentGetResponse.class)
-	@GetMapping("/content/{contentSeq}")
-	public ResponseEntity<ContentGetResponse> contentGet(@PathVariable("contentSeq") @ApiParam(value = "조회할 글의 글번호", required = true) int contentSeq) {
-		return new ResponseEntity<ContentGetResponse>(contentService.contentGet(contentSeq), HttpStatus.OK);
-	}
-
 	@ApiOperation(value = "content personal list", notes = "특정 인물의 게시물 리스트 조회", response = ContentGetResponse.class)
-	@GetMapping("/content/person/{characterSeq}")
-	public ResponseEntity<List<ContentGetResponse>> contentPersonalList(@PathVariable("characterSeq") @ApiParam(value = "특정 인물을 조회할 캐릭터 번호.", required = true) int characterSeq) {
-		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentPersonalList(characterSeq),
-				HttpStatus.OK);
+	@PostMapping("/content/person")
+	public ResponseEntity<List<ContentGetResponse>> contentPersonalList(@RequestBody @ApiParam(value = "특정 인물을 조회할 캐릭터 번호.", required = true) ContentPersonListRequest contentPersonListRequest) {
+		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentPersonalList(contentPersonListRequest), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "content tag list", notes = "특정 태그의 게시물 리스트 조회", response = ContentGetResponse.class)
-	@GetMapping("/content/tag/{tagText}")
-	public ResponseEntity<List<ContentGetResponse>> contentTagList(@PathVariable("tagText") @ApiParam(value = "특정 태그를 조회할 태그 내용.", required = true) String tagText) {
-		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentTagList(tagText), HttpStatus.OK);
+	@PostMapping("/content/tag")
+	public ResponseEntity<List<ContentGetResponse>> contentTagList(@RequestBody @ApiParam(value = "특정 태그를 조회할 태그 내용.", required = true) ContentTagListRequest contentTagListRequest) {
+		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentTagList(contentTagListRequest), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "reply create", notes = "reply 작성, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
@@ -112,9 +110,9 @@ public class ContentController {
 	}
 
 	@ApiOperation(value = "reply list", notes = "댓글조회", response = List.class)
-	@GetMapping("/content/reply/{contentSeq}")
-	public ResponseEntity<List<ReplyGetResponse>> replylist(@PathVariable("contentSeq") @ApiParam(value = "댓글을 조회할 글번호.", required = true) int contentSeq) {
-		return new ResponseEntity<List<ReplyGetResponse>>(contentService.replyList(contentSeq), HttpStatus.OK);
+	@PostMapping("/content/replys")
+	public ResponseEntity<List<ReplyGetResponse>> replylist(@RequestBody @ApiParam(value = "댓글을 조회할 글번호.", required = true) ContentGetRequest contentGetRequest) {
+		return new ResponseEntity<List<ReplyGetResponse>>(contentService.replyList(contentGetRequest), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "content like list", notes = "게시글 좋아요 누른 유저 리스트", response = List.class)
@@ -183,6 +181,45 @@ public class ContentController {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value = "reply like", notes = "댓글 좋아요, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping("/content/reply/like")
+	public ResponseEntity<String> replyLike(@RequestBody @ApiParam(value = "댓글 좋아요.", required = true) ReplyLikeRequest replyLikeRequest) {
+		int replySeq = replyLikeRequest.getReplySeq();
+		
+		contentService.replyLikeUpdate(replySeq);
+		
+		if (contentService.replyLike(replyLikeRequest)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value = "reply dislike", notes = "댓글 좋아요 취소, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@DeleteMapping("/content/reply/like")
+	public ResponseEntity<String> replyDislike(@RequestBody @ApiParam(value = "댓글 좋아요 취소.", required = true) ReplyLikeRequest replyLikeRequest) {
+		int replySeq = replyLikeRequest.getReplySeq();
+		
+		contentService.replyDislikeUpdate(replySeq);
+		
+		if (contentService.replyDislike(replyLikeRequest)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+
+	@ApiOperation(value = "content detail", notes = "게시글 상세조회", response = ContentGetResponse.class)
+	@PostMapping("/contentdetail")
+	public ResponseEntity<ContentGetResponse> contentGet(@RequestBody @ApiParam(value = "조회할 글의 글번호", required = true) ContentGetRequest contentGetRequest) {
+		return new ResponseEntity<ContentGetResponse>(contentService.contentGet(contentGetRequest), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "content list", notes = "게시글 리스트(메인페이지)", response = List.class)
+	@GetMapping("/contents")
+	public ResponseEntity<List<ContentGetResponse>> contentList(@RequestParam @ApiParam(value = "리스트를 조회할 캐릭터번호.", required = true) int characterNow) {
+		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentList(characterNow), HttpStatus.OK);
 	}
 	
 	

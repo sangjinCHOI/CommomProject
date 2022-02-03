@@ -13,12 +13,14 @@ public class CharacterUpdateRequest {
 	private int characterSeq;
 	private String nickname;
 	private String introduction;
+	private int representativeAchievement;
 
 	public CharacterEntity toCharacterEntity() {
 		return CharacterEntity.builder()
 				.characterSeq(characterSeq)
 				.nickname(nickname)
 				.introduction(introduction)
+				.representativeAchievement(representativeAchievement)
 				.build();
 	}
 }

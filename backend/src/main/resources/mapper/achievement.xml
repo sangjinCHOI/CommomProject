@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ssafy.persona.character.mapper.AchievementMapper">
+
+	<select id="getAchievementList" resultType="AchievementGetResponse">
+		select achievement_seq, achievement_name, achievement_description, 
+			achievement_condition, achievement_type, achievement_level, 
+			achievement_is_active, achievement_created_date,
+		    (select count(*) from tb_user_achivement ua where ua.achievement_seq = a.achievement_seq and ua.character_seq = 1) as isGained
+		from tb_achievement
+		where 1 = 1
+		<if test="achievementType != null and achievementType != ''">
+			and achievement_type=#{achievementType}
+		</if>
+		<if test="level != null and level != ''">
+			and level=#{level}
+		</if>
+	</select>
+
+</mapper>

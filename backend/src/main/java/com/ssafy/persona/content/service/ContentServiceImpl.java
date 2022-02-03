@@ -10,13 +10,17 @@ import com.ssafy.persona.content.mapper.LikeMapper;
 import com.ssafy.persona.content.mapper.ReplyMapper;
 import com.ssafy.persona.content.mapper.ReportMapper;
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
+import com.ssafy.persona.content.model.dto.ContentGetRequest;
 import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.content.model.dto.ContentLikeRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
+import com.ssafy.persona.content.model.dto.ContentPersonListRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
+import com.ssafy.persona.content.model.dto.ContentTagListRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
 import com.ssafy.persona.content.model.dto.ReplyGetResponse;
+import com.ssafy.persona.content.model.dto.ReplyLikeRequest;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
 import com.ssafy.persona.content.model.dto.ReplyReportRequest;
 
@@ -63,23 +67,18 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public List<ReplyGetResponse> replyList(int contentSeq) {
-		return replyMapper.replyList(contentSeq);
+	public List<ReplyGetResponse> replyList(ContentGetRequest contentGetRequest) {
+		return replyMapper.replyList(contentGetRequest);
 	}
 
 	@Override
-	public ContentGetResponse contentGet(int contentSeq) {
-		return contentMapper.contentGet(contentSeq);
+	public List<ContentGetResponse> contentPersonalList(ContentPersonListRequest contentPersonListRequest) {
+		return contentMapper.contentPersonalList(contentPersonListRequest);
 	}
 
 	@Override
-	public List<ContentGetResponse> contentPersonalList(int characterSeq) {
-		return contentMapper.contentPersonalList(characterSeq);
-	}
-
-	@Override
-	public List<ContentGetResponse> contentTagList(String tagText) {
-		return contentMapper.contentTagList(tagText);
+	public List<ContentGetResponse> contentTagList(ContentTagListRequest contentTagListRequest) {
+		return contentMapper.contentTagList(contentTagListRequest);
 	}
 
 	@Override
@@ -145,6 +144,37 @@ public class ContentServiceImpl implements ContentService {
 	public void contentDislikeUpdate(int contentSeq) {
 		likeMapper.contentDislikeUpdate(contentSeq);
 		
+	}
+
+	@Override
+	public boolean replyLike(ReplyLikeRequest replyLikeRequest) {
+		return likeMapper.replyLike(replyLikeRequest) == 1;
+	}
+
+	@Override
+	public void replyLikeUpdate(int replySeq) {
+		likeMapper.replyLikeUpdate(replySeq);
+	}
+
+	@Override
+	public boolean replyDislike(ReplyLikeRequest replyLikeRequest) {
+		return likeMapper.replyDislike(replyLikeRequest) == 1;
+	}
+
+	@Override
+	public void replyDislikeUpdate(int replySeq) {
+		likeMapper.replyDislikeUpdate(replySeq);
+		
+	}
+
+	@Override
+	public ContentGetResponse contentGet(ContentGetRequest contentGetRequest) {
+		return contentMapper.contentGet(contentGetRequest);
+	}
+
+	@Override
+	public List<ContentGetResponse> contentList(int characterNow) {
+		return contentMapper.contentList(characterNow);
 	}
 	
 }

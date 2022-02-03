@@ -24,13 +24,6 @@
 			test="representativeAchievement != null and representativeAchievement != ''">
 			representative_achievement=#{representativeAchievement},
 		</if>
-		<if test="characterActive != null and characterActive != ''">
-			character_active=#{characterActive},
-		</if>
-		<if
-			test="characterDeleteReason != null and characterDeleteReason != ''">
-			character_delete_reason=#{characterDeleteReason},
-		</if>
 		character_modified_date = now()
 		where character_seq=#{characterSeq}
 	</update>
@@ -67,6 +60,15 @@
 		from
 			tb_character
 		where user_seq=#{userSeq}
+		and character_active = 1
+	</select>
+
+	<select id="checkCharacterNickname"	resultType="int">
+		select 
+			count(*)
+		from
+			tb_character
+		where nickname=#{nickname}
 		and character_active = 1
 	</select>
 

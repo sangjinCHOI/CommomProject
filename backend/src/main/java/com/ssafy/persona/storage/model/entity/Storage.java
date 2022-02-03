@@ -6,14 +6,14 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
 @Getter
-@ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Storage {
 	@Id
 	private int storageSeq;

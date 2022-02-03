@@ -16,16 +16,25 @@ public class AlarmCreateRequest {
 	private int characterSeq;
 	private int alarmType;
 	private String alarmText;
+	private String relationTb;
+	private int targetSeq;
+	private boolean alarmIsRead;
 	private LocalDateTime alarmDate;
 	
-
-	public Alarm toCharacterEntity() {
+	public Alarm toAlarm() {
 		return Alarm.builder()
 				.userSeq(userSeq)
 				.characterSeq(characterSeq)
 				.alarmType(alarmType)
 				.alarmText(alarmText)
+				.relationTb(relationTb)
+				.targetSeq(targetSeq)
+				.alarmIsRead(alarmIsRead)
 				.alarmDate(alarmDate)
 				.build();
+	}
+
+	public void setAlarmText(String alarmText) {
+		this.alarmText = alarmText;
 	}
 }

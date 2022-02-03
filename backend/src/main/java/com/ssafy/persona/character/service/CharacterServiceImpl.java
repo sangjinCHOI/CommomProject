@@ -7,16 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.persona.character.mapper.CharacterMapper;
-import com.ssafy.persona.character.model.dto.AlarmCreateRequest;
-import com.ssafy.persona.character.model.dto.AlarmGetResponse;
-import com.ssafy.persona.character.model.dto.AlarmUpdateRequest;
+import com.ssafy.persona.character.model.dto.AlarmSettingUpdateRequest;
 import com.ssafy.persona.character.model.dto.CharacterCreatRequest;
 import com.ssafy.persona.character.model.dto.CharacterDeleteRequest;
 import com.ssafy.persona.character.model.dto.CharacterGetResponse;
 import com.ssafy.persona.character.model.dto.CharacterUpdateRequest;
 import com.ssafy.persona.user.mapper.UserMapper;
-import com.ssafy.persona.user.model.dto.UpdateCountRequest;
-import com.ssafy.persona.user.model.entity.User;
 
 @Service
 public class CharacterServiceImpl implements CharacterService {
@@ -62,18 +58,13 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	public int createAlarm(AlarmCreateRequest request) {
-		return characterMapper.createAlarm(request);
-	}
-
-	@Override
-	public int updateAlarmStatus(AlarmUpdateRequest request) {
+	public int updateAlarmStatus(AlarmSettingUpdateRequest request) {
 		return characterMapper.updateAlarmStatus(request);
 	}
 
 	@Override
-	public List<AlarmGetResponse> getAlarmList(int characterSeq) {
-		return characterMapper.getAlarmList(characterSeq);
+	public int checkCharacterNickname(String nickname) {
+		return characterMapper.checkCharacterNickname(nickname);
 	}
 
 }

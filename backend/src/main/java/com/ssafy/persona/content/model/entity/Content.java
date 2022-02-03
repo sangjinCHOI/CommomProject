@@ -39,4 +39,6 @@ public class Content {
 	private LocalDateTime contentCreatedDate;
 	@Column
 	private LocalDateTime contentModifiedDate;
+	@Column
+	private int contentIsLike;
 }
