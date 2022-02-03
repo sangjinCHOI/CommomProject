@@ -47,7 +47,7 @@ public class UserController {
 	@Autowired
 	private SecurityService securityService;
 	
-<<<<<<< HEAD
+
 	@GetMapping("/{userId}")
 	public ResponseEntity<UserGetResponse> getUser(@PathVariable String userId) {
 		
@@ -57,7 +57,8 @@ public class UserController {
 		}
 		else {
 			return (new ResponseEntity<UserGetResponse>(user,HttpStatus.ACCEPTED));
-=======
+		}
+	}
 	@PostMapping("/login")
 	public ResponseEntity<Map<String,String>> createToken(@RequestBody UserLoginRequest request) throws NoSuchAlgorithmException{
 
@@ -69,7 +70,6 @@ public class UserController {
 		if(userService.userLogin(request.toUser()) < 1) {
 			map.put("token", "");
 			return (new ResponseEntity<Map<String,String>>(map,HttpStatus.ACCEPTED));
->>>>>>> 37b7599dfd76f00e32a480d731731bce1eb09cb1
 		}
 		
 		// 만료기간 1분
@@ -97,18 +97,18 @@ public class UserController {
 			
 		return (new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED));
 	}
-	
-	@GetMapping("/{userSeq}")
-	public ResponseEntity<UserGetResponse> getUser(@PathVariable int userSeq) {
-		
-		UserGetResponse user = userService.getUser(userSeq);
-		if (user != null) {
-			return (new ResponseEntity<UserGetResponse>(user,HttpStatus.OK));
-		}
-		else {
-			return (new ResponseEntity<UserGetResponse>(user,HttpStatus.ACCEPTED));
-		}
-	}
+//	
+//	@GetMapping("/{userSeq}")
+//	public ResponseEntity<UserGetResponse> getUser(@PathVariable int userSeq) {
+//		
+//		UserGetResponse user = userService.getUser(userSeq);
+//		if (user != null) {
+//			return (new ResponseEntity<UserGetResponse>(user,HttpStatus.OK));
+//		}
+//		else {
+//			return (new ResponseEntity<UserGetResponse>(user,HttpStatus.ACCEPTED));
+//		}
+//	}
 	
 	@GetMapping("/email")
 	public ResponseEntity updateUser(@RequestParam String userId) {
