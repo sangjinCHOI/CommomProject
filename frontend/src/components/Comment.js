@@ -22,7 +22,7 @@ export default function Comment(props) {
         </ModalHeader>
         <hr className="mb-5" />
         <ModalBody>
-          <div style={{ overflowY: "scroll", width: 500, height: 320, "overflow-y": "auto" }}>
+          <div style={{ overflowY: "scroll", width: 500, height: 320 }}>
             <div className="mb-5">
               <div className="px-4 flex justify-between">
                 <div className="flex">

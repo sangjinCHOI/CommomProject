@@ -27,6 +27,7 @@ import Search from "./router/Search";
 import SearchCharacters from "./router/SearchCharacters";
 import SearchStorages from "./router/SearchStorages";
 import SearchTags from "./router/SearchTags";
+import SearchTagsDetail from "./router/SearchTagsDetail";
 import Storages from "./router/Storages";
 
 function App() {
@@ -69,6 +70,7 @@ function App() {
                 <Route exact path="/search/storages" component={SearchStorages} />
                 <Route exact path="/:nickname/storages" component={Storages} />
                 <Route exact path="/search/tags" component={SearchTags} />
+                <Route exact path="/search/tags" component={SearchTagsDetail} />
                 {/* characters, login, signup같은 닉네임이 있다면 문제 발생 가능 주의 */}
                 <Route exact path="/:nickname" component={Profile} />
                 <Route exact path="/:nickname/follow" component={Follow} />
