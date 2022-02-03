@@ -24,7 +24,7 @@
 	</delete>
 	
 	<select id="storageList" parameterType="int" resultType="StorageListResponse">
-		select storage_name as storageName
+		select storage_name as storageName, storage_public as storagePublic
 		from tb_storage
 		where character_seq = #{characterSeq}
 	</select>

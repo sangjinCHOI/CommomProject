@@ -11,10 +11,12 @@ import lombok.ToString;
 @ToString
 public class StorageListResponse {
 	private String storageName;
+	private boolean storagePublic;
 	
 	public StorageListResponse(Storage storage) {
 		super();
 		this.storageName = storage.getStorageName();
+		this.storagePublic = storage.isStoragePublic();
 	}
 
 }
