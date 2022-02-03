@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.storage.mapper.StorageMapper;
 import com.ssafy.persona.storage.model.dto.ContentStoreListResponse;
 import com.ssafy.persona.storage.model.dto.ContentStoreRequest;
+import com.ssafy.persona.storage.model.dto.StorageContentListRequest;
 import com.ssafy.persona.storage.model.dto.StorageCreateRequest;
 import com.ssafy.persona.storage.model.dto.StorageDeleteRequest;
 import com.ssafy.persona.storage.model.dto.StorageListResponse;
@@ -62,6 +64,11 @@ public class StorageServiceImpl implements StorageService {
 	@Override
 	public List<ContentStoreListResponse> contentStoreList(int contentSeq) {
 		return storageMapper.contentStoreList(contentSeq);
+	}
+
+	@Override
+	public List<ContentGetResponse> storageContentList(StorageContentListRequest storageContentListRequeset) {
+		return storageMapper.storageContentList(storageContentListRequeset);
 	}
 
 }
