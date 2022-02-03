@@ -41,7 +41,7 @@
 	<select id="contentList" parameterType="int" resultType="ContentGetResponse">
 		select content_seq as contentSeq, content_is_active as contentIsActive, content_is_public as contentIsPublic, character_seq as characterSeq, category_seq as categorySeq, content_text as contentText, content_like as contentLike, content_save as contentSave, content_is_media as contentIsMedia, content_created_date contentCreatedDate, content_modified_Date as contentModifiedDate, (select count(*) 
 		from tb_content_like
-		where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsLike
+		where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsLike, (select count(*) from tb_stored_content where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsStore
 		from tb_content
 		where category_seq IN (select category_seq from tb_character where character_seq = #{characterNow})
 	</select>
