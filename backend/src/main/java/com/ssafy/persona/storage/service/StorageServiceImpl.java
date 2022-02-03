@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.persona.storage.mapper.StorageMapper;
 import com.ssafy.persona.storage.model.dto.StorageCreateRequest;
+import com.ssafy.persona.storage.model.dto.StorageDeleteRequest;
 import com.ssafy.persona.storage.model.dto.StorageModifyRequest;
 
 @Service
@@ -20,6 +21,11 @@ public class StorageServiceImpl implements StorageService {
 	@Override
 	public boolean storageModify(StorageModifyRequest storageModifyRequest) {
 		return storageMapper.storageModify(storageModifyRequest) == 1;
+	}
+
+	@Override
+	public boolean storageDelete(StorageDeleteRequest storageDeleteRequest) {
+		return storageMapper.storageDelete(storageDeleteRequest) == 1;
 	}
 
 }
