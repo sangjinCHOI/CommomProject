@@ -6,11 +6,8 @@ import { useHistory } from "react-router";
 import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
-<<<<<<< HEAD
 import Send from "../config/Send";
-=======
 // import userStore from "../store/userStore";
->>>>>>> 239e0b2ffb703c680b4d7c996bc2b7b99127e612
 
 export default function Login() {
   const history = useHistory();
