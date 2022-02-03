@@ -48,4 +48,14 @@ public class StorageServiceImpl implements StorageService {
 		
 	}
 
+	@Override
+	public boolean contentUnstore(ContentStoreRequest contentStoreRequest) {
+		return storageMapper.contentUnstore(contentStoreRequest) == 1;
+	}
+
+	@Override
+	public void contentUnstoreUpdate(int contentSeq) {
+		storageMapper.contentUnstoreUpdate(contentSeq);
+	}
+
 }

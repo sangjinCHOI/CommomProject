@@ -12,11 +12,13 @@ import lombok.ToString;
 public class ContentStoreRequest {
 	private int storageSeq;
 	private int contentSeq;
+	private int characterSeq;
 	
 	public StoredContent toStoredContent() {
 		return StoredContent.builder()
 							.storageSeq(storageSeq)
 							.contentSeq(contentSeq)
+							.characterSeq(characterSeq)
 							.build();
 	}
 	

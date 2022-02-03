@@ -30,8 +30,8 @@
 	</select>
 	
 	<insert id="contentStore" parameterType="contentStoreRequest">
-		insert into tb_stored_content (content_seq, storage_seq)
-		values (#{contentSeq}, #{storageSeq})
+		insert into tb_stored_content (content_seq, storage_seq, character_seq)
+		values (#{contentSeq}, #{storageSeq}, #{characterSeq})
 	</insert>
 	
 	<update id="contentStoreUpdate" parameterType="int">
@@ -39,5 +39,17 @@
 		set content_save = content_save + 1
 		where content_seq = #{contentSeq}
 	</update>
+	
+	<delete id="contentUnstore" parameterType="contentStoreRequest">
+		delete from tb_stored_content
+		where content_seq = #{contentSeq} and storage_seq = #{storageSeq}
+	</delete>
+	
+	<update id="contentUnstoreUpdate" parameterType="int">
+		update tb_content
+		set content_save = content_save - 1
+		where content_seq = #{contentSeq}
+	</update>
+	
 	
 </mapper>

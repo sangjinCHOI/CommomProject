@@ -18,4 +18,7 @@ public interface StorageService {
 	boolean contentStore(ContentStoreRequest contentStoreRequest);
 	void contentStoreUpdate(int contentSeq);
 	
+	boolean contentUnstore(ContentStoreRequest contentStoreRequest);
+	void contentUnstoreUpdate(int contentSeq);
+	
 }

@@ -81,5 +81,20 @@ public class StorageController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
+	@ApiOperation(value = "content unstore", notes = "게시글 저장 취소, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@DeleteMapping("/content/unstore")
+	public ResponseEntity<String> contentUnstore(@RequestBody @ApiParam(value = "게시글 저장 취소.", required = true) ContentStoreRequest contentStoreRequest) {
+		int contentSeq = contentStoreRequest.getContentSeq();
+		
+		storageService.contentUnstoreUpdate(contentSeq);
+		
+		if (storageService.contentUnstore(contentStoreRequest)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	
+	
 
 }

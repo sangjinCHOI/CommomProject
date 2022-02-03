@@ -19,5 +19,7 @@ public interface StorageMapper {
 	List<StorageListResponse> storageList(int characterSeq);
 	int contentStore(ContentStoreRequest contentStoreRequest);
 	void contentStoreUpdate(int contentSeq);
+	int contentUnstore(ContentStoreRequest contentStoreRequest);
+	void contentUnstoreUpdate(int contentSeq);
 
 }

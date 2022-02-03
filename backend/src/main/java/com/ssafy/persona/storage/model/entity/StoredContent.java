@@ -19,4 +19,6 @@ public class StoredContent {
 	private int storageSeq;
 	@Column
 	private int contentSeq;
+	@Column
+	private int characterSeq;
 }
