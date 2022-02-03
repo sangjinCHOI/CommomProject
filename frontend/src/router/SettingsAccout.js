@@ -84,22 +84,25 @@ export default function SettingsAccount() {
     userPw: passwordcheck,
   };
   const ChangePassBtn = (e) => {
-    // alert("test");
-    axios
-      .put("http://localhost:8080/user/setting/account", JSON.stringify(pwData), {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((data) => {
-        if (data.status === 200) {
-          alert("비밀번호를 성공적으로 변경하였습니다.");
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        alert("비밀번호 변경을 실패하였습니다.");
-      });
+    if (PassCheckEqual || showPassEqual) {
+      alert("비밀번호를 확인해 주세여");
+    } else {
+      axios
+        .put("http://localhost:8080/user/setting/account", JSON.stringify(pwData), {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((data) => {
+          if (data.status === 200) {
+            alert("비밀번호를 성공적으로 변경하였습니다.");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          alert("비밀번호 변경을 실패하였습니다.");
+        });
+    }
   };
 
   const handleKeyPress = (e) => {
