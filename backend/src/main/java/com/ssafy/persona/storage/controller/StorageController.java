@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.persona.content.model.dto.ContentLikeRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
+import com.ssafy.persona.storage.model.dto.ContentStoreRequest;
 import com.ssafy.persona.storage.model.dto.StorageCreateRequest;
 import com.ssafy.persona.storage.model.dto.StorageDeleteRequest;
 import com.ssafy.persona.storage.model.dto.StorageListResponse;
@@ -66,6 +68,18 @@ public class StorageController {
 		return new ResponseEntity<List<StorageListResponse>>(storageService.storageList(characterSeq), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "content store", notes = "게시글 저장, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping("/content/store")
+	public ResponseEntity<String> contentStore(@RequestBody @ApiParam(value = "게시글 저장.", required = true) ContentStoreRequest contentStoreRequest) {
+		int contentSeq = contentStoreRequest.getContentSeq();
+		
+		storageService.contentStoreUpdate(contentSeq);
+		
+		if (storageService.contentStore(contentStoreRequest)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
 	
 
 }
