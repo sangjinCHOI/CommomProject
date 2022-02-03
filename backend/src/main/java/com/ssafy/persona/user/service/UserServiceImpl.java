@@ -15,12 +15,12 @@ public class UserServiceImpl implements UserService{
 	UserMapper userMapper;
 	
 	@Override
-	public UserGetResponse getUser(int userSeq) {
+	public UserGetResponse getUser(String userId) {
 		// user가 없다면
-		if(userMapper.seqIsValid(userSeq) < 1)
+		if(userMapper.seqIsValid(userId) < 1)
 			return (null);
 		// 해당 user 있음
-		return (userMapper.getUser(userSeq));
+		return (userMapper.getUser(userId));
 	}
 
 	@Override
