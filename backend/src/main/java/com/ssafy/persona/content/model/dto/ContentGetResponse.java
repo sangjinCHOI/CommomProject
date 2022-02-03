@@ -24,6 +24,7 @@ public class ContentGetResponse {
 	private LocalDateTime contentCreatedDate;
 	private LocalDateTime contentModifiedDate;
 	private int contentIsLike;
+	private int contentIsStore;
 	
 	public ContentGetResponse(Content content) {
 		super();
@@ -39,5 +40,6 @@ public class ContentGetResponse {
 		this.contentCreatedDate = content.getContentCreatedDate();
 		this.contentModifiedDate = content.getContentModifiedDate();
 		this.contentIsLike = content.getContentIsLike();
+		this.contentIsStore = content.getContentIsStore();
 	}
 }
