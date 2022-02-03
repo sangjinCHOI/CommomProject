@@ -6,7 +6,11 @@ import { useHistory } from "react-router";
 import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
+<<<<<<< HEAD
 import Send from "../config/Send";
+=======
+// import userStore from "../store/userStore";
+>>>>>>> 239e0b2ffb703c680b4d7c996bc2b7b99127e612
 
 export default function Login() {
   const history = useHistory();
@@ -46,10 +50,46 @@ export default function Login() {
       userPw: password,
     };
 
-    Send.post('/user/login', JSON.stringify(data))
-    .then((data) =>{
-      window.localStorage.setItem("idToken", (data.data.token));
-    }).catch((e) => {
+    // Send.post('/user/login', JSON.stringify(data))
+    // .then((data) =>{
+    //   window.localStorage.setItem("idToken", (data.data.token));
+    // }).catch((e) => {
+    axios
+      .post("http://localhost:8080/user/login", JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
+          //토큰값
+        },
+      })
+      .then((res) => {
+        // const token = res.data;
+        window.localStorage.setItem("idToken", JSON.stringify(res.data));
+        console.log(localStorage.getItem("idToken"));
+        axios
+          .get(`http://localhost:8080/user/${data.userId}`)
+          .then((res) => {
+            history.push({
+              pathname: "../characters/select",
+              props: {
+                userId: data.userId,
+                userSeq: res.data.userSeq,
+                userCreatableCount: res.data.userCreatableCount,
+              },
+            });
+            // userStore.dispatch({
+            //   type: "userSave",
+            //   userSeq: res.data.userSeq,
+            //   userCreatableCount: res.data.userCreatableCount,
+            // });
+
+            // userSeq를 localStorage에 저장? or token으로 찾는 방법?
+            // 모든 페이지에서 캐릭터 선택 창으로 갈 때 userSeq가 필요함
+            localStorage.setItem("userSeq", res.data.userSeq);
+            console.log(localStorage.getItem("userSeq"));
+          })
+          .catch((e) => console.log(e));
+      })
+      .catch((e) => {
         console.log(e);
       });
 

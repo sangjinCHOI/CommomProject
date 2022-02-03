@@ -25,27 +25,45 @@ export default function Follow() {
     // data1로 팔로우 현황 확인
     const data1 = {
       followee: 12,
-      nickname: "유산슬",
+      nickname: "유야", // 유야 를 포함한 팔로워 확인 용도
     };
     // data2로 팔로우 요청
-    // 현재 중복 팔로우 가능
-    // 팔로우 했는지 여부 확인은 어떻게?
+    // 팔로우 했는지 여부 확인은 어떻게? -> 나중에 characterSeq로 1:1 확인
     const data2 = {
-      followee: 13, // 유산슬
-      follower: 12, // 유야호 // 유야호(13)가 유산슬(12)을 팔로우
+      followee: 12, // 유산슬
+      follower: 13, // 유야호(나)
     };
     axios
       .post("http://localhost:8080/character/followers", JSON.stringify(data1), {
         headers: { "Content-Type": "application/json" },
       })
       .then((res) => {
-        console.log(res.data); // 계속 빈 배열 나옴
-        // axios
-        //   .post("http://localhost:8080/character/follow", JSON.stringify(data2), {
-        //     headers: { "Content-Type": "application/json" },
-        //   })
-        //   .then((res) => console.log(res));
+        console.log(res.data);
+        axios
+          .post("http://localhost:8080/character/follow", JSON.stringify(data2), {
+            headers: { "Content-Type": "application/json" },
+          })
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err));
       });
+  };
+
+  const unfollow = (e) => {
+    e.preventDefault();
+    const data3 = {
+      followee: 12, // 유산슬
+      follower: 13, // 유야호(나)
+    };
+    axios
+      .delete("http://localhost:8080/character/follow", JSON.stringify(data3), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -115,7 +133,9 @@ export default function Follow() {
                   <div className="w-44">{nickname}</div>
                 </Link>
                 <div className="ml-12 mr-3">
-                  <Label color="blueGray">언팔로우</Label>
+                  <Link to="" onClick={unfollow}>
+                    <Label color="blueGray">언팔로우</Label>
+                  </Link>
                 </div>
               </div>
             ))}

@@ -26,7 +26,6 @@ export default function CharactersCreate() {
   const maxLen = (value) => value.length <= 50;
   const introduction = useInput("", maxLen);
 
-  const [userSeq, setUserSeq] = useState(0);
   const [categorySeq, setCategorySeq] = useState(0);
   const [nickname, setNickname] = useState("");
   const history = useHistory();
@@ -34,7 +33,7 @@ export default function CharactersCreate() {
   const characterSave = (e) => {
     e.preventDefault();
     const data = {
-      userSeq: 91, // 현재 DB상에서 id: qweqweqwe123인 유저
+      userSeq: 92, // 현재 DB상에서 id: qkrwhdgns1인 유저
       categorySeq: parseInt(categorySeq),
       nickname,
       introduction: introduction.value,
