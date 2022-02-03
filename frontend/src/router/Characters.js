@@ -1,10 +1,35 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
 
 function Characters({ characterSlice }) {
   const [isManagement, setIsManagement] = useState(false);
+  // history.push()에서 userSeq 받아오는 방법
+  // const location = useLocation();
+  // const { userSeq } = location.props;
+  const userSeq = localStorage.getItem("userSeq");
+  const [characterList, setCharacterList] = useState([]);
+  const [characterLen, setCharacterLen] = useState(0);
+
+  const tempUserCreatableCount = 2;
+
+  const getCharacterList = () => {
+    axios
+      .get(`http://localhost:8080/character/characters/${userSeq}`)
+      .then((res) => {
+        setCharacterList(res.data);
+        console.log(res.data);
+        setCharacterLen(res.data.length);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getCharacterList();
+  }, []);
+
   const management = (event) => {
     event.preventDefault();
     setIsManagement(!isManagement);
@@ -24,34 +49,34 @@ function Characters({ characterSlice }) {
       </div>
       <div className="flex justify-center m-8">
         <Character
-          nickname={characterSlice.nickname}
+          nickname={characterLen >= 1 ? characterList[0].nickname : null}
           isManagement={isManagement}
-          isExist={true}
-          isLock={false}
+          isExist={characterLen >= 1 ? true : false}
+          isLock={tempUserCreatableCount >= 1 ? false : true}
           imgSrc="https://cdn2.thecatapi.com/images/ba2.jpg"
         />
         <Character
-          nickname="닉네임은여덟글자"
+          nickname={characterLen >= 2 ? characterList[1].nickname : null}
           isManagement={isManagement}
-          isExist={true}
-          isLock={false}
+          isExist={characterLen >= 2 ? true : false}
+          isLock={tempUserCreatableCount >= 2 ? false : true}
           imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
         />
       </div>
       <div className="flex justify-center m-8">
         <Character
-          nickname=""
+          nickname={characterLen >= 3 ? characterList[2].nickname : null}
           isManagement={isManagement}
-          isExist={false}
-          isLock={false}
-          imgSrc=""
+          isExist={characterLen >= 3 ? true : false}
+          isLock={tempUserCreatableCount >= 3 ? false : true}
+          imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
         />
         <Character
-          nickname=""
+          nickname={characterLen >= 4 ? characterList[3].nickname : null}
           isManagement={isManagement}
-          isExist={false}
-          isLock={true}
-          imgSrc=""
+          isExist={characterLen >= 4 ? true : false}
+          isLock={tempUserCreatableCount >= 4 ? false : true}
+          imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
         />
       </div>
       <div className="text-center text-2xl mt-24">
@@ -71,13 +96,19 @@ const Character = ({
   imgSrc = null,
 }) => {
   return (
-    <Link
-      to={
-        isLock ? "" : isManagement ? "../characters/update" : isExist ? "" : "../characters/create"
-      }
-      onClick={isLock ? (e) => e.preventDefault() : null}
-    >
-      <div className="mt-8 mx-12 w-32">
+    <div className="mt-8 mx-12 w-32">
+      <Link
+        to={
+          isLock
+            ? ""
+            : isManagement
+            ? "../characters/update"
+            : isExist
+            ? ""
+            : "../characters/create"
+        }
+        onClick={isLock ? (e) => e.preventDefault() : null}
+      >
         <CharacterImg
           underText={nickname}
           // 캐릭터 잠금 상태인지, 캐릭터가 존재하는지, 캐릭터 관리 상태인지, 이미지가 있는지에 따라 분기(순서 중요)
@@ -92,9 +123,10 @@ const Character = ({
                 : require("../assets/images/default_user.png")
               : require("../assets/images/character_plus.png")
           }
+          lock={isLock}
         />
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
 
 // characterStore의 update reducer를 import
-import { update } from "../store/characterStore";
+import { update } from "../store/charactersStore";
 
 const useInput = (initialValue, validator) => {
   const [value, setValue] = useState(initialValue);
@@ -26,7 +26,7 @@ const useInput = (initialValue, validator) => {
   return { value, onChange };
 };
 
-function CharactersCreate({ characterSlice, updateCharacter }) {
+function CharactersCreate({ charactersSlice, updateCharacters }) {
   const maxLen = (value) => value.length <= 50;
   const introduction = useInput("", maxLen);
 
@@ -45,19 +45,19 @@ function CharactersCreate({ characterSlice, updateCharacter }) {
     };
 
     // characterStore.js의 update reducer 실행
-    updateCharacter({ data });
+    updateCharacters({ data });
 
-    // console.log(data);
-    // axios
-    //   .put("http://localhost:8080/character", JSON.stringify(data), {
-    //     headers: { "Content-Type": "application/json" },
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //     alert("캐릭터 수정이 완료되었습니다.");
-    //     history.push("../characters/select");
-    //   })
-    //   .catch((err) => console.log(err));
+    console.log(data);
+    axios
+      .put("http://localhost:8080/character", JSON.stringify(data), {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((res) => {
+        console.log(res);
+        alert("캐릭터 수정이 완료되었습니다.");
+        history.push("../characters/select");
+      })
+      .catch((err) => console.log(err));
     history.push("../characters/select");
   };
 
@@ -67,11 +67,6 @@ function CharactersCreate({ characterSlice, updateCharacter }) {
 
   return (
     <>
-      {/* 테스트 */}
-      {characterSlice.nickname}
-      <br />
-      {characterSlice.introduction}
-
       <Link to="../characters/select">
         <span className="material-icons text-xl m-4 absolute top-0">arrow_back 취소</span>
       </Link>
@@ -124,11 +119,11 @@ function CharactersCreate({ characterSlice, updateCharacter }) {
 
 // characterSlice를 return 함으로써 여기서 props로 받아올 수 있는듯?
 function mapStateToProps(state) {
-  return { characterSlice: state.character };
+  return { charactersSlice: state.character };
 }
 
 function mapDispatchToProps(dispatch) {
-  return { updateCharacter: (character) => dispatch(update(character)) };
+  return { updateCharacters: (characters) => dispatch(update(characters)) };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CharactersCreate);

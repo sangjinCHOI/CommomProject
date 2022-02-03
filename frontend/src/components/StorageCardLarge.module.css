@@ -2,3 +2,12 @@
   transform: scalex(1.06) scaley(1.17);
   /* transition: transform 0.1s ease-in-out; */
 }
+
+.textActive {
+  background-color: rgba(255, 255, 255, 0.6);
+  font-size: 1.35rem;
+}
+
+.textInactive {
+  background-color: rgba(255, 255, 255, 0.4);
+}
