@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.persona.storage.mapper.StorageMapper;
+import com.ssafy.persona.storage.model.dto.ContentStoreListResponse;
 import com.ssafy.persona.storage.model.dto.ContentStoreRequest;
 import com.ssafy.persona.storage.model.dto.StorageCreateRequest;
 import com.ssafy.persona.storage.model.dto.StorageDeleteRequest;
@@ -56,6 +57,11 @@ public class StorageServiceImpl implements StorageService {
 	@Override
 	public void contentUnstoreUpdate(int contentSeq) {
 		storageMapper.contentUnstoreUpdate(contentSeq);
+	}
+
+	@Override
+	public List<ContentStoreListResponse> contentStoreList(int contentSeq) {
+		return storageMapper.contentStoreList(contentSeq);
 	}
 
 }

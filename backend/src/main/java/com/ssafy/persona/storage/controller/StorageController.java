@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.persona.content.model.dto.ContentLikeRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
+import com.ssafy.persona.storage.model.dto.ContentStoreListResponse;
 import com.ssafy.persona.storage.model.dto.ContentStoreRequest;
 import com.ssafy.persona.storage.model.dto.StorageCreateRequest;
 import com.ssafy.persona.storage.model.dto.StorageDeleteRequest;
@@ -92,6 +93,12 @@ public class StorageController {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value = "content store list", notes = "게시글 저장 누른 유저 리스트", response = List.class)
+	@GetMapping("/content/store/{contentSeq}")
+	public ResponseEntity<List<ContentStoreListResponse>> contentStoreList(@PathVariable("contentSeq") @ApiParam(value = "리스트를 조회할 게시글번호.", required = true) int contentSeq) {
+		return new ResponseEntity<List<ContentStoreListResponse>>(storageService.contentStoreList(contentSeq), HttpStatus.OK);
 	}
 	
 	

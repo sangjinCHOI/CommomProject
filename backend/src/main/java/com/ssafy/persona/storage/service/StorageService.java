@@ -2,6 +2,7 @@ package com.ssafy.persona.storage.service;
 
 import java.util.List;
 
+import com.ssafy.persona.storage.model.dto.ContentStoreListResponse;
 import com.ssafy.persona.storage.model.dto.ContentStoreRequest;
 import com.ssafy.persona.storage.model.dto.StorageCreateRequest;
 import com.ssafy.persona.storage.model.dto.StorageDeleteRequest;
@@ -20,5 +21,7 @@ public interface StorageService {
 	
 	boolean contentUnstore(ContentStoreRequest contentStoreRequest);
 	void contentUnstoreUpdate(int contentSeq);
+	
+	List<ContentStoreListResponse> contentStoreList(int contentSeq);
 	
 }

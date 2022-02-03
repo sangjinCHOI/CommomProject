@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ssafy.persona.storage.model.dto.ContentStoreListResponse;
 import com.ssafy.persona.storage.model.dto.ContentStoreRequest;
 import com.ssafy.persona.storage.model.dto.StorageCreateRequest;
 import com.ssafy.persona.storage.model.dto.StorageDeleteRequest;
@@ -21,5 +22,6 @@ public interface StorageMapper {
 	void contentStoreUpdate(int contentSeq);
 	int contentUnstore(ContentStoreRequest contentStoreRequest);
 	void contentUnstoreUpdate(int contentSeq);
+	List<ContentStoreListResponse> contentStoreList(int contentSeq);
 
 }

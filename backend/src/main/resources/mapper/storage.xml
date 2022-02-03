@@ -51,5 +51,11 @@
 		where content_seq = #{contentSeq}
 	</update>
 	
+	<select id="contentStoreList" parameterType="int" resultType="ContentStoreListResponse">
+		select character_seq, nickname
+		from tb_character
+		where character_seq in (select character_seq from tb_stored_content where content_seq = #{contentSeq})
+	</select>
+	
 	
 </mapper>
