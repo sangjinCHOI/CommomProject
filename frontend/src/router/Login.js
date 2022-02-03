@@ -63,6 +63,10 @@ export default function Login() {
               pathname: "../characters/select",
               props: { userSeq: res.data.userSeq },
             });
+            // userSeq를 localStorage에 저장? or token으로 찾는 방법?
+            // 모든 페이지에서 캐릭터 선택 창으로 갈 때 userSeq가 필요함
+            localStorage.setItem("userSeq", res.data.userSeq);
+            console.log(localStorage.getItem("userSeq"));
           })
           .catch((e) => console.log(e));
       })

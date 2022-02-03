@@ -7,8 +7,10 @@ import CharacterImg from "../components/CharacterImg";
 
 function Characters({ characterSlice }) {
   const [isManagement, setIsManagement] = useState(false);
-  const location = useLocation();
-  const { userSeq } = location.props;
+  // history.push()에서 userSeq 받아오는 방법
+  // const location = useLocation();
+  // const { userSeq } = location.props;
+  const userSeq = localStorage.getItem("userSeq");
   const [characterList, setCharacterList] = useState([]);
   const [characterLen, setCharacterLen] = useState(0);
 
@@ -46,7 +48,6 @@ function Characters({ characterSlice }) {
         </span>
       </div>
       <div className="flex justify-center m-8">
-        {/* 캐릭터가 1 ~ 4개일 때 각각 케이스 나눠서 하드코딩 뿐인가? */}
         <Character
           nickname={characterLen >= 1 ? characterList[0].nickname : null}
           isManagement={isManagement}
@@ -61,21 +62,6 @@ function Characters({ characterSlice }) {
           isLock={tempUserCreatableCount >= 2 ? false : true}
           imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
         />
-
-        {/* <Character
-          nickname={characterSlice.nickname}
-          isManagement={isManagement}
-          isExist={true}
-          isLock={false}
-          imgSrc="https://cdn2.thecatapi.com/images/ba2.jpg"
-        /> */}
-        {/* <Character
-          nickname="닉네임은여덟글자"
-          isManagement={isManagement}
-          isExist={true}
-          isLock={false}
-          imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
-        /> */}
       </div>
       <div className="flex justify-center m-8">
         <Character
@@ -92,20 +78,6 @@ function Characters({ characterSlice }) {
           isLock={tempUserCreatableCount >= 4 ? false : true}
           imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
         />
-        {/* <Character
-          nickname=""
-          isManagement={isManagement}
-          isExist={false}
-          isLock={false}
-          imgSrc=""
-        />
-        <Character
-          nickname=""
-          isManagement={isManagement}
-          isExist={false}
-          isLock={true}
-          imgSrc=""
-        /> */}
       </div>
       <div className="text-center text-2xl mt-24">
         <Link to="" onClick={management}>

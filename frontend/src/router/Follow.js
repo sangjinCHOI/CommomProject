@@ -31,8 +31,8 @@ export default function Follow() {
     // 현재 중복 팔로우 가능
     // 팔로우 했는지 여부 확인은 어떻게?
     const data2 = {
-      followee: 13, // 유산슬
-      follower: 12, // 유야호 // 유야호(13)가 유산슬(12)을 팔로우
+      followee: 12, // 유산슬
+      follower: 13, // 유야호 // 유야호(13)가 유산슬(12)을 팔로우
     };
     axios
       .post("http://localhost:8080/character/followers", JSON.stringify(data1), {
@@ -40,11 +40,11 @@ export default function Follow() {
       })
       .then((res) => {
         console.log(res.data); // 계속 빈 배열 나옴
-        // axios
-        //   .post("http://localhost:8080/character/follow", JSON.stringify(data2), {
-        //     headers: { "Content-Type": "application/json" },
-        //   })
-        //   .then((res) => console.log(res));
+        axios
+          .post("http://localhost:8080/character/follow", JSON.stringify(data2), {
+            headers: { "Content-Type": "application/json" },
+          })
+          .then((res) => console.log(res));
       });
   };
 
