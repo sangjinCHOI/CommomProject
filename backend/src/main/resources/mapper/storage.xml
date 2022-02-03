@@ -17,5 +17,15 @@
 		   		storage_modified_date = now()
 		where storage_seq = #{storageSeq} and character_seq = #{characterSeq}
 	</update>
-
+	
+	<delete id="storageDelete" parameterType="storageDeleteRequest">
+		delete from tb_storage
+		where storage_seq = #{storageSeq} and character_seq = #{characterSeq}
+	</delete>
+	
+	<select id="storageList" parameterType="int" resultType="StorageListResponse">
+		select storage_name as storageName, storage_public as storagePublic
+		from tb_storage
+		where character_seq = #{characterSeq}
+	</select>
 </mapper>

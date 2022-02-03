@@ -12,6 +12,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class CharacterGetResponse {
+	private int characterSeq;
 	private String nickname;
 	private int categorySeq;
 	private String introduction;
@@ -27,6 +28,7 @@ public class CharacterGetResponse {
 	private LocalDateTime characterModifiedDate;
 
 	public CharacterGetResponse(CharacterEntity ce) {
+		this.characterSeq = ce.getCharacterSeq();
 		this.nickname = ce.getNickname();
 		this.categorySeq = ce.getCategorySeq();
 		this.introduction = ce.getIntroduction();
