@@ -6,6 +6,7 @@ import { useHistory } from "react-router";
 import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
+import Send from "../config/Send";
 
 export default function Login() {
   const history = useHistory();
@@ -45,22 +46,36 @@ export default function Login() {
       userPw: password,
     };
 
-    axios
-      .post("http://localhost:8080/user/login", JSON.stringify(data), {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((data) => {
-        // const token = data.data;
-        window.localStorage.setItem("idToken", JSON.stringify(data.data));
-        // console.log(localStorage.getItem("idToken"));
-
-        history.push("../characters/select");
-      })
-      .catch((e) => {
+    Send.post('/user/login', JSON.stringify(data))
+    .then((data) =>{
+      window.localStorage.setItem("idToken", (data.data.token));
+    }).catch((e) => {
         console.log(e);
       });
+
+
+  //   axios
+  //     .post("http://localhost:8080/user/login", JSON.stringify(data), {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     })
+  //     .then((data) => {
+  //       // localStorage에 idToken 저장
+  //       window.localStorage.setItem("idToken", (data.data.token));
+
+  //       if(data.data.token == "" ){
+  //         alert("실패!");
+  //         setPassword("");
+  //       }
+  //       else{
+  //         alert("성공!");
+  //         history.push("../characters/select");
+  //       }
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
   };
 
   return (
@@ -80,7 +95,8 @@ export default function Login() {
             iconName="person"
             value={_id}
             onChange={onIdHandler}
-            onKeyPress={handleKeyPress}
+            //onKeyPress={handleKeyPress}
+            onKeyUp={handleKeyPress}
           />
         </div>
         <Link to="../accounts/id_inquiry">아이디를 잊으셨나요?</Link>
@@ -114,7 +130,7 @@ const PassComp = ({ pwHandleKeyPress }) => {
           iconName="pin"
           // value={password}
           // onChange={onPasswordHandler}
-          onKeyPress={pwHandleKeyPress}
+          onKeyUp={pwHandleKeyPress}
         />
       </div>
       <Link to="../accounts/pw_inquiry">비밀번호를 잊으셨나요?</Link>
