@@ -49,13 +49,12 @@ export default function Login() {
       .post("http://localhost:8080/user/login", JSON.stringify(data), {
         headers: {
           "Content-Type": "application/json",
-          //토큰값
         },
       })
       .then((data) => {
         // const token = data.data;
         window.localStorage.setItem("idToken", JSON.stringify(data.data));
-        console.log(localStorage.getItem("idToken"));
+        // console.log(localStorage.getItem("idToken"));
 
         history.push("../characters/select");
       })
