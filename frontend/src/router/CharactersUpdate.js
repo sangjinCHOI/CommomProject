@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
 
 // characterStore의 update reducer를 import
-import { update } from "../store/charactersStore";
+import { update } from "../store/characterStore";
 
 const useInput = (initialValue, validator) => {
   const [value, setValue] = useState(initialValue);
@@ -26,34 +26,39 @@ const useInput = (initialValue, validator) => {
   return { value, onChange };
 };
 
-function CharactersCreate({ charactersSlice, updateCharacters }) {
+function CharacterUpdate({ characterSlice, updateCharacter, location }) {
   const maxLen = (value) => value.length <= 50;
   const introduction = useInput("", maxLen);
 
-  const [userSeq, setUserSeq] = useState(0);
-  const [characterSeq, setCharacterSeq] = useState(0);
   const [nickname, setNickname] = useState("");
   const history = useHistory();
+
+  const characterSeq = location.state.characterSeq;
 
   const characterUpdate = (e) => {
     e.preventDefault();
 
-    const data = {
-      characterSeq: 9, // 링크연결갱신갱신 이었던 캐릭터
+    // const data = {
+    //   characterSeq: 9, // 링크연결갱신갱신 이었던 캐릭터
+    //   introduction: introduction.value,
+    //   nickname,
+    // };
+    // axios.get("http://localhost:8080/")
+
+    const character = {
+      characterSeq,
       introduction: introduction.value,
       nickname,
     };
 
     // characterStore.js의 update reducer 실행
-    updateCharacters({ data });
+    updateCharacter({ character });
 
-    console.log(data);
     axios
-      .put("http://localhost:8080/character", JSON.stringify(data), {
+      .put("http://localhost:8080/character", JSON.stringify(character), {
         headers: { "Content-Type": "application/json" },
       })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         alert("캐릭터 수정이 완료되었습니다.");
         history.push("../characters/select");
       })
@@ -119,11 +124,11 @@ function CharactersCreate({ charactersSlice, updateCharacters }) {
 
 // characterSlice를 return 함으로써 여기서 props로 받아올 수 있는듯?
 function mapStateToProps(state) {
-  return { charactersSlice: state.character };
+  return { characterSlice: state.character };
 }
 
 function mapDispatchToProps(dispatch) {
-  return { updateCharacters: (characters) => dispatch(update(characters)) };
+  return { updateCharacter: (character) => dispatch(update(character)) };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CharactersCreate);
+export default connect(mapStateToProps, mapDispatchToProps)(CharacterUpdate);

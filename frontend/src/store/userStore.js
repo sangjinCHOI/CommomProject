@@ -5,7 +5,7 @@ import { createStore } from "redux";
 
 export default createStore(function (state, action) {
   if (state === undefined) {
-    return { iddata: "first", emaildata: "first" };
+    return { iddata: "first", emaildata: "first", userSeq: 0, userCreatableCount: 1 };
   }
 
   if (action.type === "idtrans") {
@@ -26,6 +26,13 @@ export default createStore(function (state, action) {
       emaildata: action.emaildata,
     };
   }
+
+  // if (action.type === "userSave") {
+  //   return {
+  //     userSeq: action.userSeq,
+  //     userCreatableCount: action.userCreatableCount,
+  //   };
+  // }
 
   return state;
 }, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

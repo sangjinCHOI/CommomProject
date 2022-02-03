@@ -6,6 +6,7 @@ import { useHistory } from "react-router";
 import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
+// import userStore from "../store/userStore";
 
 export default function Login() {
   const history = useHistory();
@@ -61,8 +62,18 @@ export default function Login() {
           .then((res) => {
             history.push({
               pathname: "../characters/select",
-              props: { userSeq: res.data.userSeq },
+              props: {
+                userId: data.userId,
+                userSeq: res.data.userSeq,
+                userCreatableCount: res.data.userCreatableCount,
+              },
             });
+            // userStore.dispatch({
+            //   type: "userSave",
+            //   userSeq: res.data.userSeq,
+            //   userCreatableCount: res.data.userCreatableCount,
+            // });
+
             // userSeq를 localStorage에 저장? or token으로 찾는 방법?
             // 모든 페이지에서 캐릭터 선택 창으로 갈 때 userSeq가 필요함
             localStorage.setItem("userSeq", res.data.userSeq);
