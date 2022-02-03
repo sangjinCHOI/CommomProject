@@ -10,7 +10,7 @@
 	</select>
 	
 	<select id="getUser" resultType="UserGetResponse">
-		select user_seq as userSeq, user_id as userId, user_email as userEmail, user_birth as userBirth
+		select user_seq as userSeq, user_id as userId, user_email as userEmail, user_birth as userBirth, user_creatable_count as userCreatableCount
 		from tb_user
 		where user_id=#{userId}
 	</select>
