@@ -25,7 +25,7 @@ export default function Content() {
       <Comment isOpen={commentModal} onCancel={handleCommentClose} style={{ zIndex: 2 }} />
       <Report isOpen={reportModal} onCancel={handleReportClose} style={{ zIndex: 2 }} />
       <NewStorage isOpen={newStorageModal} onCancel={handleNewStorageClose} style={{ zIndex: 2 }} />
-      <MainCard max-height="900px">
+      <MainCard classes="mb-3" max-height="900px">
         <div style={{ height: 60 }} className="p-4 flex justify-between">
           <div className="text-xl">
             <p>초밥왕김탁구</p>
