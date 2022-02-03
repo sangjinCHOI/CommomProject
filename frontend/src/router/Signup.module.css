@@ -6,6 +6,14 @@
   margin-top: -200px;
 }
 
+.center2 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -110px;
+  margin-top: -280px;
+}
+
 .logo {
   width: auto;
   height: auto;

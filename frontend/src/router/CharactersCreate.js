@@ -26,7 +26,6 @@ export default function CharactersCreate() {
   const maxLen = (value) => value.length <= 50;
   const introduction = useInput("", maxLen);
 
-  const [userSeq, setUserSeq] = useState(0);
   const [categorySeq, setCategorySeq] = useState(0);
   const [nickname, setNickname] = useState("");
   const history = useHistory();
