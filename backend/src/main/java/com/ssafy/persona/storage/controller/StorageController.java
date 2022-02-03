@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.content.model.dto.ContentLikeRequest;
+import com.ssafy.persona.content.model.dto.ContentTagListRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
 import com.ssafy.persona.storage.model.dto.ContentStoreListResponse;
 import com.ssafy.persona.storage.model.dto.ContentStoreRequest;
+import com.ssafy.persona.storage.model.dto.StorageContentListRequest;
 import com.ssafy.persona.storage.model.dto.StorageCreateRequest;
 import com.ssafy.persona.storage.model.dto.StorageDeleteRequest;
 import com.ssafy.persona.storage.model.dto.StorageListResponse;
@@ -99,6 +102,12 @@ public class StorageController {
 	@GetMapping("/content/store/{contentSeq}")
 	public ResponseEntity<List<ContentStoreListResponse>> contentStoreList(@PathVariable("contentSeq") @ApiParam(value = "리스트를 조회할 게시글번호.", required = true) int contentSeq) {
 		return new ResponseEntity<List<ContentStoreListResponse>>(storageService.contentStoreList(contentSeq), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "storage content list", notes = "특정 저장소의 게시물 리스트 조회", response = ContentGetResponse.class)
+	@PostMapping("/storage/contents")
+	public ResponseEntity<List<ContentGetResponse>> storageContentList(@RequestBody @ApiParam(value = "특정 저장소를 조회할 정보.", required = true) StorageContentListRequest storageContentListRequest) {
+		return new ResponseEntity<List<ContentGetResponse>>(storageService.storageContentList(storageContentListRequest), HttpStatus.OK);
 	}
 	
 	
