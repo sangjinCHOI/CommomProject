@@ -56,7 +56,6 @@ export default function Login() {
         // const token = res.data;
         window.localStorage.setItem("idToken", JSON.stringify(res.data));
         console.log(localStorage.getItem("idToken"));
-        console.log(data);
         axios
           .get(`http://localhost:8080/user/${data.userId}`)
           .then((res) => {

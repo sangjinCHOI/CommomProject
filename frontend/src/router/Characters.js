@@ -50,15 +50,15 @@ function Characters({ characterSlice }) {
         <Character
           nickname={characterLen >= 1 ? characterList[0].nickname : null}
           isManagement={isManagement}
-          isExist={tempUserCreatableCount >= 1 ? true : false}
-          isLock={characterLen >= 1 ? false : true}
+          isExist={characterLen >= 1 ? true : false}
+          isLock={tempUserCreatableCount >= 1 ? false : true}
           imgSrc="https://cdn2.thecatapi.com/images/ba2.jpg"
         />
         <Character
           nickname={characterLen >= 2 ? characterList[1].nickname : null}
           isManagement={isManagement}
-          isExist={tempUserCreatableCount >= 2 ? true : false}
-          isLock={characterLen >= 2 ? false : true}
+          isExist={characterLen >= 2 ? true : false}
+          isLock={tempUserCreatableCount >= 2 ? false : true}
           imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
         />
 
@@ -81,15 +81,15 @@ function Characters({ characterSlice }) {
         <Character
           nickname={characterLen >= 3 ? characterList[2].nickname : null}
           isManagement={isManagement}
-          isExist={tempUserCreatableCount >= 3 ? true : false}
-          isLock={tempUserCreatableCount < 3 ? false : true}
+          isExist={characterLen >= 3 ? true : false}
+          isLock={tempUserCreatableCount >= 3 ? false : true}
           imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
         />
         <Character
           nickname={characterLen >= 4 ? characterList[3].nickname : null}
           isManagement={isManagement}
-          isExist={tempUserCreatableCount >= 4 ? true : false}
-          isLock={tempUserCreatableCount < 4 ? false : true}
+          isExist={characterLen >= 4 ? true : false}
+          isLock={tempUserCreatableCount >= 4 ? false : true}
           imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
         />
         {/* <Character
