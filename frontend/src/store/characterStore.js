@@ -23,7 +23,8 @@ const characterSlice = createSlice({
   name: "character",
   initialState: initialCharacterState,
   reducers: {
-    login: (state, action) => {
+    save: (state, action) => {
+      console.log("save 동작중!", action.payload);
       state.alarmAllow = action.payload.alarmAllow;
       state.categorySeq = action.payload.categorySeq;
       state.characterActive = action.payload.characterActive;
@@ -45,5 +46,5 @@ const characterSlice = createSlice({
   },
 });
 
-export const { login, update } = characterSlice.actions;
+export const { save, update } = characterSlice.actions;
 export default characterSlice.reducer;

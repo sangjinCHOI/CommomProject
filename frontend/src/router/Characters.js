@@ -6,9 +6,9 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
 
-import { login } from "../store/characterStore";
+import { save } from "../store/characterStore";
 
-function Characters({ characterSlice, loginCharacters }) {
+function Characters({ characterSlice, saveCharacter }) {
   const [isManagement, setIsManagement] = useState(false);
 
   // // userId 가져오기용 개선 필요(로그인 페이지에서 넘어올 때만 작동)
@@ -33,9 +33,7 @@ function Characters({ characterSlice, loginCharacters }) {
       .get(`http://localhost:8080/character/characters/${userSeq}`)
       .then((res) => {
         setCharacterList(res.data);
-        console.log("res.data[0]", res.data[0]);
         setCharacterLen(res.data.length);
-        console.log("characterSlice", characterSlice);
       })
       .catch((err) => console.log(err));
   };
@@ -46,6 +44,60 @@ function Characters({ characterSlice, loginCharacters }) {
   const management = (event) => {
     event.preventDefault();
     setIsManagement(!isManagement);
+  };
+
+  const Character = ({
+    nickname = "nickname",
+    isManagement = false,
+    isExist = false,
+    isLock = false,
+    imgSrc = null,
+    characterSeq = 0,
+  }) => {
+    return (
+      <div className="mt-8 mx-12 w-32">
+        <Link
+          to={{
+            pathname: isLock
+              ? null
+              : isManagement
+              ? "../characters/update"
+              : isExist
+              ? "../"
+              : "../characters/create",
+            state: { characterSeq },
+          }}
+          onClick={
+            isLock
+              ? (e) => e.preventDefault()
+              : isExist
+              ? () => {
+                  axios.get(`http://localhost:8080/character/${characterSeq}`).then((res) => {
+                    saveCharacter(res.data);
+                  });
+                }
+              : null
+          }
+        >
+          <CharacterImg
+            underText={nickname}
+            // 캐릭터 잠금 상태인지, 캐릭터가 존재하는지, 캐릭터 관리 상태인지, 이미지가 있는지에 따라 분기(순서 중요)
+            imgSrc={
+              isLock
+                ? require("../assets/images/character_lock.png")
+                : isExist
+                ? isManagement
+                  ? require("../assets/images/character_edit.png")
+                  : imgSrc
+                  ? imgSrc
+                  : require("../assets/images/default_user.png")
+                : require("../assets/images/character_plus.png")
+            }
+            lock={isLock}
+          />
+        </Link>
+      </div>
+    );
   };
 
   return (
@@ -105,56 +157,12 @@ function Characters({ characterSlice, loginCharacters }) {
   );
 }
 
-const Character = ({
-  nickname = "nickname",
-  isManagement = false,
-  isExist = false,
-  isLock = false,
-  imgSrc = null,
-  characterSeq = 0,
-}) => {
-  return (
-    <div className="mt-8 mx-12 w-32">
-      <Link
-        to={{
-          pathname: isLock
-            ? null
-            : isManagement
-            ? "../characters/update"
-            : isExist
-            ? "../"
-            : "../characters/create",
-          state: { characterSeq },
-        }}
-        onClick={isLock ? (e) => e.preventDefault() : null}
-      >
-        <CharacterImg
-          underText={nickname}
-          // 캐릭터 잠금 상태인지, 캐릭터가 존재하는지, 캐릭터 관리 상태인지, 이미지가 있는지에 따라 분기(순서 중요)
-          imgSrc={
-            isLock
-              ? require("../assets/images/character_lock.png")
-              : isExist
-              ? isManagement
-                ? require("../assets/images/character_edit.png")
-                : imgSrc
-                ? imgSrc
-                : require("../assets/images/default_user.png")
-              : require("../assets/images/character_plus.png")
-          }
-          lock={isLock}
-        />
-      </Link>
-    </div>
-  );
-};
-
 function mapStateToProps(state) {
   return { characterSlice: state.character };
 }
 
 function mapDispatchToProps(dispatch) {
-  return { loginCharacters: (characters) => dispatch(login(characters)) };
+  return { saveCharacter: (character) => dispatch(save(character)) };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Characters);
