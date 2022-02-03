@@ -33,7 +33,7 @@
 		resultType="com.ssafy.persona.character.model.dto.FollowerListResponse">
 		select
 		follower,
-		(select count(*) from tb_follow i where i.follower = #{followee} and i.followee = follower) as isFollowToo
+		(select count(*) from tb_follow i where i.follower = #{followee} and i.followee = f.follower) as isFollowToo
 		from
 		tb_follow f
 		<if test="nickname != null and nickname != ''">
