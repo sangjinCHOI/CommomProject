@@ -1,0 +1,18 @@
+.profileWrapper {
+  width: 100px;
+  height: 100px;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.imgright {
+  float: right;
+  width: 100px;
+  height: 100px;
+}
+
+.gray {
+  filter: grayscale(80%);
+}
