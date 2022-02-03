@@ -306,7 +306,7 @@ public class CharacterController {
 		return new ResponseEntity<List<AlarmGetResponse>>(alarmService.getAlarmList(characterSeq), HttpStatus.OK);
 	} // 예외처리 필요
 	
-	@PostMapping("/achievement")
+	@PostMapping("/achievements")
 	public ResponseEntity<List<AchievementGetResponse>> achievementList(@RequestBody AchievementGetRequest request) {
 		logger.info("업적 리스트 요청 - 캐릭터 번호: "+request.getCharacterSeq());
 
