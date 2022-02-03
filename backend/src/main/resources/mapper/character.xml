@@ -37,7 +37,7 @@
 	</update>
 
 	<select id="detail"	resultType="CharacterGetResponse">
-		select nickname, category_seq, introduction, representative_achievement, alarm_allow,
+		select character_seq, nickname, category_seq, introduction, representative_achievement, alarm_allow,
 			like_alarm, reply_alarm, follow_alarm, modify_alarm, reported_time, character_active
 			, character_created_date, character_modified_date
 		from
