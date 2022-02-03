@@ -22,7 +22,7 @@
 		(#{follower}, #{followee}, now())
 	</insert>
 
-	<delete id="delete">
+	<delete id="unFollow">
 		delete from tb_follow
 		where follower= #{follower}
 		and
