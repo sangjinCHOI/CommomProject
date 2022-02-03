@@ -5,6 +5,15 @@
 <mapper
 	namespace="com.ssafy.persona.character.mapper.FollowMapper">
 
+	<select id="followCheck" resultType="int">
+		select
+			count(*)
+		from
+		tb_follow
+		where followee=#{followee}
+		and follower=#{follower}
+	</select>
+
 	<insert id="follow">
 		insert into tb_follow
 		(follower, followee,
@@ -17,7 +26,7 @@
 		delete from tb_follow
 		where follower= #{follower}
 		and
-		followee= #{followee}
+		followee=#{followee}
 	</delete>
 
 	<select id="getFollowerList"
@@ -30,7 +39,7 @@
 		<if test="nickname != null and nickname != ''">
 		JOIN tb_character c ON f.follower = c.character_seq
 		</if>
-		where followee= #{followee}
+		where followee=#{followee}
 		<if test="nickname != null and nickname != ''">
 			and c.nickname like CONCAT(#{nickname}, '%')
 		</if>
@@ -44,7 +53,7 @@
 		<if test="nickname != null and nickname != ''">
 		JOIN tb_character c ON f.followee = c.character_seq
 		</if>
-		where follower= #{follower}
+		where follower=#{follower}
 		<if test="nickname != null and nickname != ''">
 			and c.nickname like CONCAT(#{nickname}, '%')
 		</if>

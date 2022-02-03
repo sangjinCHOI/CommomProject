@@ -19,7 +19,9 @@ public class FollowServiceImpl implements FollowService {
 	
 	@Override
 	public int follow(FollowRequest request) {
-		return followMapper.follow(request);
+		int result = followMapper.followCheck(request) == 0 ? followMapper.follow(request) : 0;
+		
+		return result;
 	}
 
 	@Override

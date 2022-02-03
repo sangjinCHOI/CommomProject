@@ -149,7 +149,7 @@ public class CharacterController {
 		String message = "";
 		HttpStatus status = null;
 		if (characterService.checkCharacterNickname(nickname) == 1) {
-			message = "이미 존잴하는 닉네임 입니다.";
+			message = "이미 존재하는 닉네임 입니다.";
 			status = HttpStatus.BAD_REQUEST;
 		} else {
 			message = "해당 닉네임은 사용가능합니다. 사용하시겠습니까?";
@@ -190,7 +190,7 @@ public class CharacterController {
 			message = SUCCESS;
 			status = HttpStatus.OK;
 		} else {
-			message = FAIL;
+			message = "이미 팔로우된 관계 또는 서버오류입니다.";
 			status = HttpStatus.ACCEPTED;
 		}
 		Map<String, String> result = new HashMap<String, String>();
