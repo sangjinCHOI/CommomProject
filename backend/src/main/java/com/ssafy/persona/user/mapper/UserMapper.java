@@ -8,8 +8,8 @@ import com.ssafy.persona.user.model.entity.User;
 
 @Mapper
 public interface UserMapper {
-	int seqIsValid(int userSeq);
-	UserGetResponse getUser(int userSeq);
+	int seqIsValid(String userId);
+	UserGetResponse getUser(String userId);
 	int userValid(String userId);
 	int userSignup(User user);
 	int checkPw(User user);

@@ -44,10 +44,10 @@ public class UserController {
 	@Autowired
 	private SecurityService securityService;
 	
-	@GetMapping("/{userSeq}")
-	public ResponseEntity<UserGetResponse> getUser(@PathVariable int userSeq) {
+	@GetMapping("/{userId}")
+	public ResponseEntity<UserGetResponse> getUser(@PathVariable String userId) {
 		
-		UserGetResponse user = userService.getUser(userSeq);
+		UserGetResponse user = userService.getUser(userId);
 		if (user != null) {
 			return (new ResponseEntity<UserGetResponse>(user,HttpStatus.OK));
 		}

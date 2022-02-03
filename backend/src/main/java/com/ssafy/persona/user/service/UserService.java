@@ -7,7 +7,7 @@ import com.ssafy.persona.user.model.entity.User;
 
 @Service
 public interface UserService {
-	UserGetResponse getUser(int userSeq);
+	UserGetResponse getUser(String userId);
 	boolean userValid(String userId);
 	int userSignup(User user);
 	int checkPw(User user);
