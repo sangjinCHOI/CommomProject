@@ -35,6 +35,7 @@ function CharactersCreate({ characterSlice, saveCharacter, location }) {
 
   const { userSeq, userId } = location.state;
 
+  // 현재 캐릭터 삭제 -> 캐릭터 0개일 때 캐릭터 생성 -> 캐릭터 선택 창에서 새로고침 할 때 캐릭터 못불러오는 버그 존재 --> 로컬스토리지+토큰??
   const characterSave = (e) => {
     e.preventDefault();
     const data = {
