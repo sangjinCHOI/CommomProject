@@ -13,6 +13,7 @@ import lombok.ToString;
 @ToString
 public class CharacterGetResponse {
 	private int characterSeq;
+	private int userSeq;
 	private String nickname;
 	private int categorySeq;
 	private String introduction;
@@ -29,6 +30,7 @@ public class CharacterGetResponse {
 
 	public CharacterGetResponse(CharacterEntity ce) {
 		this.characterSeq = ce.getCharacterSeq();
+		this.userSeq = ce.getUserSeq();
 		this.nickname = ce.getNickname();
 		this.categorySeq = ce.getCategorySeq();
 		this.introduction = ce.getIntroduction();
