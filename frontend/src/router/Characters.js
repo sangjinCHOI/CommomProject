@@ -8,9 +8,10 @@ import CharacterImg from "../components/CharacterImg";
 import { save } from "../store/characterStore";
 import Send from "../config/Send";
 
-function Characters({ characterSlice, saveCharacter, location }) {
+function Characters({ characterSlice, userSlice, saveCharacter, location }) {
   const [isManagement, setIsManagement] = useState(false);
   // const [userSeq, setUserSeq] = useState(0);
+  console.log("userSlice", userSlice);
 
   // userId 가져오기용 개선 필요(로그인 페이지에서 넘어올 때만 작동)
   // 로그인 페이지에서 넘어올 경우에는 props, 다른 경우는 characterSlice에서 userId를 가져온다.
@@ -37,8 +38,9 @@ function Characters({ characterSlice, saveCharacter, location }) {
   const getCharacterList = () => {
     console.log("location.props", location.props);
     console.log(Boolean(location.props));
-    const { userId } = location.props ? location.props : characterSlice;
-    console.log(characterSlice, userId);
+    // const { userId } = location.props ? location.props : characterSlice;
+    const { userId, userSeq, userCreatableCount } = userSlice;
+    console.log("여기요", userId, userSeq, userCreatableCount);
     Send.get(`/user/${userId}`).then((res) => {
       const { userSeq, userCreatableCount } = res.data;
       setUserSeq(res.data.userSeq); // create를 위한 userSeq 값 변경
@@ -181,7 +183,7 @@ function Characters({ characterSlice, saveCharacter, location }) {
 }
 
 function mapStateToProps(state) {
-  return { characterSlice: state.character };
+  return { characterSlice: state.character, userSlice: state.user };
 }
 
 function mapDispatchToProps(dispatch) {

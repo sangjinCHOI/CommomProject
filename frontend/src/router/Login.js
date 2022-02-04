@@ -9,7 +9,10 @@ import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
 import Send from "../config/Send";
 // import userStore from "../store/userStore";
 
-export default function Login() {
+import { connect } from "react-redux";
+import { save } from "../store/user";
+
+function Login({ saveUser }) {
   const history = useHistory();
   const [_id, setId] = useState("");
   const [password, setPassword] = useState("");
@@ -65,6 +68,8 @@ export default function Login() {
         axios
           .get(`http://localhost:8080/user/${data.userId}`)
           .then((res) => {
+            saveUser(res.data);
+            console.log(res.data);
             history.push({
               pathname: "../characters/select",
               props: {
@@ -81,8 +86,8 @@ export default function Login() {
 
             // userSeq를 localStorage에 저장? or token으로 찾는 방법?
             // 모든 페이지에서 캐릭터 선택 창으로 갈 때 userSeq가 필요함
-            localStorage.setItem("userSeq", res.data.userSeq);
-            console.log(localStorage.getItem("userSeq"));
+            // localStorage.setItem("userSeq", res.data.userSeq);
+            // console.log(localStorage.getItem("userSeq"));
           })
           .catch((e) => console.log(e));
       })
@@ -173,3 +178,13 @@ const PassComp = ({ pwHandleKeyPress }) => {
     </div>
   );
 };
+
+function mapStateToProps(state) {
+  return { userSlice: state.user };
+}
+
+function mapDispatchToProps(dispatch) {
+  return { saveUser: (user) => dispatch(save(user)) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

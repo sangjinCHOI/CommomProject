@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "./counter";
 import authReducer from "./auth";
 import characterReducer from "./characterStore";
+import userReducer from "./user";
 
 import { combineReducers } from "redux";
 import storageSession from "redux-persist/lib/storage/session";
@@ -12,6 +13,7 @@ const reducers = combineReducers({
   counter: counterReducer,
   auth: authReducer,
   character: characterReducer,
+  user: userReducer,
 });
 
 const persistConfig = {
@@ -19,7 +21,7 @@ const persistConfig = {
   // localStorage: 일부러 안지우면 영구 보관, session: 인터넷 끄면 사라짐
   storage: storageSession,
   // characterReducer만 localStorage에 저장
-  whitelist: ["character"],
+  whitelist: ["character", "user"],
   // 해당 reducer만 제외
   // blacklist: []
 };
