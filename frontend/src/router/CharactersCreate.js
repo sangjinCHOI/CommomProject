@@ -1,6 +1,7 @@
 import { InputIcon, Textarea } from "@material-tailwind/react";
 import axios from "axios";
 import { useState } from "react";
+import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
@@ -22,7 +23,7 @@ const useInput = (initialValue, validator) => {
   return { value, onChange };
 };
 
-export default function CharactersCreate() {
+function CharactersCreate({ characterSlice }) {
   const maxLen = (value) => value.length <= 50;
   const introduction = useInput("", maxLen);
 
@@ -120,3 +121,9 @@ export default function CharactersCreate() {
     </>
   );
 }
+
+function mapStateToProps(state) {
+  return { characterSlice: state.character };
+}
+
+export default connect(mapStateToProps)(CharactersCreate);

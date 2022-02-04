@@ -5,6 +5,7 @@ import { useState } from "react";
 import { shuffle } from "lodash";
 import MainCard from "../components/MainCard";
 import axios from "axios";
+import Send from "../config/Send";
 
 export default function Follow() {
   const nicknameList = [
@@ -33,36 +34,33 @@ export default function Follow() {
       followee: 12, // 유산슬
       follower: 13, // 유야호(나)
     };
-    axios
-      .post("http://localhost:8080/character/followers", JSON.stringify(data1), {
-        headers: { "Content-Type": "application/json" },
-      })
-      .then((res) => {
-        console.log(res.data);
-        axios
-          .post("http://localhost:8080/character/follow", JSON.stringify(data2), {
-            headers: { "Content-Type": "application/json" },
-          })
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err));
-      });
+    Send.post("/character/follow", JSON.stringify(data2))
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
+  const deleteFollow = (e) => {
+    e.preventDefault();
+    // data4로 상대가 나를 팔로우하는 것을 삭제 요청
+    const data4 = {
+      followee: 13, // 유야호(나)
+      follower: 12, // 유산슬(상대)
+    };
+    Send.delete("/character/follow", { data: JSON.stringify(data4) })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   const unfollow = (e) => {
     e.preventDefault();
+    // data3으로 언팔로우 요청
     const data3 = {
       followee: 12, // 유산슬
       follower: 13, // 유야호(나)
     };
-    axios
-      .delete("http://localhost:8080/character/follow", JSON.stringify(data3), {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      })
+    // delete 요청은 아래와 같은 형식으로
+    Send.delete("/character/follow", { data: JSON.stringify(data3) })
+      .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
 
@@ -118,7 +116,9 @@ export default function Follow() {
                   </Link>
                 </div>
                 <div className="mr-3">
-                  <Label color="blueGray">삭제</Label>
+                  <Link to="" onClick={deleteFollow}>
+                    <Label color="blueGray">삭제</Label>
+                  </Link>
                 </div>
               </div>
             ))
