@@ -20,4 +20,5 @@ public interface ContentMapper {
 	List<ContentGetResponse> contentTagList(ContentTagListRequest contentTagListRequest);
 	ContentGetResponse contentGet(ContentGetRequest contentGetRequest);
 	List<ContentGetResponse> contentList(int characterNow);
+	int hashtagCreate(List<String> hashtag, int contentSeq);
 }

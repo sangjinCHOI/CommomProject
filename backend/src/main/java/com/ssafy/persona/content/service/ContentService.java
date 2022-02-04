@@ -19,6 +19,7 @@ import com.ssafy.persona.content.model.dto.ReplyReportRequest;
 
 public interface ContentService {
 	boolean contentCreate(ContentCreateRequest contentCreateRequest);
+	boolean hashtagCreate(List<String> hashtag, int contentSeq);
 	boolean contentModify(ContentModifyRequest contentModifyRequest);
 	boolean contentDelete(int contentSeq);
 	ContentGetResponse contentGet(ContentGetRequest contentGetRequest);
