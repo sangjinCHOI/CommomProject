@@ -14,6 +14,8 @@ import CharacterImg from "../components/CharacterImg";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import Send from "../config/Send";
+import { useHistory } from "react-router-dom";
 
 const useInput = (initialValue, validator) => {
   const [value, setValue] = useState(initialValue);
@@ -37,8 +39,25 @@ function SettingsCharacter({ characterSlice }) {
   const maxLen = (value) => value.length <= 50;
   const introduction = useInput("", maxLen);
   const [nickname, setNickname] = useState("");
+  const history = useHistory();
 
   console.log(characterSlice);
+
+  const characterDelete = (e) => {
+    const data = {
+      characterDeleteReason: 1,
+      characterSeq: characterSlice.characterSeq,
+    };
+    setShowModal(false);
+    Send.delete("/character", { data: JSON.stringify(data) })
+      .then((res) => {
+        // 현재 200 요청이 가지만 삭제가 안됨
+        alert("삭제되었습니다.");
+        console.log(res);
+        history.push("../characters/select");
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
@@ -108,7 +127,7 @@ function SettingsCharacter({ characterSlice }) {
             Close
           </Button>
 
-          <Button color="red" onClick={(e) => setShowModal(false)} ripple="light">
+          <Button color="red" onClick={characterDelete} ripple="light">
             삭제
           </Button>
         </ModalFooter>
