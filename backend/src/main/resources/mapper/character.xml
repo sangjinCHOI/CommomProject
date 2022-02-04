@@ -49,6 +49,7 @@
 		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_character'
 		AND f.relation_seq = c.character_seq
 		where character_seq=#{characterSeq} 
+		AND character_active = 1
 	</select>
 
 	<select id="list"
@@ -61,7 +62,8 @@
 		from tb_character c
 		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_character'
 		AND f.relation_seq = c.character_seq
-		where user_seq= #{userSeq}
+		where user_seq=#{userSeq}
+		AND character_active = 1
 	</select>
 
 	<select id="getCharacterCount"	resultType="int">

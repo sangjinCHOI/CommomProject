@@ -42,7 +42,7 @@ public class CharacterEntity {
 	@Column
 	private boolean characterActive;
 	@Column
-	private char characterDeleteReason;
+	private int characterDeleteReason;
 	@Column
 	private LocalDateTime characterCreatedDate;
 	@Column
