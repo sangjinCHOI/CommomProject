@@ -17,6 +17,7 @@ const initialCharacterState = {
   replyAlarm: false,
   reportedTime: 0,
   representativeAchievement: 0,
+  userSeq: 0,
 };
 
 const characterSlice = createSlice({
@@ -39,6 +40,7 @@ const characterSlice = createSlice({
       state.replyAlarm = action.payload.replyAlarm;
       state.reportedTime = action.payload.reportedTime;
       state.representativeAchievement = action.payload.representativeAchievement;
+      state.userSeq = action.payload.userSeq;
     },
     // 캐릭터 수정 화면에서 해당 캐릭터 정보 수정
     update: (state, action) => {

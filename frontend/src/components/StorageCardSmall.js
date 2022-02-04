@@ -12,7 +12,7 @@ export default function StorageCardSmall({ storageName, imgSrc }) {
       <img
         src={imgSrc}
         alt={imgSrc}
-        className={`${isMouseOver ? null : `opacity-40`}`}
+        className={`${isMouseOver ? null : `opacity-60`}`}
         style={{
           width: "200px",
           height: "150px",

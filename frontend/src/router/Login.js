@@ -90,29 +90,28 @@ export default function Login() {
         console.log(e);
       });
 
+    //   axios
+    //     .post("http://localhost:8080/user/login", JSON.stringify(data), {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //     })
+    //     .then((data) => {
+    //       // localStorage에 idToken 저장
+    //       window.localStorage.setItem("idToken", (data.data.token));
 
-  //   axios
-  //     .post("http://localhost:8080/user/login", JSON.stringify(data), {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //     .then((data) => {
-  //       // localStorage에 idToken 저장
-  //       window.localStorage.setItem("idToken", (data.data.token));
-
-  //       if(data.data.token == "" ){
-  //         alert("실패!");
-  //         setPassword("");
-  //       }
-  //       else{
-  //         alert("성공!");
-  //         history.push("../characters/select");
-  //       }
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
+    //       if(data.data.token == "" ){
+    //         alert("실패!");
+    //         setPassword("");
+    //       }
+    //       else{
+    //         alert("성공!");
+    //         history.push("../characters/select");
+    //       }
+    //     })
+    //     .catch((e) => {
+    //       console.log(e);
+    //     });
   };
 
   return (

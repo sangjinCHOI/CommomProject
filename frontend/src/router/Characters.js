@@ -8,14 +8,15 @@ import CharacterImg from "../components/CharacterImg";
 
 import { save } from "../store/characterStore";
 
-function Characters({ characterSlice, saveCharacter }) {
+function Characters({ characterSlice, saveCharacter, location }) {
   const [isManagement, setIsManagement] = useState(false);
+  const [userSeq, setUserSeq] = useState(0);
 
-  // // userId 가져오기용 개선 필요(로그인 페이지에서 넘어올 때만 작동)
-  // const location = useLocation();
+  // userId 가져오기용 개선 필요(로그인 페이지에서 넘어올 때만 작동)
+  // 로그인 페이지에서 넘어올 경우에는 props, 다른 경우는 characterSlice에서 userId를 가져온다.
   // const { userId } = location.props;
 
-  const userSeq = localStorage.getItem("userSeq");
+  // const userSeq = localStorage.getItem("userSeq");
   const [characterList, setCharacterList] = useState([]);
   const [characterLen, setCharacterLen] = useState(0);
 
@@ -29,13 +30,18 @@ function Characters({ characterSlice, saveCharacter }) {
   // };
 
   const getCharacterList = () => {
-    axios
-      .get(`http://localhost:8080/character/characters/${userSeq}`)
-      .then((res) => {
-        setCharacterList(res.data);
-        setCharacterLen(res.data.length);
-      })
-      .catch((err) => console.log(err));
+    // 현재 characterSlice.userId 존재하지 않음
+    const { userId } = location.props ? location.props : characterSlice.userId;
+    axios.get(`http://localhost:8080/user/${userId}`).then((res) => {
+      const { userSeq } = res.data;
+      axios
+        .get(`http://localhost:8080/character/characters/${userSeq}`)
+        .then((res) => {
+          setCharacterList(res.data);
+          setCharacterLen(res.data.length);
+        })
+        .catch((err) => console.log(err));
+    });
   };
   useEffect(() => {
     getCharacterList();
