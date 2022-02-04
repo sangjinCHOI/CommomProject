@@ -20,7 +20,8 @@ function Characters({ characterSlice, saveCharacter, location }) {
   const [characterList, setCharacterList] = useState([]);
   const [characterLen, setCharacterLen] = useState(0);
 
-  // const [userCreatableCount, setUserCreatableCount] = useState(0);
+  // 프론트에서의 userCreatableCount
+  const [userCreatableCount, setUserCreatableCount] = useState(0);
   const tempUserCreatableCount = 2;
 
   // const getUserCreatableCount = () => {
@@ -32,9 +33,14 @@ function Characters({ characterSlice, saveCharacter, location }) {
 
   const getCharacterList = () => {
     // 현재 characterSlice.userId 존재하지 않음
-    const { userId } = location.props ? location.props : characterSlice.userId;
+    // 캐릭터가 0개일 때 아직 고려 안함
+    console.log("location.props", location.props);
+    console.log(Boolean(location.props));
+    const { userId } = location.props ? location.props : characterSlice;
+    console.log(characterSlice, userId);
     axios.get(`http://localhost:8080/user/${userId}`).then((res) => {
       const { userSeq, userCreatableCount } = res.data;
+      setUserCreatableCount(userCreatableCount); // DB에서의 userCreatableCount
       axios
         .get(`http://localhost:8080/character/characters/${userSeq}`)
         .then((res) => {
@@ -125,7 +131,7 @@ function Characters({ characterSlice, saveCharacter, location }) {
           nickname={characterLen >= 1 ? characterList[0].nickname : null}
           isManagement={isManagement}
           isExist={characterLen >= 1 ? true : false}
-          isLock={tempUserCreatableCount >= 1 ? false : true}
+          isLock={userCreatableCount >= 1 ? false : true}
           imgSrc="https://cdn2.thecatapi.com/images/ba2.jpg"
           characterSeq={characterLen >= 1 ? characterList[0].characterSeq : null}
         />
@@ -133,7 +139,7 @@ function Characters({ characterSlice, saveCharacter, location }) {
           nickname={characterLen >= 2 ? characterList[1].nickname : null}
           isManagement={isManagement}
           isExist={characterLen >= 2 ? true : false}
-          isLock={tempUserCreatableCount >= 2 ? false : true}
+          isLock={userCreatableCount >= 2 ? false : true}
           imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
           characterSeq={characterLen >= 2 ? characterList[1].characterSeq : null}
         />
@@ -143,7 +149,7 @@ function Characters({ characterSlice, saveCharacter, location }) {
           nickname={characterLen >= 3 ? characterList[2].nickname : null}
           isManagement={isManagement}
           isExist={characterLen >= 3 ? true : false}
-          isLock={tempUserCreatableCount >= 3 ? false : true}
+          isLock={userCreatableCount >= 3 ? false : true}
           imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
           characterSeq={characterLen >= 3 ? characterList[2].characterSeq : null}
         />
@@ -151,7 +157,7 @@ function Characters({ characterSlice, saveCharacter, location }) {
           nickname={characterLen >= 4 ? characterList[3].nickname : null}
           isManagement={isManagement}
           isExist={characterLen >= 4 ? true : false}
-          isLock={tempUserCreatableCount >= 4 ? false : true}
+          isLock={userCreatableCount >= 4 ? false : true}
           imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
           characterSeq={characterLen >= 4 ? characterList[3].characterSeq : null}
         />

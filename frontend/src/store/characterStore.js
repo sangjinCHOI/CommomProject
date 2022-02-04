@@ -18,6 +18,8 @@ const initialCharacterState = {
   reportedTime: 0,
   representativeAchievement: 0,
   userSeq: 0,
+  userId: "initialUserId",
+  filePath: null,
 };
 
 const characterSlice = createSlice({
@@ -41,6 +43,8 @@ const characterSlice = createSlice({
       state.reportedTime = action.payload.reportedTime;
       state.representativeAchievement = action.payload.representativeAchievement;
       state.userSeq = action.payload.userSeq;
+      state.userId = action.payload.userId;
+      state.filePath = action.payload.filePath;
     },
     // 캐릭터 수정 화면에서 해당 캐릭터 정보 수정
     update: (state, action) => {
