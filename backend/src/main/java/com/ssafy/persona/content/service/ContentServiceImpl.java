@@ -34,6 +34,7 @@ public class ContentServiceImpl implements ContentService {
 	LikeMapper likeMapper;
 	@Autowired
 	ReportMapper reportMapper;
+
 	
 	@Override
 	public boolean contentCreate(ContentCreateRequest contentCreateRequest) {
@@ -175,6 +176,21 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public List<ContentGetResponse> contentList(int characterNow) {
 		return contentMapper.contentList(characterNow);
+	}
+
+	@Override
+	public boolean hashtagCreate(List<String> hashtag, int contentSeq) {
+		return contentMapper.hashtagCreate(hashtag, contentSeq) == 1;
+	}
+
+	@Override
+	public boolean hashtagModify(List<String> hashtag, int contentSeq) {
+		return contentMapper.hashtagModify(hashtag, contentSeq) == 1;
+	}
+
+	@Override
+	public List<String> hashtagGet(int contentSeq) {
+		return contentMapper.hashtagGet(contentSeq);
 	}
 	
 }
