@@ -30,6 +30,7 @@ import SearchTags from "./router/SearchTags";
 import SearchTagsDetail from "./router/SearchTagsDetail";
 import SearchTexts from "./router/SearchTexts";
 import Storages from "./router/Storages";
+import StoragesDetail from "./router/StoragesDetail";
 
 function App() {
   return (
@@ -69,7 +70,6 @@ function App() {
                 <Route exact path="/search" component={Search} />
                 <Route exact path="/search/characters" component={SearchCharacters} />
                 <Route exact path="/search/storages" component={SearchStorages} />
-                <Route exact path="/:nickname/storages" component={Storages} />
                 <Route exact path="/search/tags" component={SearchTags} />
                 <Route exact path="/search/tag" component={SearchTagsDetail} />
                 <Route exact path="/search/texts" component={SearchTexts} />
@@ -77,6 +77,8 @@ function App() {
                 <Route exact path="/:nickname" component={Profile} />
                 <Route exact path="/:nickname/follow" component={Follow} />
                 <Route exact path="/:nickname/achievement" component={Achievement} />
+                <Route exact path="/:nickname/storages" component={Storages} />
+                <Route exact path="/:nickname/storages/:storage_seq" component={StoragesDetail} />
               </Switch>
             </Layout>
           </Route>
