@@ -241,5 +241,11 @@ public class ContentController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
+	@ApiOperation(value = "hashtag get", notes = "hashtag 조회", response = List.class)
+	@GetMapping("/content/hashtag/{contentSeq}")
+	public ResponseEntity<List<String>> hashtagGet(@PathVariable("contentSeq") @ApiParam(value = "해시태그를 조회할 게시글 번호.", required = true) int contentSeq) {
+		return new ResponseEntity<List<String>>(contentService.hashtagGet(contentSeq), HttpStatus.OK);
+	}
+	
 
 }

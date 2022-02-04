@@ -187,5 +187,10 @@ public class ContentServiceImpl implements ContentService {
 	public boolean hashtagModify(List<String> hashtag, int contentSeq) {
 		return contentMapper.hashtagModify(hashtag, contentSeq) == 1;
 	}
+
+	@Override
+	public List<String> hashtagGet(int contentSeq) {
+		return contentMapper.hashtagGet(contentSeq);
+	}
 	
 }

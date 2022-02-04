@@ -73,6 +73,12 @@
 		where content_seq = #{contentSeq}
 	</delete>
 	
+	<select id="hashtagGet" resultType="String">
+		select tag_text
+		from tb_tag
+		where content_Seq = #{contentSeq}
+	</select>
+	
 	
 	
 	
