@@ -1,9 +1,12 @@
 import { InputIcon, Textarea } from "@material-tailwind/react";
-import axios from "axios";
 import { useState } from "react";
+import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
+
+import { save } from "../store/characterStore";
+import Send from "../config/Send";
 
 const useInput = (initialValue, validator) => {
   const [value, setValue] = useState(initialValue);
@@ -22,7 +25,7 @@ const useInput = (initialValue, validator) => {
   return { value, onChange };
 };
 
-export default function CharactersCreate() {
+function CharactersCreate({ characterSlice, saveCharacter, location }) {
   const maxLen = (value) => value.length <= 50;
   const introduction = useInput("", maxLen);
 
@@ -30,23 +33,34 @@ export default function CharactersCreate() {
   const [nickname, setNickname] = useState("");
   const history = useHistory();
 
+  const { userSeq, userId } = location.state;
+
+  // 현재 캐릭터 생성 -> 캐릭터 선택 창에서 새로고침 할 때 캐릭터 못불러오는 버그 존재 -> props로 userId/userSeq를 전달하면 새로고침 하면 사라지기 때문에
+  // 결국 userStore를 새로 만드는 방법 뿐인가?
   const characterSave = (e) => {
     e.preventDefault();
     const data = {
-      userSeq: 92, // 현재 DB상에서 id: qkrwhdgns1인 유저
+      userSeq, // 현재 DB상에서 id: qkrwhdgns1인 유저
       categorySeq: parseInt(categorySeq),
       nickname,
       introduction: introduction.value,
     };
     console.log(data);
-    axios
-      .post("http://localhost:8080/character", JSON.stringify(data), {
-        headers: { "Content-Type": "application/json" },
-      })
+    Send.post("/character", JSON.stringify(data))
       .then((res) => {
         console.log(res);
         alert("캐릭터 생성이 완료되었습니다.");
-        history.push("../characters/select");
+        Send.get(`/character/characters/${userSeq}`).then((res) => {
+          console.log(res.data[res.data.length - 1]);
+          saveCharacter(res.data[res.data.length - 1]);
+          history.push({
+            pathname: "../characters/select",
+            props: {
+              userId,
+              userSeq,
+            },
+          });
+        });
       })
       .catch((err) => console.log(err));
   };
@@ -120,3 +134,13 @@ export default function CharactersCreate() {
     </>
   );
 }
+
+function mapStateToProps(state) {
+  return { characterSlice: state.character };
+}
+
+function mapDispatchToProps(dispatch) {
+  return { saveCharacter: (character) => dispatch(save(character)) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CharactersCreate);

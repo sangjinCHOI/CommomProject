@@ -13,7 +13,7 @@ export default function StorageCardLarge({ storageName, imgSrc }) {
       <img
         src={imgSrc}
         alt={imgSrc}
-        className={`w-80 h-40 border rounded ${isMouseOver ? `${styles.highlight}` : `opacity-40`}`}
+        className={`w-80 h-40 border rounded ${isMouseOver ? `${styles.highlight}` : `opacity-60`}`}
         style={{
           width: "100%",
           height: "100%",
