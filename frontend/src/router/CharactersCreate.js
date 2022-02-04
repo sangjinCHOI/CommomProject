@@ -1,10 +1,12 @@
 import { InputIcon, Textarea } from "@material-tailwind/react";
-import axios from "axios";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
+
+import { save } from "../store/characterStore";
+import Send from "../config/Send";
 
 const useInput = (initialValue, validator) => {
   const [value, setValue] = useState(initialValue);
@@ -23,7 +25,7 @@ const useInput = (initialValue, validator) => {
   return { value, onChange };
 };
 
-function CharactersCreate({ characterSlice, location }) {
+function CharactersCreate({ characterSlice, saveCharacter, location }) {
   const maxLen = (value) => value.length <= 50;
   const introduction = useInput("", maxLen);
 
@@ -31,7 +33,7 @@ function CharactersCreate({ characterSlice, location }) {
   const [nickname, setNickname] = useState("");
   const history = useHistory();
 
-  const { userSeq } = location.state;
+  const { userSeq, userId } = location.state;
 
   const characterSave = (e) => {
     e.preventDefault();
@@ -42,14 +44,21 @@ function CharactersCreate({ characterSlice, location }) {
       introduction: introduction.value,
     };
     console.log(data);
-    axios
-      .post("http://localhost:8080/character", JSON.stringify(data), {
-        headers: { "Content-Type": "application/json" },
-      })
+    Send.post("/character", JSON.stringify(data))
       .then((res) => {
         console.log(res);
         alert("캐릭터 생성이 완료되었습니다.");
-        history.push("../characters/select");
+        Send.get(`/character/characters/${userSeq}`).then((res) => {
+          console.log(res.data[res.data.length - 1]);
+          saveCharacter(res.data[res.data.length - 1]);
+          history.push({
+            pathname: "../characters/select",
+            props: {
+              userId,
+              userSeq,
+            },
+          });
+        });
       })
       .catch((err) => console.log(err));
   };
@@ -128,4 +137,8 @@ function mapStateToProps(state) {
   return { characterSlice: state.character };
 }
 
-export default connect(mapStateToProps)(CharactersCreate);
+function mapDispatchToProps(dispatch) {
+  return { saveCharacter: (character) => dispatch(save(character)) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CharactersCreate);

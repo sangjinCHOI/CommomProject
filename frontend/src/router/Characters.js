@@ -1,12 +1,12 @@
 // 여기선 서버에 요청해서 DB의 캐릭터 리스트 가져와서 랜더링
 
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
 
 import { save } from "../store/characterStore";
+import Send from "../config/Send";
 
 function Characters({ characterSlice, saveCharacter, location }) {
   const [isManagement, setIsManagement] = useState(false);
@@ -32,20 +32,19 @@ function Characters({ characterSlice, saveCharacter, location }) {
   // };
 
   const [userSeq, setUserSeq] = useState(0);
+  const [userId, setUserId] = useState("");
 
   const getCharacterList = () => {
-    // 현재 characterSlice.userId 존재하지 않음
-    // 캐릭터가 0개일 때 아직 고려 안함
     console.log("location.props", location.props);
     console.log(Boolean(location.props));
     const { userId } = location.props ? location.props : characterSlice;
     console.log(characterSlice, userId);
-    axios.get(`http://localhost:8080/user/${userId}`).then((res) => {
+    Send.get(`/user/${userId}`).then((res) => {
       const { userSeq, userCreatableCount } = res.data;
       setUserSeq(res.data.userSeq); // create를 위한 userSeq 값 변경
+      setUserId(res.data.userId); // create를 위한 userSeq 값 변경
       setUserCreatableCount(userCreatableCount); // DB에서의 userCreatableCount
-      axios
-        .get(`http://localhost:8080/character/characters/${userSeq}`)
+      Send.get(`/character/characters/${userSeq}`)
         .then((res) => {
           setCharacterList(res.data);
           console.log(res.data);
@@ -87,6 +86,7 @@ function Characters({ characterSlice, saveCharacter, location }) {
             state: {
               characterSeq,
               userSeq,
+              userId,
             },
           }}
           onClick={
@@ -95,7 +95,7 @@ function Characters({ characterSlice, saveCharacter, location }) {
               : isExist
               ? () => {
                   // 메인페이지로 넘어갈 때 캐릭터 저장
-                  axios.get(`http://localhost:8080/character/${characterSeq}`).then((res) => {
+                  Send.get(`/character/${characterSeq}`).then((res) => {
                     saveCharacter(res.data);
                   });
                 }

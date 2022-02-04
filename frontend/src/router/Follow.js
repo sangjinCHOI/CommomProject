@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { shuffle } from "lodash";
 import MainCard from "../components/MainCard";
-import axios from "axios";
 import Send from "../config/Send";
 
 export default function Follow() {

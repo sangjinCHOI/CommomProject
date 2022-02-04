@@ -1,10 +1,10 @@
 import { InputIcon, Textarea } from "@material-tailwind/react";
-import axios from "axios";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
+import Send from "../config/Send";
 
 // characterStore의 update reducer를 import
 import { update } from "../store/characterStore";
@@ -54,10 +54,7 @@ function CharacterUpdate({ characterSlice, updateCharacter, location }) {
     // characterStore.js의 update reducer 실행
     updateCharacter({ character });
 
-    axios
-      .put("http://localhost:8080/character", JSON.stringify(character), {
-        headers: { "Content-Type": "application/json" },
-      })
+    Send.put("/character", JSON.stringify(character))
       .then(() => {
         alert("캐릭터 수정이 완료되었습니다.");
         history.push("../characters/select");
