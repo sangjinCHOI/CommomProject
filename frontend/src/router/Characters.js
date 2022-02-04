@@ -22,7 +22,7 @@ function Characters({ characterSlice, saveCharacter, location }) {
 
   // 프론트에서의 userCreatableCount
   const [userCreatableCount, setUserCreatableCount] = useState(0);
-  const tempUserCreatableCount = 2;
+  // const tempUserCreatableCount = 2;
 
   // const getUserCreatableCount = () => {
   //   axios.get(`http://localhost:8080/user/${userId}`).then((res) => {
@@ -30,6 +30,8 @@ function Characters({ characterSlice, saveCharacter, location }) {
   //     // setUserCreatableCount(res)
   //   });
   // };
+
+  const [userSeq, setUserSeq] = useState(0);
 
   const getCharacterList = () => {
     // 현재 characterSlice.userId 존재하지 않음
@@ -40,6 +42,7 @@ function Characters({ characterSlice, saveCharacter, location }) {
     console.log(characterSlice, userId);
     axios.get(`http://localhost:8080/user/${userId}`).then((res) => {
       const { userSeq, userCreatableCount } = res.data;
+      setUserSeq(res.data.userSeq); // create를 위한 userSeq 값 변경
       setUserCreatableCount(userCreatableCount); // DB에서의 userCreatableCount
       axios
         .get(`http://localhost:8080/character/characters/${userSeq}`)
@@ -47,6 +50,7 @@ function Characters({ characterSlice, saveCharacter, location }) {
           setCharacterList(res.data);
           console.log(res.data);
           setCharacterLen(res.data.length);
+          return userSeq;
         })
         .catch((err) => console.log(err));
     });
@@ -68,6 +72,7 @@ function Characters({ characterSlice, saveCharacter, location }) {
     imgSrc = null,
     characterSeq = 0,
   }) => {
+    console.log(userSeq);
     return (
       <div className="mt-8 mx-12 w-32">
         <Link
@@ -79,13 +84,17 @@ function Characters({ characterSlice, saveCharacter, location }) {
               : isExist
               ? "../"
               : "../characters/create",
-            state: { characterSeq },
+            state: {
+              characterSeq,
+              userSeq,
+            },
           }}
           onClick={
             isLock
               ? (e) => e.preventDefault()
               : isExist
               ? () => {
+                  // 메인페이지로 넘어갈 때 캐릭터 저장
                   axios.get(`http://localhost:8080/character/${characterSeq}`).then((res) => {
                     saveCharacter(res.data);
                   });

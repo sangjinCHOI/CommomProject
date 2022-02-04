@@ -41,6 +41,8 @@ function SettingsCharacter({ characterSlice }) {
   const [nickname, setNickname] = useState("");
   const history = useHistory();
 
+  const [characterDeleteReason, setcharacterDeleteReason] = useState(0);
+
   console.log(characterSlice);
 
   const characterDelete = (e) => {
@@ -57,6 +59,10 @@ function SettingsCharacter({ characterSlice }) {
         history.push("../characters/select");
       })
       .catch((err) => console.log(err));
+  };
+
+  const oncharacterDeleteReasonHandler = (e) => {
+    setcharacterDeleteReason(e.target.value);
   };
 
   return (
@@ -100,7 +106,24 @@ function SettingsCharacter({ characterSlice }) {
           <p className="text-base leading-relaxed text-gray-600 font-normal">
             캐릭터를 삭제하려는 이유가 무엇인가요?
           </p>
-          <Dropdown
+          <select
+            className="bg-white rounded-lg w-96 h-11 p-2 mb-16 border border-gray-300 outline-sky-500 text-black"
+            onChange={oncharacterDeleteReasonHandler}
+          >
+            <option className="rounded-lg h-10" value="0">
+              개인정보 보호 문제
+            </option>
+            <option className="rounded-lg h-10" value="1">
+              캐릭터 슬롯이 부족함
+            </option>
+            <option className="rounded-lg h-10" value="2">
+              다른 카테고리로 변경하고 싶음
+            </option>
+            <option className="rounded-lg h-10" value="2">
+              기타 사유
+            </option>
+          </select>
+          {/* <Dropdown
             color={"blueGray"}
             buttonType={"outline"}
             buttonText={"이유 선택"}
@@ -110,7 +133,7 @@ function SettingsCharacter({ characterSlice }) {
             <DropdownItem children={"캐릭터 슬롯이 부족함"} />
             <DropdownItem children={"다른 카테고리로 변경하고 싶음"} />
             <DropdownItem children={"기타 사유"} />
-          </Dropdown>
+          </Dropdown> */}
           <br />
           <p className="text-base leading-relaxed text-gray-600 font-normal">
             비밀번호를 다시 입력하세요.

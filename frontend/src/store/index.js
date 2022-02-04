@@ -4,7 +4,7 @@ import authReducer from "./auth";
 import characterReducer from "./characterStore";
 
 import { combineReducers } from "redux";
-import storage from "redux-persist/lib/storage";
+import storageSession from "redux-persist/lib/storage/session";
 import { persistReducer } from "redux-persist";
 import thunk from "redux-thunk";
 
@@ -16,7 +16,8 @@ const reducers = combineReducers({
 
 const persistConfig = {
   key: "root",
-  storage,
+  // localStorage: 일부러 안지우면 영구 보관, session: 인터넷 끄면 사라짐
+  storage: storageSession,
   // characterReducer만 localStorage에 저장
   whitelist: ["character"],
   // 해당 reducer만 제외

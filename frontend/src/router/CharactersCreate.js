@@ -23,7 +23,7 @@ const useInput = (initialValue, validator) => {
   return { value, onChange };
 };
 
-function CharactersCreate({ characterSlice }) {
+function CharactersCreate({ characterSlice, location }) {
   const maxLen = (value) => value.length <= 50;
   const introduction = useInput("", maxLen);
 
@@ -31,10 +31,12 @@ function CharactersCreate({ characterSlice }) {
   const [nickname, setNickname] = useState("");
   const history = useHistory();
 
+  const { userSeq } = location.state;
+
   const characterSave = (e) => {
     e.preventDefault();
     const data = {
-      userSeq: 92, // 현재 DB상에서 id: qkrwhdgns1인 유저
+      userSeq, // 현재 DB상에서 id: qkrwhdgns1인 유저
       categorySeq: parseInt(categorySeq),
       nickname,
       introduction: introduction.value,
