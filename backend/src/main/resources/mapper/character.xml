@@ -37,21 +37,33 @@
 	</update>
 
 	<select id="detail"	resultType="CharacterGetResponse">
-		select character_seq, user_seq, nickname, category_seq, introduction, representative_achievement, alarm_allow,
-			like_alarm, reply_alarm, follow_alarm, modify_alarm, reported_time, character_active
-			, character_created_date, character_modified_date
+		select c.character_seq, c.user_seq, c.nickname, c.category_seq, c.introduction, 
+			c.representative_achievement, c.alarm_allow, c.like_alarm, c.reply_alarm,
+			c.follow_alarm, c.modify_alarm, c.reported_time, character_active,
+			c.character_created_date, c.character_modified_date,
+			u.user_id,
+			f.file_path
 		from
-			tb_character
-		where character_seq=#{characterSeq}
+			tb_character c
+		JOIN tb_user u ON c.user_seq = u.user_seq
+		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_character'
+		AND f.relation_seq = c.character_seq
+		where character_seq=#{characterSeq} 
+		AND character_active = 1
 	</select>
 
 	<select id="list"
 		resultType="com.ssafy.persona.character.model.dto.CharacterGetResponse">
-		select character_seq, user_seq, nickname, category_seq, introduction, representative_achievement, alarm_allow,
-			like_alarm, reply_alarm, follow_alarm, modify_alarm, reported_time, character_active
-			, character_created_date, character_modified_date
-		from tb_character
-		where user_seq= #{userSeq}
+		select c.character_seq, c.user_seq, c.nickname, c.category_seq, c.introduction, 
+			c.representative_achievement, c.alarm_allow, c.like_alarm, c.reply_alarm,
+			c.follow_alarm, c.modify_alarm, c.reported_time, character_active,
+			c.character_created_date, c.character_modified_date,
+			f.file_path
+		from tb_character c
+		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_character'
+		AND f.relation_seq = c.character_seq
+		where user_seq=#{userSeq}
+		AND character_active = 1
 	</select>
 
 	<select id="getCharacterCount"	resultType="int">

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.ssafy.persona.character.model.Entity.CharacterEntity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -11,9 +12,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @ToString
+@AllArgsConstructor
 public class CharacterGetResponse {
 	private int characterSeq;
 	private int userSeq;
+	private String userId;
+	private String filePath;
 	private String nickname;
 	private int categorySeq;
 	private String introduction;
@@ -27,23 +31,5 @@ public class CharacterGetResponse {
 	private boolean characterActive;
 	private LocalDateTime characterCreatedDate;
 	private LocalDateTime characterModifiedDate;
-
-	public CharacterGetResponse(CharacterEntity ce) {
-		this.characterSeq = ce.getCharacterSeq();
-		this.userSeq = ce.getUserSeq();
-		this.nickname = ce.getNickname();
-		this.categorySeq = ce.getCategorySeq();
-		this.introduction = ce.getIntroduction();
-		this.representativeAchievement = ce.getRepresentativeAchievement();
-		this.alarmAllow = ce.isAlarmAllow();
-		this.likeAlarm = ce.isLikeAlarm();
-		this.replyAlarm = ce.isReplyAlarm();
-		this.followAlarm = ce.isFollowAlarm();
-		this.modifyAlarm = ce.isModifyAlarm();
-		this.reportedTime = ce.getReportedTime();
-		this.characterActive = ce.isCharacterActive();
-		this.characterCreatedDate = ce.getCharacterCreatedDate();
-		this.characterModifiedDate = ce.getCharacterModifiedDate();
-	}
 
 }

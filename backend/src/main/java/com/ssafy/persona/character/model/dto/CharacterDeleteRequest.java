@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 public class CharacterDeleteRequest {
 	private int characterSeq;
-	private char characterDeleteReason;
+	private int characterDeleteReason;
 
 	public CharacterEntity toCharacterEntity() {
 		return CharacterEntity.builder()
