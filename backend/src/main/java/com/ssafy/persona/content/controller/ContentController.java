@@ -51,15 +51,6 @@ public class ContentController {
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
-	
-	@ApiOperation(value = "hashtag create", notes = "hashtag 작성, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PostMapping("/content/hashtag/{contentSeq}")
-	public ResponseEntity<String> hashtagCreate(@RequestBody @ApiParam(value = "hashtag", required = true) List<String> hashtag, @PathVariable int contentSeq) {
-		if (contentService.hashtagCreate(hashtag, contentSeq)) {
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-		}
-		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-	}
 
 	@ApiOperation(value = "content modify", notes = "content 수정, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping("/content")
@@ -231,6 +222,24 @@ public class ContentController {
 		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentList(characterNow), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "hashtag create", notes = "hashtag 작성, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping("/content/hashtag/{contentSeq}")
+	public ResponseEntity<String> hashtagCreate(@RequestBody @ApiParam(value = "hashtag", required = true) List<String> hashtag, @PathVariable int contentSeq) {
+		if (contentService.hashtagCreate(hashtag, contentSeq)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value = "hashtag modify", notes = "hashtag 수정, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PutMapping("/content/hashtag/{contentSeq}")
+	public ResponseEntity<String> hashtagModify(@RequestBody @ApiParam(value = "hashtag", required = true) List<String> hashtag, @PathVariable int contentSeq) {
+		contentService.hashtagModify(hashtag, contentSeq);
+		if (contentService.hashtagCreate(hashtag, contentSeq)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
 	
 
 }

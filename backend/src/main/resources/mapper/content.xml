@@ -8,12 +8,6 @@
 		values (#{characterSeq}, #{categorySeq}, #{contentText}, #{contentIsPublic}, #{contentIsMedia}, now())
 	</insert>
 	
-	<insert id="hashtagCreate" >
-		insert into tb_tag (content_seq, tag_text)
-		values
-		<foreach collection="hashtag" index="index" item="item" separator=",">(#{contentSeq}, #{item})</foreach>
-	</insert>
-	
 	<update id="contentModify" parameterType="contentModifyRequest">
 		update tb_content
 		set <if test="contentText != null and contentText != ''">
@@ -67,6 +61,17 @@
 		from tb_content
 		where content_seq In (select content_seq from tb_tag where tag_text = #{tagText});
 	</select>
+	
+	<insert id="hashtagCreate" >
+		insert into tb_tag (content_seq, tag_text)
+		values
+		<foreach collection="hashtag" index="index" item="item" separator=",">(#{contentSeq}, #{item})</foreach>
+	</insert>
+	
+	<delete id="hashtagModify">
+		delete from tb_tag
+		where content_seq = #{contentSeq}
+	</delete>
 	
 	
 	
