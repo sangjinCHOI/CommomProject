@@ -16,9 +16,17 @@ function Follow({ characterSlice }) {
       followee: characterSlice.characterSeq,
       nickname: "",
     };
+    setFollowerList([]);
     Send.post("/character/followers", JSON.stringify(data)).then((res) => {
-      console.log(res.data);
-      setFollowerList(res.data);
+      res.data.forEach((follower) => {
+        Send.get(`/character/${follower.follower}`).then((res) => {
+          console.log(res.data);
+          // 캐릭터 데이터가 있다면
+          if (res.data) {
+            setFollowerList((followerList) => [res.data, ...followerList]);
+          }
+        });
+      });
     });
   };
 
@@ -49,8 +57,8 @@ function Follow({ characterSlice }) {
     // data2로 팔로우 요청
     // 팔로우 했는지 여부 확인은 어떻게? -> 나중에 characterSeq로 1:1 확인
     const data2 = {
-      followee: 12, // 유산슬
-      follower: 13, // 유야호(나)
+      followee: 14,
+      follower: 37, // 유야호(나)
     };
     Send.post("/character/follow", JSON.stringify(data2))
       .then((res) => console.log(res))
@@ -118,31 +126,29 @@ function Follow({ characterSlice }) {
           <span className="material-icons absolute right-12">search</span>
         </div>
         {isFollowerTab
-          ? // 임시로 표현해놓은 상태
-            followerList.map((follower) => <div>{follower.follower}</div>)
-          : // ? shuffle(nicknameList).map((nickname) => (
-            //     <div className="flex justify-center items-center" key={nickname}>
-            //       <Link to={`../${nickname}`}>
-            //         <div className="m-3">
-            //           <CharacterImg imgWidth="50px" />
-            //         </div>
-            //       </Link>
-            //       <Link to={`../${nickname}`}>
-            //         <div className="w-44">{nickname}</div>
-            //       </Link>
-            //       <div className="m-2">
-            //         <Link to="" onClick={follow}>
-            //           <Label color="lightBlue">팔로우</Label>
-            //         </Link>
-            //       </div>
-            //       <div className="mr-3">
-            //         <Link to="" onClick={deleteFollow}>
-            //           <Label color="blueGray">삭제</Label>
-            //         </Link>
-            //       </div>
-            //     </div>
-            //   ))
-            shuffle(nicknameList).map((nickname) => (
+          ? shuffle(followerList).map((follower) => (
+              <div className="flex justify-center items-center" key={follower.characterSeq}>
+                <Link to={`../${follower.nickname}`}>
+                  <div className="m-3">
+                    <CharacterImg imgWidth="50px" />
+                  </div>
+                </Link>
+                <Link to={`../${follower.nickname}`}>
+                  <div className="w-44">{follower.nickname}</div>
+                </Link>
+                <div className="m-2">
+                  <Link to="" onClick={follow}>
+                    <Label color="lightBlue">팔로우</Label>
+                  </Link>
+                </div>
+                <div className="mr-3">
+                  <Link to="" onClick={deleteFollow}>
+                    <Label color="blueGray">삭제</Label>
+                  </Link>
+                </div>
+              </div>
+            ))
+          : shuffle(nicknameList).map((nickname) => (
               <div className="flex justify-center items-center" key={nickname}>
                 <Link to={`../${nickname}`}>
                   <div className="m-3">
