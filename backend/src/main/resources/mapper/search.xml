@@ -69,18 +69,18 @@
 	</update>
 
 	<select id="checkCloudWord" resultType="int">
-		select 
-			search_weight
+		 select IFNULL((select 
+			search_weight 
 		FROM tb_search_cloud
 		WHERE search_word = #{searchWord}
-		AND search_date = #{searchDate}
+		AND search_date = #{searchDate}), 0) AS search_weight
 	</select>
 
 	<insert id="createCloudWord">
 		insert INTO tb_search_cloud
 			(search_word, search_weight, search_date)
 		VALUES
-			(#{searchWord}, 1, now())
+			(#{searchWord}, 1, #{searchDate})
 	</insert>
 
 	<update id="increaseWeightCloud">
@@ -90,7 +90,7 @@
 		AND search_date = #{searchDate}
 	</update>
 
-	<select id="realTimePopularWord">
+	<select id="realTimePopularWord" resultType="String">
 		select 
 			search_word
 		FROM tb_search_cloud
@@ -99,9 +99,9 @@
 		LIMIT 10;
 	</select>
 
-	<select id="getHistory">
+	<select id="getHistory" resultType="String">
 		select 
-			searchHistoryText
+			search_history_text
 		FROM tb_search_history 
 		WHERE character_seq = #{characterSeq} 
 		ORDER BY search_date DESC 

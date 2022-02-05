@@ -1,5 +1,6 @@
 package com.ssafy.persona.search.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.ssafy.persona.search.model.dto.HistoryCreateRequest;
@@ -20,7 +21,7 @@ public interface SearchService {
 	
 	int searchRecord(HistoryCreateRequest request);
 	
-	List<String> realTimePopularWord();
+	List<String> realTimePopularWord(LocalDate today);
 	
 	List<String> getHistory(int characterSeq);
 	

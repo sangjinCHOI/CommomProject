@@ -53,11 +53,11 @@ public class SearchServiceImpl implements SearchService {
 		LocalDate today = LocalDate.now();
 		CloudCreateRequest cloudCreateRequest = CloudCreateRequest.builder()
 				.searchWord(request.getSearchHistoryText())
-				.searchDate(today)
+				.searchDate(String.valueOf(today))
 				.build();
 		
 		int textWeight = searchMapper.checkCloudWord(cloudCreateRequest);
-		cloudCreateRequest.setSearchWeight(textWeight);
+		cloudCreateRequest.setSearchWeight(textWeight+1);
 		if ( flag == 1 && textWeight == 0) {
 			flag = searchMapper.createCloudWord(cloudCreateRequest);
 		}else {
@@ -68,9 +68,8 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public List<String> realTimePopularWord() {
-		LocalDate today = LocalDate.now();
-		return searchMapper.realTimePopularWord(today);
+	public List<String> realTimePopularWord(LocalDate today) {
+		return searchMapper.realTimePopularWord(String.valueOf(today));
 	}
 
 	@Override

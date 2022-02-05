@@ -35,7 +35,7 @@ public interface SearchMapper {
 	
 	int increaseWeightCloud(CloudCreateRequest request);
 	
-	List<String> realTimePopularWord(LocalDate searchDate);
+	List<String> realTimePopularWord(String searchDate);
 	
 	List<String> getHistory(int characterSeq);
 	
