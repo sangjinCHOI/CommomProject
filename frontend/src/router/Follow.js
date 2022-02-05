@@ -1,12 +1,31 @@
 import CharacterImg from "../components/CharacterImg";
 import { Button, Label } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { shuffle } from "lodash";
 import MainCard from "../components/MainCard";
 import Send from "../config/Send";
+import { connect } from "react-redux";
 
-export default function Follow() {
+function Follow({ characterSlice }) {
+  const [followerList, setFollowerList] = useState([]);
+
+  const getFollowerList = () => {
+    console.log(characterSlice);
+    const data = {
+      followee: characterSlice.characterSeq,
+      nickname: "",
+    };
+    Send.post("/character/followers", JSON.stringify(data)).then((res) => {
+      console.log(res.data);
+      setFollowerList(res.data);
+    });
+  };
+
+  useEffect(() => {
+    getFollowerList();
+  }, []);
+
   const nicknameList = [
     "요리왕",
     "개발왕",
@@ -99,29 +118,31 @@ export default function Follow() {
           <span className="material-icons absolute right-12">search</span>
         </div>
         {isFollowerTab
-          ? shuffle(nicknameList).map((nickname) => (
-              <div className="flex justify-center items-center" key={nickname}>
-                <Link to={`../${nickname}`}>
-                  <div className="m-3">
-                    <CharacterImg imgWidth="50px" />
-                  </div>
-                </Link>
-                <Link to={`../${nickname}`}>
-                  <div className="w-44">{nickname}</div>
-                </Link>
-                <div className="m-2">
-                  <Link to="" onClick={follow}>
-                    <Label color="lightBlue">팔로우</Label>
-                  </Link>
-                </div>
-                <div className="mr-3">
-                  <Link to="" onClick={deleteFollow}>
-                    <Label color="blueGray">삭제</Label>
-                  </Link>
-                </div>
-              </div>
-            ))
-          : shuffle(nicknameList).map((nickname) => (
+          ? // 임시로 표현해놓은 상태
+            followerList.map((follower) => <div>{follower.follower}</div>)
+          : // ? shuffle(nicknameList).map((nickname) => (
+            //     <div className="flex justify-center items-center" key={nickname}>
+            //       <Link to={`../${nickname}`}>
+            //         <div className="m-3">
+            //           <CharacterImg imgWidth="50px" />
+            //         </div>
+            //       </Link>
+            //       <Link to={`../${nickname}`}>
+            //         <div className="w-44">{nickname}</div>
+            //       </Link>
+            //       <div className="m-2">
+            //         <Link to="" onClick={follow}>
+            //           <Label color="lightBlue">팔로우</Label>
+            //         </Link>
+            //       </div>
+            //       <div className="mr-3">
+            //         <Link to="" onClick={deleteFollow}>
+            //           <Label color="blueGray">삭제</Label>
+            //         </Link>
+            //       </div>
+            //     </div>
+            //   ))
+            shuffle(nicknameList).map((nickname) => (
               <div className="flex justify-center items-center" key={nickname}>
                 <Link to={`../${nickname}`}>
                   <div className="m-3">
@@ -142,3 +163,9 @@ export default function Follow() {
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  return { characterSlice: state.character };
+}
+
+export default connect(mapStateToProps)(Follow);
