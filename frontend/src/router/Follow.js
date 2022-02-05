@@ -6,6 +6,7 @@ import { shuffle } from "lodash";
 import MainCard from "../components/MainCard";
 import Send from "../config/Send";
 import { connect } from "react-redux";
+import styles from "./Follow.module.css";
 
 function Follow({ characterSlice }) {
   const [followerList, setFollowerList] = useState([]);
@@ -125,46 +126,48 @@ function Follow({ characterSlice }) {
           />
           <span className="material-icons absolute right-12">search</span>
         </div>
-        {isFollowerTab
-          ? shuffle(followerList).map((follower) => (
-              <div className="flex justify-center items-center" key={follower.characterSeq}>
-                <Link to={`../${follower.nickname}`}>
-                  <div className="m-3">
-                    <CharacterImg imgWidth="50px" />
+        <div className={`${styles.box} overflow-y-auto`} style={{ height: "550px" }}>
+          {isFollowerTab
+            ? shuffle(followerList).map((follower) => (
+                <div className="flex justify-center items-center" key={follower.characterSeq}>
+                  <Link to={`../${follower.nickname}`}>
+                    <div className="m-3">
+                      <CharacterImg imgWidth="50px" />
+                    </div>
+                  </Link>
+                  <Link to={`../${follower.nickname}`}>
+                    <div className="w-44">{follower.nickname}</div>
+                  </Link>
+                  <div className="m-2">
+                    <Link to="" onClick={follow}>
+                      <Label color="lightBlue">팔로우</Label>
+                    </Link>
                   </div>
-                </Link>
-                <Link to={`../${follower.nickname}`}>
-                  <div className="w-44">{follower.nickname}</div>
-                </Link>
-                <div className="m-2">
-                  <Link to="" onClick={follow}>
-                    <Label color="lightBlue">팔로우</Label>
-                  </Link>
-                </div>
-                <div className="mr-3">
-                  <Link to="" onClick={deleteFollow}>
-                    <Label color="blueGray">삭제</Label>
-                  </Link>
-                </div>
-              </div>
-            ))
-          : shuffle(nicknameList).map((nickname) => (
-              <div className="flex justify-center items-center" key={nickname}>
-                <Link to={`../${nickname}`}>
-                  <div className="m-3">
-                    <CharacterImg imgWidth="50px" />
+                  <div className="mr-3">
+                    <Link to="" onClick={deleteFollow}>
+                      <Label color="blueGray">삭제</Label>
+                    </Link>
                   </div>
-                </Link>
-                <Link to={`../${nickname}`}>
-                  <div className="w-44">{nickname}</div>
-                </Link>
-                <div className="ml-12 mr-3">
-                  <Link to="" onClick={unfollow}>
-                    <Label color="blueGray">언팔로우</Label>
-                  </Link>
                 </div>
-              </div>
-            ))}
+              ))
+            : shuffle(nicknameList).map((nickname) => (
+                <div className="flex justify-center items-center" key={nickname}>
+                  <Link to={`../${nickname}`}>
+                    <div className="m-3">
+                      <CharacterImg imgWidth="50px" />
+                    </div>
+                  </Link>
+                  <Link to={`../${nickname}`}>
+                    <div className="w-44">{nickname}</div>
+                  </Link>
+                  <div className="ml-12 mr-3">
+                    <Link to="" onClick={unfollow}>
+                      <Label color="blueGray">언팔로우</Label>
+                    </Link>
+                  </div>
+                </div>
+              ))}
+        </div>
       </MainCard>
     </div>
   );
