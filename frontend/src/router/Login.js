@@ -1,4 +1,4 @@
-import axios from "axios";
+//import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
@@ -54,19 +54,19 @@ function Login({ saveUser }) {
     // .then((data) =>{
     //   window.localStorage.setItem("idToken", (data.data.token));
     // }).catch((e) => {
-    axios
-      .post("http://localhost:8080/user/login", JSON.stringify(data), {
-        headers: {
-          "Content-Type": "application/json",
-          //토큰값
-        },
-      })
+    // axios
+    //   .post("http://localhost:8080/user/login", JSON.stringify(data), {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       //토큰값
+    //     },
+    //   })
+    Send.post(`/user/login`, JSON.stringify(data))
       .then((res) => {
         // const token = res.data;
         window.localStorage.setItem("idToken", JSON.stringify(res.data));
         console.log(localStorage.getItem("idToken"));
-        axios
-          .get(`http://localhost:8080/user/${data.userId}`)
+        Send.get(`/user/${data.userId}`)
           .then((res) => {
             saveUser(res.data);
             console.log(res.data);
