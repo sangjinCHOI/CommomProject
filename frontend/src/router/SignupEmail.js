@@ -35,6 +35,7 @@ export default class SignupEmail extends Component {
         },
       })
       .then((data) => {
+        //^^
         userStore.dispatch({ type: "idtrans", iddata: this.state.iddata });
       })
       .catch((e) => {
@@ -59,22 +60,10 @@ export default class SignupEmail extends Component {
 
         <CardFooter>
           <div className="flex justify-center">
-            <Button
-              color="lightBlue"
-              buttonType="link"
-              size="lg"
-              ripple="dark"
-              onClick={() => window.open("https://" + this.state.emaildata, "_blank")}
-            >
+            <Button color="lightBlue" buttonType="link" size="lg" ripple="dark" onClick={() => window.open("https://" + this.state.emaildata, "_blank")}>
               메일함 이동
             </Button>
-            <Button
-              color="lightBlue"
-              buttonType="link"
-              size="lg"
-              ripple="dark"
-              onClick={this.reEmail}
-            >
+            <Button color="lightBlue" buttonType="link" size="lg" ripple="dark" onClick={this.reEmail}>
               메일 재발송
             </Button>
           </div>

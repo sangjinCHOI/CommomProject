@@ -52,6 +52,7 @@ export default function PwInquiry() {
       })
       .then((data) => {
         // console.log(data);
+        //^^
         userStore.dispatch({ type: "emailtrans", emaildata: email });
         console.log("이메일" + email);
 
@@ -76,15 +77,7 @@ export default function PwInquiry() {
 
       <div className="mt-3 mb-4 px-11">
         <div className="bg-white rounded-lg">
-          <InputIcon
-            type="text"
-            color="lightBlue"
-            placeholder="ID"
-            outline={true}
-            iconName="person"
-            onChange={onIdHandler}
-            onKeyPress={handleKeyPress}
-          />
+          <InputIcon type="text" color="lightBlue" placeholder="ID" outline={true} iconName="person" onChange={onIdHandler} onKeyPress={handleKeyPress} />
         </div>
       </div>
 
@@ -114,14 +107,7 @@ const EmailComp = ({ emailHandleKeyPress }) => {
 
       <div className="mt-3 mb-5 px-11">
         <div className="bg-white rounded-lg">
-          <InputIcon
-            type="text"
-            color="lightBlue"
-            placeholder="E-mail"
-            outline={true}
-            iconName="person"
-            onKeyPress={emailHandleKeyPress}
-          />
+          <InputIcon type="text" color="lightBlue" placeholder="E-mail" outline={true} iconName="person" onKeyPress={emailHandleKeyPress} />
         </div>
       </div>
     </>

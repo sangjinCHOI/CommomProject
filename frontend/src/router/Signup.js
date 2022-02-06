@@ -122,9 +122,8 @@ export default function Signup() {
     //   })
     Send.post(`/user`, JSON.stringify(data))
       .then((data) => {
-        console.log(data);
-        console.log("test");
-
+        //console.log(data);
+        //console.log("test");
         // axios
         //   .get("http://localhost:8080/user/email/", {
         //     params: {
@@ -136,6 +135,7 @@ export default function Signup() {
             userId: _id,
           },
         }).then((data) => {
+          //^^
           userStore.dispatch({ type: "idtrans", emaildata: email, iddata: _id });
           // userStore.dispatch({ type: "idtrans", iddata: _id });
 
