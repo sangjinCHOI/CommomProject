@@ -1,53 +1,46 @@
 import React, { useEffect, useState } from "react";
-import userStore from "../store/userStore";
+//import userStore from "../store/userStore";
 import styles from "./Signup.module.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {
-  Card,
-  CardBody,
-  Button,
-  Input,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  InputIcon,
-} from "@material-tailwind/react";
+import { Card, CardBody, Button, Input, Modal, ModalHeader, ModalBody, ModalFooter, InputIcon } from "@material-tailwind/react";
 import axios from "axios";
+import Send from "../config/Send";
+import { save } from "../store/characterStore";
+import { connect } from "react-redux";
 
-export default function SettingsAccount() {
-  const [showPwModal, setShowPwModal] = React.useState(false);
-  const [showBirthModal, setShowBirthModal] = React.useState(false);
+function SettingsAccount({ userSlice }) {
+  //console.log(userSlice);
+  //export default function SettingsAccount() {
+  const [showPwModal, setShowPwModal] = useState(false);
+  const [showBirthModal, setShowBirthModal] = useState(false);
 
-  const [birth, setBirth] = React.useState(new Date());
+  const [birth, setBirth] = useState(new Date());
   const [date, setDate] = useState(false);
-  const [password, setPassword] = React.useState(false);
-  const [changePassword, setChangePassword] = React.useState(false);
-  const [passwordcheck, setpasswordCheck] = useState(false);
+  const [password, setPassword] = useState("");
+  const [changePassword, setChangePassword] = useState("");
+  const [passwordcheck, setpasswordCheck] = useState("");
   const [showPassConfirm, setShowPassConfirm] = useState(false);
   const [showPassEqual, setShowPassEqual] = useState(false);
   const [PassCheckEqual, setPassCheckEqual] = useState(false);
   const [showPassCheckConfirm, setShowPassCheckConfirm] = useState(false);
-  const [iddata, setIddata] = React.useState(userStore.getState().iddata);
-  const [emildata, setEmildata] = React.useState(userStore.getState().emildata);
-  const [mode, setMode] = React.useState("pass");
+  const [iddata, setIddata] = useState(userSlice.userId);
+  const [emildata, setEmildata] = useState(userSlice.userEmail);
+  const [mode, setMode] = useState("pass");
 
+  //console.log("iddata");
+  //console.log(iddata);
   useEffect(() => {
-    setIddata({ iddata: userStore.getState().iddata });
-    setEmildata({ emildata: userStore.getState().emildata });
-
-    // console.log(iddata);
+    //  setIddata({ iddata: userSlice.iddata });
+    //  setEmildata({ emildata: userSlice.emildata });
   }, []);
 
   const onPasswordHandler = (e) => {
-    // console.log("pass : " + e.target.value);
     setPassword(e.target.value);
   };
 
   const ChangePasswordHandler = (e) => {
     setChangePassword(e.target.value);
-    console.log(e.target.value);
     const specialLetter = e.target.value.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
     const isValidPassword = e.target.value.length >= 8 && specialLetter >= 1;
 
@@ -56,9 +49,7 @@ export default function SettingsAccount() {
     } else {
       setShowPassConfirm(false);
     }
-    if (changePassword == e.target.value) {
-      // console.log("pass: " + password);
-      // console.log("Cpass: " + e.target.value);
+    if (password == e.target.value) {
       setPassCheckEqual(true);
     } else {
       setPassCheckEqual(false);
@@ -66,7 +57,6 @@ export default function SettingsAccount() {
   };
 
   const ChangePasswordCheckHandler = (e) => {
-    // console.log("passcheck : " + e.target.value);
     setpasswordCheck(e.target.value);
 
     if (changePassword === e.target.value) {
@@ -74,28 +64,43 @@ export default function SettingsAccount() {
     } else {
       setShowPassCheckConfirm(true);
     }
-    if (password === changePassword) {
+    if (changePassword === passwordcheck) {
+      console.log("!");
       setShowPassEqual(true);
+    } else {
+      setShowPassEqual(false);
+      console.log("@");
     }
   };
 
   const pwData = {
-    userId: iddata.iddata,
+    userId: iddata,
     userPw: passwordcheck,
   };
   const ChangePassBtn = (e) => {
-    if (PassCheckEqual || showPassEqual) {
+    //^^ 비밀번호 유효성검사 어떻게 되는지 확인해야함
+    console.log(PassCheckEqual);
+    console.log(showPassEqual);
+    if (!(!PassCheckEqual && showPassEqual)) {
       alert("비밀번호를 확인해 주세여");
+      console.log(changePassword);
+      console.log(passwordcheck);
+      console.log(pwData);
     } else {
-      axios
-        .put("http://localhost:8080/user/setting/account", JSON.stringify(pwData), {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
+      Send.put("/user/setting/account", JSON.stringify(pwData))
+        // axios
+        //   .put("http://localhost:8080/user/setting/account", JSON.stringify(pwData), {
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //   })
         .then((data) => {
           if (data.status === 200) {
+            setPassword(passwordcheck);
             alert("비밀번호를 성공적으로 변경하였습니다.");
+            setpasswordCheck(() => "");
+            setChangePassword("");
+            setShowPwModal(false);
           }
         })
         .catch((e) => {
@@ -103,6 +108,13 @@ export default function SettingsAccount() {
           alert("비밀번호 변경을 실패하였습니다.");
         });
     }
+  };
+
+  const deleteInput = () => {
+    setShowPwModal(false);
+    setpasswordCheck("");
+    console.log(passwordcheck);
+    setChangePassword("");
   };
 
   const handleKeyPress = (e) => {
@@ -131,6 +143,7 @@ export default function SettingsAccount() {
     userId: iddata.iddata,
   };
   const changeBirthHandler = (e) => {
+    //^^ 여기 put 정상작동하는지 확인
     axios
       .put("http://localhost:8080/user/setting/account", JSON.stringify(birthData), {
         headers: {
@@ -149,20 +162,26 @@ export default function SettingsAccount() {
   };
 
   const data = {
-    userId: iddata.iddata,
+    userId: iddata,
     userPw: password,
   };
 
   const settingChange = (e) => {
-    axios
-      .post("http://localhost:8080/user/setting/verification", JSON.stringify(data), {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+    console.log(data);
+
+    Send.post("/user/setting/verification", JSON.stringify(data))
+      // axios
+      //   .post("http://localhost:8080/user/setting/verification", JSON.stringify(data), {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //   })
       .then((data) => {
+        console.log(data);
+        console.log(iddata);
+        console.log(password);
         if (data.status === 200) {
-          // console.log(data);
+          console.log(data);
           setMode("setting");
         } else {
           alert("비밀번호를 확인해주세요");
@@ -238,10 +257,7 @@ export default function SettingsAccount() {
                           <span>{date}</span>
                         </th>
                         <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-center">
-                          <button
-                            className="material-icons"
-                            onClick={(e) => setShowBirthModal(true)}
-                          >
+                          <button className="material-icons" onClick={(e) => setShowBirthModal(true)}>
                             arrow_forward_ios
                           </button>
                         </th>
@@ -259,26 +275,18 @@ export default function SettingsAccount() {
             </ModalHeader>
             <hr className="mb-5" />
             <ModalBody>
-              <p className="text-base leading-relaxed text-gray-600 font-normal">
-                새로운 비밀번호를 입력하세요.
-              </p>
-              <Input type="password" placeholder="" onChange={ChangePasswordHandler}></Input>
+              <p className="text-base leading-relaxed text-gray-600 font-normal">새로운 비밀번호를 입력하세요.</p>
+              <Input type="password" placeholder="" onKeyUp={ChangePasswordHandler}></Input>
               {showPassConfirm ? <PassConf></PassConf> : null}
               {PassCheckEqual ? <PassCheckEqualConf></PassCheckEqualConf> : null}
               <span className="invisible">-------------------------------------------------</span>
-              <p className="text-base leading-relaxed text-gray-600 font-normal">
-                새로운 비밀번호를 다시 한 번 입력하세요.
-              </p>
-              <Input type="password" placeholder="" onChange={ChangePasswordCheckHandler}></Input>
+              <p className="text-base leading-relaxed text-gray-600 font-normal">새로운 비밀번호를 다시 한 번 입력하세요.</p>
+              <Input type="password" placeholder="" onKeyUp={ChangePasswordCheckHandler}></Input>
               {showPassCheckConfirm ? <PassCheckConf></PassCheckConf> : null}
             </ModalBody>
             <ModalFooter>
-              <Button
-                color="black"
-                buttonType="link"
-                onClick={(e) => setShowPwModal(false)}
-                ripple="dark"
-              >
+              {/* <Button color="black" buttonType="link" onClick={(e) => setShowPwModal(false)} ripple="dark"> */}
+              <Button color="black" buttonType="link" onClick={() => deleteInput()} ripple="dark">
                 Close
               </Button>
 
@@ -295,9 +303,7 @@ export default function SettingsAccount() {
             </ModalHeader>
             <hr className="mb-5" />
             <ModalBody>
-              <p className="text-base leading-relaxed text-gray-600 font-normal">
-                생년월일을 입력하세요.
-              </p>
+              <p className="text-base leading-relaxed text-gray-600 font-normal">생년월일을 입력하세요.</p>
               {/* <Input
                 id="birthDate"
                 name="birthDate"
@@ -310,16 +316,11 @@ export default function SettingsAccount() {
               <span className="invisible">-------------------------------------------------</span>
             </ModalBody>
             <ModalFooter>
-              <Button
-                color="black"
-                buttonType="link"
-                onClick={(e) => setShowBirthModal(false)}
-                ripple="dark"
-              >
+              <Button color="black" buttonType="link" onClick={(e) => setShowBirthModal(false)} ripple="dark">
                 Close
               </Button>
 
-              <Button color="lightBlue" value={Date} onClick={onBirthHandler} ripple="light">
+              <Button color="lightBlue" onClick={onBirthHandler} ripple="light">
                 변경
               </Button>
             </ModalFooter>
@@ -355,3 +356,13 @@ function PassCheckEqualConf(props) {
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  return { userSlice: state.user };
+}
+
+function mapDispatchToProps(dispatch) {
+  return { saveCharacter: (user) => dispatch(save(user)) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsAccount);

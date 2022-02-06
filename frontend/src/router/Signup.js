@@ -3,13 +3,16 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
 import { useHistory } from "react-router";
-import userStore from "../store/userStore";
+//import userStore from "../store/userStore";
 import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
 import Send from "../config/Send";
+import { saveId } from "../store/user";
 
-export default function Signup() {
+import { connect } from "react-redux";
+//export default function Signup() {
+function Signup({ saveUserId }) {
   const history = useHistory();
 
   const [_id, setId] = useState("");
@@ -50,13 +53,9 @@ export default function Signup() {
   };
 
   const onPasswordHandler = (e) => {
-    // console.log("id : " + _id);
-    // const RegPass = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
-
     const specialLetter = e.target.value.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
     const isValidPassword = e.target.value.length >= 8 && specialLetter >= 1;
 
-    //  console.log("pass : " + e.target.value);
     setPassword(e.target.value);
 
     if (!isValidPassword) {
@@ -83,13 +82,9 @@ export default function Signup() {
       setShowEmailConfirm(true);
     } else setShowEmailConfirm(false);
 
-    console.log("email : " + e.target.value);
     setEmail(e.target.value);
 
-    // axios.get("http://localhost:8080/user/email/valid/" + e.target.value, {}).then(({ data }) => {
     Send.get(`/user/email/valid` + e.target.value, {}).then(({ data }) => {
-      //  console.log(data);
-
       if (data.valid == 0) {
         setShowEmailDuplicate(true);
         console.log("valid : " + data.valid);
@@ -101,12 +96,6 @@ export default function Signup() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("회원가입");
-
-    // if (!isValidInput || !isValidEmail || !isValidEmail) {
-    //   alert("please fill in the blanks");
-    //   console.log();
-    // }
 
     const data = {
       userId: _id,
@@ -114,33 +103,16 @@ export default function Signup() {
       userPw: passwordCheck,
     };
 
-    // axios
-    //   .post("http://localhost:8080/user", JSON.stringify(data), {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   })
     Send.post(`/user`, JSON.stringify(data))
       .then((data) => {
-        //console.log(data);
-        //console.log("test");
-        // axios
-        //   .get("http://localhost:8080/user/email/", {
-        //     params: {
-        //       userId: _id,
-        //     },
-        //   })
-        Send.get(`/user/email/`, {
-          params: {
-            userId: _id,
-          },
-        }).then((data) => {
-          //^^
-          userStore.dispatch({ type: "idtrans", emaildata: email, iddata: _id });
-          // userStore.dispatch({ type: "idtrans", iddata: _id });
-
+        console.log(data);
+        if (data.status == 200) {
           history.push("../accounts/signup/email");
-        });
+        }
+        // 추가 실패했을때 반응 삽입 요망
+        else {
+          alert("실패!");
+        }
       })
       .catch((e) => {
         console.log(e);
@@ -153,8 +125,6 @@ export default function Signup() {
         <img src={Logo} />
       </div>
       <br />
-
-      {/* <Input type="email" placeholder="Full Name" color="lightBlue" outline={true} /> */}
 
       <div className="mt-3 mb-5 px-11">
         <div className="bg-white rounded-lg">
@@ -247,3 +217,9 @@ function EmailDupl(props) {
     </div>
   );
 }
+
+function mapDispatchToProps(dispatch) {
+  return { saveUserId: (user) => dispatch(saveId(user)) };
+}
+
+export default connect(null, mapDispatchToProps)(Signup);

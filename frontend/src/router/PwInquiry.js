@@ -2,13 +2,19 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
 import { useHistory } from "react-router";
-import userStore from "../store/userStore";
 import { useState, useCallback } from "react";
 import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
+import Send from "../config/Send";
 
-export default function PwInquiry() {
+import { connect } from "react-redux";
+import { saveId } from "../store/user";
+
+//^^ 여기 이메일+아이디로 확인해야하는데 단순히 아이디만 입력해도 보내지게 되어있음
+//^^ Send.put 실제로 동작하는지 하나씩 확인해야함
+//^^ 필요에 따라 추가적인 API 만들어야하는지 고민
+function PwInquiry({ saveUser, userSlice }) {
   const history = useHistory();
 
   var [emailShow, setEmailShow] = useState(false);
@@ -38,7 +44,7 @@ export default function PwInquiry() {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log("비밀번호 찾기");
-
+    console.log(userSlice);
     const data = {
       userEmail: email,
       userId: _id,
@@ -51,11 +57,6 @@ export default function PwInquiry() {
         },
       })
       .then((data) => {
-        // console.log(data);
-        //^^
-        userStore.dispatch({ type: "emailtrans", emaildata: email });
-        console.log("이메일" + email);
-
         if (data.status === 200) {
           history.push("./pw_inquiry/result");
         } else {
@@ -113,3 +114,13 @@ const EmailComp = ({ emailHandleKeyPress }) => {
     </>
   );
 };
+
+function mapStateToProps(state) {
+  return { userSlice: state.user };
+}
+
+function mapDispatchToProps(dispatch) {
+  return { saveUser: (user) => dispatch(saveId(user)) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PwInquiry);
