@@ -1,4 +1,4 @@
-import axios from "axios";
+//import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
@@ -7,6 +7,7 @@ import userStore from "../store/userStore";
 import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
+import Send from "../config/Send";
 
 export default function Signup() {
   const history = useHistory();
@@ -35,9 +36,9 @@ export default function Signup() {
     } else {
       setShowIdConfirm(false);
     }
-
-    axios.get("http://localhost:8080/user/valid/" + e.target.value, {}).then((data) => {
-      console.log(data);
+    //  axios.get("http://localhost:8080/user/valid/" + e.target.value, {}).then((data) => {
+    Send.get(`/user/valid/` + e.target.value, {}).then((data) => {
+      //   console.log(data);
 
       if (data.valid == 2) {
         setShowIdDuplicate(true);
@@ -55,7 +56,7 @@ export default function Signup() {
     const specialLetter = e.target.value.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
     const isValidPassword = e.target.value.length >= 8 && specialLetter >= 1;
 
-    console.log("pass : " + e.target.value);
+    //  console.log("pass : " + e.target.value);
     setPassword(e.target.value);
 
     if (!isValidPassword) {
@@ -85,8 +86,9 @@ export default function Signup() {
     console.log("email : " + e.target.value);
     setEmail(e.target.value);
 
-    axios.get("http://localhost:8080/user/email/valid/" + e.target.value, {}).then(({ data }) => {
-      console.log(data);
+    // axios.get("http://localhost:8080/user/email/valid/" + e.target.value, {}).then(({ data }) => {
+    Send.get(`/user/email/valid` + e.target.value, {}).then(({ data }) => {
+      //  console.log(data);
 
       if (data.valid == 0) {
         setShowEmailDuplicate(true);
@@ -112,28 +114,33 @@ export default function Signup() {
       userPw: passwordCheck,
     };
 
-    axios
-      .post("http://localhost:8080/user", JSON.stringify(data), {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+    // axios
+    //   .post("http://localhost:8080/user", JSON.stringify(data), {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   })
+    Send.post(`/user`, JSON.stringify(data))
       .then((data) => {
-        console.log(data);
-        console.log("test");
+        //console.log(data);
+        //console.log("test");
+        // axios
+        //   .get("http://localhost:8080/user/email/", {
+        //     params: {
+        //       userId: _id,
+        //     },
+        //   })
+        Send.get(`/user/email/`, {
+          params: {
+            userId: _id,
+          },
+        }).then((data) => {
+          //^^
+          userStore.dispatch({ type: "idtrans", emaildata: email, iddata: _id });
+          // userStore.dispatch({ type: "idtrans", iddata: _id });
 
-        axios
-          .get("http://localhost:8080/user/email/", {
-            params: {
-              userId: _id,
-            },
-          })
-          .then((data) => {
-            userStore.dispatch({ type: "idtrans", emaildata: email, iddata: _id });
-            // userStore.dispatch({ type: "idtrans", iddata: _id });
-
-            history.push("../accounts/signup/email");
-          });
+          history.push("../accounts/signup/email");
+        });
       })
       .catch((e) => {
         console.log(e);
@@ -151,14 +158,7 @@ export default function Signup() {
 
       <div className="mt-3 mb-5 px-11">
         <div className="bg-white rounded-lg">
-          <InputIcon
-            type="text"
-            color="lightBlue"
-            placeholder="USER ID"
-            outline={true}
-            iconName="person"
-            onChange={onIdHandler}
-          />
+          <InputIcon type="text" color="lightBlue" placeholder="USER ID" outline={true} iconName="person" onChange={onIdHandler} />
         </div>
         {showIdConfirm ? <IdConf></IdConf> : null}
         {showIdDuplicate ? <IdDupl></IdDupl> : null}
@@ -166,42 +166,21 @@ export default function Signup() {
 
       <div className="mb-5 px-11">
         <div className="bg-white rounded-lg">
-          <InputIcon
-            type="password"
-            color="lightBlue"
-            placeholder="Password"
-            outline={true}
-            iconName="pin"
-            onChange={onPasswordHandler}
-          />
+          <InputIcon type="password" color="lightBlue" placeholder="Password" outline={true} iconName="pin" onChange={onPasswordHandler} />
         </div>
         {showPassConfirm ? <PassConf></PassConf> : null}
       </div>
 
       <div className="mb-5 px-11">
         <div className="bg-white rounded-lg">
-          <InputIcon
-            type="password"
-            color="lightBlue"
-            placeholder="Password Check"
-            outline={true}
-            iconName="pin"
-            onChange={onPasswordCheckHandler}
-          />
+          <InputIcon type="password" color="lightBlue" placeholder="Password Check" outline={true} iconName="pin" onChange={onPasswordCheckHandler} />
         </div>
         {showPassCheckConfirm ? <PassCheckConf></PassCheckConf> : null}
       </div>
 
       <div className="mb-4 px-11">
         <div className="bg-white rounded-lg">
-          <InputIcon
-            type="email"
-            color="lightBlue"
-            placeholder="Email Address"
-            outline={true}
-            iconName="email"
-            onChange={onEmailHandler}
-          />
+          <InputIcon type="email" color="lightBlue" placeholder="Email Address" outline={true} iconName="email" onChange={onEmailHandler} />
         </div>
         {showEmailConfirm ? <EmailConf></EmailConf> : null}
         {showEmailDuplicate ? <EmailDupl></EmailDupl> : null}

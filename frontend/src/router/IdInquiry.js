@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
@@ -8,12 +7,15 @@ import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
 
-export default function IdInquiry() {
+import Send from "../config/Send";
+import { connect } from "react-redux";
+import { saveId } from "../store/user";
+
+function IdInquiry({ userSlice, saveUserId }) {
   const history = useHistory();
 
   const [email, setEmail] = useState("");
   const [showEmailConfirm, setShowEmailConfirm] = useState(false);
-  // const [mode, setMode] = useState("id");
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -23,17 +25,19 @@ export default function IdInquiry() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("아이디 찾기");
+    //  console.log("아이디 찾기");
 
-    axios
-      .get("http://localhost:8080/user/email/" + email, {})
+    Send.get(`/user/email/${email}`)
       .then(({ data }) => {
-        // console.log(data.userId);
-        userStore.dispatch({ type: "idtrans", iddata: data.userId, emaildata: email });
-
+        saveUserId({
+          userId: data.userId,
+          userEmail: email,
+        });
         history.push("./id_inquiry/result");
       })
-      .catch((e) => {});
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const onEmailHandler = (e) => {
@@ -59,15 +63,7 @@ export default function IdInquiry() {
 
         <div className="mt-3 mb-5 px-11">
           <div className="bg-white rounded-lg">
-            <InputIcon
-              type="text"
-              color="lightBlue"
-              placeholder="E-mail"
-              outline={true}
-              iconName="person"
-              onChange={onEmailHandler}
-              onKeyPress={handleKeyPress}
-            />
+            <InputIcon type="text" color="lightBlue" placeholder="E-mail" outline={true} iconName="person" onChange={onEmailHandler} onKeyPress={handleKeyPress} />
           </div>
           {showEmailConfirm ? <EmailConf></EmailConf> : null}
         </div>
@@ -104,3 +100,14 @@ function EmailConf(props) {
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  console.log(state);
+  return { userSlice: state.user };
+}
+
+function mapDispatchToProps(dispatch) {
+  return { saveUserId: (user) => dispatch(saveId(user)) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(IdInquiry);
