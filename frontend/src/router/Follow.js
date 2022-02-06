@@ -72,44 +72,34 @@ function Follow({ characterSlice }) {
 
   const [isFollowerTab, setIsFollowerTab] = useState(true);
 
-  const follow = (e) => {
+  const follow = (followerSeq, e) => {
     e.preventDefault();
-    // data1로 팔로우 현황 확인
-    const data1 = {
-      followee: 12,
-      nickname: "유야", // 유야 를 포함한 팔로워 확인 용도
-    };
-    // data2로 팔로우 요청
-    // 팔로우 했는지 여부 확인은 어떻게? -> 나중에 characterSeq로 1:1 확인
     const data2 = {
-      followee: 37,
-      follower: 14, // 유야호(나)
+      followee: followerSeq,
+      follower: characterSlice.characterSeq,
     };
     Send.post("/character/follow", JSON.stringify(data2))
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
 
-  const deleteFollow = (e) => {
+  const deleteFollow = (followerSeq, e) => {
     e.preventDefault();
-    // data4로 상대가 나를 팔로우하는 것을 삭제 요청
     const data4 = {
-      followee: 13, // 유야호(나)
-      follower: 12, // 유산슬(상대)
+      followee: characterSlice.characterSeq,
+      follower: followerSeq,
     };
     Send.delete("/character/follow", { data: JSON.stringify(data4) })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
 
-  const unfollow = (e) => {
+  const unfollow = (followeeSeq, e) => {
     e.preventDefault();
-    // data3으로 언팔로우 요청
     const data3 = {
-      followee: 12, // 유산슬
-      follower: 13, // 유야호(나)
+      followee: followeeSeq,
+      follower: characterSlice.characterSeq,
     };
-    // delete 요청은 아래와 같은 형식으로
     Send.delete("/character/follow", { data: JSON.stringify(data3) })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
@@ -166,12 +156,22 @@ function Follow({ characterSlice }) {
                       <div className="w-44">{follower.nickname}</div>
                     </Link>
                     <div className="m-2">
-                      <Link to="" onClick={follow}>
+                      <Link
+                        to=""
+                        onClick={(e) => {
+                          follow(follower.characterSeq, e);
+                        }}
+                      >
                         <Label color="lightBlue">팔로우</Label>
                       </Link>
                     </div>
                     <div className="mr-3">
-                      <Link to="" onClick={deleteFollow}>
+                      <Link
+                        to=""
+                        onClick={(e) => {
+                          deleteFollow(follower.characterSeq, e);
+                        }}
+                      >
                         <Label color="blueGray">삭제</Label>
                       </Link>
                     </div>
@@ -190,7 +190,12 @@ function Follow({ characterSlice }) {
                       <div className="w-44">{followee.nickname}</div>
                     </Link>
                     <div className="ml-12 mr-3">
-                      <Link to="" onClick={unfollow}>
+                      <Link
+                        to=""
+                        onClick={(e) => {
+                          unfollow(followee.characterSeq, e);
+                        }}
+                      >
                         <Label color="blueGray">언팔로우</Label>
                       </Link>
                     </div>
