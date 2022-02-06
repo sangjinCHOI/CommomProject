@@ -80,7 +80,9 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public int getUserSeq(String userId) {
-		return (userMapper.getUserSeq(userId));
+		Integer tmp = userMapper.getUserSeq(userId);
+		if(tmp == null) return (0);
+		return (tmp);
 	}
 
 	@Override
