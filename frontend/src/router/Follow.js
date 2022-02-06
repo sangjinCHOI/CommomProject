@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 
 function Follow({ characterSlice }) {
   const [followerList, setFollowerList] = useState([]);
+  const [followeeList, setFolloweeList] = useState([]);
 
   const getFollowerList = () => {
     console.log(characterSlice);
@@ -29,9 +30,29 @@ function Follow({ characterSlice }) {
       });
     });
   };
+  const getFolloweeList = () => {
+    console.log(characterSlice);
+    const data = {
+      follower: characterSlice.characterSeq,
+      nickname: "",
+    };
+    setFolloweeList([]);
+    Send.post("/character/followees", JSON.stringify(data)).then((res) => {
+      res.data.forEach((followee) => {
+        Send.get(`/character/${followee.followee}`).then((res) => {
+          console.log(res.data);
+          // 캐릭터 데이터가 있다면
+          if (res.data) {
+            setFolloweeList((followeeList) => [res.data, ...followeeList]);
+          }
+        });
+      });
+    });
+  };
 
   useEffect(() => {
     getFollowerList();
+    getFolloweeList();
   }, []);
 
   const nicknameList = [
@@ -57,8 +78,8 @@ function Follow({ characterSlice }) {
     // data2로 팔로우 요청
     // 팔로우 했는지 여부 확인은 어떻게? -> 나중에 characterSeq로 1:1 확인
     const data2 = {
-      followee: 14,
-      follower: 37, // 유야호(나)
+      followee: 37,
+      follower: 14, // 유야호(나)
     };
     Send.post("/character/follow", JSON.stringify(data2))
       .then((res) => console.log(res))
@@ -148,15 +169,15 @@ function Follow({ characterSlice }) {
                 </div>
               </div>
             ))
-          : shuffle(nicknameList).map((nickname) => (
-              <div className="flex justify-center items-center" key={nickname}>
-                <Link to={`../${nickname}`}>
+          : shuffle(followeeList).map((followee) => (
+              <div className="flex justify-center items-center" key={followee.characterSeq}>
+                <Link to={`../${followee.nickname}`}>
                   <div className="m-3">
                     <CharacterImg imgWidth="50px" />
                   </div>
                 </Link>
-                <Link to={`../${nickname}`}>
-                  <div className="w-44">{nickname}</div>
+                <Link to={`../${followee.nickname}`}>
+                  <div className="w-44">{followee.nickname}</div>
                 </Link>
                 <div className="ml-12 mr-3">
                   <Link to="" onClick={unfollow}>
