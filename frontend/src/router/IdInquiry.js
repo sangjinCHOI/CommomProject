@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
 import { useHistory } from "react-router";
-import userStore from "../store/userStore";
 import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
@@ -47,7 +46,6 @@ function IdInquiry({ userSlice, saveUserId }) {
       setShowEmailConfirm(true);
     } else setShowEmailConfirm(false);
 
-    console.log("email : " + e.target.value);
     setEmail(e.target.value);
   };
 
