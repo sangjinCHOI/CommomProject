@@ -7,12 +7,12 @@ import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
 import Send from "../config/Send";
-// import userStore from "../store/userStore";
+//import userStore from "../store/userStore";
 
 import { connect } from "react-redux";
 import { save } from "../store/user";
 
-function Login({ saveUser }) {
+function Login({ saveUser, userSlice }) {
   const history = useHistory();
   const [_id, setId] = useState("");
   const [password, setPassword] = useState("");
@@ -68,8 +68,10 @@ function Login({ saveUser }) {
         console.log(localStorage.getItem("idToken"));
         Send.get(`/user/${data.userId}`)
           .then((res) => {
+            console.log("this::: ~!~" + res);
             saveUser(res.data);
             console.log(res.data);
+            console.log(userSlice);
             history.push({
               pathname: "../characters/select",
               props: {

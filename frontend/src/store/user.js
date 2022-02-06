@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialUserState = {
-  userBirth: "",
-  userCreatableCount: 0,
-  userEmail: "",
-  userId: "",
   userSeq: 0,
+  userId: "",
+  userEmail: "",
+  userCreatableCount: 0,
+  userBirth: "",
 };
 
 const userSlice = createSlice({
@@ -13,14 +13,19 @@ const userSlice = createSlice({
   initialState: initialUserState,
   reducers: {
     save: (state, action) => {
-      state.userBirth = action.payload.userBirth;
-      state.userCreatableCount = action.payload.userCreatableCount;
-      state.userEmail = action.payload.userEmail;
-      state.userId = action.payload.userId;
       state.userSeq = action.payload.userSeq;
+      state.userId = action.payload.userId;
+      state.userEmail = action.payload.userEmail;
+      state.userCreatableCount = action.payload.userCreatableCount;
+      state.userBirth = action.payload.userBirth;
+    },
+    saveId: (state, action) => {
+      console.log(action.payload);
+      state.userId = action.payload.userId;
+      state.userEmail = action.payload.userEmail;
     },
   },
 });
 
-export const { save } = userSlice.actions;
+export const { save, saveId } = userSlice.actions;
 export default userSlice.reducer;
