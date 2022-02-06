@@ -2,17 +2,35 @@ import CharacterImg from "../components/CharacterImg";
 import { Button, Label } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { shuffle } from "lodash";
 import MainCard from "../components/MainCard";
 import Send from "../config/Send";
 import { connect } from "react-redux";
 import styles from "./Follow.module.css";
 
+const useInput = (initialValue, validator) => {
+  const [value, setValue] = useState(initialValue);
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    let willUpdate = true;
+    if (typeof validator === "function") {
+      willUpdate = validator(value);
+    }
+    if (willUpdate) {
+      setValue(value);
+    }
+  };
+  return { value, onChange };
+};
+
 function Follow({ characterSlice }) {
   const [followerList, setFollowerList] = useState([]);
+  const [followeeList, setFolloweeList] = useState([]);
+
+  const searchText = useInput("");
 
   const getFollowerList = () => {
-    console.log(characterSlice);
     const data = {
       followee: characterSlice.characterSeq,
       nickname: "",
@@ -21,7 +39,6 @@ function Follow({ characterSlice }) {
     Send.post("/character/followers", JSON.stringify(data)).then((res) => {
       res.data.forEach((follower) => {
         Send.get(`/character/${follower.follower}`).then((res) => {
-          console.log(res.data);
           // 캐릭터 데이터가 있다면
           if (res.data) {
             setFollowerList((followerList) => [res.data, ...followerList]);
@@ -30,21 +47,28 @@ function Follow({ characterSlice }) {
       });
     });
   };
+  const getFolloweeList = () => {
+    const data = {
+      follower: characterSlice.characterSeq,
+      nickname: "",
+    };
+    setFolloweeList([]);
+    Send.post("/character/followees", JSON.stringify(data)).then((res) => {
+      res.data.forEach((followee) => {
+        Send.get(`/character/${followee.followee}`).then((res) => {
+          // 캐릭터 데이터가 있다면
+          if (res.data) {
+            setFolloweeList((followeeList) => [res.data, ...followeeList]);
+          }
+        });
+      });
+    });
+  };
 
   useEffect(() => {
     getFollowerList();
+    getFolloweeList();
   }, []);
-
-  const nicknameList = [
-    "요리왕",
-    "개발왕",
-    "만화왕",
-    "드라마다봄",
-    "넷플릭스다봄",
-    "인스타에서넘어옴",
-    "페르소나",
-    "PersonA",
-  ];
 
   const [isFollowerTab, setIsFollowerTab] = useState(true);
 
@@ -58,8 +82,8 @@ function Follow({ characterSlice }) {
     // data2로 팔로우 요청
     // 팔로우 했는지 여부 확인은 어떻게? -> 나중에 characterSeq로 1:1 확인
     const data2 = {
-      followee: 14,
-      follower: 37, // 유야호(나)
+      followee: 37,
+      follower: 14, // 유야호(나)
     };
     Send.post("/character/follow", JSON.stringify(data2))
       .then((res) => console.log(res))
@@ -123,50 +147,55 @@ function Follow({ characterSlice }) {
             className="w-96 border rounded-lg px-4 py-2"
             type="text"
             placeholder="캐릭터 검색"
+            {...searchText}
           />
           <span className="material-icons absolute right-12">search</span>
         </div>
         <div className={`${styles.box} overflow-y-auto`} style={{ height: "550px" }}>
           {isFollowerTab
-            ? shuffle(followerList).map((follower) => (
-                <div className="flex justify-center items-center" key={follower.characterSeq}>
-                  <Link to={`../${follower.nickname}`}>
-                    <div className="m-3">
-                      <CharacterImg imgWidth="50px" />
+            ? followerList
+                .filter((follower) => follower.nickname.includes(searchText.value))
+                .map((follower) => (
+                  <div className="flex justify-center items-center" key={follower.characterSeq}>
+                    <Link to={`../${follower.nickname}`}>
+                      <div className="m-3">
+                        <CharacterImg imgWidth="50px" />
+                      </div>
+                    </Link>
+                    <Link to={`../${follower.nickname}`}>
+                      <div className="w-44">{follower.nickname}</div>
+                    </Link>
+                    <div className="m-2">
+                      <Link to="" onClick={follow}>
+                        <Label color="lightBlue">팔로우</Label>
+                      </Link>
                     </div>
-                  </Link>
-                  <Link to={`../${follower.nickname}`}>
-                    <div className="w-44">{follower.nickname}</div>
-                  </Link>
-                  <div className="m-2">
-                    <Link to="" onClick={follow}>
-                      <Label color="lightBlue">팔로우</Label>
-                    </Link>
-                  </div>
-                  <div className="mr-3">
-                    <Link to="" onClick={deleteFollow}>
-                      <Label color="blueGray">삭제</Label>
-                    </Link>
-                  </div>
-                </div>
-              ))
-            : shuffle(nicknameList).map((nickname) => (
-                <div className="flex justify-center items-center" key={nickname}>
-                  <Link to={`../${nickname}`}>
-                    <div className="m-3">
-                      <CharacterImg imgWidth="50px" />
+                    <div className="mr-3">
+                      <Link to="" onClick={deleteFollow}>
+                        <Label color="blueGray">삭제</Label>
+                      </Link>
                     </div>
-                  </Link>
-                  <Link to={`../${nickname}`}>
-                    <div className="w-44">{nickname}</div>
-                  </Link>
-                  <div className="ml-12 mr-3">
-                    <Link to="" onClick={unfollow}>
-                      <Label color="blueGray">언팔로우</Label>
-                    </Link>
                   </div>
-                </div>
-              ))}
+                ))
+            : followeeList
+                .filter((followee) => followee.nickname.includes(searchText.value))
+                .map((followee) => (
+                  <div className="flex justify-center items-center" key={followee.characterSeq}>
+                    <Link to={`../${followee.nickname}`}>
+                      <div className="m-3">
+                        <CharacterImg imgWidth="50px" />
+                      </div>
+                    </Link>
+                    <Link to={`../${followee.nickname}`}>
+                      <div className="w-44">{followee.nickname}</div>
+                    </Link>
+                    <div className="ml-12 mr-3">
+                      <Link to="" onClick={unfollow}>
+                        <Label color="blueGray">언팔로우</Label>
+                      </Link>
+                    </div>
+                  </div>
+                ))}
         </div>
       </MainCard>
     </div>
