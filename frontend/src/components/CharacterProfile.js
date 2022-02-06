@@ -1,15 +1,17 @@
 import { Label } from "@material-tailwind/react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import CharacterImg from "./CharacterImg";
 import styles from "./CharacterProfile.module.css";
 
-export default function CharacterProfile({
+function CharacterProfile({
   nickname,
   category,
   introduction,
   representativeAchievement,
   classes,
   isMe = true,
+  characterSlice,
 }) {
   return (
     <div className={`flex justify-center items-center p-4 my-4 ${classes}`}>
@@ -63,7 +65,14 @@ export default function CharacterProfile({
               </Link>
             </div>
             <div className="inline-block px-2">
-              <Link to="../characters/update">
+              <Link
+                to={{
+                  pathname: "../characters/update",
+                  state: {
+                    characterSeq: characterSlice.characterSeq,
+                  },
+                }}
+              >
                 <Label color="blueGray" className={`${styles.customRadius}`}>
                   프로필 편집
                 </Label>
@@ -90,3 +99,9 @@ export default function CharacterProfile({
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  return { characterSlice: state.character, userSlice: state.user };
+}
+
+export default connect(mapStateToProps)(CharacterProfile);
