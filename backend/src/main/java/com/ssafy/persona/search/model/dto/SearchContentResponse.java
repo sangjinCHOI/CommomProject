@@ -12,6 +12,6 @@ public class SearchContentResponse {
 	private String nickname;
 	private int filePath;
 	private int contentSeq;
-	private String contText;
+	private String contentText;
 
 }

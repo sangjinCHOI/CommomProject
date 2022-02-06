@@ -28,7 +28,7 @@
 
 	<select id="searchStorage" resultType="SearchStorageResponse">
 		select 
-			s.storage_seq, s.storageName, 
+			s.storage_seq, s.storage_name, 
 			f.file_path 
 		from tb_storage s
 		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_storage'

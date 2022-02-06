@@ -1,6 +1,7 @@
 package com.ssafy.persona.search.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,28 +37,28 @@ public class SearchController {
 	@Autowired
 	private SearchService searchService;
 	
-	@GetMapping("/people/{text}")
+	@GetMapping("/characters/{text}")
 	public ResponseEntity<List<SearchPeopleResponse>> searchPeople(@PathVariable String text){
 		logger.info("인명 검색 요청 텍스트: "+text);
 		
 		return new ResponseEntity<List<SearchPeopleResponse>>(searchService.searchPeople(text), HttpStatus.OK);
 	}
 	
-	@GetMapping("/content/{text}")
+	@GetMapping("/contents/{text}")
 	public ResponseEntity<List<SearchContentResponse>> searchContent(@PathVariable String text){
 		logger.info("게시물 검색 요청 텍스트: "+text);
 		
 		return new ResponseEntity<List<SearchContentResponse>>(searchService.searchContent(text), HttpStatus.OK);
 	}
 	
-	@GetMapping("/storage/{text}")
+	@GetMapping("/storages/{text}")
 	public ResponseEntity<List<SearchStorageResponse>> searchStorage(@PathVariable String text){
 		logger.info("저장목록 검색 요청 텍스트: "+text);
 		
 		return new ResponseEntity<List<SearchStorageResponse>>(searchService.searchStorage(text), HttpStatus.OK);
 	}
 	
-	@GetMapping("/tag/{text}")
+	@GetMapping("/tags/{text}")
 	public ResponseEntity<List<SearchTagResponse>> searchTag(@PathVariable String text){
 		logger.info("태그 검색 요청 텍스트: "+text);
 		
@@ -94,6 +95,10 @@ public class SearchController {
 		return new ResponseEntity<List<String>>(searchService.getHistory(characterSeq), HttpStatus.OK);
 	}
 	
-	
+	@GetMapping("autoComplete/{text}")
+	public ResponseEntity<List<String>> autoComplete(@PathVariable String text){
+		logger.info("검색어 자동 완성 - 요청 text: "+ text);
+		return new ResponseEntity<List<String>>(new ArrayList<String>() , HttpStatus.OK);
+	}
 	
 }
