@@ -1,10 +1,12 @@
-import React from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "@material-tailwind/react";
-// import Send from "../config/Send";
+import { useState } from "react";
+import { connect } from "react-redux";
+// import { Link } from "react-router-dom";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ClosingAlert } from "@material-tailwind/react";
+import Send from "../config/Send";
 
-export default function ContentCreate(props) {
-  const [tag, setTag] = React.useState("");
-  const [tags, setTags] = React.useState([]);
+function ContentCreate(props) {
+  const [tag, setTag] = useState("");
+  const [tags, setTags] = useState([]);
   const onTagChange = (e) => setTag(e.target.value);
   const onSubmit = (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -21,24 +23,46 @@ export default function ContentCreate(props) {
   const onRemoveTags = (index) => {
     setTags(tags.filter((tag, tagIndex) => index != tagIndex));
   };
-
   const { isOpen, onCancel } = props;
   const handleClose = () => {
     onCancel();
+  };
+
+  // console.log(props.characterSlice.characterSeq);
+  // const contentText = useInput("");
+  const [contentText, setContentText] = useState("");
+  const [isPublic, setIsPublic] = useState(true);
+  const handleTextChange = (e) => {
+    setContentText(e.target.value);
+  };
+  const handleIsPublic = (e) => {
+    setIsPublic(e.target.value);
+    console.log(e.target.value);
+  };
+  const postContent = () => {
+    const data = {
+      categorySeq: props.characterSlice.categorySeq,
+      characterSeq: props.characterSlice.characterSeq,
+      contentIsMedia: false,
+      contentIsPublic: isPublic,
+      contentText: contentText,
+    };
+    Send.post("/content", JSON.stringify(data)).then((res) => console.log(res.data));
   };
 
   return (
     <Modal size="regular" active={isOpen} toggler={() => handleClose(false)}>
       <ModalHeader className="text-center" toggler={() => handleClose(false)}>
         <span>게시글 작성</span>
-        <select className="bg-white rounded-lg w-24 h-9 mx-3 p-2 text-xs border border-gray-300 outline-sky-500 text-black">
-          <option className="rounded-lg h-10" value="0">
-            전체공개
+        <select
+          className="bg-white rounded-lg w-24 h-9 mx-3 p-2 text-xs border border-gray-300 outline-sky-500 text-black"
+          value={isPublic}
+          onChange={handleIsPublic}
+        >
+          <option className="rounded-lg h-10" value="true">
+            공개
           </option>
-          <option className="rounded-lg h-10" value="1">
-            팔로워공개
-          </option>
-          <option className="rounded-lg h-10" value="2">
+          <option className="rounded-lg h-10" value="false">
             비공개
           </option>
         </select>
@@ -64,17 +88,41 @@ export default function ContentCreate(props) {
             </div>
           ))}
         </div>
-        <textarea className="bg-slate-100 rounded" name="" id="" cols="70" rows="10" placeholder="이 곳에 게시글을 작성해주세요."></textarea>
+        <textarea
+          value={contentText}
+          onChange={handleTextChange}
+          className="bg-slate-100 rounded"
+          name=""
+          id=""
+          cols="70"
+          rows="10"
+          placeholder="이 곳에 게시글을 작성해주세요."
+        ></textarea>
         <div className="bg-slate-100 rounded mb-1 flex justify-between">
           <input id="upload-file" type="file" multiple="multiple" accept="image/*" />
           {/* <Button color="red">파일삭제</Button> */}
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button color="lightBlue" ripple="light">
+        <Button
+          color="lightBlue"
+          ripple="light"
+          onClick={() => {
+            if (contentText) {
+              postContent();
+              handleClose(false);
+            }
+          }}
+        >
           작성
         </Button>
       </ModalFooter>
     </Modal>
   );
 }
+
+function mapStateToProps(state) {
+  return { characterSlice: state.character };
+}
+
+export default connect(mapStateToProps)(ContentCreate);
