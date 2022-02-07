@@ -7,7 +7,7 @@
 
 	<insert id="createAlarm">
 		insert into tb_alarm
-			(user_seq, character_seq, alarm_type, alarm_text, relation_tb, target_seq. alarm_is_read, alarm_date)
+			(user_seq, character_seq, alarm_type, alarm_text, relation_tb, target_seq, alarm_is_read, alarm_date)
 		values
 			(#{userSeq}, #{characterSeq}, #{alarmType}, #{alarmText}, #{relationTb}, #{targetSeq}, 0, now())
 	</insert>
