@@ -1,5 +1,3 @@
-// 여기선 서버에 요청해서 DB의 캐릭터 리스트 가져와서 랜더링
-
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -8,48 +6,17 @@ import CharacterImg from "../components/CharacterImg";
 import { save } from "../store/characterStore";
 import Send from "../config/Send";
 
-function Characters({ characterSlice, userSlice, saveCharacter, location }) {
+function Characters({ userSlice, saveCharacter }) {
   const [isManagement, setIsManagement] = useState(false);
-  // const [userSeq, setUserSeq] = useState(0);
-  console.log("userSlice", userSlice);
-
-  // userId 가져오기용 개선 필요(로그인 페이지에서 넘어올 때만 작동)
-  // 로그인 페이지에서 넘어올 경우에는 props, 다른 경우는 characterSlice에서 userId를 가져온다.
-  // const { userId } = location.props;
-
-  // const userSeq = localStorage.getItem("userSeq");
   const [characterList, setCharacterList] = useState([]);
   const [characterLen, setCharacterLen] = useState(0);
-
-  // 프론트에서의 userCreatableCount
-  const [userCreatableCount, setUserCreatableCount] = useState(0);
-  // const tempUserCreatableCount = 2;
-
-  // const getUserCreatableCount = () => {
-  //   axios.get(`http://localhost:8080/user/${userId}`).then((res) => {
-  //     console.log(res);
-  //     // setUserCreatableCount(res)
-  //   });
-  // };
-
-  const [userSeq, setUserSeq] = useState(0);
-  const [userId, setUserId] = useState("");
+  const { userId, userSeq, userCreatableCount } = userSlice;
 
   const getCharacterList = () => {
-    console.log("location.props", location.props);
-    console.log(Boolean(location.props));
-    // const { userId } = location.props ? location.props : characterSlice;
-    const { userId, userSeq, userCreatableCount } = userSlice;
-    console.log("여기요", userId, userSeq, userCreatableCount);
     Send.get(`/user/${userId}`).then((res) => {
-      const { userSeq, userCreatableCount } = res.data;
-      setUserSeq(res.data.userSeq); // create를 위한 userSeq 값 변경
-      setUserId(res.data.userId); // create를 위한 userSeq 값 변경
-      setUserCreatableCount(userCreatableCount); // DB에서의 userCreatableCount
       Send.get(`/character/characters/${userSeq}`)
         .then((res) => {
           setCharacterList(res.data);
-          console.log(res.data);
           setCharacterLen(res.data.length);
           return userSeq;
         })
@@ -73,7 +40,6 @@ function Characters({ characterSlice, userSlice, saveCharacter, location }) {
     imgSrc = null,
     characterSeq = 0,
   }) => {
-    console.log(userSeq);
     return (
       <div className="mt-8 mx-12 w-32">
         <Link

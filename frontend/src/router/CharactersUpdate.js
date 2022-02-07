@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
 import Send from "../config/Send";
 
-// characterStore의 update reducer를 import
 import { update } from "../store/characterStore";
 
 const useInput = (initialValue, validator) => {
@@ -26,7 +25,7 @@ const useInput = (initialValue, validator) => {
   return { value, onChange };
 };
 
-function CharacterUpdate({ characterSlice, updateCharacter, location }) {
+function CharacterUpdate({ updateCharacter, location }) {
   const maxLen = (value) => value.length <= 50;
   const introduction = useInput("", maxLen);
 
@@ -38,20 +37,12 @@ function CharacterUpdate({ characterSlice, updateCharacter, location }) {
   const characterUpdate = (e) => {
     e.preventDefault();
 
-    // const data = {
-    //   characterSeq: 9, // 링크연결갱신갱신 이었던 캐릭터
-    //   introduction: introduction.value,
-    //   nickname,
-    // };
-    // axios.get("http://localhost:8080/")
-
     const character = {
       characterSeq,
       introduction: introduction.value,
       nickname,
     };
 
-    // characterStore.js의 update reducer 실행
     updateCharacter({ character });
 
     Send.put("/character", JSON.stringify(character))
@@ -119,7 +110,6 @@ function CharacterUpdate({ characterSlice, updateCharacter, location }) {
   );
 }
 
-// characterSlice를 return 함으로써 여기서 props로 받아올 수 있는듯?
 function mapStateToProps(state) {
   return { characterSlice: state.character };
 }

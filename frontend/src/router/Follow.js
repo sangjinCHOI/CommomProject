@@ -79,7 +79,21 @@ function Follow({ characterSlice }) {
       follower: characterSlice.characterSeq,
     };
     Send.post("/character/follow", JSON.stringify(data2))
-      .then((res) => console.log(res))
+      .then((res) => {
+        if (res.status === 200) {
+          const alarmData = {
+            alarmDate: new Date().toISOString(),
+            // alarmIsRead: false,
+            // alarmText: `${followerNickname}님이 회원님을 팔로우하기 시작했습니다.`,
+            alarmType: 1,
+            characterSeq: followerSeq, // 상대방
+            relationTb: "tb_character",
+            targetSeq: characterSlice.characterSeq, // 본인 캐릭터or저장소or업적
+            // userSeq: 0
+          };
+          Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => console.log(res));
+        }
+      })
       .catch((err) => console.log(err));
   };
 
@@ -142,10 +156,48 @@ function Follow({ characterSlice }) {
           <span className="material-icons absolute right-12">search</span>
         </div>
         <div className={`${styles.box} overflow-y-auto`} style={{ height: "550px" }}>
-          {isFollowerTab
-            ? followerList
-                .filter((follower) => follower.nickname.includes(searchText.value))
-                .map((follower) => (
+          {isFollowerTab // 팔로워 탭일 때
+            ? searchText.value.length >= 2 // 2글자 이상 검색 시
+              ? followerList // 리스트 필터링
+                  .filter((follower) => follower.nickname.includes(searchText.value))
+                  .map((follower) => (
+                    <div className="flex justify-center items-center" key={follower.characterSeq}>
+                      <Link to={`../${follower.nickname}`}>
+                        <div className="m-3">
+                          <CharacterImg imgWidth="50px" />
+                        </div>
+                      </Link>
+                      <Link to={`../${follower.nickname}`}>
+                        <div className="w-44">{follower.nickname}</div>
+                      </Link>
+                      <div className="m-2">
+                        <Link
+                          to=""
+                          onClick={(e) => {
+                            follow(follower.characterSeq, e);
+                          }}
+                        >
+                          <Label color="lightBlue" className={`${styles.customRadius}`}>
+                            팔로우
+                          </Label>
+                        </Link>
+                      </div>
+                      <div className="mr-3">
+                        <Link
+                          to=""
+                          onClick={(e) => {
+                            deleteFollow(follower.characterSeq, e);
+                          }}
+                        >
+                          <Label color="blueGray" className={`${styles.customRadius}`}>
+                            삭제
+                          </Label>
+                        </Link>
+                      </div>
+                    </div>
+                  ))
+              : // 2글자 미만일 때 리스트 필터링X
+                followerList.map((follower) => (
                   <div className="flex justify-center items-center" key={follower.characterSeq}>
                     <Link to={`../${follower.nickname}`}>
                       <div className="m-3">
@@ -162,7 +214,9 @@ function Follow({ characterSlice }) {
                           follow(follower.characterSeq, e);
                         }}
                       >
-                        <Label color="lightBlue">팔로우</Label>
+                        <Label color="lightBlue" className={`${styles.customRadius}`}>
+                          팔로우
+                        </Label>
                       </Link>
                     </div>
                     <div className="mr-3">
@@ -172,12 +226,16 @@ function Follow({ characterSlice }) {
                           deleteFollow(follower.characterSeq, e);
                         }}
                       >
-                        <Label color="blueGray">삭제</Label>
+                        <Label color="blueGray" className={`${styles.customRadius}`}>
+                          삭제
+                        </Label>
                       </Link>
                     </div>
                   </div>
                 ))
-            : followeeList
+            : // 팔로우 탭일 때
+            searchText.value.length >= 2 // 2글자 이상 검색 시
+            ? followeeList // 리스트 필터링
                 .filter((followee) => followee.nickname.includes(searchText.value))
                 .map((followee) => (
                   <div className="flex justify-center items-center" key={followee.characterSeq}>
@@ -196,11 +254,38 @@ function Follow({ characterSlice }) {
                           unfollow(followee.characterSeq, e);
                         }}
                       >
-                        <Label color="blueGray">언팔로우</Label>
+                        <Label color="blueGray" className={`${styles.customRadius}`}>
+                          언팔로우
+                        </Label>
                       </Link>
                     </div>
                   </div>
-                ))}
+                ))
+            : // 2글자 미만일 때 리스트 필터링X
+              followeeList.map((followee) => (
+                <div className="flex justify-center items-center" key={followee.characterSeq}>
+                  <Link to={`../${followee.nickname}`}>
+                    <div className="m-3">
+                      <CharacterImg imgWidth="50px" />
+                    </div>
+                  </Link>
+                  <Link to={`../${followee.nickname}`}>
+                    <div className="w-44">{followee.nickname}</div>
+                  </Link>
+                  <div className="ml-12 mr-3">
+                    <Link
+                      to=""
+                      onClick={(e) => {
+                        unfollow(followee.characterSeq, e);
+                      }}
+                    >
+                      <Label color="blueGray" className={`${styles.customRadius}`}>
+                        언팔로우
+                      </Label>
+                    </Link>
+                  </div>
+                </div>
+              ))}
         </div>
       </MainCard>
     </div>

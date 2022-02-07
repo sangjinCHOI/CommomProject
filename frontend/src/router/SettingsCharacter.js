@@ -53,7 +53,6 @@ function SettingsCharacter({ characterSlice }) {
     setShowModal(false);
     Send.delete("/character", { data: JSON.stringify(data) })
       .then((res) => {
-        // 현재 200 요청이 가지만 삭제가 안됨
         alert("삭제되었습니다.");
         console.log(res);
         history.push("../characters/select");
@@ -123,17 +122,6 @@ function SettingsCharacter({ characterSlice }) {
               기타 사유
             </option>
           </select>
-          {/* <Dropdown
-            color={"blueGray"}
-            buttonType={"outline"}
-            buttonText={"이유 선택"}
-            className="w-96 my-8"
-          >
-            <DropdownItem children={"개인정보 보호 문제"} />
-            <DropdownItem children={"캐릭터 슬롯이 부족함"} />
-            <DropdownItem children={"다른 카테고리로 변경하고 싶음"} />
-            <DropdownItem children={"기타 사유"} />
-          </Dropdown> */}
           <br />
           <p className="text-base leading-relaxed text-gray-600 font-normal">
             비밀번호를 다시 입력하세요.
