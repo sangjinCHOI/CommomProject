@@ -25,6 +25,12 @@ public class ContentGetResponse {
 	private LocalDateTime contentModifiedDate;
 	private int contentIsLike;
 	private int contentIsStore;
+	private int replyCount;
+	private String contentWriter;
+	private String writerProfile;
+	private int tagCount;
+	private String tags;
+	private int fileCount;
 	
 	public ContentGetResponse(Content content) {
 		super();
