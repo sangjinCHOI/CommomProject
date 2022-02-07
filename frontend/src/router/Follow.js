@@ -7,6 +7,9 @@ import Send from "../config/Send";
 import { connect } from "react-redux";
 import styles from "./Follow.module.css";
 
+// 현재 해당 페이지에서 코드 수정 후 새로고침 하는 경우에 중복 랜더링되는 버그 존재
+// useEffect 관련 이슈?
+
 const useInput = (initialValue, validator) => {
   const [value, setValue] = useState(initialValue);
   const onChange = (event) => {
@@ -35,13 +38,16 @@ function Follow({ characterSlice }) {
       followee: characterSlice.characterSeq,
       nickname: "",
     };
-    setFollowerList([]);
+    // setFollowerList([]);
     Send.post("/character/followers", JSON.stringify(data)).then((res) => {
       res.data.forEach((follower) => {
         Send.get(`/character/${follower.follower}`).then((res) => {
           // 캐릭터 데이터가 있다면
           if (res.data) {
-            setFollowerList((followerList) => [res.data, ...followerList]);
+            // setFollowerList((followerList) => [res.data, ...followerList]);
+            // 팔로우or삭제 버튼 구별을 위해서 followToo를 리스트에 담아서 저장
+            // 탭을 이동할 떄마다 움직이는 듯한 모션 왜 발생?
+            setFollowerList((followerList) => [[res.data, follower.followToo], ...followerList]);
           }
         });
       });
@@ -52,7 +58,7 @@ function Follow({ characterSlice }) {
       follower: characterSlice.characterSeq,
       nickname: "",
     };
-    setFolloweeList([]);
+    // setFolloweeList([]);
     Send.post("/character/followees", JSON.stringify(data)).then((res) => {
       res.data.forEach((followee) => {
         Send.get(`/character/${followee.followee}`).then((res) => {
@@ -159,77 +165,85 @@ function Follow({ characterSlice }) {
           {isFollowerTab // 팔로워 탭일 때
             ? searchText.value.length >= 2 // 2글자 이상 검색 시
               ? followerList // 리스트 필터링
-                  .filter((follower) => follower.nickname.includes(searchText.value))
+                  .filter((follower) => follower[0].nickname.includes(searchText.value))
                   .map((follower) => (
-                    <div className="flex justify-center items-center" key={follower.characterSeq}>
-                      <Link to={`../${follower.nickname}`}>
+                    <div
+                      className="flex justify-center items-center"
+                      key={follower[0].characterSeq}
+                    >
+                      <Link to={`../${follower[0].nickname}`}>
                         <div className="m-3">
                           <CharacterImg imgWidth="50px" />
                         </div>
                       </Link>
-                      <Link to={`../${follower.nickname}`}>
-                        <div className="w-44">{follower.nickname}</div>
+                      <Link to={`../${follower[0].nickname}`}>
+                        <div className="w-44">{follower[0].nickname}</div>
                       </Link>
-                      <div className="m-2">
-                        <Link
-                          to=""
-                          onClick={(e) => {
-                            follow(follower.characterSeq, e);
-                          }}
-                        >
-                          <Label color="lightBlue" className={`${styles.customRadius}`}>
-                            팔로우
-                          </Label>
-                        </Link>
-                      </div>
-                      <div className="mr-3">
-                        <Link
-                          to=""
-                          onClick={(e) => {
-                            deleteFollow(follower.characterSeq, e);
-                          }}
-                        >
-                          <Label color="blueGray" className={`${styles.customRadius}`}>
-                            삭제
-                          </Label>
-                        </Link>
+                      <div className="ml-12 mr-3">
+                        {!follower[1] ? (
+                          <Link
+                            to=""
+                            onClick={(e) => {
+                              follow(follower[0].characterSeq, e);
+                            }}
+                          >
+                            <Label color="lightBlue" className={`${styles.customRadius}`}>
+                              팔로우
+                            </Label>
+                          </Link>
+                        ) : (
+                          <Link
+                            to=""
+                            onClick={(e) => {
+                              deleteFollow(follower[0].characterSeq, e);
+                            }}
+                          >
+                            <Label color="blueGray" className={`ml-3 mr-2 ${styles.customRadius}`}>
+                              삭제
+                            </Label>
+                          </Link>
+                        )}
                       </div>
                     </div>
                   ))
               : // 2글자 미만일 때 리스트 필터링X
                 followerList.map((follower) => (
-                  <div className="flex justify-center items-center" key={follower.characterSeq}>
-                    <Link to={`../${follower.nickname}`}>
+                  <div className="flex justify-center items-center" key={follower[0].characterSeq}>
+                    <Link to={`../${follower[0].nickname}`}>
                       <div className="m-3">
                         <CharacterImg imgWidth="50px" />
                       </div>
                     </Link>
-                    <Link to={`../${follower.nickname}`}>
-                      <div className="w-44">{follower.nickname}</div>
+                    <Link to={`../${follower[0].nickname}`}>
+                      <div className="w-44">{follower[0].nickname}</div>
                     </Link>
-                    <div className="m-2">
-                      <Link
-                        to=""
-                        onClick={(e) => {
-                          follow(follower.characterSeq, e);
-                        }}
-                      >
-                        <Label color="lightBlue" className={`${styles.customRadius}`}>
-                          팔로우
-                        </Label>
-                      </Link>
-                    </div>
-                    <div className="mr-3">
-                      <Link
-                        to=""
-                        onClick={(e) => {
-                          deleteFollow(follower.characterSeq, e);
-                        }}
-                      >
-                        <Label color="blueGray" className={`${styles.customRadius}`}>
-                          삭제
-                        </Label>
-                      </Link>
+                    <div className="ml-12 mr-3">
+                      {!follower[1] ? (
+                        <Link
+                          to=""
+                          onClick={(e) => {
+                            follow(follower[0].characterSeq, e);
+                          }}
+                        >
+                          <Label color="lightBlue" className={`w-16 ${styles.customRadius}`}>
+                            팔로우
+                          </Label>
+                        </Link>
+                      ) : (
+                        <Link
+                          to=""
+                          onClick={(e) => {
+                            deleteFollow(follower[0].characterSeq, e);
+                          }}
+                        >
+                          <Label
+                            color="blueGray"
+                            className={`ml-3 mr-2 w-16 ${styles.customRadius}`}
+                          >
+                            삭제
+                          </Label>
+                        </Link>
+                      )}
                     </div>
                   </div>
                 ))

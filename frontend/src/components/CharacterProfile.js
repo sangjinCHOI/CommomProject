@@ -76,14 +76,18 @@ function CharacterProfile({
             </span>
           </div>
           <div className="inline-block mr-8">
-            <span>
-              팔로워 <span className="font-bold">{characterProfile.followerCount}</span>
-            </span>
+            <Link to={`../${nickname}/follow`}>
+              <span>
+                팔로워 <span className="font-bold">{characterProfile.followerCount}</span>
+              </span>
+            </Link>
           </div>
           <div className="inline-block">
-            <span>
-              팔로우 <span className="font-bold">{characterProfile.followeeCount}</span>
-            </span>
+            <Link to={`../${nickname}/follow`}>
+              <span>
+                팔로우 <span className="font-bold">{characterProfile.followeeCount}</span>
+              </span>
+            </Link>
           </div>
         </div>
 
