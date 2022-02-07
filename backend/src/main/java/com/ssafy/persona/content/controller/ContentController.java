@@ -62,7 +62,7 @@ public class ContentController {
 
 	@ApiOperation(value = "content delete", notes = "content 삭제, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("/content")
-	public ResponseEntity<String> contentDelete(@RequestBody @ApiParam(value = "삭제할 글의 글번호.", required = true) int contentSeq) {
+	public ResponseEntity<String> contentDelete(@RequestParam @ApiParam(value = "삭제할 글의 글번호.", required = true) int contentSeq) {
 		if (contentService.contentDelete(contentSeq)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
