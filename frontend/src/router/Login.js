@@ -24,11 +24,6 @@ function Login({ saveUser, userSlice }) {
     }
   };
 
-  // const onPasswordHandler = (e) => {
-  //   console.log("pass : " + password);
-  //   setPassword(e.target.value);
-  // };
-
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       setPassword(e.target.value);
@@ -47,17 +42,21 @@ function Login({ saveUser, userSlice }) {
       userId: _id,
       userPw: password,
     };
-
+    console.log(data);
     Send.post(`/user/login`, JSON.stringify(data))
+
       .then((res) => {
+        if (res.status == 202) {
+          alert("아이디 및 비밀번호를 확인해주세요");
+          return;
+        } else if (res.status == 204) {
+          alert("메일 인증을 완료해주세요");
+          return;
+        }
         window.localStorage.setItem("idToken", JSON.stringify(res.data));
-        console.log(localStorage.getItem("idToken"));
         Send.get(`/user/${data.userId}`)
           .then((res) => {
-            console.log("this::: ~!~" + res);
             saveUser(res.data);
-            console.log(res.data);
-            console.log(userSlice);
             history.push({
               pathname: "../characters/select",
               props: {
@@ -93,17 +92,7 @@ function Login({ saveUser, userSlice }) {
 
       <div className="mt-3 mb-5 px-11">
         <div className="bg-white rounded-lg">
-          <InputIcon
-            type="text"
-            color="lightBlue"
-            placeholder="ID를 입력해주세요"
-            outline={true}
-            iconName="person"
-            value={_id}
-            onChange={onIdHandler}
-            //onKeyPress={handleKeyPress}
-            onKeyUp={handleKeyPress}
-          />
+          <InputIcon type="text" color="lightBlue" placeholder="ID를 입력해주세요" outline={true} iconName="person" value={_id} onChange={onIdHandler} onKeyUp={handleKeyPress} />
         </div>
         <Link to="../accounts/id_inquiry">아이디를 잊으셨나요?</Link>
         {passShow ? <PassComp pwHandleKeyPress={pwHandleKeyPress}></PassComp> : null}
@@ -135,7 +124,7 @@ const PassComp = ({ pwHandleKeyPress }) => {
           outline={true}
           iconName="pin"
           // value={password}
-          // onChange={onPasswordHandler}
+          //onChange={onPasswordHandler}
           onKeyUp={pwHandleKeyPress}
         />
       </div>
