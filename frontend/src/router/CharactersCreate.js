@@ -35,12 +35,10 @@ function CharactersCreate({ characterSlice, saveCharacter, location }) {
 
   const { userSeq, userId } = location.state;
 
-  // 현재 캐릭터 생성 -> 캐릭터 선택 창에서 새로고침 할 때 캐릭터 못불러오는 버그 존재 -> props로 userId/userSeq를 전달하면 새로고침 하면 사라지기 때문에
-  // 결국 userStore를 새로 만드는 방법 뿐인가?
   const characterSave = (e) => {
     e.preventDefault();
     const data = {
-      userSeq, // 현재 DB상에서 id: qkrwhdgns1인 유저
+      userSeq,
       categorySeq: parseInt(categorySeq),
       nickname,
       introduction: introduction.value,
