@@ -72,14 +72,30 @@ function Follow({ characterSlice }) {
 
   const [isFollowerTab, setIsFollowerTab] = useState(true);
 
-  const follow = (followerSeq, e) => {
+  const follow = (followerSeq, followerNickname, e) => {
     e.preventDefault();
     const data2 = {
       followee: followerSeq,
       follower: characterSlice.characterSeq,
     };
     Send.post("/character/follow", JSON.stringify(data2))
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          const alarmData = {
+            alarmDate: new Date().toISOString(),
+            // alarmIsRead: false,
+            // alarmText: `${followerNickname}님이 회원님을 팔로우하기 시작했습니다.`,
+            alarmType: 1,
+            characterSeq: followerSeq, // 상대방
+            relationTb: "tb_character",
+            targetSeq: characterSlice.characterSeq, // 본인 캐릭터or저장소or업적
+            // userSeq: 0
+          };
+          console.log(alarmData);
+          Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => console.log(res));
+        }
+      })
       .catch((err) => console.log(err));
   };
 
@@ -159,7 +175,7 @@ function Follow({ characterSlice }) {
                       <Link
                         to=""
                         onClick={(e) => {
-                          follow(follower.characterSeq, e);
+                          follow(follower.characterSeq, follower.nickname, e);
                         }}
                       >
                         <Label color="lightBlue">팔로우</Label>

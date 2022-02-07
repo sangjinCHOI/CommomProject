@@ -20,19 +20,22 @@ export default function SearchTags({ location }) {
       <div className="my-4">'{query}' 태그 검색 결과</div>
       <MainCard classes="border rounded py-4">
         {tagList.map((tagText) => (
-          <Link to={{ pathname: "/search/tag", search: `?detail=${tagText[0]}` }}>
-            <div className="flex items-center mx-10 py-4" key={tagText}>
-              <div className="material-icons rounded-full border p-2 ml-2">tag</div>
-              <div className="ml-6 text-lg" style={{ width: "180px" }}>
+          <div className="flex items-center mx-10 py-4" key={tagText}>
+            <div className="material-icons rounded-full border p-2 ml-2">tag</div>
+            <Link
+              to={{ pathname: "/search/tag", search: `?detail=${tagText[0]}` }}
+              key={tagText[0]}
+            >
+              <div className="ml-5 text-lg" style={{ width: "190px" }}>
                 {tagText[0].length > 10 ? tagText[0].slice(0, 10) + "..." : tagText[0]}
               </div>
-              <div className="ml-14 text-gray-400 text-sm text-center">
-                <span>게시글 수</span>
-                <br />
-                <span>{tagText[1].toLocaleString()}</span>
-              </div>
+            </Link>
+            <div className="ml-14 text-gray-400 text-sm text-center">
+              <span>게시글 수</span>
+              <br />
+              <span>{tagText[1].toLocaleString()}</span>
             </div>
-          </Link>
+          </div>
         ))}
       </MainCard>
     </div>
