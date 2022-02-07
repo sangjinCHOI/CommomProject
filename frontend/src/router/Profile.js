@@ -36,15 +36,7 @@ function Profile({ characterSlice }) {
           }
         />
       </MainCard>
-      <div className="border">
-        <Content />
-      </div>
-      <div className="border">
-        <Content />
-      </div>
-      <div className="border">
-        <Content />
-      </div>
+      <div className="border">{/* <Content /> */}</div>
     </div>
   );
 }
