@@ -4,6 +4,7 @@ import { useState } from "react";
 import CharacterImg from "./CharacterImg";
 import { connect } from "react-redux";
 import Send from "../config/Send";
+import { useHistory } from "react-router-dom";
 
 // DB상에서 현재 한국 시간을 기준으로 불러옴
 const timeDifference = (time) => {
@@ -76,16 +77,30 @@ const timeDifference = (time) => {
 };
 
 function AlarmShow({ characterSlice }) {
+  const history = useHistory();
   const [alarmList, setAlarmList] = useState([]);
 
   const getAlarmList = () => {
     Send.get(`/character/alarms/${characterSlice.characterSeq}`).then((res) => {
+      setAlarmList(res.data.filter((alarm) => !alarm.alarmIsRead));
       console.log(res.data);
-      setAlarmList(res.data);
     });
   };
-
   // console.log(timeDifference("2022-02-07T16:29:59"));
+
+  const alarmClick = (alarmType, targetSeq, e) => {
+    e.preventDefault();
+    if (alarmType === 1) {
+      // targetSeq === characterSeq
+      Send.get(`/character/${targetSeq}`).then((res) => history.push(`../${res.data.nickname}`));
+    } else if (2 <= alarmType <= 6) {
+      // targetSeq === storageSeq
+      // 내 저장소면 상관 없지만 상대방 저장소 가려면 닉네임도 필요한데 어떻게 찾아내지?
+      history.push(`../임시닉네임/storages/${targetSeq}`);
+    } else if (alarmType === 7) {
+      history.push(`../임시닉네임/achievement`);
+    }
+  };
 
   return (
     <Menu as="div" className="mx-2 relative hidden md:block">
@@ -115,7 +130,14 @@ function AlarmShow({ characterSlice }) {
         {alarmList.map((alarm) => (
           <Menu.Item key={alarm.alarmSeq}>
             <div className="px-4 py-2">
-              <Link to="" className="text-sm text-gray-700 flex justify-center items-center">
+              {/* 현재 링크 안걸려있음 */}
+              <Link
+                to=""
+                className="text-sm text-gray-700 flex justify-center items-center"
+                onClick={(e) => {
+                  alarmClick(alarm.alarmType, alarm.targetSeq, e);
+                }}
+              >
                 <CharacterImg imgWidth="40px" classes="mr-4" />
                 <div style={{ width: "220px" }}>{alarm.alarmText}</div>
               </Link>
