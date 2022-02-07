@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-// import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ClosingAlert } from "@material-tailwind/react";
 import Send from "../config/Send";
 
 function ContentCreate(props) {
+  // 태그
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
   const onTagChange = (e) => setTag(e.target.value);
@@ -23,15 +24,17 @@ function ContentCreate(props) {
   const onRemoveTags = (index) => {
     setTags(tags.filter((tag, tagIndex) => index != tagIndex));
   };
+
+  // 모달
   const { isOpen, onCancel } = props;
   const handleClose = () => {
     onCancel();
   };
 
-  // console.log(props.characterSlice.characterSeq);
-  // const contentText = useInput("");
+  // 게시글 작성
   const [contentText, setContentText] = useState("");
   const [isPublic, setIsPublic] = useState(true);
+  const history = useHistory();
   const handleTextChange = (e) => {
     setContentText(e.target.value);
   };
@@ -47,7 +50,10 @@ function ContentCreate(props) {
       contentIsPublic: isPublic,
       contentText: contentText,
     };
-    Send.post("/content", JSON.stringify(data)).then((res) => console.log(res.data));
+    Send.post("/content", JSON.stringify(data)).then((res) => {
+      console.log(res.data);
+      history.push("");
+    });
   };
 
   return (
