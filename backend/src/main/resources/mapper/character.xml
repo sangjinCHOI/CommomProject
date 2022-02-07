@@ -5,7 +5,7 @@
 <mapper
 	namespace="com.ssafy.persona.character.mapper.CharacterMapper">
 
-	<insert id="regist">
+	<insert id="regist" useGeneratedKeys="true" keyProperty="characterSeq">
 		insert into tb_character
 			(user_seq, category_seq, nickname, introduction, character_created_date)
 		values

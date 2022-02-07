@@ -6,11 +6,14 @@
 	namespace="com.ssafy.persona.character.mapper.AchievementMapper">
 
 	<select id="getAchievementList" resultType="AchievementGetResponse">
-		select achievement_seq, achievement_name, achievement_description, 
-			achievement_condition, achievement_type, achievement_level, 
-			achievement_is_active, achievement_created_date,
-		    (select count(*) from tb_user_achivement ua where ua.achievement_seq = a.achievement_seq and ua.character_seq = 1) as isGained
-		from tb_achievement
+		select a.achievement_seq, a.achievement_name, a.achievement_description, 
+			a.achievement_condition, a.achievement_type, a.achievement_level, 
+			a.achievement_is_active, a.achievement_created_date,
+		    (select count(*) from tb_user_achivement ua where ua.achievement_seq = a.achievement_seq and ua.character_seq = 1) as isGained,
+			f.file_path		
+		from tb_achievement a
+		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_achievement'
+		AND f.relation_seq = a.achievement_seq
 		where 1 = 1
 		<if test="achievementType != null and achievementType != ''">
 			and achievement_type=#{achievementType}

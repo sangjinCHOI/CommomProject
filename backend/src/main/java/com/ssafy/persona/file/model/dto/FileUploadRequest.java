@@ -2,6 +2,7 @@ package com.ssafy.persona.file.model.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@Builder
 public class FileUploadRequest {
 	private MultipartFile[] myfile;
 	private char fileType;
