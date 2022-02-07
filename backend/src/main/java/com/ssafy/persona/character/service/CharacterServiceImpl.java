@@ -12,6 +12,7 @@ import com.ssafy.persona.character.model.dto.AlarmSettingUpdateRequest;
 import com.ssafy.persona.character.model.dto.CharacterCreatRequest;
 import com.ssafy.persona.character.model.dto.CharacterDeleteRequest;
 import com.ssafy.persona.character.model.dto.CharacterGetResponse;
+import com.ssafy.persona.character.model.dto.CharacterProfileResponse;
 import com.ssafy.persona.character.model.dto.CharacterUpdateRequest;
 import com.ssafy.persona.file.model.dto.FileUploadRequest;
 import com.ssafy.persona.file.service.FileServiceImpl;
@@ -92,6 +93,11 @@ public class CharacterServiceImpl implements CharacterService {
 		return characterMapper.detail(characterSeq);
 	}
 
+	@Override
+	public CharacterProfileResponse getCharacterProfile(String nickname) {
+		return characterMapper.getCharacterProfile(nickname);
+	}
+	
 	@Override
 	public List<CharacterGetResponse> list(int userSeq) {
 		return characterMapper.list(userSeq);
