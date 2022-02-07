@@ -6,8 +6,9 @@ import ShortLogo from "../assets/images/short_logo.png";
 import Search from "../assets/images/search.png";
 import ContentCreate from "./ContentCreate";
 import AlarmShow from "./AlarmShow";
+import { connect } from "react-redux";
 
-export default function Example() {
+function Navbar({ characterSlice }) {
   const [word, setWord] = React.useState("");
   const history = useHistory();
   const onChange = (event) => {
@@ -68,12 +69,18 @@ export default function Example() {
                 >
                   add_circle_outline
                 </button>
+
                 <AlarmShow />
-                <Link to="">
-                  <span className="hidden md:block material-icons h-10 w-10 mt-1 mx-2" style={{ fontSize: 40 }}>
+
+                <Link to={`../${characterSlice.nickname}`}>
+                  <span
+                    className="hidden md:block material-icons h-10 w-10 mt-1 mx-2"
+                    style={{ fontSize: 40 }}
+                  >
                     person_outline
                   </span>
                 </Link>
+
                 {/* dropdown */}
                 <Menu as="div" className="mx-2 relative">
                   <div>
@@ -85,7 +92,11 @@ export default function Example() {
                   </div>
                   <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white">
                     <Menu.Item>
-                      <Link to="/" className="block md:hidden px-4 py-2 text-sm text-gray-700" onClick={() => setContentCreateModal(true)}>
+                      <Link
+                        to="/"
+                        className="block md:hidden px-4 py-2 text-sm text-gray-700"
+                        onClick={() => setContentCreateModal(true)}
+                      >
                         게시글 작성
                       </Link>
                     </Menu.Item>
@@ -100,17 +111,26 @@ export default function Example() {
                       </Link>
                     </Menu.Item>
                     <Menu.Item>
-                      <Link to="/" className="block px-4 py-2 text-sm text-gray-700">
+                      <Link
+                        to="../characters/select"
+                        className="block px-4 py-2 text-sm text-gray-700"
+                      >
                         캐릭터 변경
                       </Link>
                     </Menu.Item>
                     <Menu.Item>
-                      <Link to="/settings/character" className="block px-4 py-2 text-sm text-gray-700">
+                      <Link
+                        to="/settings/character"
+                        className="block px-4 py-2 text-sm text-gray-700"
+                      >
                         설정
                       </Link>
                     </Menu.Item>
                     <Menu.Item>
-                      <Link to="/" className="block px-4 py-2 text-sm text-gray-700">
+                      <Link
+                        to="../accounts/login"
+                        className="block px-4 py-2 text-sm text-gray-700"
+                      >
                         로그아웃
                       </Link>
                     </Menu.Item>
@@ -132,3 +152,9 @@ export default function Example() {
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  return { characterSlice: state.character };
+}
+
+export default connect(mapStateToProps)(Navbar);
