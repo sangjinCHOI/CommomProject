@@ -72,7 +72,7 @@ function Follow({ characterSlice }) {
 
   const [isFollowerTab, setIsFollowerTab] = useState(true);
 
-  const follow = (followerSeq, followerNickname, e) => {
+  const follow = (followerSeq, e) => {
     e.preventDefault();
     const data2 = {
       followee: followerSeq,
@@ -80,7 +80,6 @@ function Follow({ characterSlice }) {
     };
     Send.post("/character/follow", JSON.stringify(data2))
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           const alarmData = {
             alarmDate: new Date().toISOString(),
@@ -92,7 +91,6 @@ function Follow({ characterSlice }) {
             targetSeq: characterSlice.characterSeq, // 본인 캐릭터or저장소or업적
             // userSeq: 0
           };
-          console.log(alarmData);
           Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => console.log(res));
         }
       })
@@ -175,10 +173,12 @@ function Follow({ characterSlice }) {
                       <Link
                         to=""
                         onClick={(e) => {
-                          follow(follower.characterSeq, follower.nickname, e);
+                          follow(follower.characterSeq, e);
                         }}
                       >
-                        <Label color="lightBlue">팔로우</Label>
+                        <Label color="lightBlue" className={`${styles.customRadius}`}>
+                          팔로우
+                        </Label>
                       </Link>
                     </div>
                     <div className="mr-3">
@@ -188,7 +188,9 @@ function Follow({ characterSlice }) {
                           deleteFollow(follower.characterSeq, e);
                         }}
                       >
-                        <Label color="blueGray">삭제</Label>
+                        <Label color="blueGray" className={`${styles.customRadius}`}>
+                          삭제
+                        </Label>
                       </Link>
                     </div>
                   </div>
@@ -212,7 +214,9 @@ function Follow({ characterSlice }) {
                           unfollow(followee.characterSeq, e);
                         }}
                       >
-                        <Label color="blueGray">언팔로우</Label>
+                        <Label color="blueGray" className={`${styles.customRadius}`}>
+                          언팔로우
+                        </Label>
                       </Link>
                     </div>
                   </div>

@@ -12,7 +12,6 @@ function Profile({ characterSlice }) {
   const getCharacterProfile = () => {
     Send.get(`/character/profile/${nickname}`).then((res) => {
       setCharacterProfile(res.data);
-      console.log(res.data);
     });
   };
 
@@ -23,7 +22,6 @@ function Profile({ characterSlice }) {
   return (
     <div>
       <MainCard classes="border">
-        {/* 현재 상대방 캐릭터 불러오려면 닉네임밖에 모르는데, API는 일련번호 */}
         {/* CharacterProfile에서 요청 보내고 받는게 좋은거 같은데... */}
         <CharacterProfile
           isMe={characterSlice.nickname === nickname ? true : false}
