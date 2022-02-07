@@ -30,7 +30,7 @@
 	</update>
 	
 	
-	<select id="contentGet" parameterType="contentGetRequest" resultType="ContentGetResponse">
+	<select id="contentGet" resultType="ContentGetResponse">
 		select content_seq as contentSeq, content_is_active as contentIsActive, content_is_public as contentIsPublic, character_seq as characterSeq, category_seq as categorySeq, content_text as contentText, content_like as contentLike, content_save as contentSave, content_is_media as contentIsMedia, content_created_date contentCreatedDate, content_modified_Date as contentModifiedDate, (select count(*) 
 		from tb_content_like
 		where content_seq = #{contentSeq} and character_seq = #{characterNow}) as contentIsLike, (select count(*) from tb_stored_content where content_seq = #{contentSeq} and character_seq = #{characterNow}) as contentIsStore
@@ -46,7 +46,7 @@
 		where character_seq IN (select followee from tb_follow where follower = #{characterNow}) or character_seq = #{characterNow}
 	</select>
 	
-	<select id="contentPersonalList" parameterType="ContentPersonListRequest" resultType="ContentGetResponse">
+	<select id="contentPersonalList" resultType="ContentGetResponse">
 		select content_seq as contentSeq, content_is_active as contentIsActive, content_is_public as contentIsPublic, character_seq as characterSeq, category_seq as categorySeq, content_text as contentText, content_like as contentLike, content_save as contentSave, content_is_media as contentIsMedia, content_created_date contentCreatedDate, content_modified_Date as contentModifiedDate, (select count(*) 
 		from tb_content_like
 		where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsLike, (select count(*) from tb_stored_content where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsStore
@@ -54,7 +54,7 @@
 		where character_seq = #{characterSeq}
 	</select>
 	
-	<select id="contentTagList" parameterType="ContentTagListRequest" resultType="ContentGetResponse">
+	<select id="contentTagList" resultType="ContentGetResponse">
 		select content_seq as contentSeq, content_is_active as contentIsActive, content_is_public as contentIsPublic, character_seq as characterSeq, category_seq as categorySeq, content_text as contentText, content_like as contentLike, content_save as contentSave, content_is_media as contentIsMedia, content_created_date contentCreatedDate, content_modified_Date as contentModifiedDate, (select count(*) 
 		from tb_content_like
 		where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsLike, (select count(*) from tb_stored_content where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsStore

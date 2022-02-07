@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.ssafy.persona.content.model.dto.ContentGetRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
 import com.ssafy.persona.content.model.dto.ReplyGetResponse;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
@@ -14,5 +13,5 @@ public interface ReplyMapper {
 	int replyCreate(ReplyCreateRequest replyCreateRequest);
 	int replyModify(ReplyModifyRequest replyModifyRequest);
 	int replyDelete(int replySeq);
-	List<ReplyGetResponse> replyList(ContentGetRequest contentGetRequest);
+	List<ReplyGetResponse> replyList(int characterNow, int contentSeq);
 }

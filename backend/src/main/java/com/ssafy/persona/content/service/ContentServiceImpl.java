@@ -10,14 +10,11 @@ import com.ssafy.persona.content.mapper.LikeMapper;
 import com.ssafy.persona.content.mapper.ReplyMapper;
 import com.ssafy.persona.content.mapper.ReportMapper;
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
-import com.ssafy.persona.content.model.dto.ContentGetRequest;
 import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.content.model.dto.ContentLikeRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
-import com.ssafy.persona.content.model.dto.ContentPersonListRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
-import com.ssafy.persona.content.model.dto.ContentTagListRequest;
 import com.ssafy.persona.content.model.dto.ReplyCreateRequest;
 import com.ssafy.persona.content.model.dto.ReplyGetResponse;
 import com.ssafy.persona.content.model.dto.ReplyLikeRequest;
@@ -68,18 +65,18 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public List<ReplyGetResponse> replyList(ContentGetRequest contentGetRequest) {
-		return replyMapper.replyList(contentGetRequest);
+	public List<ReplyGetResponse> replyList(int characterNow, int contentSeq) {
+		return replyMapper.replyList(characterNow, contentSeq);
 	}
 
 	@Override
-	public List<ContentGetResponse> contentPersonalList(ContentPersonListRequest contentPersonListRequest) {
-		return contentMapper.contentPersonalList(contentPersonListRequest);
+	public List<ContentGetResponse> contentPersonalList(int characterNow, int characterSeq) {
+		return contentMapper.contentPersonalList(characterNow, characterSeq);
 	}
 
 	@Override
-	public List<ContentGetResponse> contentTagList(ContentTagListRequest contentTagListRequest) {
-		return contentMapper.contentTagList(contentTagListRequest);
+	public List<ContentGetResponse> contentTagList(int characterNow, String tagText) {
+		return contentMapper.contentTagList(characterNow, tagText);
 	}
 
 	@Override
@@ -169,8 +166,8 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public ContentGetResponse contentGet(ContentGetRequest contentGetRequest) {
-		return contentMapper.contentGet(contentGetRequest);
+	public ContentGetResponse contentGet(int characterNow, int contentSeq) {
+		return contentMapper.contentGet(characterNow, contentSeq);
 	}
 
 	@Override
