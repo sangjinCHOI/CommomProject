@@ -1,10 +1,11 @@
 import React from "react";
-import { Button, ClosingLabel, Modal, ModalHeader, ModalBody, ModalFooter } from "@material-tailwind/react";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "@material-tailwind/react";
+// import Send from "../config/Send";
 
 export default function ContentCreate(props) {
   const [tag, setTag] = React.useState("");
   const [tags, setTags] = React.useState([]);
-  const onChange = (e) => setTag(e.target.value);
+  const onTagChange = (e) => setTag(e.target.value);
   const onSubmit = (e) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
@@ -17,9 +18,10 @@ export default function ContentCreate(props) {
       }
     }
   };
-  const onRemove = (index) => {
+  const onRemoveTags = (index) => {
     setTags(tags.filter((tag, tagIndex) => index != tagIndex));
   };
+
   const { isOpen, onCancel } = props;
   const handleClose = () => {
     onCancel();
@@ -49,26 +51,23 @@ export default function ContentCreate(props) {
           className="bg-white rounded-lg w-94 h-9 mx-1 mb-3 p-2 text-xs border border-gray-300 outline-sky-500 text-black"
           maxLength="20"
           value={tag}
-          onChange={onChange}
+          onChange={onTagChange}
           onKeyPress={onSubmit}
         />
         <div className="bg-slate-100 h-9 rounded mb-1 h-fit flex flex-wrap items-center" style={{ width: 574 }}>
           {tags.map((item, id) => (
             <div className="m-1 px-2 rounded-md bg-purple-200 flex" key={id}>
               {item}
-              <button className="material-icons text-sm ml-2 pt-0.5" onClick={() => onRemove(id)}>
+              <button className="material-icons text-sm ml-2 pt-0.5" onClick={() => onRemoveTags(id)}>
                 close
               </button>
             </div>
           ))}
         </div>
         <textarea className="bg-slate-100 rounded" name="" id="" cols="70" rows="10" placeholder="이 곳에 게시글을 작성해주세요."></textarea>
-        <div>
-          <img src="{{ fileImage }}" alt="" />
-        </div>
         <div className="bg-slate-100 rounded mb-1 flex justify-between">
-          <input type="file" multiple="multiple" />
-          <Button color="red">파일삭제</Button>
+          <input id="upload-file" type="file" multiple="multiple" accept="image/*" />
+          {/* <Button color="red">파일삭제</Button> */}
         </div>
       </ModalBody>
       <ModalFooter>

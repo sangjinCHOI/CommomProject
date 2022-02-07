@@ -14,22 +14,10 @@ function Profile({ characterSlice }) {
           isMe={characterSlice.nickname === nickname ? true : false}
           nickname={nickname}
           category={characterSlice.nickname === nickname ? characterSlice.categorySeq : "상대방"}
-          introduction={
-            characterSlice.nickname === nickname
-              ? characterSlice.introduction
-              : "내 캐릭터가 아니랍니다"
-          }
+          introduction={characterSlice.nickname === nickname ? characterSlice.introduction : "내 캐릭터가 아니랍니다"}
         />
       </MainCard>
-      <div className="border">
-        <Content />
-      </div>
-      <div className="border">
-        <Content />
-      </div>
-      <div className="border">
-        <Content />
-      </div>
+      <div className="border">{/* <Content /> */}</div>
     </div>
   );
 }
