@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -71,6 +72,10 @@ public class UserController {
 			map.put("token", "");
 			return (new ResponseEntity<Map<String,String>>(map,HttpStatus.ACCEPTED));
 		}
+
+		// 이메일 인증 전
+		if(userService.isValid(request.getUserId()) != 1)
+			return (new ResponseEntity<Map<String,String>>(map,HttpStatus.NO_CONTENT));
 		
 		// 만료기간 1분
 		String token = securityService.createToken(request.getUserId(), (1*1000*60));
@@ -84,7 +89,9 @@ public class UserController {
 	public ResponseEntity signupUser(@RequestBody UserSignupRequest user) throws NoSuchAlgorithmException {
 		
 		user.setUserPw(securityservice.encrypt(user.getUserPw()));
-		
+		System.out.println(user.getUserId());
+		System.out.println(user.getUserPw());
+		System.out.println(user.getUserEmail());
 		if(userService.userSignup(user.toUser()) > 0) {
 			
 			Mail mail = new Mail();
@@ -155,6 +162,7 @@ public class UserController {
 	
 	@GetMapping("/email/id")
 	public ResponseEntity findId(@RequestParam String userEmail) {
+		System.out.println(userEmail);
 		Mail mail = new Mail();
 
 		mail.setUserEmail(userEmail);
@@ -229,9 +237,13 @@ public class UserController {
 	
 	@PostMapping("/setting/verification")
 	public ResponseEntity checkPw(@RequestBody UserLoginRequest user) throws NoSuchAlgorithmException {
+		System.out.println(user.getUserId());
+		System.out.println(user.getUserPw());
 		user.setUserPw(securityservice.encrypt(user.getUserPw()));
+		System.out.println(user.getUserPw());
 		if(userService.checkPw(user.toUser()) > 0)
 			return (new ResponseEntity(HttpStatus.OK));
+		System.out.println("@@");
 		return (new ResponseEntity(HttpStatus.ACCEPTED));
 	}
 	

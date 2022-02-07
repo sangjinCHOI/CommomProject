@@ -24,4 +24,5 @@ public interface UserMapper {
 	String getUserEmail(String userId);
 	int getCreatableCount(int userSeq);
 	int updateCreatableCount(UpdateCountRequest request);
+	int isValid(String userId);
 }

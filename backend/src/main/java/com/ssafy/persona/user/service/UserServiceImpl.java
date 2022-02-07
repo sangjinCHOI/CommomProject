@@ -13,7 +13,7 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	UserMapper userMapper;
-	
+
 	@Override
 	public UserGetResponse getUser(String userId) {
 		// user가 없다면
@@ -95,6 +95,8 @@ public class UserServiceImpl implements UserService{
 		return (userMapper.getUserEmail(userId));
 	}
 	
-	
+	@Override
+	public int isValid(String userId){return (userMapper.isValid(userId));}
+
 
 }
