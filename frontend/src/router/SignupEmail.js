@@ -1,47 +1,23 @@
-import axios from "axios";
 import styles from "./Signup.module.css";
 import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { connect } from "react-redux";
 import { Card, CardBody, CardFooter, Button } from "@material-tailwind/react";
-import { useState } from "react";
+import Send from "../config/Send";
 
 function SignupEmail({ userSlice }) {
-  console.log(userSlice);
-  //export default class SignupEmail extends Component {
-  //const [iddata, setIdData] = useState()
-  // state = {
-  //   iddata: userStore.getState().iddata,
-  //   emaildata: userStore.getState().emaildata,
-  // };
-
-  //constructor(props) {
-  //super(props);
-  // userStore.subscribe(
-  //   function () {
-  //     this.setState({ iddata: userStore.getState().iddata });
-  //     this.setState({ emaildata: userStore.getState().emaildata });
-  //   }.bind(this)
-  // );
-  //}
-
   const reEmail = (e) => {
     e.preventDefault();
-    console.log("이메일 재전송");
-    console.log("아이디 : " + userSlice.userId);
-    console.log("이메일 : " + userSlice.userEmail);
 
-    axios
-      .get("http://localhost:8080/user/email/", {
-        params: {
-          userId: userSlice.userEmail,
-        },
-      })
+    Send.get(`/user/email`, {
+      params: {
+        userId: userSlice.userId,
+      },
+    })
       .then((data) => {
-        console.log("data");
-        console.log(data);
-        //^^
-        //userStore.dispatch({ type: "idtrans", iddata: this.state.iddata });
+        if (data.status == 200) alert("인증메일을 재전송 했습니다!");
+        else if (data.status == 500) alert("서버 오류입니다");
+        else alert("다시한번 시도해주세요");
       })
       .catch((e) => {
         console.log(e);
@@ -85,9 +61,5 @@ function SignupEmail({ userSlice }) {
 function mapStateToProps(state) {
   return { userSlice: state.user };
 }
-
-// function mapDispatchToProps(dispatch) {
-//   return { saveCharacter: (user) => dispatch(save(user)) };
-// }
 
 export default connect(mapStateToProps)(SignupEmail);

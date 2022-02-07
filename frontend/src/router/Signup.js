@@ -1,9 +1,7 @@
-//import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
 import { useHistory } from "react-router";
-//import userStore from "../store/userStore";
 import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { CardFooter, InputIcon, Button } from "@material-tailwind/react";
@@ -11,8 +9,7 @@ import Send from "../config/Send";
 import { saveId } from "../store/user";
 
 import { connect } from "react-redux";
-//export default function Signup() {
-function Signup({ saveUserId }) {
+function Signup({ userSlice, saveUserId }) {
   const history = useHistory();
 
   const [_id, setId] = useState("");
@@ -28,21 +25,17 @@ function Signup({ saveUserId }) {
   const [showEmailDuplicate, setShowEmailDuplicate] = useState(false);
 
   const onIdHandler = (e) => {
-    console.log("id : " + e.target.value);
     setId(e.target.value);
 
     var RegId = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/; //ID 우효성 검사 알파벳 대,소문자, 숫자만 가능
 
-    var valId = RegId.test(e.target.value);
+    //var valId = RegId.test(e.target.value);
     if (!RegId.test(e.target.value)) {
       setShowIdConfirm(true);
     } else {
       setShowIdConfirm(false);
     }
-    //  axios.get("http://localhost:8080/user/valid/" + e.target.value, {}).then((data) => {
     Send.get(`/user/valid/` + e.target.value, {}).then((data) => {
-      //   console.log(data);
-
       if (data.valid == 2) {
         setShowIdDuplicate(true);
         console.log("valid : " + data.valid);
@@ -105,14 +98,18 @@ function Signup({ saveUserId }) {
 
     Send.post(`/user`, JSON.stringify(data))
       .then((data) => {
-        console.log(data);
+        saveUserId({
+          userId: _id,
+          userEmail: email,
+        });
         if (data.status == 200) {
+          alert("회원가입에 성공하였습니다");
           history.push("../accounts/signup/email");
         }
         // 추가 실패했을때 반응 삽입 요망
-        else {
-          alert("실패!");
-        }
+        else if (data.status == 202) {
+          alert("아이디 혹은 E-Mail을 확인해주세요");
+        } else alert("서버 오류입니다");
       })
       .catch((e) => {
         console.log(e);
@@ -218,8 +215,12 @@ function EmailDupl(props) {
   );
 }
 
+function mapStateToProps(state) {
+  return { userSlice: state.user };
+}
+
 function mapDispatchToProps(dispatch) {
   return { saveUserId: (user) => dispatch(saveId(user)) };
 }
 
-export default connect(null, mapDispatchToProps)(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
