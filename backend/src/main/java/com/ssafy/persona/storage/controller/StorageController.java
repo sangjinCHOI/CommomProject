@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.persona.content.model.dto.ContentGetResponse;
-import com.ssafy.persona.content.model.dto.ContentLikeRequest;
-import com.ssafy.persona.content.model.dto.ContentTagListRequest;
-import com.ssafy.persona.content.model.dto.LikeListResponse;
 import com.ssafy.persona.storage.model.dto.ContentStoreListResponse;
 import com.ssafy.persona.storage.model.dto.ContentStoreRequest;
 import com.ssafy.persona.storage.model.dto.StorageContentListRequest;
@@ -32,6 +30,7 @@ import io.swagger.annotations.ApiParam;
 
 @RestController
 @Api("storage controller API")
+@CrossOrigin(origins = {"*"}, maxAge = 6000)
 public class StorageController {
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
