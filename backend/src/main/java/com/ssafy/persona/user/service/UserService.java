@@ -20,4 +20,5 @@ public interface UserService {
 	int userLogin(User user);
 	int getUserSeq(String userId);
 	int emailIsValid(String userId);
+	int isValid(String userId);
 }

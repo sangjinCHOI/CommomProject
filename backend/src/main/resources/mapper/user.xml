@@ -98,5 +98,10 @@ values (#{userId}, #{userPw}, #{userEmail}, now())
 		set user_creatable_count=#{userCreatableCount}
 		where user_seq=#{userSeq}
 	</update>
-	
+
+	<select id="isValid" resultType="Integer">
+		select email_is_auth
+		from tb_user
+		where user_id=#{userId};
+	</select>
 </mapper>
