@@ -8,15 +8,15 @@ import axios from "axios";
 import Send from "../config/Send";
 import { save } from "../store/characterStore";
 import { connect } from "react-redux";
+import { useRef } from "react";
 
 function SettingsAccount({ userSlice }) {
-  //console.log(userSlice);
-  //export default function SettingsAccount() {
   const [showPwModal, setShowPwModal] = useState(false);
   const [showBirthModal, setShowBirthModal] = useState(false);
 
   const [birth, setBirth] = useState(new Date());
-  const [date, setDate] = useState(false);
+  const [date, setDate] = useState("");
+
   const [password, setPassword] = useState("");
   const [changePassword, setChangePassword] = useState("");
   const [passwordcheck, setpasswordCheck] = useState("");
@@ -27,13 +27,6 @@ function SettingsAccount({ userSlice }) {
   const [iddata, setIddata] = useState(userSlice.userId);
   const [emildata, setEmildata] = useState(userSlice.userEmail);
   const [mode, setMode] = useState("pass");
-
-  //console.log("iddata");
-  //console.log(iddata);
-  useEffect(() => {
-    //  setIddata({ iddata: userSlice.iddata });
-    //  setEmildata({ emildata: userSlice.emildata });
-  }, []);
 
   const onPasswordHandler = (e) => {
     setPassword(e.target.value);
@@ -65,11 +58,9 @@ function SettingsAccount({ userSlice }) {
       setShowPassCheckConfirm(true);
     }
     if (changePassword === passwordcheck) {
-      console.log("!");
       setShowPassEqual(true);
     } else {
       setShowPassEqual(false);
-      console.log("@");
     }
   };
 
@@ -78,29 +69,16 @@ function SettingsAccount({ userSlice }) {
     userPw: passwordcheck,
   };
   const ChangePassBtn = (e) => {
-    //^^ 비밀번호 유효성검사 어떻게 되는지 확인해야함
-    console.log(PassCheckEqual);
-    console.log(showPassEqual);
     if (!(!PassCheckEqual && showPassEqual)) {
-      alert("비밀번호를 확인해 주세여");
-      console.log(changePassword);
-      console.log(passwordcheck);
-      console.log(pwData);
+      alert("비밀번호를 확인해 주세요");
     } else {
       Send.put("/user/setting/account", JSON.stringify(pwData))
-        // axios
-        //   .put("http://localhost:8080/user/setting/account", JSON.stringify(pwData), {
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //   })
         .then((data) => {
           if (data.status === 200) {
             setPassword(passwordcheck);
             alert("비밀번호를 성공적으로 변경하였습니다.");
-            setpasswordCheck(() => "");
-            setChangePassword("");
-            setShowPwModal(false);
+            //^^ 비밀번호 바꾸고 초기화하고싶은데 어케함
+            deleteInput();
           }
         })
         .catch((e) => {
@@ -112,9 +90,8 @@ function SettingsAccount({ userSlice }) {
 
   const deleteInput = () => {
     setShowPwModal(false);
-    setpasswordCheck("");
-    console.log(passwordcheck);
-    setChangePassword("");
+    //setpasswordCheck("");
+    // setChangePassword("");
   };
 
   const handleKeyPress = (e) => {
@@ -129,31 +106,21 @@ function SettingsAccount({ userSlice }) {
     var year = birth.getFullYear();
     var month = birth.getMonth() + 1;
     var day = birth.getDate();
-    console.log(year);
-    console.log(month);
-    console.log(day);
-    setDate(String(year + "-" + month + "-" + day));
-    // console.log(date2);
 
-    changeBirthHandler();
+    changeBirthHandler(year + "-" + month + "-" + day);
   };
 
-  const birthData = {
-    userBirth: date,
-    userId: iddata.iddata,
-  };
-  const changeBirthHandler = (e) => {
-    //^^ 여기 put 정상작동하는지 확인
-    axios
-      .put("http://localhost:8080/user/setting/account", JSON.stringify(birthData), {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+  const changeBirthHandler = (props) => {
+    const birthData = {
+      userBirth: props,
+      userId: iddata,
+    };
+    Send.put("/user/setting/account", JSON.stringify(birthData))
       .then((data) => {
         if (data.status === 200) {
           alert("생년월일을 성공적으로 변경하였습니다.");
         }
+        setShowBirthModal(false);
       })
       .catch((e) => {
         console.log(e);
@@ -167,19 +134,8 @@ function SettingsAccount({ userSlice }) {
   };
 
   const settingChange = (e) => {
-    console.log(data);
-
     Send.post("/user/setting/verification", JSON.stringify(data))
-      // axios
-      //   .post("http://localhost:8080/user/setting/verification", JSON.stringify(data), {
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   })
       .then((data) => {
-        console.log(data);
-        console.log(iddata);
-        console.log(password);
         if (data.status === 200) {
           console.log(data);
           setMode("setting");
@@ -286,7 +242,7 @@ function SettingsAccount({ userSlice }) {
             </ModalBody>
             <ModalFooter>
               {/* <Button color="black" buttonType="link" onClick={(e) => setShowPwModal(false)} ripple="dark"> */}
-              <Button color="black" buttonType="link" onClick={() => deleteInput()} ripple="dark">
+              <Button color="black" buttonType="link" onClick={() => setShowPwModal(false)} ripple="dark">
                 Close
               </Button>
 
