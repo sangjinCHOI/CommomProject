@@ -20,7 +20,7 @@
 
 	<select id="alarmDetalForMove" resultType="AlarmGetResponse">
 		select 
-			alarm_seq, user_seq, character_seq, alarm_type, alarm_text, relation_tb, target_seq. alarm_is_read, alarm_date		
+			alarm_seq, user_seq, character_seq, alarm_type, alarm_text, relation_tb, target_seq, alarm_is_read, alarm_date		
 		from
 			tb_alarm
 		where alarm_seq=#{alarmSeq}
@@ -28,7 +28,7 @@
 
 	<select id="getAlarmList" resultType="AlarmGetResponse">
 		select 
-			alarm_seq, user_seq, character_seq, alarm_type, alarm_text, relation_tb, target_seq. alarm_is_read, alarm_date		
+			alarm_seq, user_seq, character_seq, alarm_type, alarm_text, relation_tb, target_seq, alarm_is_read, alarm_date		
 		from
 			tb_alarm
 		where character_seq=#{characterSeq}

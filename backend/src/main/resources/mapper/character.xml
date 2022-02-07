@@ -52,6 +52,24 @@
 		AND character_active = 1
 	</select>
 
+	<select id="getCharacterProfile" resultType="CharacterProfileResponse">
+		select 
+			c.character_seq,
+			c.representative_achievement, 
+			f.file_path AS achievement_image,
+			ca.character_category_name AS category_name,
+			(SELECT count(*) FROM tb_content where character_seq = c.character_seq AND content_is_active = 1) AS content_count,
+			(SELECT count(*) FROM tb_follow where followee = c.character_seq) AS follower_count,
+			(SELECT count(*) FROM tb_follow where follower = c.character_seq) AS followee_count
+		from
+			tb_character c
+		LEFT OUTER JOIN tb_character_category ca ON ca.character_category_seq = c.category_seq
+		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_achievement'
+		AND f.relation_seq = c.representative_achievement
+		where nickname=#{nickname} 
+		AND character_active = 1
+	</select>
+
 	<select id="list"
 		resultType="com.ssafy.persona.character.model.dto.CharacterGetResponse">
 		select c.character_seq, c.user_seq, c.nickname, c.category_seq, c.introduction, 

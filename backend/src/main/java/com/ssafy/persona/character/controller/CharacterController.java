@@ -30,6 +30,7 @@ import com.ssafy.persona.character.model.dto.AlarmSettingUpdateRequest;
 import com.ssafy.persona.character.model.dto.CharacterCreatRequest;
 import com.ssafy.persona.character.model.dto.CharacterDeleteRequest;
 import com.ssafy.persona.character.model.dto.CharacterGetResponse;
+import com.ssafy.persona.character.model.dto.CharacterProfileResponse;
 import com.ssafy.persona.character.model.dto.CharacterUpdateRequest;
 import com.ssafy.persona.character.model.dto.FollowRequest;
 import com.ssafy.persona.character.model.dto.FolloweeListRequest;
@@ -137,6 +138,13 @@ public class CharacterController {
 		return new ResponseEntity<CharacterGetResponse>(characterService.detail(characterSeq), HttpStatus.OK);
 	} // 예외처리 필요
 
+	@GetMapping("/profile/{nickname}")
+	public ResponseEntity<CharacterProfileResponse> characterProfile(@PathVariable String nickname) {
+		logger.info("프로필 요청 - 해당 캐릭터 닉네임: " + nickname);
+		
+		return new ResponseEntity<CharacterProfileResponse>(characterService.getCharacterProfile(nickname), HttpStatus.OK);
+	} // 예외처리 필요
+	
 	@GetMapping("characters/{userSeq}")
 	public ResponseEntity<List<CharacterGetResponse>> characterList(@PathVariable int userSeq) {
 		logger.info("캐릭터 리스트 - 요청 계정 번호: " + userSeq);
