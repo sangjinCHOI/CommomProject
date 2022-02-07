@@ -10,6 +10,23 @@ import { save } from "../store/characterStore";
 import { connect } from "react-redux";
 import { useRef } from "react";
 
+const useInput = (initialValue, validator) => {
+  const [value, setValue] = useState(initialValue);
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    let willUpdate = true;
+    if (typeof validator === "function") {
+      willUpdate = validator(value);
+    }
+    if (willUpdate) {
+      setValue(value);
+    }
+  };
+  return { value, onChange };
+};
+
 function SettingsAccount({ userSlice }) {
   const [showPwModal, setShowPwModal] = useState(false);
   const [showBirthModal, setShowBirthModal] = useState(false);
@@ -18,8 +35,8 @@ function SettingsAccount({ userSlice }) {
   const [date, setDate] = useState("");
 
   const [password, setPassword] = useState("");
-  const [changePassword, setChangePassword] = useState("");
-  const [passwordcheck, setpasswordCheck] = useState("");
+  // const [changePassword, setChangePassword] = useState("");
+  // const [passwordcheck, setpasswordCheck] = useState("");
   const [showPassConfirm, setShowPassConfirm] = useState(false);
   const [showPassEqual, setShowPassEqual] = useState(false);
   const [PassCheckEqual, setPassCheckEqual] = useState(false);
@@ -28,56 +45,52 @@ function SettingsAccount({ userSlice }) {
   const [emildata, setEmildata] = useState(userSlice.userEmail);
   const [mode, setMode] = useState("pass");
 
+  const changePassword = useInput("");
+  const passwordcheck = useInput("");
+
   const onPasswordHandler = (e) => {
     setPassword(e.target.value);
   };
 
-  const ChangePasswordHandler = (e) => {
-    setChangePassword(e.target.value);
-    const specialLetter = e.target.value.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-    const isValidPassword = e.target.value.length >= 8 && specialLetter >= 1;
+  const pwd1Valid = () => {
+    var regExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+    const specialLetter = regExp.test(changePassword.value);
+    const isValidPassword = changePassword.value.length >= 8 && specialLetter >= 1;
 
     if (!isValidPassword) {
       setShowPassConfirm(true);
     } else {
       setShowPassConfirm(false);
     }
-    if (password == e.target.value) {
+    if (password == changePassword.value) {
       setPassCheckEqual(true);
     } else {
       setPassCheckEqual(false);
     }
   };
-
-  const ChangePasswordCheckHandler = (e) => {
-    setpasswordCheck(e.target.value);
-
-    if (changePassword === e.target.value) {
-      setShowPassCheckConfirm(false);
-    } else {
+  const pwd2Valid = () => {
+    if (changePassword.value != passwordcheck.value) {
       setShowPassCheckConfirm(true);
-    }
-    if (changePassword === passwordcheck) {
-      setShowPassEqual(true);
     } else {
-      setShowPassEqual(false);
+      setShowPassCheckConfirm(false);
     }
   };
 
   const pwData = {
     userId: iddata,
-    userPw: passwordcheck,
+    userPw: passwordcheck.value,
   };
   const ChangePassBtn = (e) => {
-    if (!(!PassCheckEqual && showPassEqual)) {
+    if (showPassConfirm || showPassEqual || showPassCheckConfirm) {
       alert("비밀번호를 확인해 주세요");
     } else {
       Send.put("/user/setting/account", JSON.stringify(pwData))
         .then((data) => {
           if (data.status === 200) {
-            setPassword(passwordcheck);
+            setPassword(passwordcheck.value);
             alert("비밀번호를 성공적으로 변경하였습니다.");
             //^^ 비밀번호 바꾸고 초기화하고싶은데 어케함
+            setShowPwModal(false);
             deleteInput();
           }
         })
@@ -89,9 +102,9 @@ function SettingsAccount({ userSlice }) {
   };
 
   const deleteInput = () => {
-    setShowPwModal(false);
-    //setpasswordCheck("");
-    // setChangePassword("");
+    changePassword.onChange = () => {
+      changePassword = "";
+    };
   };
 
   const handleKeyPress = (e) => {
@@ -232,12 +245,14 @@ function SettingsAccount({ userSlice }) {
             <hr className="mb-5" />
             <ModalBody>
               <p className="text-base leading-relaxed text-gray-600 font-normal">새로운 비밀번호를 입력하세요.</p>
-              <Input type="password" placeholder="" onKeyUp={ChangePasswordHandler}></Input>
+              {/* <Input type="password" placeholder="" onKeyUp={ChangePasswordHandler}></Input> */}
+              <Input type="password" placeholder="" onKeyUp={pwd1Valid} {...changePassword}></Input>
               {showPassConfirm ? <PassConf></PassConf> : null}
               {PassCheckEqual ? <PassCheckEqualConf></PassCheckEqualConf> : null}
               <span className="invisible">-------------------------------------------------</span>
               <p className="text-base leading-relaxed text-gray-600 font-normal">새로운 비밀번호를 다시 한 번 입력하세요.</p>
-              <Input type="password" placeholder="" onKeyUp={ChangePasswordCheckHandler}></Input>
+              {/* <Input type="password" placeholder="" onKeyUp={ChangePasswordCheckHandler}></Input> */}
+              <Input type="password" placeholder="" onKeyUp={pwd2Valid} {...passwordcheck}></Input>
               {showPassCheckConfirm ? <PassCheckConf></PassCheckConf> : null}
             </ModalBody>
             <ModalFooter>
