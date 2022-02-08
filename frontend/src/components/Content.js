@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
 import { Menu } from "@headlessui/react";
 import { Label } from "@material-tailwind/react";
@@ -6,25 +6,28 @@ import MainCard from "../components/MainCard";
 import Report from "../components/Report";
 import NewStorage from "./NewStorage";
 import Comment from "./Comment";
+import Send from "../config/Send";
 
 function Content(props) {
-  const [reportModal, setReportModal] = React.useState(false);
+  const [reportModal, setReportModal] = useState(false);
   const handleReportClose = () => {
     setReportModal(false);
   };
-  const [newStorageModal, setNewStorageModal] = React.useState(false);
+  const [newStorageModal, setNewStorageModal] = useState(false);
   const handleNewStorageClose = () => {
     setNewStorageModal(false);
   };
-  const [commentModal, setCommentModal] = React.useState(false);
+  const [commentModal, setCommentModal] = useState(false);
   const handleCommentClose = () => {
     setCommentModal(false);
   };
+
+  // 피드 게시물
   const feedContents = props.contents;
   if (feedContents.length > 1) {
     feedContents.sort((a, b) => (a.contentSeq > b.contentSeq ? 1 : -1));
   }
-  // console.log(feedContents.length);
+  console.log(feedContents);
 
   return (
     <>
@@ -37,22 +40,44 @@ function Content(props) {
             <MainCard classes="mb-3" max-height="900px">
               <div style={{ height: 60 }} className="p-4 flex justify-between">
                 <div className="text-xl">
-                  <p>{content.characterSeq}</p>
+                  <p>{content.contentWriter}</p>
                 </div>
                 <Menu as="div" className="mx-2 relative">
                   <Menu.Button className="flex text-sm">
                     <span className="material-icons">more_horiz</span>
                   </Menu.Button>
-                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white flex flex-col border-2">
-                    <Menu.Item>
-                      <button className="mx-4" onClick={() => setReportModal(true)}>
-                        게시글 신고
-                      </button>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <button className="mx-4">팔로우</button>
-                    </Menu.Item>
-                  </Menu.Items>
+                  {content.characterSeq === props.characterSlice.characterSeq ? (
+                    <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white flex flex-col border-2">
+                      <Menu.Item>
+                        <button
+                          className="mx-4"
+                          onClick={() => {
+                            console.log(content.contentSeq);
+                            Send.delete("/content", {
+                              params: {
+                                contentSeq: content.contentSeq,
+                              },
+                            }).then((res) => {
+                              console.log(res.data);
+                            });
+                          }}
+                        >
+                          삭제
+                        </button>
+                      </Menu.Item>
+                    </Menu.Items>
+                  ) : (
+                    <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white flex flex-col border-2">
+                      <Menu.Item>
+                        <button className="mx-4" onClick={() => setReportModal(true)}>
+                          게시글 신고
+                        </button>
+                      </Menu.Item>
+                      <Menu.Item>
+                        <button className="mx-4">팔로우</button>
+                      </Menu.Item>
+                    </Menu.Items>
+                  )}
                 </Menu>
               </div>
               <div className="flex justify-center bg-slate-100" style={{ height: 600 }}>
@@ -76,7 +101,7 @@ function Content(props) {
                   <div className="invisible">---</div>
                   <button className="flex items-center" onClick={() => setCommentModal(true)}>
                     <span className="material-icons">chat_bubble_outline</span>
-                    <span className="pb-1">123</span>
+                    <span className="pb-1">{content.replyCount}</span>
                   </button>
                 </div>
                 <div className="flex items-center">

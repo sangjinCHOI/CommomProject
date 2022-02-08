@@ -8,18 +8,35 @@ import axios from "axios";
 import Send from "../config/Send";
 import { save } from "../store/characterStore";
 import { connect } from "react-redux";
+import { useRef } from "react";
+
+const useInput = (initialValue, validator) => {
+  const [value, setValue] = useState(initialValue);
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    let willUpdate = true;
+    if (typeof validator === "function") {
+      willUpdate = validator(value);
+    }
+    if (willUpdate) {
+      setValue(value);
+    }
+  };
+  return { value, onChange };
+};
 
 function SettingsAccount({ userSlice }) {
-  //console.log(userSlice);
-  //export default function SettingsAccount() {
   const [showPwModal, setShowPwModal] = useState(false);
   const [showBirthModal, setShowBirthModal] = useState(false);
 
   const [birth, setBirth] = useState(new Date());
-  const [date, setDate] = useState(false);
+  const [date, setDate] = useState("");
+
   const [password, setPassword] = useState("");
-  const [changePassword, setChangePassword] = useState("");
-  const [passwordcheck, setpasswordCheck] = useState("");
+  // const [changePassword, setChangePassword] = useState("");
+  // const [passwordcheck, setpasswordCheck] = useState("");
   const [showPassConfirm, setShowPassConfirm] = useState(false);
   const [showPassEqual, setShowPassEqual] = useState(false);
   const [PassCheckEqual, setPassCheckEqual] = useState(false);
@@ -28,79 +45,53 @@ function SettingsAccount({ userSlice }) {
   const [emildata, setEmildata] = useState(userSlice.userEmail);
   const [mode, setMode] = useState("pass");
 
-  //console.log("iddata");
-  //console.log(iddata);
-  useEffect(() => {
-    //  setIddata({ iddata: userSlice.iddata });
-    //  setEmildata({ emildata: userSlice.emildata });
-  }, []);
+  const changePassword = useInput("");
+  const passwordcheck = useInput("");
 
   const onPasswordHandler = (e) => {
     setPassword(e.target.value);
   };
 
-  const ChangePasswordHandler = (e) => {
-    setChangePassword(e.target.value);
-    const specialLetter = e.target.value.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-    const isValidPassword = e.target.value.length >= 8 && specialLetter >= 1;
+  const pwd1Valid = () => {
+    var regExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+    const specialLetter = regExp.test(changePassword.value);
+    const isValidPassword = changePassword.value.length >= 8 && specialLetter >= 1;
 
     if (!isValidPassword) {
       setShowPassConfirm(true);
     } else {
       setShowPassConfirm(false);
     }
-    if (password == e.target.value) {
+    if (password == changePassword.value) {
       setPassCheckEqual(true);
     } else {
       setPassCheckEqual(false);
     }
   };
-
-  const ChangePasswordCheckHandler = (e) => {
-    setpasswordCheck(e.target.value);
-
-    if (changePassword === e.target.value) {
-      setShowPassCheckConfirm(false);
-    } else {
+  const pwd2Valid = () => {
+    if (changePassword.value != passwordcheck.value) {
       setShowPassCheckConfirm(true);
-    }
-    if (changePassword === passwordcheck) {
-      console.log("!");
-      setShowPassEqual(true);
     } else {
-      setShowPassEqual(false);
-      console.log("@");
+      setShowPassCheckConfirm(false);
     }
   };
 
   const pwData = {
     userId: iddata,
-    userPw: passwordcheck,
+    userPw: passwordcheck.value,
   };
   const ChangePassBtn = (e) => {
-    //^^ 비밀번호 유효성검사 어떻게 되는지 확인해야함
-    console.log(PassCheckEqual);
-    console.log(showPassEqual);
-    if (!(!PassCheckEqual && showPassEqual)) {
-      alert("비밀번호를 확인해 주세여");
-      console.log(changePassword);
-      console.log(passwordcheck);
-      console.log(pwData);
+    if (showPassConfirm || showPassEqual || showPassCheckConfirm) {
+      alert("비밀번호를 확인해 주세요");
     } else {
       Send.put("/user/setting/account", JSON.stringify(pwData))
-        // axios
-        //   .put("http://localhost:8080/user/setting/account", JSON.stringify(pwData), {
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //   })
         .then((data) => {
           if (data.status === 200) {
-            setPassword(passwordcheck);
+            setPassword(passwordcheck.value);
             alert("비밀번호를 성공적으로 변경하였습니다.");
-            setpasswordCheck(() => "");
-            setChangePassword("");
+            //^^ 비밀번호 바꾸고 초기화하고싶은데 어케함
             setShowPwModal(false);
+            deleteInput();
           }
         })
         .catch((e) => {
@@ -111,10 +102,9 @@ function SettingsAccount({ userSlice }) {
   };
 
   const deleteInput = () => {
-    setShowPwModal(false);
-    setpasswordCheck("");
-    console.log(passwordcheck);
-    setChangePassword("");
+    changePassword.onChange = () => {
+      changePassword = "";
+    };
   };
 
   const handleKeyPress = (e) => {
@@ -129,31 +119,21 @@ function SettingsAccount({ userSlice }) {
     var year = birth.getFullYear();
     var month = birth.getMonth() + 1;
     var day = birth.getDate();
-    console.log(year);
-    console.log(month);
-    console.log(day);
-    setDate(String(year + "-" + month + "-" + day));
-    // console.log(date2);
 
-    changeBirthHandler();
+    changeBirthHandler(year + "-" + month + "-" + day);
   };
 
-  const birthData = {
-    userBirth: date,
-    userId: iddata.iddata,
-  };
-  const changeBirthHandler = (e) => {
-    //^^ 여기 put 정상작동하는지 확인
-    axios
-      .put("http://localhost:8080/user/setting/account", JSON.stringify(birthData), {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+  const changeBirthHandler = (props) => {
+    const birthData = {
+      userBirth: props,
+      userId: iddata,
+    };
+    Send.put("/user/setting/account", JSON.stringify(birthData))
       .then((data) => {
         if (data.status === 200) {
           alert("생년월일을 성공적으로 변경하였습니다.");
         }
+        setShowBirthModal(false);
       })
       .catch((e) => {
         console.log(e);
@@ -167,19 +147,8 @@ function SettingsAccount({ userSlice }) {
   };
 
   const settingChange = (e) => {
-    console.log(data);
-
     Send.post("/user/setting/verification", JSON.stringify(data))
-      // axios
-      //   .post("http://localhost:8080/user/setting/verification", JSON.stringify(data), {
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   })
       .then((data) => {
-        console.log(data);
-        console.log(iddata);
-        console.log(password);
         if (data.status === 200) {
           console.log(data);
           setMode("setting");
@@ -276,17 +245,19 @@ function SettingsAccount({ userSlice }) {
             <hr className="mb-5" />
             <ModalBody>
               <p className="text-base leading-relaxed text-gray-600 font-normal">새로운 비밀번호를 입력하세요.</p>
-              <Input type="password" placeholder="" onKeyUp={ChangePasswordHandler}></Input>
+              {/* <Input type="password" placeholder="" onKeyUp={ChangePasswordHandler}></Input> */}
+              <Input type="password" placeholder="" onKeyUp={pwd1Valid} {...changePassword}></Input>
               {showPassConfirm ? <PassConf></PassConf> : null}
               {PassCheckEqual ? <PassCheckEqualConf></PassCheckEqualConf> : null}
               <span className="invisible">-------------------------------------------------</span>
               <p className="text-base leading-relaxed text-gray-600 font-normal">새로운 비밀번호를 다시 한 번 입력하세요.</p>
-              <Input type="password" placeholder="" onKeyUp={ChangePasswordCheckHandler}></Input>
+              {/* <Input type="password" placeholder="" onKeyUp={ChangePasswordCheckHandler}></Input> */}
+              <Input type="password" placeholder="" onKeyUp={pwd2Valid} {...passwordcheck}></Input>
               {showPassCheckConfirm ? <PassCheckConf></PassCheckConf> : null}
             </ModalBody>
             <ModalFooter>
               {/* <Button color="black" buttonType="link" onClick={(e) => setShowPwModal(false)} ripple="dark"> */}
-              <Button color="black" buttonType="link" onClick={() => deleteInput()} ripple="dark">
+              <Button color="black" buttonType="link" onClick={() => setShowPwModal(false)} ripple="dark">
                 Close
               </Button>
 
