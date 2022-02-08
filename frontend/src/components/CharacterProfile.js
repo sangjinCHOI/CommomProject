@@ -36,6 +36,7 @@ function CharacterProfile({
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
+          getCharacterProfile();
           const alarmData = {
             alarmDate: new Date().toISOString(),
             // alarmIsRead: false,
@@ -76,18 +77,22 @@ function CharacterProfile({
             </span>
           </div>
           <div className="inline-block mr-8">
-            <span>
-              팔로워 <span className="font-bold">{characterProfile.followerCount}</span>
-            </span>
+            <Link to={`../${nickname}/follow`}>
+              <span>
+                팔로워 <span className="font-bold">{characterProfile.followerCount}</span>
+              </span>
+            </Link>
           </div>
           <div className="inline-block">
-            <span>
-              팔로우 <span className="font-bold">{characterProfile.followeeCount}</span>
-            </span>
+            <Link to={`../${nickname}/follow`}>
+              <span>
+                팔로우 <span className="font-bold">{characterProfile.followeeCount}</span>
+              </span>
+            </Link>
           </div>
         </div>
 
-        <div className="text-sm w-80 h-7">{introduction}</div>
+        <div className="text-sm w-80 h-7">{characterProfile.introduction}</div>
         {isMe ? (
           <div className="mt-3">
             <div className="inline-block px-2">

@@ -9,14 +9,31 @@ import { useEffect, useState } from "react";
 function Profile({ characterSlice }) {
   const { nickname } = useParams();
   const [characterProfile, setCharacterProfile] = useState({});
+  const [feedContents, setFeedContents] = useState([]);
   const getCharacterProfile = () => {
     Send.get(`/character/profile/${nickname}`).then((res) => {
       setCharacterProfile(res.data);
     });
   };
 
+  const getFeed = () => {
+    Send.get(`/character/profile/${nickname}`).then((res) => {
+      Send.get(`/content/person/${res.data.characterSeq}`, {
+        params: {
+          characterNow: characterSlice.characterSeq,
+          characterSeq: res.data.characterSeq,
+        },
+      }).then((res) => {
+        if (res.data) {
+          setFeedContents(res.data);
+        }
+      });
+    });
+  };
+
   useEffect(() => {
     getCharacterProfile();
+    getFeed();
   }, []);
 
   return (
@@ -27,14 +44,12 @@ function Profile({ characterSlice }) {
           isMe={characterSlice.nickname === nickname ? true : false}
           nickname={nickname}
           category={characterProfile.categoryName}
-          introduction={
-            characterSlice.nickname === nickname
-              ? characterSlice.introduction
-              : "내 캐릭터가 아니랍니다"
-          }
+          introduction={characterSlice.nickname === nickname ? characterSlice.introduction : "내 캐릭터가 아니랍니다"}
         />
       </MainCard>
-      <div className="border">{/* <Content /> */}</div>
+      <div className="border">
+        <Content contents={feedContents} />
+      </div>
     </div>
   );
 }

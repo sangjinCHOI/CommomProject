@@ -39,7 +39,6 @@ export default function Search({ location }) {
   ];
 
   const [charactersResultList, setCharactersResultList] = useState([]);
-
   const getCharactersResult = () => {
     Send.get(`/search/characters/${query}`).then((res) => {
       console.log(res);
@@ -47,8 +46,17 @@ export default function Search({ location }) {
     });
   };
 
+  const [tagsResultList, setTagsResultList] = useState([]);
+  const getTagsResult = () => {
+    Send.get(`/search/tags/${query}`).then((res) => {
+      console.log(res);
+      setTagsResultList(res.data);
+    });
+  };
+
   useEffect(() => {
     getCharactersResult();
+    getTagsResult();
   }, [query]);
 
   return (
@@ -90,25 +98,20 @@ export default function Search({ location }) {
           </Link>
         </div>
         <MainCard classes="border rounded-2xl py-3">
-          <div className="flex justify-center items-center text-xl h-16">
-            <Label color={colorList[Math.floor(Math.random() * colorList.length)]}>
-              <span>
-                {"태그는띄어쓰기안돼요그리고태그검색결과페이지에서는열글자까지보여줍니다".length >
-                10
-                  ? "태그는띄어쓰기안돼요그리고태그검색결과페이지에서는열글자까지보여줍니다".slice(
-                      0,
-                      10
-                    ) + ".."
-                  : "태그는띄어쓰기안돼요그리고태그검색결과페이지에서는열글자까지보여줍니다"}
-              </span>
-            </Label>
-            <Label color={colorList[Math.floor(Math.random() * colorList.length)]}>요리법</Label>
-            <Label color={colorList[Math.floor(Math.random() * colorList.length)]}>계란 요리</Label>
-            <Label color={colorList[Math.floor(Math.random() * colorList.length)]}>요리보고</Label>
-            <Label color={colorList[Math.floor(Math.random() * colorList.length)]}>요리조리</Label>
-            <Label color={colorList[Math.floor(Math.random() * colorList.length)]}>
-              맛있는 요리
-            </Label>
+          <div className={`flex overflow-x-auto justify-center items-center text-xl h-16 mx-8`}>
+            {/* 태그는 최대 5개만 가져옴 + 6글자 까지 보여줌 */}
+            {tagsResultList.slice(0, 4).map((tag) => (
+              <Link
+                to={{ pathname: "/search/tag", search: `?detail=${tag.tagText}` }}
+                className="mx-1"
+              >
+                <Label color={colorList[Math.floor(Math.random() * colorList.length)]}>
+                  <span>
+                    {tag.tagText.length > 6 ? tag.tagText.slice(0, 6) + ".." : tag.tagText}
+                  </span>
+                </Label>
+              </Link>
+            ))}
           </div>
         </MainCard>
       </div>
