@@ -19,6 +19,7 @@ public class ReplyGetResponse {
 	private LocalDateTime replyCreatedDate;
 	private LocalDateTime replyModifiedDate;
 	private int replyIsLike;
+	private String replyWriter;
 	
 	public ReplyGetResponse(Reply reply) {
 		super();
