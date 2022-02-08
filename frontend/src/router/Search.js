@@ -12,10 +12,6 @@ export default function Search({ location }) {
   const params = new URLSearchParams(queryString);
   const query = params.get("query");
 
-  const tempText =
-    "맛있는 김치찌개 만드는 방법을 알아봅시다. 요리를 처음 하시는 분들은 그냥 따라만 오셔도 됩니다!!";
-  const nicknameList = ["닉네임은여덟글자", "테스트1", "TEST2", "테3"];
-
   const colorList = [
     "blueGray",
     "gray",
