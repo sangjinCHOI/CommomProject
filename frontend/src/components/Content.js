@@ -161,7 +161,7 @@ function Content(props) {
         return (
           <div key={index}>
             <Comment comments={comments} isOpen={commentModal} onCancel={handleCommentClose} style={{ zIndex: 2 }} />
-            <Report isOpen={reportModal} onCancel={handleReportClose} style={{ zIndex: 2 }} />
+            <Report content={content} isOpen={reportModal} onCancel={handleReportClose} style={{ zIndex: 2 }} />
             <NewStorage isOpen={newStorageModal} onCancel={handleNewStorageClose} style={{ zIndex: 2 }} />
             <MainCard classes="mb-3" max-height="900px">
               <div style={{ height: 60 }} className="p-4 flex justify-between">

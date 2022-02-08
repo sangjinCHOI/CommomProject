@@ -4,6 +4,7 @@ import { Menu } from "@headlessui/react";
 import { Image, Modal, ModalHeader, ModalBody } from "@material-tailwind/react";
 import ReactReadMoreReadLess from "react-read-more-read-less";
 import Report from "../components/Report";
+import Send from "../config/Send";
 
 function Comment(props) {
   const { isOpen, onCancel } = props;
@@ -14,7 +15,7 @@ function Comment(props) {
   const handleReportClose = () => {
     setReportModal(false);
   };
-  // console.log(props);
+
   return (
     <>
       <Modal className="min-h-3" size="regular" active={isOpen} toggler={() => handleCommentClose(false)}>
@@ -26,6 +27,7 @@ function Comment(props) {
           <div style={{ overflowY: "scroll", width: 500, height: 350 }}>
             {props.comments
               ? props.comments.map((comment, index) => {
+                  console.log(comment);
                   return (
                     <div className="mb-5" key={index}>
                       <div className="px-4 flex justify-between">
@@ -37,16 +39,33 @@ function Comment(props) {
                           <Menu.Button className="flex text-sm">
                             <span className="material-icons">more_horiz</span>
                           </Menu.Button>
-                          <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white flex flex-col border-2">
-                            <Menu.Item>
-                              <button className="mx-4 text-sm" onClick={() => setReportModal(true)}>
-                                댓글 신고
-                              </button>
-                            </Menu.Item>
-                            <Menu.Item>
-                              <button className="mx-4 text-sm">삭제</button>
-                            </Menu.Item>
-                          </Menu.Items>
+                          {comment.characterSeq === props.characterSlice.characterSeq ? (
+                            <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white flex flex-col border-2">
+                              <Menu.Item>
+                                <button
+                                  className="mx-4 text-sm"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    Send.delete("/content/reply", {
+                                      params: {
+                                        replySeq: comment.replySeq,
+                                      },
+                                    }).then((res) => console.log(res.data));
+                                  }}
+                                >
+                                  삭제
+                                </button>
+                              </Menu.Item>
+                            </Menu.Items>
+                          ) : (
+                            <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white flex flex-col border-2">
+                              <Menu.Item>
+                                <button className="mx-4 text-sm" onClick={() => setReportModal(true)}>
+                                  댓글 신고
+                                </button>
+                              </Menu.Item>
+                            </Menu.Items>
+                          )}
                         </Menu>
                       </div>
                       <div style={{ width: 400, paddingLeft: 57 }}>
