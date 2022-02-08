@@ -27,15 +27,46 @@ function Content(props) {
   if (feedContents.length > 1) {
     feedContents.sort((a, b) => (a.contentSeq > b.contentSeq ? 1 : -1));
   }
-  console.log(feedContents);
+  // console.log(feedContents);
 
-  // 태그 관리
+  // 댓글 작성
+  const [replyText, setReplyText] = useState("");
+  const handleReplyTextChange = (e) => {
+    setReplyText(e.target.value);
+  };
+  const postComment = (contentSeq, replyText, e) => {
+    e.preventDefault();
+    const data = {
+      characterSeq: props.characterSlice.characterSeq,
+      contentSeq: contentSeq,
+      replyText: replyText,
+    };
+    Send.post("/content/reply", JSON.stringify(data)).then((res) => console.log(res.data));
+  };
+
+  //댓글 불러오기
+  const [comments, setComments] = useState([]);
+  const getComment = (contentSeq, e) => {
+    e.preventDefault();
+    Send.get(`/content/reply/${contentSeq}`, {
+      params: {
+        characterNow: props.characterSlice.characterSeq,
+        contentSeq: contentSeq,
+      },
+    })
+      .then((res) => {
+        if (res.data) {
+          setComments(res.data);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <>
       {feedContents.reverse().map((content, index) => {
         return (
           <div key={index}>
-            <Comment isOpen={commentModal} onCancel={handleCommentClose} style={{ zIndex: 2 }} />
+            <Comment comments={comments} isOpen={commentModal} onCancel={handleCommentClose} style={{ zIndex: 2 }} />
             <Report isOpen={reportModal} onCancel={handleReportClose} style={{ zIndex: 2 }} />
             <NewStorage isOpen={newStorageModal} onCancel={handleNewStorageClose} style={{ zIndex: 2 }} />
             <MainCard classes="mb-3" max-height="900px">
@@ -106,7 +137,13 @@ function Content(props) {
                     <span className="pb-1">{content.contentLike}</span>
                   </button>
                   <div className="invisible">---</div>
-                  <button className="flex items-center" onClick={() => setCommentModal(true)}>
+                  <button
+                    className="flex items-center"
+                    onClick={(e) => {
+                      setCommentModal(true);
+                      getComment(content.contentSeq, e);
+                    }}
+                  >
                     <span className="material-icons">chat_bubble_outline</span>
                     <span className="pb-1">{content.replyCount}</span>
                   </button>
@@ -137,9 +174,25 @@ function Content(props) {
               <div className="px-4 py-2 flex justify-between self-center">
                 <div className="flex">
                   <div>프로필사진</div>
-                  <textarea className="mx-4" type="text" placeholder="댓글 달기..." style={{ height: 25, width: 400 }} />
+                  <textarea
+                    value={replyText}
+                    onChange={handleReplyTextChange}
+                    className="mx-4"
+                    type="text"
+                    placeholder="댓글 달기..."
+                    style={{ height: 25, width: 400 }}
+                  />
                 </div>
-                <button>작성</button>
+                <button
+                  className="px-2 pb-0.5 rounded-md bg-slate-200"
+                  onClick={(e) => {
+                    if (replyText) {
+                      postComment(content.contentSeq, replyText, e);
+                    }
+                  }}
+                >
+                  작성
+                </button>
               </div>
             </MainCard>
           </div>
