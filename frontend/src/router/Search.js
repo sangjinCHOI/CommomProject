@@ -40,23 +40,43 @@ export default function Search({ location }) {
 
   const [charactersResultList, setCharactersResultList] = useState([]);
   const getCharactersResult = () => {
+    setCharactersResultList([]);
     Send.get(`/search/characters/${query}`).then((res) => {
-      console.log(res);
+      // console.log(res);
       setCharactersResultList(res.data);
     });
   };
 
   const [tagsResultList, setTagsResultList] = useState([]);
   const getTagsResult = () => {
+    setTagsResultList([]);
     Send.get(`/search/tags/${query}`).then((res) => {
-      console.log(res);
+      // console.log(res);
       setTagsResultList(res.data);
+    });
+  };
+
+  const [contentsResultList, setContentsResultList] = useState([]);
+  const getContentsResult = () => {
+    setContentsResultList([]);
+    Send.get(`/search/contents/${query}`).then((res) => {
+      // console.log(res.data);
+      res.data.forEach((content) => {
+        Send.get(`/character/${content.characterSeq}`).then((res) => {
+          // console.log([res.data, content]);
+          setContentsResultList((contentsResultList) => [
+            [res.data, content],
+            ...contentsResultList,
+          ]);
+        });
+      });
     });
   };
 
   useEffect(() => {
     getCharactersResult();
     getTagsResult();
+    getContentsResult();
   }, [query]);
 
   return (
@@ -97,13 +117,15 @@ export default function Search({ location }) {
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard classes="border rounded-2xl py-3">
-          <div className={`flex overflow-x-auto justify-center items-center text-xl h-16 mx-8`}>
+        <MainCard classes="border rounded-2xl py-2">
+          <div className={`flex overflow-x-auto justify-center items-center text-xl mx-8`}>
             {/* 태그는 최대 5개만 가져옴 + 6글자 까지 보여줌 */}
+            {/* 현재 태그 상세보기 미구현 */}
             {tagsResultList.slice(0, 4).map((tag) => (
               <Link
                 to={{ pathname: "/search/tag", search: `?detail=${tag.tagText}` }}
-                className="mx-1"
+                className="mx-1 my-4"
+                key={tag.tagText}
               >
                 <Label color={colorList[Math.floor(Math.random() * colorList.length)]}>
                   <span>
@@ -126,19 +148,24 @@ export default function Search({ location }) {
           </Link>
         </div>
         <MainCard classes="border rounded-2xl py-3">
-          {nicknameList.map((nickname) => (
-            <div className="flex justify-center items-center py-2" key={nickname}>
-              <Link to={`../${nickname}`}>
+          {contentsResultList.map((content) => (
+            <div className="flex justify-center items-center py-2" key={content[1].contentSeq}>
+              <Link to={`../${content[0].nickname}`}>
                 <div className="m-3">
                   <CharacterImg imgWidth="50px" />
                 </div>
               </Link>
-              <div style={{ width: "126px" }} key={nickname}>
-                <Link to={`../${nickname}`}>{nickname}</Link>
+              <div style={{ width: "126px" }}>
+                <Link to={`../${content[0].nickname}`}>{content[0].nickname}</Link>
               </div>
-              <div className="ml-8 w-72">
-                {tempText.length < 40 ? tempText : tempText.slice(0, 40) + ".."}
-              </div>
+              {/* 현재 해당 내용으로 이동 아직 미구현 */}
+              <Link to="">
+                <div className="ml-8 w-72">
+                  {content[1].contentText.length < 40
+                    ? content[1].contentText
+                    : content[1].contentText.slice(0, 40) + ".."}
+                </div>
+              </Link>
             </div>
           ))}
         </MainCard>
