@@ -55,8 +55,10 @@
 	<select id="getCharacterProfile" resultType="CharacterProfileResponse">
 		select 
 			c.character_seq,
+			c.introduction,
 			c.representative_achievement, 
-			f.file_path AS achievement_image,
+			achieveFile.file_path AS achievement_image,
+			characterFile.file_path AS profile_image,
 			ca.character_category_name AS category_name,
 			(SELECT count(*) FROM tb_content where character_seq = c.character_seq AND content_is_active = 1) AS content_count,
 			(SELECT count(*) FROM tb_follow where followee = c.character_seq) AS follower_count,
@@ -64,8 +66,10 @@
 		from
 			tb_character c
 		LEFT OUTER JOIN tb_character_category ca ON ca.character_category_seq = c.category_seq
-		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_achievement'
-		AND f.relation_seq = c.representative_achievement
+		LEFT OUTER JOIN tb_file achieveFile ON achieveFile.relation_tb = 'tb_achievement'
+		AND achieveFile.relation_seq = c.representative_achievement
+		LEFT OUTER JOIN tb_file characterFile ON characterFile.relation_tb = 'tb_character'
+		AND characterFile.relation_seq = c.character_seq
 		where nickname=#{nickname} 
 		AND character_active = 1
 	</select>

@@ -11,7 +11,9 @@ import lombok.ToString;
 @AllArgsConstructor
 public class CharacterProfileResponse {
 	private int characterSeq;
+	private String introduction;
 	private int representativeAchievement;
+	private String profileImage;
 	private String achievementImage;
 	private String categoryName;
 	private int contentCount;
