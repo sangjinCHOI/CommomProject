@@ -25,12 +25,13 @@ const useInput = (initialValue, validator) => {
   return { value, onChange };
 };
 
-function CharactersCreate({ characterSlice, saveCharacter, location }) {
-  const maxLen = (value) => value.length <= 50;
-  const introduction = useInput("", maxLen);
+function CharactersCreate({ saveCharacter, location }) {
+  const nicknameMaxLen = (value) => value.length <= 16;
+  const introductionMaxLen = (value) => value.length <= 50;
+  const nickname = useInput("", nicknameMaxLen);
+  const introduction = useInput("", introductionMaxLen);
 
   const [categorySeq, setCategorySeq] = useState(0);
-  const [nickname, setNickname] = useState("");
   const history = useHistory();
 
   const { userSeq, userId } = location.state;
@@ -40,7 +41,7 @@ function CharactersCreate({ characterSlice, saveCharacter, location }) {
     const data = {
       userSeq,
       categorySeq: parseInt(categorySeq),
-      nickname,
+      nickname: nickname.value,
       introduction: introduction.value,
     };
     console.log(data);
@@ -63,9 +64,9 @@ function CharactersCreate({ characterSlice, saveCharacter, location }) {
       .catch((err) => console.log(err));
   };
 
-  const onNicknameHandler = (e) => {
-    setNickname(e.target.value);
-  };
+  // const onNicknameHandler = (e) => {
+  //   setNickname(e.target.value);
+  // };
 
   const onCategorySeqHandler = (e) => {
     setCategorySeq(e.target.value);
@@ -90,7 +91,8 @@ function CharactersCreate({ characterSlice, saveCharacter, location }) {
             outline={true}
             iconName="edit"
             placeholder="닉네임을 입력하세요."
-            onChange={onNicknameHandler}
+            // onChange={onNicknameHandler}
+            {...nickname}
           />
         </div>
         <div className="bg-white rounded-lg text-gray-400">
