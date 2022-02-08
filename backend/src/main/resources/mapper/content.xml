@@ -33,9 +33,15 @@
 	<select id="contentGet" resultType="ContentGetResponse">
 		select content_seq as contentSeq, content_is_active as contentIsActive, content_is_public as contentIsPublic, character_seq as characterSeq, category_seq as categorySeq, content_text as contentText, content_like as contentLike, content_save as contentSave, content_is_media as contentIsMedia, content_created_date contentCreatedDate, content_modified_Date as contentModifiedDate, (select count(*) 
 		from tb_content_like
-		where content_seq = #{contentSeq} and character_seq = #{characterNow}) as contentIsLike, (select count(*) from tb_stored_content where content_seq = #{contentSeq} and character_seq = #{characterNow}) as contentIsStore
+		where content_seq = #{contentSeq} and character_seq = #{characterNow}) as contentIsLike, (select count(*) from tb_stored_content where content_seq = #{contentSeq} and character_seq = #{characterNow}) as contentIsStore, (select count(*) from tb_reply where content_seq = tb_content.content_seq) AS replyCount,
+        (select nickname from tb_character where character_seq = tb_content.character_seq) AS contentWriter,
+        (select file_path from tb_file where relation_tb = 'tb_character' AND relation_seq = tb_content.character_seq) AS writerProfile,
+        (select count(*) from tb_tag where content_seq = tb_content.content_seq) AS tagCount,
+        (select GROUP_CONCAT(tag_text separator '|') from tb_tag where content_seq = tb_content.content_seq GROUP BY content_seq) AS tags,
+        (select count(*) from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.character_seq ) AS fileCount,
+        (select GROUP_CONCAT(file_path separator '|') from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.character_seq GROUP BY relation_seq) AS files
 		from tb_content
-		where content_seq = #{contentSeq}
+		where content_seq = #{contentSeq} and content_is_active = 1
 	</select>
 	
 	<select id="contentList" parameterType="int" resultType="ContentGetResponse">
@@ -49,23 +55,35 @@
         (select count(*) from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.character_seq ) AS fileCount,
         (select GROUP_CONCAT(file_path separator '|') from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.character_seq GROUP BY relation_seq) AS files
 		from tb_content
-		where character_seq IN (select followee from tb_follow where follower = #{characterNow}) or character_seq = #{characterNow}
+		where (character_seq IN (select followee from tb_follow where follower = #{characterNow}) or character_seq = #{characterNow}) and content_is_active = 1
 	</select>
 	
 	<select id="contentPersonalList" resultType="ContentGetResponse">
 		select content_seq as contentSeq, content_is_active as contentIsActive, content_is_public as contentIsPublic, character_seq as characterSeq, category_seq as categorySeq, content_text as contentText, content_like as contentLike, content_save as contentSave, content_is_media as contentIsMedia, content_created_date contentCreatedDate, content_modified_Date as contentModifiedDate, (select count(*) 
 		from tb_content_like
-		where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsLike, (select count(*) from tb_stored_content where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsStore
+		where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsLike, (select count(*) from tb_stored_content where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsStore, (select count(*) from tb_reply where content_seq = tb_content.content_seq) AS replyCount,
+        (select nickname from tb_character where character_seq = tb_content.character_seq) AS contentWriter,
+        (select file_path from tb_file where relation_tb = 'tb_character' AND relation_seq = tb_content.character_seq) AS writerProfile,
+        (select count(*) from tb_tag where content_seq = tb_content.content_seq) AS tagCount,
+        (select GROUP_CONCAT(tag_text separator '|') from tb_tag where content_seq = tb_content.content_seq GROUP BY content_seq) AS tags,
+        (select count(*) from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.character_seq ) AS fileCount,
+        (select GROUP_CONCAT(file_path separator '|') from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.character_seq GROUP BY relation_seq) AS files
 		from tb_content
-		where character_seq = #{characterSeq}
+		where character_seq = #{characterSeq} and content_is_active = 1
 	</select>
 	
 	<select id="contentTagList" resultType="ContentGetResponse">
 		select content_seq as contentSeq, content_is_active as contentIsActive, content_is_public as contentIsPublic, character_seq as characterSeq, category_seq as categorySeq, content_text as contentText, content_like as contentLike, content_save as contentSave, content_is_media as contentIsMedia, content_created_date contentCreatedDate, content_modified_Date as contentModifiedDate, (select count(*) 
 		from tb_content_like
-		where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsLike, (select count(*) from tb_stored_content where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsStore
+		where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsLike, (select count(*) from tb_stored_content where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsStore, (select count(*) from tb_reply where content_seq = tb_content.content_seq) AS replyCount,
+        (select nickname from tb_character where character_seq = tb_content.character_seq) AS contentWriter,
+        (select file_path from tb_file where relation_tb = 'tb_character' AND relation_seq = tb_content.character_seq) AS writerProfile,
+        (select count(*) from tb_tag where content_seq = tb_content.content_seq) AS tagCount,
+        (select GROUP_CONCAT(tag_text separator '|') from tb_tag where content_seq = tb_content.content_seq GROUP BY content_seq) AS tags,
+        (select count(*) from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.character_seq ) AS fileCount,
+        (select GROUP_CONCAT(file_path separator '|') from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.character_seq GROUP BY relation_seq) AS files
 		from tb_content
-		where content_seq In (select content_seq from tb_tag where tag_text = #{tagText});
+		where content_seq In (select content_seq from tb_tag where tag_text = #{tagText}); and content_is_active = 1
 	</select>
 	
 	<insert id="hashtagCreate" >
