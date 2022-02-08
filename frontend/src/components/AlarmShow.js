@@ -108,7 +108,8 @@ function AlarmShow({ characterSlice }) {
 
   const getAlarmList = () => {
     Send.get(`/character/alarms/${characterSlice.characterSeq}`).then((res) => {
-      setAlarmList(res.data.filter((alarm) => !alarm.alarmIsRead));
+      const alarmList = res.data.reverse();
+      setAlarmList(alarmList.filter((alarm) => !alarm.alarmIsRead));
       console.log(res.data);
     });
   };
