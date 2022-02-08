@@ -143,7 +143,7 @@ function Alarm({ characterSlice }) {
         <div className="text-2xl px-4 py-4 text-center">알림</div>
         <hr className="mb-1 mx-2" />
         <div className="px-4 py-2 ml-4">신규 알림</div>
-        <div className={`overflow-y-auto ${styles.box}`} style={{ maxHeight: "550px" }}>
+        <div className={`overflow-y-auto ${styles.box}`} style={{ maxHeight: "350px" }}>
           {newAlarmList.map((alarm) => (
             <div className="px-4 py-2" key={alarm.alarmSeq}>
               {/* 현재 링크 안걸려있음 */}
@@ -215,7 +215,7 @@ function Alarm({ characterSlice }) {
           </div>
         </div> */}
         <div className="px-4 py-2 ml-4">기존 알림</div>
-        <div className={`overflow-y-auto ${styles.box}`} style={{ maxHeight: "550px" }}>
+        <div className={`overflow-y-auto ${styles.box}`} style={{ maxHeight: "350px" }}>
           {oldAlarmList.map((alarm) => (
             <div className="px-4 py-2" key={alarm.alarmSeq}>
               <Link
