@@ -26,16 +26,20 @@ const useInput = (initialValue, validator) => {
 };
 
 function CharacterUpdate({ updateCharacter, location }) {
-  const maxLen = (value) => value.length <= 50;
-  const introduction = useInput("", maxLen);
+  // 한글 8자, 영어 12자정도?로 나눠서 구분해야할 듯
+  const nicknameMaxLen = (value) => value.length <= 16;
+  const introductionMaxLen = (value) => value.length <= 50;
+  const nickname = useInput("", nicknameMaxLen);
+  const introduction = useInput("", introductionMaxLen);
 
-  const [nickname, setNickname] = useState("");
+  // const [nickname, setNickname] = useState("");
   const history = useHistory();
 
   const characterSeq = location.state.characterSeq;
   const getCharacter = () => {
     Send.get(`/character/${characterSeq}`).then((res) => {
-      setNickname(res.data.nickname);
+      // setNickname(res.data.nickname);
+      nickname.setValue(res.data.nickname);
       introduction.setValue(res.data.introduction);
     });
   };
@@ -50,7 +54,7 @@ function CharacterUpdate({ updateCharacter, location }) {
     const character = {
       characterSeq,
       introduction: introduction.value,
-      nickname,
+      nickname: nickname.value,
     };
 
     updateCharacter({ character });
@@ -64,9 +68,9 @@ function CharacterUpdate({ updateCharacter, location }) {
     history.push("../characters/select");
   };
 
-  const onNicknameHandler = (e) => {
-    setNickname(e.target.value);
-  };
+  // const onNicknameHandler = (e) => {
+  //   setNickname(e.target.value);
+  // };
 
   return (
     <>
@@ -87,8 +91,9 @@ function CharacterUpdate({ updateCharacter, location }) {
             outline={true}
             iconName="edit"
             placeholder="닉네임을 입력하세요."
-            onChange={onNicknameHandler}
-            value={nickname}
+            // onChange={onNicknameHandler}
+            // value={nickname}
+            {...nickname}
           />
         </div>
         <div className="bg-white rounded-lg text-gray-400 my-8">

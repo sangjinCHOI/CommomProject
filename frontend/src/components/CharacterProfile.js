@@ -100,7 +100,9 @@ function CharacterProfile({
           </div>
         </div>
 
-        <div className="text-sm w-80 h-7">{characterProfile.introduction}</div>
+        <div className="w-80 h-7" style={{ fontSize: "13px" }}>
+          {characterProfile.introduction}
+        </div>
         {isMe ? (
           <div className="mt-3">
             <div className="inline-block px-2">
