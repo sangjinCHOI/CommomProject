@@ -1,13 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Switch } from "@headlessui/react";
 import { Card, CardBody } from "@material-tailwind/react";
+import { connect } from "react-redux";
+import { alarmUpdate } from "../store/characterStore";
+import Send from "../config/Send";
 
-export default function SettingsAlarm() {
-  const [allEnabled, setAllEnabled] = useState(true);
-  const [likeEnabled, setLikeEnabled] = useState(true);
-  const [commentEnabled, setCommentEnabled] = useState(true);
-  const [followEnabled, setFollowEnabled] = useState(true);
-  const [saveEnabled, setSaveEnabled] = useState(true);
+function SettingsAlarm({ characterSlice, characterAlarmUpdate }) {
+  const [allEnabled, setAllEnabled] = useState(characterSlice.alarmAllow);
+  const [likeEnabled, setLikeEnabled] = useState(characterSlice.likeAlarm);
+  const [commentEnabled, setCommentEnabled] = useState(characterSlice.replyAlarm);
+  const [followEnabled, setFollowEnabled] = useState(characterSlice.followAlarm);
+  const [saveEnabled, setSaveEnabled] = useState(characterSlice.modifyAlarm);
+
+  const setAlarmState = () => {
+    const data = {
+      characterSeq: characterSlice.characterSeq,
+      alarmAllow: allEnabled,
+      likeAlarm: likeEnabled,
+      replyAlarm: commentEnabled,
+      followAlarm: followEnabled,
+      modifyAlarm: saveEnabled,
+    };
+    console.log(data);
+    // 백 업데이트
+    Send.put("/character/alarmStatus", JSON.stringify(data)).then((res) => {
+      console.log("백 업데이트", res);
+    });
+    // 프론트 업데이트
+    characterAlarmUpdate(data);
+  };
+
+  useEffect(() => {
+    setAlarmState();
+  }, [allEnabled, likeEnabled, commentEnabled, followEnabled, saveEnabled]);
 
   return (
     <>
@@ -146,3 +171,13 @@ export default function SettingsAlarm() {
     </>
   );
 }
+
+function mapStateToProps(state) {
+  return { characterSlice: state.character };
+}
+
+function mapDispatchToProps(dispatch) {
+  return { characterAlarmUpdate: (character) => dispatch(alarmUpdate(character)) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsAlarm);

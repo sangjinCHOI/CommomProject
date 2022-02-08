@@ -48,8 +48,17 @@ const characterSlice = createSlice({
       state.introduction = action.payload.introduction;
       state.nickname = action.payload.nickname;
     },
+    alarmUpdate: (state, action) => {
+      console.log("알람 업데이트 완료", action.payload);
+      state.characterSeq = action.payload.characterSeq;
+      state.alarmAllow = action.payload.alarmAllow;
+      state.likeAlarm = action.payload.likeAlarm;
+      state.replyAlarm = action.payload.replyAlarm;
+      state.followAlarm = action.payload.followAlarm;
+      state.modifyAlarm = action.payload.modifyAlarm;
+    },
   },
 });
 
-export const { save, update } = characterSlice.actions;
+export const { save, update, alarmUpdate } = characterSlice.actions;
 export default characterSlice.reducer;
