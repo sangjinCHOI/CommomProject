@@ -7,9 +7,11 @@
 
 	<insert id="regist" useGeneratedKeys="true" keyProperty="characterSeq">
 		insert into tb_character
-			(user_seq, category_seq, nickname, introduction, character_created_date)
+			(user_seq, category_seq, nickname, introduction, character_created_date,
+			alarm_allow, like_alarm, reply_alarm, follow_alarm, modify_alarm)
 		values
-			(#{userSeq}, #{categorySeq}, #{nickname}, #{introduction}, now())
+			(#{userSeq}, #{categorySeq}, #{nickname}, #{introduction}, now(),
+			true, true, true, true, true)
 	</insert>
 
 	<update id="update">
@@ -23,6 +25,27 @@
 		<if
 			test="representativeAchievement != null and representativeAchievement != ''">
 			representative_achievement=#{representativeAchievement},
+		</if>
+		character_modified_date = now()
+		where character_seq=#{characterSeq}
+	</update>
+	
+	<update id="updateAlarmStatus">
+		update tb_character set 
+		<if test="alarmAllow != null and alarmAllow != ''">
+			alarm_allow=#{alarmAllow},
+		</if>
+		<if test="likeAlarm != null and likeAlarm != ''">
+			like_alarm=#{likeAlarm},
+		</if>
+		<if test="replyAlarm != null and replyAlarm != ''">
+			reply_alarm=#{replyAlarm},
+		</if>
+		<if test="followAlarm != null and followAlarm != ''">
+			follow_alarm=#{followAlarm},
+		</if>
+		<if test="modifyAlarm != null and modifyAlarm != ''">
+			modify_alarm=#{modifyAlarm},
 		</if>
 		character_modified_date = now()
 		where character_seq=#{characterSeq}
