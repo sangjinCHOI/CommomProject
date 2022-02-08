@@ -51,7 +51,7 @@ function PwInquiry({ saveUser, userSlice }) {
     };
 
     axios
-      .put("http://localhost:8080/user/email/", JSON.stringify(data), {
+      .put("http://localhost:8082/user/email/", JSON.stringify(data), {
         headers: {
           "Content-Type": "application/json",
         },
