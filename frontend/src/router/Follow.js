@@ -27,6 +27,8 @@ const useInput = (initialValue, validator) => {
   return { value, onChange };
 };
 
+// 현재 내 캐릭터의 팔로우 현황만 볼 수 있는데, characterSlice로 하는게 아니라 남의 캐릭도 볼 수 있게 바꿔야 함
+// 닉네임만으로 캐릭터의 모든 정보를 알 수 있으면 좋겠다...
 function Follow({ characterSlice }) {
   const [followerList, setFollowerList] = useState([]);
   const [followeeList, setFolloweeList] = useState([]);
@@ -46,7 +48,6 @@ function Follow({ characterSlice }) {
           if (res.data) {
             // setFollowerList((followerList) => [res.data, ...followerList]);
             // 팔로우or삭제 버튼 구별을 위해서 followToo를 리스트에 담아서 저장
-            // 탭을 이동할 떄마다 움직이는 듯한 모션 왜 발생?
             setFollowerList((followerList) => [[res.data, follower.followToo], ...followerList]);
           }
         });
@@ -80,11 +81,11 @@ function Follow({ characterSlice }) {
 
   const follow = (followerSeq, e) => {
     e.preventDefault();
-    const data2 = {
+    const data = {
       followee: followerSeq,
       follower: characterSlice.characterSeq,
     };
-    Send.post("/character/follow", JSON.stringify(data2))
+    Send.post("/character/follow", JSON.stringify(data))
       .then((res) => {
         if (res.status === 200) {
           const alarmData = {
@@ -105,22 +106,22 @@ function Follow({ characterSlice }) {
 
   const deleteFollow = (followerSeq, e) => {
     e.preventDefault();
-    const data4 = {
+    const data = {
       followee: characterSlice.characterSeq,
       follower: followerSeq,
     };
-    Send.delete("/character/follow", { data: JSON.stringify(data4) })
+    Send.delete("/character/follow", { data: JSON.stringify(data) })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
 
   const unfollow = (followeeSeq, e) => {
     e.preventDefault();
-    const data3 = {
+    const data = {
       followee: followeeSeq,
       follower: characterSlice.characterSeq,
     };
-    Send.delete("/character/follow", { data: JSON.stringify(data3) })
+    Send.delete("/character/follow", { data: JSON.stringify(data) })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
@@ -168,16 +169,17 @@ function Follow({ characterSlice }) {
                   .filter((follower) => follower[0].nickname.includes(searchText.value))
                   .map((follower) => (
                     <div
-                      className="flex justify-center items-center"
+                      className="flex justify-between mx-12 items-center"
                       key={follower[0].characterSeq}
                     >
-                      <Link to={`../${follower[0].nickname}`}>
+                      <Link
+                        to={`../${follower[0].nickname}`}
+                        className="flex justify-between items-center"
+                      >
                         <div className="m-3">
                           <CharacterImg imgWidth="50px" />
                         </div>
-                      </Link>
-                      <Link to={`../${follower[0].nickname}`}>
-                        <div className="w-44">{follower[0].nickname}</div>
+                        <div className="w-36">{follower[0].nickname}</div>
                       </Link>
                       <div className="ml-12 mr-3">
                         {!follower[1] ? (
@@ -208,14 +210,18 @@ function Follow({ characterSlice }) {
                   ))
               : // 2글자 미만일 때 리스트 필터링X
                 followerList.map((follower) => (
-                  <div className="flex justify-center items-center" key={follower[0].characterSeq}>
-                    <Link to={`../${follower[0].nickname}`}>
+                  <div
+                    className="flex justify-between mx-12 items-center"
+                    key={follower[0].characterSeq}
+                  >
+                    <Link
+                      to={`../${follower[0].nickname}`}
+                      className="flex justify-between items-center"
+                    >
                       <div className="m-3">
                         <CharacterImg imgWidth="50px" />
                       </div>
-                    </Link>
-                    <Link to={`../${follower[0].nickname}`}>
-                      <div className="w-44">{follower[0].nickname}</div>
+                      <div className="w-36">{follower[0].nickname}</div>
                     </Link>
                     <div className="ml-12 mr-3">
                       {!follower[1] ? (
@@ -225,7 +231,7 @@ function Follow({ characterSlice }) {
                             follow(follower[0].characterSeq, e);
                           }}
                         >
-                          <Label color="lightBlue" className={`w-16 ${styles.customRadius}`}>
+                          <Label color="lightBlue" className={`${styles.customRadius}`}>
                             팔로우
                           </Label>
                         </Link>
@@ -236,10 +242,7 @@ function Follow({ characterSlice }) {
                             deleteFollow(follower[0].characterSeq, e);
                           }}
                         >
-                          <Label
-                            color="blueGray"
-                            className={`ml-3 mr-2 w-16 ${styles.customRadius}`}
-                          >
+                          <Label color="blueGray" className={`ml-3 mr-2 ${styles.customRadius}`}>
                             삭제
                           </Label>
                         </Link>
@@ -252,14 +255,18 @@ function Follow({ characterSlice }) {
             ? followeeList // 리스트 필터링
                 .filter((followee) => followee.nickname.includes(searchText.value))
                 .map((followee) => (
-                  <div className="flex justify-center items-center" key={followee.characterSeq}>
-                    <Link to={`../${followee.nickname}`}>
+                  <div
+                    className="flex justify-between mx-12 items-center"
+                    key={followee.characterSeq}
+                  >
+                    <Link
+                      to={`../${followee.nickname}`}
+                      className="flex justify-between items-center"
+                    >
                       <div className="m-3">
                         <CharacterImg imgWidth="50px" />
                       </div>
-                    </Link>
-                    <Link to={`../${followee.nickname}`}>
-                      <div className="w-44">{followee.nickname}</div>
+                      <div className="w-36">{followee.nickname}</div>
                     </Link>
                     <div className="ml-12 mr-3">
                       <Link
@@ -277,14 +284,18 @@ function Follow({ characterSlice }) {
                 ))
             : // 2글자 미만일 때 리스트 필터링X
               followeeList.map((followee) => (
-                <div className="flex justify-center items-center" key={followee.characterSeq}>
-                  <Link to={`../${followee.nickname}`}>
+                <div
+                  className="flex justify-between mx-12 items-center"
+                  key={followee.characterSeq}
+                >
+                  <Link
+                    to={`../${followee.nickname}`}
+                    className="flex justify-between items-center"
+                  >
                     <div className="m-3">
                       <CharacterImg imgWidth="50px" />
                     </div>
-                  </Link>
-                  <Link to={`../${followee.nickname}`}>
-                    <div className="w-44">{followee.nickname}</div>
+                    <div className="w-36">{followee.nickname}</div>
                   </Link>
                   <div className="ml-12 mr-3">
                     <Link
