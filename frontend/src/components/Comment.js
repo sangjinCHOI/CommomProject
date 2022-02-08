@@ -14,7 +14,7 @@ function Comment(props) {
   const handleReportClose = () => {
     setReportModal(false);
   };
-
+  // console.log(props);
   return (
     <>
       <Modal className="min-h-3" size="regular" active={isOpen} toggler={() => handleCommentClose(false)}>
@@ -31,7 +31,7 @@ function Comment(props) {
                       <div className="px-4 flex justify-between">
                         <div className="flex">
                           <Image src="https://url.kr/p6xvn5" width="32px" rounded={true} raised={false} alt="Rounded Image" />
-                          <p className="pt-0.5 mx-2 text-lg">초밥왕김탁구</p>
+                          <p className="pt-0.5 mx-2 text-lg">{comment.replyWriter}</p>
                         </div>
                         <Menu as="div" className="mx-2 mt-1 relative w-12">
                           <Menu.Button className="flex text-sm">
