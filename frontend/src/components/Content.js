@@ -29,6 +29,7 @@ function Content(props) {
   }
   console.log(feedContents);
 
+  // 태그 관리
   return (
     <>
       {feedContents.reverse().map((content, index) => {
@@ -85,9 +86,15 @@ function Content(props) {
               </div>
               <div className="px-4 py-2">{content.contentText}</div>
               <div className="px-4 pt-2 flex flex-wrap">
-                <Label className="mb-1" color="lightGreen">
-                  초밥
-                </Label>
+                {content.tags
+                  ? content.tags.split("|").map((tag, index) => {
+                      return (
+                        <Label className="mb-1" color="lightGreen" key={index}>
+                          {tag}
+                        </Label>
+                      );
+                    })
+                  : null}
               </div>
               <div className="text-slate-400 px-4">
                 {content.contentCreatedDate.slice(0, 10)} {content.contentCreatedDate.slice(11, 16)}
