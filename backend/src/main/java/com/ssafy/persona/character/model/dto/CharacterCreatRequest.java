@@ -17,7 +17,7 @@ public class CharacterCreatRequest {
 	private String nickname;
 	private String introduction;
 	
-	public void setCaracterSeq(int characterSeq) {
+	public void setCharacterSeq(int characterSeq) {
 		this.characterSeq = characterSeq;
 	}
 }

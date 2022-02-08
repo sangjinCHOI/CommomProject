@@ -10,6 +10,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class ContentCreateRequest {
+	private int contentSeq;
 	private int characterSeq;
 	private int categorySeq;
 	private String contentText;
@@ -24,5 +25,9 @@ public class ContentCreateRequest {
 					  .contentIsPublic(contentIsPublic)
 					  .contentIsMedia(contentIsMedia)
 					  .build();
+	}
+
+	public void setContentSeq(int contentSeq) {
+		this.contentSeq = contentSeq;
 	}
 }

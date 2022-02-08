@@ -1,6 +1,8 @@
 package com.ssafy.persona.content.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,11 +46,17 @@ public class ContentController {
 
 	@ApiOperation(value = "content create", notes = "content 작성, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/content")
-	public ResponseEntity<String> contentCreate(@RequestBody @ApiParam(value = "게시글 정보.", required = true) ContentCreateRequest contentCreateRequest) {
+	public ResponseEntity<Map<String, Object>> contentCreate(@RequestBody @ApiParam(value = "게시글 정보.", required = true) ContentCreateRequest contentCreateRequest) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		String message = FAIL;
+		HttpStatus status = HttpStatus.ACCEPTED;
 		if (contentService.contentCreate(contentCreateRequest)) {
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+			message = SUCCESS;
+			status = HttpStatus.OK;
+			result.put("message", message);
+			result.put("content_seq", contentCreateRequest.getContentSeq());
 		}
-		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+		return new ResponseEntity<Map<String, Object>>(result, status);
 	}
 
 	@ApiOperation(value = "content modify", notes = "content 수정, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)

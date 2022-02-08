@@ -41,7 +41,7 @@ public class CharacterServiceImpl implements CharacterService {
 			int creatableCount = userMapper.getCreatableCount(request.getUserSeq());
 			int nowCount = characterMapper.getCharacterCount(request.getUserSeq());
 			if (nowCount < creatableCount) {
-				result = characterMapper.regist(request);
+				result = characterMapper.regist(request); // set character_seq
 			}
 		} catch (NullPointerException e) {
 			e.printStackTrace();
