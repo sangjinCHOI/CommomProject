@@ -6,9 +6,12 @@ import MainCard from "../components/MainCard";
 import Send from "../config/Send";
 import { connect } from "react-redux";
 import styles from "./Follow.module.css";
+import { useParams } from "react-router-dom";
 
 // 현재 해당 페이지에서 코드 수정 후 새로고침 하는 경우에 중복 랜더링되는 버그 존재
 // useEffect 관련 이슈?
+
+// 나랑 다른 캐릭터를 보고 있으면 버튼 안보이게 구현하자
 
 const useInput = (initialValue, validator) => {
   const [value, setValue] = useState(initialValue);
@@ -28,17 +31,34 @@ const useInput = (initialValue, validator) => {
 };
 
 // 현재 내 캐릭터의 팔로우 현황만 볼 수 있는데, characterSlice로 하는게 아니라 남의 캐릭도 볼 수 있게 바꿔야 함
-// 닉네임만으로 캐릭터의 모든 정보를 알 수 있으면 좋겠다...
+// 다른 사람이 들어왔을 때 보이는 버튼 적절히 수정해야 함!
 function Follow({ characterSlice }) {
-  const [followerList, setFollowerList] = useState([]);
-  const [followeeList, setFolloweeList] = useState([]);
+  const { nickname } = useParams();
+  const [character, setCharacter] = useState([]);
+  const getCharacter = () => {
+    Send.get(`/character/profile/${nickname}`).then((res) => {
+      const characterSeq = res.data.characterSeq;
+      Send.get(`/character/${characterSeq}`).then((res) => {
+        console.log(res.data);
+        setCharacter(res.data); // 페이지 유저 데이터
+        // character 가져온 뒤 리스트 가져오는 함수 실행
+        getFollowerList(res.data);
+        getFolloweeList(res.data);
+      });
+    });
+  };
 
   const searchText = useInput("");
 
-  const getFollowerList = () => {
+  const [followerList, setFollowerList] = useState([]);
+  const [followeeList, setFolloweeList] = useState([]);
+  const getFollowerList = (character) => {
     console.log("getFollowerList 실행됨");
+    console.log("asdasd", character);
+    // 해당 페이지의 캐릭터를 기준으로 리스트를 불러오는데
+    // 버튼도 역시 그 캐릭터를 기준으로 랜더링 하는 현황
     const data = {
-      followee: characterSlice.characterSeq,
+      followee: character.characterSeq, // 해당 페이지의 캐릭터
       nickname: "",
     };
     setFollowerList([]); // 이게 있어야 코드 수정 후 저장할 때 중복으로 안가져옴
@@ -55,10 +75,10 @@ function Follow({ characterSlice }) {
       });
     });
   };
-  const getFolloweeList = () => {
+  const getFolloweeList = (character) => {
     console.log("getFolloweeList 실행됨");
     const data = {
-      follower: characterSlice.characterSeq,
+      follower: character.characterSeq, // 해당 페이지의 캐릭터
       nickname: "",
     };
     setFolloweeList([]); // 이게 있어야 코드 수정 후 저장할 때 중복으로 안가져옴
@@ -75,8 +95,9 @@ function Follow({ characterSlice }) {
   };
 
   useEffect(() => {
-    getFollowerList();
-    getFolloweeList();
+    getCharacter();
+    // getFollowerList();
+    // getFolloweeList();
   }, []);
 
   const [isFollowerTab, setIsFollowerTab] = useState(true);
@@ -184,7 +205,55 @@ function Follow({ characterSlice }) {
                         <div className="w-36">{follower[0].nickname}</div>
                       </Link>
                       <div className="ml-12 mr-3">
-                        {!follower[1] ? (
+                        {character.characterSeq === characterSlice.characterSeq ? (
+                          !follower[1] ? (
+                            <Link
+                              to=""
+                              onClick={(e) => {
+                                follow(follower[0].characterSeq, e);
+                              }}
+                            >
+                              <Label color="lightBlue" className={`${styles.customRadius}`}>
+                                팔로우
+                              </Label>
+                            </Link>
+                          ) : (
+                            <Link
+                              to=""
+                              onClick={(e) => {
+                                deleteFollow(follower[0].characterSeq, e);
+                              }}
+                            >
+                              <Label
+                                color="blueGray"
+                                className={`ml-3 mr-2 ${styles.customRadius}`}
+                              >
+                                삭제
+                              </Label>
+                            </Link>
+                          )
+                        ) : null}
+                      </div>
+                    </div>
+                  ))
+              : // 2글자 미만일 때 리스트 필터링X
+                followerList.map((follower) => (
+                  <div
+                    className="flex justify-between mx-12 items-center"
+                    key={follower[0].characterSeq}
+                  >
+                    <Link
+                      to={`../${follower[0].nickname}`}
+                      className="flex justify-between items-center"
+                    >
+                      <div className="m-3">
+                        <CharacterImg imgWidth="50px" />
+                      </div>
+                      <div className="w-36">{follower[0].nickname}</div>
+                    </Link>
+                    <div className="ml-12 mr-3">
+                      {character.characterSeq === characterSlice.characterSeq ? (
+                        !follower[1] ? (
                           <Link
                             to=""
                             onClick={(e) => {
@@ -206,49 +275,8 @@ function Follow({ characterSlice }) {
                               삭제
                             </Label>
                           </Link>
-                        )}
-                      </div>
-                    </div>
-                  ))
-              : // 2글자 미만일 때 리스트 필터링X
-                followerList.map((follower) => (
-                  <div
-                    className="flex justify-between mx-12 items-center"
-                    key={follower[0].characterSeq}
-                  >
-                    <Link
-                      to={`../${follower[0].nickname}`}
-                      className="flex justify-between items-center"
-                    >
-                      <div className="m-3">
-                        <CharacterImg imgWidth="50px" />
-                      </div>
-                      <div className="w-36">{follower[0].nickname}</div>
-                    </Link>
-                    <div className="ml-12 mr-3">
-                      {!follower[1] ? (
-                        <Link
-                          to=""
-                          onClick={(e) => {
-                            follow(follower[0].characterSeq, e);
-                          }}
-                        >
-                          <Label color="lightBlue" className={`${styles.customRadius}`}>
-                            팔로우
-                          </Label>
-                        </Link>
-                      ) : (
-                        <Link
-                          to=""
-                          onClick={(e) => {
-                            deleteFollow(follower[0].characterSeq, e);
-                          }}
-                        >
-                          <Label color="blueGray" className={`ml-3 mr-2 ${styles.customRadius}`}>
-                            삭제
-                          </Label>
-                        </Link>
-                      )}
+                        )
+                      ) : null}
                     </div>
                   </div>
                 ))
@@ -271,16 +299,18 @@ function Follow({ characterSlice }) {
                       <div className="w-36">{followee.nickname}</div>
                     </Link>
                     <div className="ml-12 mr-3">
-                      <Link
-                        to=""
-                        onClick={(e) => {
-                          unfollow(followee.characterSeq, e);
-                        }}
-                      >
-                        <Label color="blueGray" className={`${styles.customRadius}`}>
-                          언팔로우
-                        </Label>
-                      </Link>
+                      {character.characterSeq === characterSlice.characterSeq ? (
+                        <Link
+                          to=""
+                          onClick={(e) => {
+                            unfollow(followee.characterSeq, e);
+                          }}
+                        >
+                          <Label color="blueGray" className={`${styles.customRadius}`}>
+                            언팔로우
+                          </Label>
+                        </Link>
+                      ) : null}
                     </div>
                   </div>
                 ))
@@ -300,16 +330,18 @@ function Follow({ characterSlice }) {
                     <div className="w-36">{followee.nickname}</div>
                   </Link>
                   <div className="ml-12 mr-3">
-                    <Link
-                      to=""
-                      onClick={(e) => {
-                        unfollow(followee.characterSeq, e);
-                      }}
-                    >
-                      <Label color="blueGray" className={`${styles.customRadius}`}>
-                        언팔로우
-                      </Label>
-                    </Link>
+                    {character.characterSeq === characterSlice.characterSeq ? (
+                      <Link
+                        to=""
+                        onClick={(e) => {
+                          unfollow(followee.characterSeq, e);
+                        }}
+                      >
+                        <Label color="blueGray" className={`${styles.customRadius}`}>
+                          언팔로우
+                        </Label>
+                      </Link>
+                    ) : null}
                   </div>
                 </div>
               ))}
