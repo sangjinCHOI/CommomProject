@@ -23,7 +23,7 @@ function Report(props) {
   const handleWhyReport = (e) => {
     setWhyReport(e.target.value);
   };
-  const postReport = (e) => {
+  const postContentReport = (e) => {
     e.preventDefault();
     const data = {
       reportText: reportText,
@@ -33,7 +33,17 @@ function Report(props) {
     };
     Send.post("/content/report", JSON.stringify(data)).then((res) => console.log(res.data));
   };
-
+  const postCommentReport = (e) => {
+    e.preventDefault();
+    const data = {
+      reportText: reportText,
+      reportType: whyReport,
+      reportedReply: props.comment.replySeq,
+      reportingCharacter: props.characterSlice.characterSeq,
+    };
+    Send.post("/content/reply/report", JSON.stringify(data)).then((res) => console.log(res.data));
+  };
+  // console.log(props);
   return (
     <>
       <ReportCompleted isOpen={reportCompletedModal} onCancel={handleReportCompletedClose} style={{ zIndex: 3 }} />
@@ -68,8 +78,8 @@ function Report(props) {
             className="bg-slate-100 rounded"
             name=""
             id=""
-            cols="70"
-            rows="10"
+            cols="50"
+            rows="5"
             placeholder="신고 내용을 작성해주세요."
           ></textarea>
         </ModalBody>
@@ -80,7 +90,11 @@ function Report(props) {
             onClick={(e) => {
               setReportCompletedModal(true);
               handleReportClose(false);
-              postReport(e);
+              if (props.comment) {
+                postCommentReport(e);
+              } else if (props.content) {
+                postContentReport(e);
+              }
             }}
           >
             신고하기
