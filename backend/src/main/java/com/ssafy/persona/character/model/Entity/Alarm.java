@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -14,6 +15,7 @@ import lombok.ToString;
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Alarm {
 	@Id
 	private int alarmSeq;
@@ -22,9 +24,15 @@ public class Alarm {
 	@Column
 	private int characterSeq;
 	@Column
-	private String alarmType;
+	private int alarmType;
 	@Column
 	private String alarmText;
+	@Column
+	private String relationTb;
+	@Column
+	private int targetSeq;
+	@Column
+	private boolean alarmIsRead;
 	@Column
 	private LocalDateTime alarmDate;
 }

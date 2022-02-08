@@ -35,5 +35,10 @@ public class User {
 	private LocalDateTime userCreatedDate;
 	@Column
 	private LocalDateTime userModifiedDate;
+	@Column
+	private int userCreatableCount;
 	
+	public void setUserPw(String userPw) {
+		this.userPw = userPw;
+	}
 }

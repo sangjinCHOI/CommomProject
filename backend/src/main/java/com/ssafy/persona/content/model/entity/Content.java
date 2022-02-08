@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
 @Getter
 @RequiredArgsConstructor
@@ -40,4 +39,9 @@ public class Content {
 	private LocalDateTime contentCreatedDate;
 	@Column
 	private LocalDateTime contentModifiedDate;
+	@Column
+	private int contentIsLike;
+	@Column
+	private int contentIsStore;
+	
 }

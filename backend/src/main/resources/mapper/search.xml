@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ssafy.persona.search.mapper.SearchMapper">
+
+	<select id="searchPeople" resultType="SearchPeopleResponse">
+		select c.character_seq, c.nickname, f.file_path
+		from tb_character c
+		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_character'
+		AND f.relation_seq = c.character_seq
+		where c.nickname like CONCAT(#{text}, '%')
+	</select>
+
+	<select id="searchContent" resultType="SearchContentResponse">
+		select 
+			c.character_seq, c.nickname, 
+			f.file_path, 
+			co.content_seq, co.content_text
+		from tb_character c
+		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_character'
+		AND f.relation_seq = c.character_seq
+		JOIN tb_content co ON co.character_seq = c.character_seq
+		where co.content_text like CONCAT('%', #{text}, '%')
+		ORDER BY co.content_created_date DESC
+	</select>
+
+	<select id="searchStorage" resultType="SearchStorageResponse">
+		select 
+			s.storage_seq, s.storage_name, 
+			f.file_path 
+		from tb_storage s
+		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_storage'
+		AND f.relation_seq = s.storage_seq
+		where s.storage_name like CONCAT('%', #{text}, '%')
+	</select>
+
+	<select id="searchTag" resultType="SearchTagResponse">
+		select 
+   			big.tag_text,
+    		(select count(*) from tb_tag small where small.tag_text = big.tag_text) AS tag_count
+		FROM tb_tag big 
+		where big.tag_text like CONCAT('%', #{text}, '%')
+		GROUP BY tag_text
+		ORDER BY tag_count DESC;
+	</select>
+
+	<select id="checkHistory" resultType="int">
+		select 
+			count(*)
+		FROM tb_search_history
+		WHERE character_seq = #{characterSeq}
+		AND search_history_text = #{searchHistoryText}
+	</select>
+
+	<insert id="createHistory">
+		insert INTO tb_search_history
+			(character_seq, search_history_text, search_date)
+		VALUES
+			(#{characterSeq}, #{searchHistoryText}, now())
+	</insert>
+
+	<update id="renewalHistory">
+		update tb_search_history SET 
+		search_date = now()
+		WHERE character_seq = #{characterSeq}
+		AND search_history_text = #{searchHistoryText}
+	</update>
+
+	<select id="checkCloudWord" resultType="int">
+		 select IFNULL((select 
+			search_weight 
+		FROM tb_search_cloud
+		WHERE search_word = #{searchWord}
+		AND search_date = #{searchDate}), 0) AS search_weight
+	</select>
+
+	<insert id="createCloudWord">
+		insert INTO tb_search_cloud
+			(search_word, search_weight, search_date)
+		VALUES
+			(#{searchWord}, 1, #{searchDate})
+	</insert>
+
+	<update id="increaseWeightCloud">
+		update tb_search_cloud SET 
+			search_weight = #{searchWeight}
+		WHERE search_word = #{searchWord}
+		AND search_date = #{searchDate}
+	</update>
+
+	<select id="realTimePopularWord" resultType="String">
+		select 
+			search_word
+		FROM tb_search_cloud
+		where search_date = #{searchDate}
+		ORDER BY search_weight DESC 
+		LIMIT 10;
+	</select>
+
+	<select id="getHistory" resultType="String">
+		select 
+			search_history_text
+		FROM tb_search_history 
+		WHERE character_seq = #{characterSeq} 
+		ORDER BY search_date DESC 
+		LIMIT 10;
+	</select>
+
+	<select id="SearchAutoCompletion">
+		
+	</select>
+
+</mapper>

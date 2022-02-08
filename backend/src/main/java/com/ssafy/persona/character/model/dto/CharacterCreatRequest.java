@@ -1,6 +1,6 @@
 package com.ssafy.persona.character.model.dto;
 
-import com.ssafy.persona.character.model.Entity.CharacterEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,17 +10,14 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class CharacterCreatRequest {
+	private int characterSeq;
+	private MultipartFile[] myfile;
 	private int userSeq;
 	private int categorySeq;
 	private String nickname;
 	private String introduction;
-
-	public CharacterEntity toCharacterEntity() {
-		return CharacterEntity.builder()
-				.userSeq(userSeq)
-				.categorySeq(categorySeq)
-				.nickname(nickname)
-				.introduction(introduction)
-				.build();
+	
+	public void setCaracterSeq(int characterSeq) {
+		this.characterSeq = characterSeq;
 	}
 }

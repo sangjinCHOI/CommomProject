@@ -3,6 +3,60 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.persona.content.mapper.LikeMapper">
-
-
+	<select id="contentLikeList" parameterType="int" resultType="LikeListResponse">
+		select character_seq, nickname
+		from tb_character
+		where character_seq in (select character_seq from tb_content_like where content_seq = #{contentSeq})
+	</select>
+	
+	<select id="replyLikeList" parameterType="int" resultType="LikeListResponse">
+		select character_seq, nickname
+		from tb_character
+		where character_seq in (select character_seq from tb_reply_like where reply_seq = #{replySeq})
+	</select>
+	
+	<insert id="contentLike" parameterType="contentLikeRequest">
+		insert into tb_content_like (content_seq, character_seq)
+		values (#{contentSeq}, #{characterSeq})
+	</insert>
+	
+	<update id="contentLikeUpdate" parameterType="int">
+		update tb_content
+		set content_like = content_like + 1
+		where content_seq = #{contentSeq}
+	</update>
+	
+	<insert id="contentDislike" parameterType="contentLikeRequest">
+		delete from tb_content_like
+		where content_seq = #{contentSeq} and character_seq = #{characterSeq}
+	</insert>
+	
+	<update id="contentDislikeUpdate" parameterType="int">
+		update tb_content
+		set content_like = content_like - 1
+		where content_seq = #{contentSeq}
+	</update>
+	
+	<insert id="replyLike" parameterType="replyLikeRequest">
+		insert into tb_reply_like (reply_seq, character_seq)
+		values (#{replySeq}, #{characterSeq})
+	</insert>
+	
+	<update id="replyLikeUpdate" parameterType="int">
+		update tb_reply
+		set reply_like = reply_like + 1
+		where reply_seq = #{replySeq}
+	</update>
+	
+	<insert id="replyDislike" parameterType="contentLikeRequest">
+		delete from tb_reply_like
+		where reply_seq = #{replySeq} and character_seq = #{characterSeq}
+	</insert>
+	
+	<update id="replyDislikeUpdate" parameterType="int">
+		update tb_reply
+		set reply_like = reply_like - 1
+		where reply_seq = #{replySeq}
+	</update>
+	
 </mapper>

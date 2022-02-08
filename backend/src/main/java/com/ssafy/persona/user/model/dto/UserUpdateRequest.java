@@ -17,6 +17,10 @@ public class UserUpdateRequest {
 	private String userBirth;
 	private String userPw;
 	
+	public void setUserPw(String userPw) {
+		this.userPw = userPw;
+	}
+	
 	public User toUser() {
 		return (User.builder()
 					.userId(userId)

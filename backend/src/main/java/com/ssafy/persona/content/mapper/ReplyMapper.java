@@ -13,5 +13,5 @@ public interface ReplyMapper {
 	int replyCreate(ReplyCreateRequest replyCreateRequest);
 	int replyModify(ReplyModifyRequest replyModifyRequest);
 	int replyDelete(int replySeq);
-	List<ReplyGetResponse> replyList(int contentSeq);
+	List<ReplyGetResponse> replyList(int characterNow, int contentSeq);
 }

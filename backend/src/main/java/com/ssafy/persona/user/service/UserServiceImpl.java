@@ -13,14 +13,14 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	UserMapper userMapper;
-	
+
 	@Override
-	public UserGetResponse getUser(int userSeq) {
+	public UserGetResponse getUser(String userId) {
 		// user가 없다면
-		if(userMapper.seqIsValid(userSeq) < 1)
+		if(userMapper.seqIsValid(userId) < 1)
 			return (null);
 		// 해당 user 있음
-		return (userMapper.getUser(userSeq));
+		return (userMapper.getUser(userId));
 	}
 
 	@Override
@@ -77,5 +77,26 @@ public class UserServiceImpl implements UserService{
 	public int userLogin(User user) {
 		return (userMapper.userLogin(user));
 	}
+
+	@Override
+	public int getUserSeq(String userId) {
+		Integer tmp = userMapper.getUserSeq(userId);
+		if(tmp == null) return (0);
+		return (tmp);
+	}
+
+	@Override
+	public int emailIsValid(String userId) {
+		return (userMapper.emailIsValid(userId));
+	}
+
+	@Override
+	public String getUserEmail(String userId) {
+		return (userMapper.getUserEmail(userId));
+	}
+	
+	@Override
+	public int isValid(String userId){return (userMapper.isValid(userId));}
+
 
 }

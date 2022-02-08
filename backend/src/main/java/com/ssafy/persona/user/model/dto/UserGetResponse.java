@@ -14,11 +14,13 @@ public class UserGetResponse {
 	private String userId;
 	private String userEmail;
 	private String userBirth;
+	private int userCreatableCount;
 	
 	public UserGetResponse(User user) {
 		this.userSeq = user.getUserSeq();
 		this.userId =  user.getUserId();
 		this.userEmail = user.getUserEmail();
 		this.userBirth = user.getUserBirth();
+		this.userCreatableCount = user.getUserCreatableCount();
 	}
 }

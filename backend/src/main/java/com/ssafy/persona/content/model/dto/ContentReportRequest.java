@@ -1,6 +1,6 @@
 package com.ssafy.persona.content.model.dto;
 
-import com.ssafy.persona.character.model.Entity.Report;
+import com.ssafy.persona.content.model.entity.ContentReport;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,18 +11,16 @@ import lombok.ToString;
 @ToString
 public class ContentReportRequest {
 	private int reportingCharacter;
-	private int reportedCharacter;
+	private int reportedContent;
 	private int reportType;
-	private String reportContentType;
-	private int reportSeq;
+	private String reportText;
 	
-	public Report toReport() {
-		return Report.builder()
-					 .reportingCharacter(reportingCharacter)
-					 .reportedCharacter(reportedCharacter)
-					 .reportType(reportType)
-					 .reportContentType(reportContentType)
-					 .reportSeq(reportSeq)
-					 .build();
+	public ContentReport toContentReport() {
+		return ContentReport.builder()
+							.reportingCharacter(reportingCharacter)
+							.reportedContent(reportedContent)
+							.reportType(reportType)
+							.reportText(reportText)
+							.build();
 	}
 }

@@ -8,12 +8,12 @@ import com.ssafy.persona.character.model.dto.FollowerListRequest;
 import com.ssafy.persona.character.model.dto.FollowerListResponse;
 
 public interface FollowService {
-	int follow(FollowRequest fr);
+	int follow(FollowRequest request);
 
-	int unFollow(FollowRequest fr);
+	int unFollow(FollowRequest request);
 
-	List<FollowerListResponse> getFollowerList(FollowerListRequest flr);
+	List<FollowerListResponse> getFollowerList(FollowerListRequest request);
 
-	List<Integer> getFolloweeList(FolloweeListRequest flr);
+	List<Integer> getFolloweeList(FolloweeListRequest request);
 
 }
