@@ -88,7 +88,7 @@ function Alarm({ characterSlice }) {
       setOldAlarmList(res.data.filter((alarm) => alarm.alarmIsRead));
     });
   };
-
+  // 알람 에러 한번 체크하기
   const alarmClick = (alarmSeq, alarmType, targetSeq, targetNickname, e) => {
     e.preventDefault();
     // 신규 알림 -> 기존 알림으로 변경
@@ -119,11 +119,18 @@ function Alarm({ characterSlice }) {
         <div className="px-4 py-2 ml-4">신규 알림</div>
         {newAlarmList.map((alarm) => (
           <div className="px-4 py-2" key={alarm.alarmSeq}>
+            {/* 현재 링크 안걸려있음 */}
             <Link
               to=""
               className="text-sm text-gray-700 flex justify-center items-center"
               onClick={(e) => {
-                alarmClick(alarm.alarmType, alarm.targetSeq, alarm.targetNickname, e);
+                alarmClick(
+                  alarm.alarmSeq,
+                  alarm.alarmType,
+                  alarm.targetSeq,
+                  alarm.targetNickname,
+                  e
+                );
               }}
             >
               <CharacterImg imgWidth="50px" classes="mr-4" />
