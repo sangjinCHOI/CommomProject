@@ -28,27 +28,35 @@ function CharacterProfile({
 
   const follow = (followerSeq, e) => {
     e.preventDefault();
-    const data2 = {
+    const data = {
       followee: followerSeq,
       follower: characterSlice.characterSeq,
     };
-    Send.post("/character/follow", JSON.stringify(data2))
+    Send.post("/character/follow", JSON.stringify(data))
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           getCharacterProfile();
-          const alarmData = {
-            alarmDate: new Date().toISOString(),
-            // alarmIsRead: false,
-            // alarmText: `${followerNickname}님이 회원님을 팔로우하기 시작했습니다.`,
-            alarmType: 1,
-            characterSeq: followerSeq, // 상대방
-            relationTb: "tb_character",
-            targetSeq: characterSlice.characterSeq, // 본인 캐릭터or저장소or업적
-            // userSeq: 0
-          };
-          console.log(alarmData);
-          Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => console.log(res));
+          // 상대방 캐릭터 정보 가져와서
+          Send.get(`/character/${followerSeq}`).then((res) => {
+            const character = res.data;
+            // 팔로우 알람 보내기
+            if (character.followAlarm || character.alarmAllow) {
+              const alarmData = {
+                alarmDate: new Date().toISOString(),
+                // alarmIsRead: false,
+                // alarmText: `${followerNickname}님이 회원님을 팔로우하기 시작했습니다.`,
+                alarmType: 1,
+                characterSeq: followerSeq, // 상대방
+                relationTb: "tb_character",
+                targetSeq: characterSlice.characterSeq, // 본인 캐릭터or저장소or업적
+                // userSeq: 0
+              };
+              console.log(alarmData);
+              Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) =>
+                console.log(res)
+              );
+            }
+          });
         }
       })
       .catch((err) => console.log(err));
