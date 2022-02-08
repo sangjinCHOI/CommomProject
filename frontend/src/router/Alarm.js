@@ -89,7 +89,7 @@ function Alarm({ characterSlice }) {
     });
   };
 
-  const alarmClick = (alarmType, targetSeq, e) => {
+  const alarmClick = (alarmType, targetSeq, targetNickname, e) => {
     e.preventDefault();
     if (alarmType === 1) {
       // targetSeq === characterSeq
@@ -97,9 +97,9 @@ function Alarm({ characterSlice }) {
     } else if (2 <= alarmType <= 6) {
       // targetSeq === storageSeq
       // 내 저장소면 상관 없지만 상대방 저장소 가려면 닉네임도 필요한데 어떻게 찾아내지?
-      history.push(`../임시닉네임/storages/${targetSeq}`);
+      history.push(`../${targetNickname}/storages/${targetSeq}`);
     } else if (alarmType === 7) {
-      history.push(`../임시닉네임/achievement`);
+      history.push(`../${targetNickname}/achievement`);
     }
   };
 
@@ -120,7 +120,7 @@ function Alarm({ characterSlice }) {
               to=""
               className="text-sm text-gray-700 flex justify-center items-center"
               onClick={(e) => {
-                alarmClick(alarm.alarmType, alarm.targetSeq, e);
+                alarmClick(alarm.alarmType, alarm.targetSeq, alarm.targetNickname, e);
               }}
             >
               <CharacterImg imgWidth="50px" classes="mr-4" />
