@@ -89,8 +89,11 @@ function Alarm({ characterSlice }) {
     });
   };
 
-  const alarmClick = (alarmType, targetSeq, targetNickname, e) => {
+  const alarmClick = (alarmSeq, alarmType, targetSeq, targetNickname, e) => {
     e.preventDefault();
+    // 신규 알림 -> 기존 알림으로 변경
+    Send.get(`/character/alarm/${alarmSeq}`).then((res) => console.log(res));
+
     if (alarmType === 1) {
       // targetSeq === characterSeq
       Send.get(`/character/${targetSeq}`).then((res) => history.push(`../${res.data.nickname}`));
@@ -183,7 +186,13 @@ function Alarm({ characterSlice }) {
               to=""
               className="text-sm text-gray-700 flex justify-center items-center"
               onClick={(e) => {
-                alarmClick(alarm.alarmType, alarm.targetSeq, e);
+                alarmClick(
+                  alarm.alarmSeq,
+                  alarm.alarmType,
+                  alarm.targetSeq,
+                  alarm.targetNickname,
+                  e
+                );
               }}
             >
               <CharacterImg imgWidth="50px" classes="mr-4" />

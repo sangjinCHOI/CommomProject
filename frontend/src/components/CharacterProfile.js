@@ -36,6 +36,7 @@ function CharacterProfile({
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
+          getCharacterProfile();
           const alarmData = {
             alarmDate: new Date().toISOString(),
             // alarmIsRead: false,
