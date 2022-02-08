@@ -110,8 +110,9 @@ function Alarm({ characterSlice }) {
 
   const getAlarmList = () => {
     Send.get(`/character/alarms/${characterSlice.characterSeq}`).then((res) => {
-      setNewAlarmList(res.data.filter((alarm) => !alarm.alarmIsRead));
-      setOldAlarmList(res.data.filter((alarm) => alarm.alarmIsRead));
+      const alarmList = res.data.reverse();
+      setNewAlarmList(alarmList.filter((alarm) => !alarm.alarmIsRead));
+      setOldAlarmList(alarmList.filter((alarm) => alarm.alarmIsRead));
     });
   };
   // 알람 에러 한번 체크하기

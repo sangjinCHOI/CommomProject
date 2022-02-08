@@ -22,7 +22,7 @@ const useInput = (initialValue, validator) => {
       setValue(value);
     }
   };
-  return { value, onChange };
+  return { value, onChange, setValue };
 };
 
 function CharacterUpdate({ updateCharacter, location }) {
@@ -33,12 +33,10 @@ function CharacterUpdate({ updateCharacter, location }) {
   const history = useHistory();
 
   const characterSeq = location.state.characterSeq;
-  // const [character, setCharacter] = useState({});
   const getCharacter = () => {
     Send.get(`/character/${characterSeq}`).then((res) => {
-      // setCharacter(res.data);
       setNickname(res.data.nickname);
-      // introduction은 useInput으로 하면 렌더링 안되는 문제 있어서 추후 수정 예정
+      introduction.setValue(res.data.introduction);
     });
   };
 
@@ -72,7 +70,6 @@ function CharacterUpdate({ updateCharacter, location }) {
 
   return (
     <>
-      {introduction.value}
       <Link to="../characters/select">
         <span className="material-icons text-xl m-4 absolute top-0">arrow_back 취소</span>
       </Link>
