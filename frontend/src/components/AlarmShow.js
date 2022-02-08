@@ -87,17 +87,20 @@ function AlarmShow({ characterSlice }) {
     });
   };
 
-  const alarmClick = (alarmType, targetSeq, e) => {
+  const alarmClick = (alarmSeq, alarmType, targetSeq, targetNickname, e) => {
     e.preventDefault();
+    // 신규 알림 -> 기존 알림으로 변경
+    Send.get(`/character/alarm/${alarmSeq}`).then((res) => console.log(res));
+
     if (alarmType === 1) {
       // targetSeq === characterSeq
       Send.get(`/character/${targetSeq}`).then((res) => history.push(`../${res.data.nickname}`));
     } else if (2 <= alarmType <= 6) {
       // targetSeq === storageSeq
       // 내 저장소면 상관 없지만 상대방 저장소 가려면 닉네임도 필요함
-      history.push(`../임시닉네임/storages/${targetSeq}`);
+      history.push(`../${targetNickname}/storages/${targetSeq}`);
     } else if (alarmType === 7) {
-      history.push(`../임시닉네임/achievement`);
+      history.push(`../${targetNickname}/achievement`);
     }
   };
 
@@ -134,7 +137,13 @@ function AlarmShow({ characterSlice }) {
                 to=""
                 className="text-sm text-gray-700 flex justify-center items-center"
                 onClick={(e) => {
-                  alarmClick(alarm.alarmType, alarm.targetSeq, e);
+                  alarmClick(
+                    alarm.alarmSeq,
+                    alarm.alarmType,
+                    alarm.targetSeq,
+                    alarm.targetNickname,
+                    e
+                  );
                 }}
               >
                 <CharacterImg imgWidth="40px" classes="mr-4" />
@@ -146,68 +155,6 @@ function AlarmShow({ characterSlice }) {
             </div>
           </Menu.Item>
         ))}
-        {/* <Menu.Item>
-          <div className="px-4 py-2">
-            <Link to="" className="text-sm text-gray-700 flex justify-center items-center">
-              <CharacterImg imgWidth="40px" classes="mr-4" />
-              <div style={{ width: "220px" }}>초밥왕님이 회원님을 팔로우하기 시작했습니다.</div>
-            </Link>
-            <div className="flex justify-end mr-2" style={{ fontSize: "12px" }}>
-              1시간 전
-            </div>
-          </div>
-        </Menu.Item>
-        <Menu.Item>
-          <div className="px-4 py-2">
-            <Link to="" className="text-sm text-gray-700 flex justify-center items-center">
-              <CharacterImg
-                imgSrc="https://cdn2.thecatapi.com/images/cna.jpg"
-                imgWidth="40px"
-                classes="mr-4"
-              />
-              <div style={{ width: "220px" }}>
-                저장소 '불타는 요리 맛집'에 게시물이 삭제되었습니다.
-              </div>
-            </Link>
-            <div className="flex justify-end text-sm mr-2" style={{ fontSize: "12px" }}>
-              11시간 전
-            </div>
-          </div>
-        </Menu.Item>
-        <Menu.Item>
-          <div className="px-4 py-2">
-            <Link to="" className="text-sm text-gray-700 flex justify-center items-center">
-              <CharacterImg
-                imgSrc="https://cdn2.thecatapi.com/images/cna.jpg"
-                imgWidth="40px"
-                classes="mr-4"
-              />
-              <div style={{ width: "220px" }}>
-                저장소 '불타는 요리 맛집'에 게시물이 수정되었습니다.
-              </div>
-            </Link>
-            <div className="flex justify-end text-sm mr-2" style={{ fontSize: "12px" }}>
-              14시간 전
-            </div>
-          </div>
-        </Menu.Item>
-        <Menu.Item>
-          <div className="px-4 py-2">
-            <Link to="" className="text-sm text-gray-700 flex justify-center items-center">
-              <CharacterImg
-                imgSrc="https://cdn2.thecatapi.com/images/cna.jpg"
-                imgWidth="40px"
-                classes="mr-4"
-              />
-              <div style={{ width: "220px" }}>
-                저장소 '불타는 요리 맛집'에 게시물이 추가되었습니다.
-              </div>
-            </Link>
-            <div className="flex justify-end text-sm mr-2" style={{ fontSize: "12px" }}>
-              2일 전
-            </div>
-          </div>
-        </Menu.Item> */}
       </Menu.Items>
     </Menu>
   );
