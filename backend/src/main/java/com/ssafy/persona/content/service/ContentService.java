@@ -21,8 +21,8 @@ public interface ContentService {
 	ContentGetResponse contentGet(int characterNow, int contentSeq);
 	List<ContentGetResponse> contentList(int characterNow);
 	
-	boolean hashtagCreate(List<String> hashtag, int contentSeq);
-	boolean hashtagModify(List<String> hashtag, int contentSeq);
+	boolean hashtagCreate(String[] hashtag, int contentSeq);
+	boolean hashtagModify(String[] hashtag, int contentSeq);
 	List<String> hashtagGet(int contentSeq);
 	
 	boolean replyCreate(ReplyCreateRequest replyCreateRequest);
