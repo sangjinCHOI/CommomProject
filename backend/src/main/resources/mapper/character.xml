@@ -32,19 +32,19 @@
 	
 	<update id="updateAlarmStatus">
 		update tb_character set 
-		<if test="alarmAllow != null and alarmAllow != ''">
+		<if test="alarmAllow != null">
 			alarm_allow=#{alarmAllow},
 		</if>
-		<if test="likeAlarm != null and likeAlarm != ''">
+		<if test="likeAlarm != null">
 			like_alarm=#{likeAlarm},
 		</if>
-		<if test="replyAlarm != null and replyAlarm != ''">
+		<if test="replyAlarm != null">
 			reply_alarm=#{replyAlarm},
 		</if>
-		<if test="followAlarm != null and followAlarm != ''">
+		<if test="followAlarm != null">
 			follow_alarm=#{followAlarm},
 		</if>
-		<if test="modifyAlarm != null and modifyAlarm != ''">
+		<if test="modifyAlarm != null">
 			modify_alarm=#{modifyAlarm},
 		</if>
 		character_modified_date = now()
