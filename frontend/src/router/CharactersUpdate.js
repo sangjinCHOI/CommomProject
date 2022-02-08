@@ -1,5 +1,5 @@
 import { InputIcon, Textarea } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -33,6 +33,16 @@ function CharacterUpdate({ updateCharacter, location }) {
   const history = useHistory();
 
   const characterSeq = location.state.characterSeq;
+  const [character, setCharacter] = useState({});
+  const getCharacter = () => {
+    Send.get(`/character/${characterSeq}`).then((res) => {
+      setCharacter(res.data);
+    });
+  };
+
+  useEffect(() => {
+    getCharacter();
+  }, []);
 
   const characterUpdate = (e) => {
     e.preventDefault();
