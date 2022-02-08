@@ -36,11 +36,12 @@ function Follow({ characterSlice }) {
   const searchText = useInput("");
 
   const getFollowerList = () => {
+    console.log("getFollowerList 실행됨");
     const data = {
       followee: characterSlice.characterSeq,
       nickname: "",
     };
-    // setFollowerList([]);
+    setFollowerList([]); // 이게 있어야 코드 수정 후 저장할 때 중복으로 안가져옴
     Send.post("/character/followers", JSON.stringify(data)).then((res) => {
       res.data.forEach((follower) => {
         Send.get(`/character/${follower.follower}`).then((res) => {
@@ -55,11 +56,12 @@ function Follow({ characterSlice }) {
     });
   };
   const getFolloweeList = () => {
+    console.log("getFolloweeList 실행됨");
     const data = {
       follower: characterSlice.characterSeq,
       nickname: "",
     };
-    // setFolloweeList([]);
+    setFolloweeList([]); // 이게 있어야 코드 수정 후 저장할 때 중복으로 안가져옴
     Send.post("/character/followees", JSON.stringify(data)).then((res) => {
       res.data.forEach((followee) => {
         Send.get(`/character/${followee.followee}`).then((res) => {
