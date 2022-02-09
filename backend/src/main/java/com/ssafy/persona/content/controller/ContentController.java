@@ -178,13 +178,11 @@ public class ContentController {
 	}
 	
 	@ApiOperation(value = "content dislike", notes = "게시글 좋아요 취소, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@DeleteMapping("/content/dislike")
-	public ResponseEntity<String> contentDislike(@RequestBody @ApiParam(value = "게시글 좋아요 취소.", required = true) ContentLikeRequest contentLikeRequest) {
-		int contentSeq = contentLikeRequest.getContentSeq();
-		
+	@DeleteMapping("/content/like/{contentSeq}")
+	public ResponseEntity<String> contentDislike(@RequestParam @ApiParam(value = "게시글 좋아요 취소.", required = true) int characterSeq, @PathVariable int contentSeq) {
 		contentService.contentDislikeUpdate(contentSeq);
 		
-		if (contentService.contentDislike(contentLikeRequest)) {
+		if (contentService.contentDislike(characterSeq, contentSeq)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);

@@ -134,8 +134,8 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public boolean contentDislike(ContentLikeRequest contentLikeRequest) {
-		return likeMapper.contentDislike(contentLikeRequest) == 1;
+	public boolean contentDislike(int characterSeq, int contentSeq) {
+		return likeMapper.contentDislike(characterSeq, contentSeq) == 1;
 	}
 
 	@Override

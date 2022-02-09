@@ -26,7 +26,7 @@
 		where content_seq = #{contentSeq}
 	</update>
 	
-	<insert id="contentDislike" parameterType="contentLikeRequest">
+	<insert id="contentDislike" parameterType="int">
 		delete from tb_content_like
 		where content_seq = #{contentSeq} and character_seq = #{characterSeq}
 	</insert>

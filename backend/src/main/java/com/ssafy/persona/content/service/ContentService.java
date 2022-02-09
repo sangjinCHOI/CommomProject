@@ -44,7 +44,7 @@ public interface ContentService {
 	boolean contentLike(ContentLikeRequest contentLikeRequest);
 	void contentLikeUpdate(int contentSeq);
 	
-	boolean contentDislike(ContentLikeRequest contentLikeRequest);
+	boolean contentDislike(int characterSeq, int contentSeq);
 	void contentDislikeUpdate(int contentSeq);
 	
 	List<LikeListResponse> contentLikeList(int contentSeq);
