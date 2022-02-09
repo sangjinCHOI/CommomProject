@@ -16,11 +16,11 @@ public interface LikeMapper {
 
 	int contentLike(ContentLikeRequest contentLikeRequest);
 	void contentLikeUpdate(int contentSeq);
-	int contentDislike(ContentLikeRequest contentLikeRequest);
+	int contentDislike(int characterSeq, int contentSeq);
 	void contentDislikeUpdate(int contentSeq);
 	int replyLike(ReplyLikeRequest replyLikeRequest);
 	void replyLikeUpdate(int replySeq);
-	int replyDislike(ReplyLikeRequest replyLikeRequest);
+	int replyDislike(int characterSeq, int replySeq);
 	void replyDislikeUpdate(int replySeq);
 	
 
