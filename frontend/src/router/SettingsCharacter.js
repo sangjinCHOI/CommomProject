@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import Send from "../config/Send";
 import { useHistory } from "react-router-dom";
 import { update } from "../store/characterStore";
+import File from "../config/File";
 
 const useInput = (initialValue, validator) => {
   const [value, setValue] = useState(initialValue);
@@ -59,6 +60,8 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
     return totalByte;
   };
 
+  const [imgFile, setImgFile] = useState(null);
+
   // 닉네임만 Byte로 제한
   const nicknameMaxLen = (value) => convertByte(value) <= 16;
   const introductionMaxLen = (value) => value.length <= 50;
@@ -80,13 +83,18 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
   const [characterDeleteReason, setcharacterDeleteReason] = useState(0);
 
   const saveCharacter = () => {
+    const formData = new FormData();
+
     const data = {
       characterSeq: characterSlice.characterSeq,
       nickname: nickname.value,
       introduction: introduction.value,
       representativeAchievement: 0,
     };
-    Send.put("/character", JSON.stringify(data))
+    formData.append("file", imgFile);
+    formData.append("request", new Blob([JSON.stringify(data)], { type: "application/json" }));
+
+    File.put("/character", formData)
       .then((res) => {
         if (res.status == 200) {
           updateCharacter(data);
@@ -119,11 +127,16 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
     setcharacterDeleteReason(e.target.value);
   };
 
+  const imgChangeHandler = (propsImg) => {
+    setImgFile(propsImg);
+    console.log(propsImg);
+  };
+
   return (
     <>
       <div className="flex mx-10 mt-10">
         <div className="text-center text-md flex flex-col justify-evenly">
-          <CharacterImg underText="변경" />
+          <CharacterImg imgChangeHandler={imgChangeHandler} isChange={true} underText="변경" />
           <button onClick={(e) => setShowModal(true)}>캐릭터 삭제</button>
         </div>
         <div className="w-96 mx-auto mt-10 flex flex-col justify-center">

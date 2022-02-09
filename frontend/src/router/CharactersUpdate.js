@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
 import Send from "../config/Send";
+import File from "../config/File";
 
 import { update } from "../store/characterStore";
 
@@ -46,6 +47,8 @@ function CharacterUpdate({ updateCharacter, location }) {
     return totalByte;
   };
 
+  const [imgFile, setImgFile] = useState(null);
+
   // 닉네임만 Byte로 제한
   const nicknameMaxLen = (value) => convertByte(value) <= 16;
   const introductionMaxLen = (value) => value.length <= 50;
@@ -69,22 +72,37 @@ function CharacterUpdate({ updateCharacter, location }) {
 
   const characterUpdate = (e) => {
     e.preventDefault();
+    const formData = new FormData();
 
     const character = {
       characterSeq,
       introduction: introduction.value,
       nickname: nickname.value,
     };
+    formData.append("file", imgFile);
+    formData.append("request", new Blob([JSON.stringify(character)], { type: "application/json" }));
 
     updateCharacter({ character });
 
-    Send.put("/character", JSON.stringify(character))
+    // Send.put("/character", JSON.stringify(character))
+    //   .then(() => {
+    //     alert("캐릭터 수정이 완료되었습니다.");
+    //     history.push("../characters/select");
+    //   })
+    //   .catch((err) => console.log(err));
+    // history.push("../characters/select");
+    File.put("/character", formData)
       .then(() => {
         alert("캐릭터 수정이 완료되었습니다.");
         history.push("../characters/select");
       })
       .catch((err) => console.log(err));
     history.push("../characters/select");
+  };
+
+  const imgChangeHandler = (propsImg) => {
+    setImgFile(propsImg);
+    console.log(propsImg);
   };
 
   return (
@@ -97,9 +115,7 @@ function CharacterUpdate({ updateCharacter, location }) {
         alt="main_logo"
         className="mx-auto my-24 w-96"
       />
-
-      <CharacterImg isChange={true} underText="변경" />
-
+      <CharacterImg imgChangeHandler={imgChangeHandler} isChange={true} underText="변경" />
       <div className="w-96 mx-auto mt-8">
         <div className="bg-white rounded-lg">
           <InputIcon
