@@ -53,7 +53,7 @@ public interface ContentService {
 	boolean replyLike(ReplyLikeRequest replyLikeRequest);
 	void replyLikeUpdate(int replySeq);
 	
-	boolean replyDislike(ReplyLikeRequest replyLikeRequest);
+	boolean replyDislike(int characterSeq, int replySeq);
 	void replyDislikeUpdate(int replySeq);
 
 }

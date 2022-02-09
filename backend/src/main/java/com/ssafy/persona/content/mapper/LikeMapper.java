@@ -20,7 +20,7 @@ public interface LikeMapper {
 	void contentDislikeUpdate(int contentSeq);
 	int replyLike(ReplyLikeRequest replyLikeRequest);
 	void replyLikeUpdate(int replySeq);
-	int replyDislike(ReplyLikeRequest replyLikeRequest);
+	int replyDislike(int characterSeq, int replySeq);
 	void replyDislikeUpdate(int replySeq);
 	
 
