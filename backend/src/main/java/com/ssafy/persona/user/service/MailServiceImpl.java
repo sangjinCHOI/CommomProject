@@ -64,7 +64,7 @@ public class MailServiceImpl implements MailService{
 	
 			// EC2 올리면 서버 설정필요
 			imgContent = 
-					"<a href='http://localhost:8080/user/email/verify?userId="
+					"<a href='http://i6a506.p.ssafy.io//user/email/verify?userId="
 					+ userId 
 					+ "&authText="
 					+ authKey

@@ -42,7 +42,7 @@ import com.ssafy.persona.character.service.FollowService;
 import java.util.*;
 
 //@CrossOrigin(origins = { "*" }, maxAge = 6000)
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/character")
 public class CharacterController {
