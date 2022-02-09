@@ -100,7 +100,7 @@ const timeDifference = (time) => {
     let n = nowSecond + 60 - second;
     return `${n}초 전`;
   }
-  return `error`;
+  return `방금 전`;
 };
 
 function Alarm({ characterSlice }) {
