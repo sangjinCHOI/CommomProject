@@ -11,5 +11,4 @@ import com.ssafy.persona.character.model.dto.AchievementGetResponse;
 public interface AchievementMapper {
 
 	List<AchievementGetResponse> getAchievementList(AchievementGetRequest request);
-	
 }

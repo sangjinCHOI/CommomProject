@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ssafy.persona.character.mapper.CategoryMapper">
+
+	<select id="getCategoryList" resultType="CategoryGetResponse">
+		select 
+			character_category_number,
+			character_category_name
+		from tb_character_category 
+		where character_category_is_active = 1
+		<if test="searchText != null and searchText != ''">
+			AND character_category_name like CONCAT('%', #{searchText}, '%')
+		</if>
+		<choose>
+			<when test="order == 'number'">
+			 ORDER BY character_category_number ASC
+			 </when>
+			<when test="order == 'alphabet'">
+			 ORDER BY character_category_name ASC
+			 </when>
+		</choose>
+		
+	</select>
+
+</mapper>
