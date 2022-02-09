@@ -17,7 +17,7 @@ public interface ContentMapper {
 	List<ContentGetResponse> contentTagList(int characterNow, String tagText);
 	ContentGetResponse contentGet(int characterNow, int contentSeq);
 	List<ContentGetResponse> contentList(int characterNow);
-	int hashtagCreate(List<String> hashtag, int contentSeq);
-	int hashtagModify(List<String> hashtag, int contentSeq);
+	int hashtagCreate(String[] hashtag, int contentSeq);
+	int hashtagModify(String[] hashtag, int contentSeq);
 	List<String> hashtagGet(int contentSeq);
 }

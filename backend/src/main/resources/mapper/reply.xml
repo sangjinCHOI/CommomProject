@@ -25,7 +25,7 @@
 		from tb_reply_like
 		where reply_seq = tb_reply.reply_seq and character_seq = #{characterNow}) as replyIsLike, (select nickname from tb_character where character_seq = tb_reply.character_seq) as replyWriter
 		from tb_reply
-		where content_seq = #{contentSeq}
+		where content_seq = #{contentSeq} and reply_is_active = 1
 	</select>
 	
 </mapper>

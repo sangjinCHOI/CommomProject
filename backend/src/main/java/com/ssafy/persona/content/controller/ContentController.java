@@ -178,7 +178,7 @@ public class ContentController {
 	}
 	
 	@ApiOperation(value = "content dislike", notes = "게시글 좋아요 취소, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@DeleteMapping("/content/like")
+	@DeleteMapping("/content/dislike")
 	public ResponseEntity<String> contentDislike(@RequestBody @ApiParam(value = "게시글 좋아요 취소.", required = true) ContentLikeRequest contentLikeRequest) {
 		int contentSeq = contentLikeRequest.getContentSeq();
 		
@@ -231,7 +231,7 @@ public class ContentController {
 	
 	@ApiOperation(value = "hashtag create", notes = "hashtag 작성, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/content/tag/{contentSeq}")
-	public ResponseEntity<String> hashtagCreate(@RequestParam @ApiParam(value = "hashtag", required = true) List<String> hashtag, @PathVariable int contentSeq) {
+	public ResponseEntity<String> hashtagCreate(@RequestBody @ApiParam(value = "hashtag[]", required = true) String[] hashtag, @PathVariable int contentSeq) {
 		if (contentService.hashtagCreate(hashtag, contentSeq)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
@@ -240,7 +240,7 @@ public class ContentController {
 	
 	@ApiOperation(value = "hashtag modify", notes = "hashtag 수정, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping("/content/tag/{contentSeq}")
-	public ResponseEntity<String> hashtagModify(@RequestParam @ApiParam(value = "hashtag", required = true) List<String> hashtag, @PathVariable int contentSeq) {
+	public ResponseEntity<String> hashtagModify(@RequestBody @ApiParam(value = "hashtag[]", required = true) String[] hashtag, @PathVariable int contentSeq) {
 		contentService.hashtagModify(hashtag, contentSeq);
 		if (contentService.hashtagCreate(hashtag, contentSeq)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
