@@ -26,7 +26,7 @@ public class FileServiceImpl implements FileService{
 		LocalDate now = LocalDate.now();
 		 
 		// 폴더 명 지정 필요 + 폴더가 없다면 만들기
-		String path = "C:\\Users\\multicampus\\Desktop\\tmp\\" + now.getYear() + "\\" + now.getMonthValue() + "\\" + now.getDayOfMonth() + "\\";
+		String path = "\\home\\ubuntu\\files\\" + now.getYear() + "\\" + now.getMonthValue() + "\\" + now.getDayOfMonth() + "\\";
 		
 		File Folder = new File(path);
 		
