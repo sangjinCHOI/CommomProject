@@ -41,7 +41,7 @@ function CharactersCreate({ saveCharacter, location }) {
   };
 
   const [categorySeq, setCategorySeq] = useState(0);
-  const [nickname, setNickname] = useState("");
+  // const [nickname, setNickname] = useState("");
   const [imgFile, setimgFile] = useState(null);
 
   // 닉네임만 Byte로 제한
@@ -94,9 +94,9 @@ function CharactersCreate({ saveCharacter, location }) {
     //console.log(e.target.files[0]);
   };
 
-  const onNicknameHandler = (e) => {
-    setNickname(e.target.value);
-  };
+  // const onNicknameHandler = (e) => {
+  //   setNickname(e.target.value);
+  // };
 
   // const onNicknameHandler = (e) => {
   //   setNickname(e.target.value);
