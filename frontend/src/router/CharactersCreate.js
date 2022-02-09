@@ -7,6 +7,8 @@ import CharacterImg from "../components/CharacterImg";
 
 import { save } from "../store/characterStore";
 import Send from "../config/Send";
+import File from "../config/File";
+import axios from "axios";
 
 const useInput = (initialValue, validator) => {
   const [value, setValue] = useState(initialValue);
@@ -31,25 +33,27 @@ function CharactersCreate({ characterSlice, saveCharacter, location }) {
 
   const [categorySeq, setCategorySeq] = useState(0);
   const [nickname, setNickname] = useState("");
+  const [imgFile, setimgFile] = useState(null);
   const history = useHistory();
 
   const { userSeq, userId } = location.state;
 
   const characterSave = (e) => {
+    const formData = new FormData();
     e.preventDefault();
-    const data = {
+    const request = {
       userSeq,
       categorySeq: parseInt(categorySeq),
       nickname,
       introduction: introduction.value,
     };
-    console.log(data);
-    Send.post("/character", JSON.stringify(data))
+    formData.append("file", imgFile);
+    formData.append("request", new Blob([JSON.stringify(request)], { type: "application/json" }));
+
+    File.post("/character", formData)
       .then((res) => {
-        console.log(res);
         alert("캐릭터 생성이 완료되었습니다.");
         Send.get(`/character/characters/${userSeq}`).then((res) => {
-          console.log(res.data[res.data.length - 1]);
           saveCharacter(res.data[res.data.length - 1]);
           history.push({
             pathname: "../characters/select",
@@ -61,6 +65,11 @@ function CharactersCreate({ characterSlice, saveCharacter, location }) {
         });
       })
       .catch((err) => console.log(err));
+  };
+
+  const imgChangeHandler = (e) => {
+    setimgFile(e.target.files[0]);
+    console.log(e.target.files[0]);
   };
 
   const onNicknameHandler = (e) => {
@@ -76,29 +85,16 @@ function CharactersCreate({ characterSlice, saveCharacter, location }) {
       <Link to="../characters/select">
         <span className="material-icons text-xl m-4 absolute top-0">arrow_back 캐릭터 선택</span>
       </Link>
-      <img
-        src={require("../assets/images/main_logo.png")}
-        alt="main_logo"
-        className="mx-auto my-24 w-96"
-      />
+      <img src={require("../assets/images/main_logo.png")} alt="main_logo" className="mx-auto my-24 w-96" />
       <CharacterImg underText="변경" />
       <div className="w-96 mx-auto mt-8">
+        <input type="file" onChange={imgChangeHandler} />
         <div className="bg-white rounded-lg">
-          <InputIcon
-            type="text"
-            color="lightBlue"
-            outline={true}
-            iconName="edit"
-            placeholder="닉네임을 입력하세요."
-            onChange={onNicknameHandler}
-          />
+          <InputIcon type="text" color="lightBlue" outline={true} iconName="edit" placeholder="닉네임을 입력하세요." onChange={onNicknameHandler} />
         </div>
         <div className="bg-white rounded-lg text-gray-400">
           <div className="my-8">
-            <select
-              className="bg-white rounded-lg w-96 h-11 p-2 border border-gray-300 outline-sky-500 text-black"
-              onChange={onCategorySeqHandler}
-            >
+            <select className="bg-white rounded-lg w-96 h-11 p-2 border border-gray-300 outline-sky-500 text-black" onChange={onCategorySeqHandler}>
               <option className="rounded-lg h-10" value="0">
                 미정
               </option>
@@ -119,9 +115,7 @@ function CharactersCreate({ characterSlice, saveCharacter, location }) {
             className="mt-8"
             {...introduction} // value={introductionInput.value}
           />
-          <div className="absolute right-5 bottom-3 text-gray-400">
-            {introduction.value.length} / 50
-          </div>
+          <div className="absolute right-5 bottom-3 text-gray-400">{introduction.value.length} / 50</div>
         </div>
       </div>
       <div className="text-center text-2xl mt-16 flex justify-center">
