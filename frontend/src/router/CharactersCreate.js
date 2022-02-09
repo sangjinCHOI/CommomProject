@@ -210,7 +210,9 @@ function CharactersCreate({ saveCharacter, location }) {
         </Link>
       </div>
       <Modal active={showCategoryModal} toggler={() => setShowCategoryModal(false)}>
-        <ModalHeader toggler={() => setShowCategoryModal(false)}>카테고리 선택</ModalHeader>
+        <ModalHeader toggler={() => setShowCategoryModal(false)}>
+          <span>카테고리 선택</span>
+        </ModalHeader>
         <ModalBody>
           <div className="overflow-y-auto px-4 py-2" style={{ maxHeight: "300px", width: "640px" }}>
             {categories.map((category) => (
