@@ -50,12 +50,7 @@ function PwInquiry({ saveUser, userSlice }) {
       userId: _id,
     };
 
-    axios
-      .put("http://localhost:8082/user/email/", JSON.stringify(data), {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+    Send.put("/user/email", JSON.stringify(data))
       .then((data) => {
         if (data.status === 200) {
           history.push("./pw_inquiry/result");
