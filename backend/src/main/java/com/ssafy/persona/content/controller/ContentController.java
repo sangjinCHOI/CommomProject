@@ -178,7 +178,7 @@ public class ContentController {
 	}
 	
 	@ApiOperation(value = "content dislike", notes = "게시글 좋아요 취소, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@DeleteMapping("/content/like")
+	@DeleteMapping("/content/dislike")
 	public ResponseEntity<String> contentDislike(@RequestBody @ApiParam(value = "게시글 좋아요 취소.", required = true) ContentLikeRequest contentLikeRequest) {
 		int contentSeq = contentLikeRequest.getContentSeq();
 		
