@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Menu } from "@headlessui/react";
 import { Label } from "@material-tailwind/react";
@@ -102,7 +102,7 @@ const timeDifference = (time) => {
     let n = nowSecond + 60 - second;
     return `${n}초 전`;
   }
-  return `error`;
+  return `방금 전`;
 };
 
 function Content(props) {
