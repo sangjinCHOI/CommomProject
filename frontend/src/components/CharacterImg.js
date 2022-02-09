@@ -65,7 +65,7 @@ export default function CharacterImg({
       <div
         className={`${styles.center} ${classes}`}
         style={{
-          height: imgWidth,
+          // height: imgWidth,
           cursor: "pointer",
         }}
       >
@@ -73,12 +73,13 @@ export default function CharacterImg({
           id="profileImg"
           src={imgSrc}
           alt="user_img"
-          width={imgWidth}
           className={`rounded-full ${styles.profileWrapper} ${styles.ProfileImg} ${
             lock ? "bg-gray-400" : null
           }`}
           style={{
             border: "1px solid lightgray",
+            height: imgWidth,
+            width: imgWidth,
           }}
         />
       </div>
