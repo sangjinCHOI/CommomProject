@@ -20,7 +20,7 @@ public class Content {
 	@Column
 	private int characterSeq;
 	@Column
-	private int categorySeq;
+	private int categoryNumber;
 	@Column
 	private String contentText;
 	@Column

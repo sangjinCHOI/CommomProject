@@ -20,7 +20,7 @@ public class CharacterEntity {
 	@Column
 	private int userSeq;
 	@Column
-	private int categorySeq;
+	private int categoryNumber;
 	@Column
 	private String nickname;
 	@Column

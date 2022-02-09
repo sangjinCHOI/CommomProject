@@ -16,7 +16,7 @@ public class ContentGetResponse {
 	private boolean contentIsActive;
 	private boolean contentIsPublic;
 	private int characterSeq;
-	private int categorySeq;
+	private int categoryNumber;
 	private String contentText;
 	private int contentLike;
 	private int contentSave;
@@ -38,7 +38,7 @@ public class ContentGetResponse {
 		this.contentIsActive = content.isContentIsActive();
 		this.contentIsPublic = content.isContentIsPublic();
 		this.characterSeq = content.getCharacterSeq();
-		this.categorySeq = content.getCategorySeq();
+		this.categoryNumber = content.getCategoryNumber();
 		this.contentText = content.getContentText();
 		this.contentLike = content.getContentLike();
 		this.contentSave = content.getContentSave();

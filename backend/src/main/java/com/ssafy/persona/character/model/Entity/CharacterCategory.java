@@ -16,6 +16,8 @@ public class CharacterCategory {
 	@Id
 	private int characterCategorySeq;
 	@Column
+	private int characterCategoryNumber;
+	@Column
 	private String characterCategoryName;
 	@Column
 	private boolean characterCategoryIsActive;

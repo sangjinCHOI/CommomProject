@@ -179,12 +179,10 @@ public class ContentController {
 	
 	@ApiOperation(value = "content dislike", notes = "게시글 좋아요 취소, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("/content/like")
-	public ResponseEntity<String> contentDislike(@RequestBody @ApiParam(value = "게시글 좋아요 취소.", required = true) ContentLikeRequest contentLikeRequest) {
-		int contentSeq = contentLikeRequest.getContentSeq();
-		
+	public ResponseEntity<String> contentDislike(@RequestParam @ApiParam(value = "캐릭터 번호.", required = true) int characterSeq, @RequestParam @ApiParam(value = "게시글 번호.", required = true) int contentSeq) {
 		contentService.contentDislikeUpdate(contentSeq);
 		
-		if (contentService.contentDislike(contentLikeRequest)) {
+		if (contentService.contentDislike(characterSeq, contentSeq)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
@@ -205,12 +203,10 @@ public class ContentController {
 	
 	@ApiOperation(value = "reply dislike", notes = "댓글 좋아요 취소, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("/content/reply/like")
-	public ResponseEntity<String> replyDislike(@RequestBody @ApiParam(value = "댓글 좋아요 취소.", required = true) ReplyLikeRequest replyLikeRequest) {
-		int replySeq = replyLikeRequest.getReplySeq();
-		
+	public ResponseEntity<String> replyDislike(@RequestParam @ApiParam(value = "캐릭터 번호.", required = true) int characterSeq, @RequestParam @ApiParam(value = "댓글 번호.", required = true) int replySeq) {
 		contentService.replyDislikeUpdate(replySeq);
 		
-		if (contentService.replyDislike(replyLikeRequest)) {
+		if (contentService.replyDislike(characterSeq, replySeq)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);

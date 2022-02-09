@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.persona.character.model.dto.AlarmSettingUpdateRequest;
+import com.ssafy.persona.character.model.dto.CategoryGetResponse;
 import com.ssafy.persona.character.model.dto.CharacterCreatRequest;
 import com.ssafy.persona.character.model.dto.CharacterDeleteRequest;
 import com.ssafy.persona.character.model.dto.CharacterGetResponse;
@@ -30,4 +31,6 @@ public interface CharacterMapper {
 	int updateAlarmStatus(AlarmSettingUpdateRequest request);
 	
 	int checkCharacterNickname(String nickname);
+	
+	List<CategoryGetResponse> categoryList();
 }
