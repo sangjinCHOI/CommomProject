@@ -11,13 +11,13 @@ export default function CharacterImg({
   lock = false,
   isChange = false,
 }) {
-  const [clickShow, setClickShow] = useState(false);
+  const [isClick, setIsClick] = useState(false);
 
   const resetImage = () => {
     const previewImage = document.getElementById("profileImg");
     // 기본 이미지도 서버에 저장해야함!(require 이슈)
-    previewImage.src = "https://cdn2.thecatapi.com/images/MTcyMDExMw.jpg";
-    setClickShow(!clickShow);
+    previewImage.src = "https://cdn2.thecatapi.com/images/9gg.jpg";
+    setIsClick(!isClick);
   };
 
   const readImage = (input) => {
@@ -35,7 +35,7 @@ export default function CharacterImg({
       };
       // reader가 이미지 읽도록 하기
       reader.readAsDataURL(input.files[0]);
-      setClickShow(!clickShow);
+      setIsClick(!isClick);
     }
   };
 
@@ -85,15 +85,13 @@ export default function CharacterImg({
       <div className={`${styles.center}`}>
         {isChange ? (
           <div className={`p-2`}>
-            <div className="relative" onClick={() => setClickShow(!clickShow)}>
+            <div className="relative" onClick={() => setIsClick(!isClick)}>
               <div style={{ cursor: "pointer" }}>변경</div>
             </div>
-            {clickShow ? <ProfileClick /> : null}
+            {isClick ? <ProfileClick /> : null}
           </div>
         ) : (
-          <span className="text-center" style={{ maxWidth: "8rem" }}>
-            {underText}
-          </span>
+          <span className="text-center">{underText}</span>
         )}
       </div>
     </div>

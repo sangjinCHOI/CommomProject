@@ -26,7 +26,20 @@ const useInput = (initialValue, validator) => {
 };
 
 function CharactersCreate({ saveCharacter, location }) {
-  const nicknameMaxLen = (value) => value.length <= 16;
+  const convertByte = (word) => {
+    let totalByte = 0;
+    for (let i = 0; i < word.length; i++) {
+      if (escape(word[i]).length > 4) {
+        totalByte += 2;
+      } else {
+        totalByte += 1;
+      }
+    }
+    return totalByte;
+  };
+
+  // 닉네임만 Byte로 제한
+  const nicknameMaxLen = (value) => convertByte(value) <= 16;
   const introductionMaxLen = (value) => value.length <= 50;
   const nickname = useInput("", nicknameMaxLen);
   const introduction = useInput("", introductionMaxLen);

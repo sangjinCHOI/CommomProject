@@ -26,8 +26,20 @@ const useInput = (initialValue, validator) => {
 };
 
 function CharacterUpdate({ updateCharacter, location }) {
-  // 한글 8자, 영어 12자정도?로 나눠서 구분해야할 듯
-  const nicknameMaxLen = (value) => value.length <= 16;
+  const convertByte = (word) => {
+    let totalByte = 0;
+    for (let i = 0; i < word.length; i++) {
+      if (escape(word[i]).length > 4) {
+        totalByte += 2;
+      } else {
+        totalByte += 1;
+      }
+    }
+    return totalByte;
+  };
+
+  // 닉네임만 Byte로 제한
+  const nicknameMaxLen = (value) => convertByte(value) <= 16;
   const introductionMaxLen = (value) => value.length <= 50;
   const nickname = useInput("", nicknameMaxLen);
   const introduction = useInput("", introductionMaxLen);
