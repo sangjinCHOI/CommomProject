@@ -11,7 +11,6 @@ import com.ssafy.persona.storage.model.dto.ContentStoreListResponse;
 import com.ssafy.persona.storage.model.dto.ContentStoreRequest;
 import com.ssafy.persona.storage.model.dto.StorageContentListRequest;
 import com.ssafy.persona.storage.model.dto.StorageCreateRequest;
-import com.ssafy.persona.storage.model.dto.StorageDeleteRequest;
 import com.ssafy.persona.storage.model.dto.StorageListResponse;
 import com.ssafy.persona.storage.model.dto.StorageModifyRequest;
 
@@ -52,8 +51,8 @@ public class StorageServiceImpl implements StorageService {
 	}
 
 	@Override
-	public boolean contentUnstore(ContentStoreRequest contentStoreRequest) {
-		return storageMapper.contentUnstore(contentStoreRequest) == 1;
+	public boolean contentUnstore(int characterSeq, int contentSeq) {
+		return storageMapper.contentUnstore(characterSeq, contentSeq) == 1;
 	}
 
 	@Override

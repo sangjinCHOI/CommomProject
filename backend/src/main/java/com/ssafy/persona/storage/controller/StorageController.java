@@ -20,7 +20,6 @@ import com.ssafy.persona.storage.model.dto.ContentStoreListResponse;
 import com.ssafy.persona.storage.model.dto.ContentStoreRequest;
 import com.ssafy.persona.storage.model.dto.StorageContentListRequest;
 import com.ssafy.persona.storage.model.dto.StorageCreateRequest;
-import com.ssafy.persona.storage.model.dto.StorageDeleteRequest;
 import com.ssafy.persona.storage.model.dto.StorageListResponse;
 import com.ssafy.persona.storage.model.dto.StorageModifyRequest;
 import com.ssafy.persona.storage.service.StorageService;
@@ -87,12 +86,10 @@ public class StorageController {
 	
 	@ApiOperation(value = "content unstore", notes = "게시글 저장 취소, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("/content/unstore")
-	public ResponseEntity<String> contentUnstore(@RequestBody @ApiParam(value = "게시글 저장 취소.", required = true) ContentStoreRequest contentStoreRequest) {
-		int contentSeq = contentStoreRequest.getContentSeq();
-		
+	public ResponseEntity<String> contentUnstore(@RequestParam @ApiParam(value = "캐릭터 번호.", required = true) int characterSeq, @RequestParam @ApiParam(value = "게시글 번호.", required = true) int contentSeq) {
 		storageService.contentUnstoreUpdate(contentSeq);
 		
-		if (storageService.contentUnstore(contentStoreRequest)) {
+		if (storageService.contentUnstore(characterSeq, contentSeq)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);

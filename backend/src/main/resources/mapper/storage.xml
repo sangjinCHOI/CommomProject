@@ -36,9 +36,9 @@
 		where content_seq = #{contentSeq}
 	</update>
 	
-	<delete id="contentUnstore" parameterType="contentStoreRequest">
+	<delete id="contentUnstore" parameterType="int">
 		delete from tb_stored_content
-		where content_seq = #{contentSeq} and storage_seq = #{storageSeq}
+		where content_seq = #{contentSeq} and character_seq = #{characterSeq}
 	</delete>
 	
 	<update id="contentUnstoreUpdate" parameterType="int">

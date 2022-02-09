@@ -7,7 +7,6 @@ import com.ssafy.persona.storage.model.dto.ContentStoreListResponse;
 import com.ssafy.persona.storage.model.dto.ContentStoreRequest;
 import com.ssafy.persona.storage.model.dto.StorageContentListRequest;
 import com.ssafy.persona.storage.model.dto.StorageCreateRequest;
-import com.ssafy.persona.storage.model.dto.StorageDeleteRequest;
 import com.ssafy.persona.storage.model.dto.StorageListResponse;
 import com.ssafy.persona.storage.model.dto.StorageModifyRequest;
 
@@ -21,7 +20,7 @@ public interface StorageService {
 	boolean contentStore(ContentStoreRequest contentStoreRequest);
 	void contentStoreUpdate(int contentSeq);
 	
-	boolean contentUnstore(ContentStoreRequest contentStoreRequest);
+	boolean contentUnstore(int characterSeq, int contentSeq);
 	void contentUnstoreUpdate(int contentSeq);
 	
 	List<ContentStoreListResponse> contentStoreList(int contentSeq);
