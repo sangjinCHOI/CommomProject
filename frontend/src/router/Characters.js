@@ -46,10 +46,10 @@ function Characters({ userSlice, saveCharacter }) {
           to={{
             pathname: isLock
               ? null
-              : isManagement
-              ? "../characters/update"
               : isExist
-              ? "../"
+              ? isManagement
+                ? "../characters/update"
+                : "../"
               : "../characters/create",
             state: {
               characterSeq,
