@@ -1,5 +1,12 @@
-import { InputIcon, Textarea } from "@material-tailwind/react";
-import { useState } from "react";
+import {
+  InputIcon,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Textarea,
+} from "@material-tailwind/react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -28,6 +35,23 @@ const useInput = (initialValue, validator) => {
 };
 
 function CharactersCreate({ saveCharacter, location }) {
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const getCategories = () => {
+    Send.get("/character/categorys").then((res) => {
+      setCategories(res.data);
+      const initialCategory = res.data.find((category) => category.characterCategoryNumber === 0);
+      setSelectedCategory([
+        initialCategory.characterCategoryName,
+        initialCategory.characterCategoryNumber,
+      ]);
+    });
+  };
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   const convertByte = (word) => {
     let totalByte = 0;
     for (let i = 0; i < word.length; i++) {
@@ -40,7 +64,7 @@ function CharactersCreate({ saveCharacter, location }) {
     return totalByte;
   };
 
-  const [categorySeq, setCategorySeq] = useState(0);
+  // const [categorySeq, setCategorySeq] = useState(0);
   // const [nickname, setNickname] = useState("");
   const [imgFile, setimgFile] = useState(null);
 
@@ -63,7 +87,8 @@ function CharactersCreate({ saveCharacter, location }) {
     const request = {
       userSeq,
       // categorySeq: parseInt(categorySeq),
-      categoryNumber: categoryNumber,
+      // categoryNumber: categoryNumber,
+      categoryNumber: selectedCategory[1],
       nickname: nickname.value,
       introduction: introduction.value,
     };
@@ -114,7 +139,11 @@ function CharactersCreate({ saveCharacter, location }) {
       <Link to="../characters/select">
         <span className="material-icons text-xl m-4 absolute top-0">arrow_back 캐릭터 선택</span>
       </Link>
-      <img src={require("../assets/images/main_logo.png")} alt="main_logo" className="mx-auto my-24 w-96" />
+      <img
+        src={require("../assets/images/main_logo.png")}
+        alt="main_logo"
+        className="mx-auto my-24 w-96"
+      />
       <CharacterImg underText="변경" />
       <div className="w-96 mx-auto mt-8">
         <input type="file" onChange={imgChangeHandler} />
@@ -137,7 +166,15 @@ function CharactersCreate({ saveCharacter, location }) {
         </div>
         <div className="bg-white rounded-lg text-gray-400">
           <div className="my-8">
-            <select
+            <div
+              className="bg-white rounded-lg w-96 h-11 p-2 border border-gray-300 outline-sky-500 text-gray-700"
+              onClick={() => setShowCategoryModal(true)}
+              style={{ cursor: "pointer" }}
+            >
+              <span className="mx-1">{selectedCategory[0]}</span>
+            </div>
+
+            {/* <select
               className="bg-white rounded-lg w-96 h-11 p-2 border border-gray-300 outline-sky-500 text-black"
               // onChange={onCategorySeqHandler}
               onChange={onCategoryNumberHandler}
@@ -151,7 +188,7 @@ function CharactersCreate({ saveCharacter, location }) {
               <option className="rounded-lg h-10" value="2">
                 개발
               </option>
-            </select>
+            </select> */}
           </div>
         </div>
         <div className="relative bg-white rounded-lg" style={{ height: 185 }}>
@@ -162,7 +199,9 @@ function CharactersCreate({ saveCharacter, location }) {
             className="mt-8"
             {...introduction} // value={introductionInput.value}
           />
-          <div className="absolute right-5 bottom-3 text-gray-400">{introduction.value.length} / 50</div>
+          <div className="absolute right-5 bottom-3 text-gray-400">
+            {introduction.value.length} / 50
+          </div>
         </div>
       </div>
       <div className="text-center text-2xl mt-16 flex justify-center">
@@ -170,6 +209,27 @@ function CharactersCreate({ saveCharacter, location }) {
           <span>캐릭터 저장</span>
         </Link>
       </div>
+      <Modal active={showCategoryModal} toggler={() => setShowCategoryModal(false)}>
+        <ModalHeader toggler={() => setShowCategoryModal(false)}>카테고리 선택</ModalHeader>
+        <ModalBody>
+          <div className="overflow-y-auto px-4 py-2" style={{ maxHeight: "300px", width: "640px" }}>
+            {categories.map((category) => (
+              <button
+                className="m-2 p-1"
+                onClick={() => {
+                  setSelectedCategory([
+                    category.characterCategoryName,
+                    category.characterCategoryNumber,
+                  ]);
+                  setShowCategoryModal(!showCategoryModal);
+                }}
+              >
+                {category.characterCategoryName}
+              </button>
+            ))}
+          </div>
+        </ModalBody>
+      </Modal>
     </>
   );
 }
