@@ -97,7 +97,7 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
     File.put("/character", formData)
       .then((res) => {
         if (res.status == 200) {
-          updateCharacter(data);
+          updateCharacter({ data });
           alert("변경되었습니다!");
           history.push("../..");
         } else alert("다시 로그인해주세요");

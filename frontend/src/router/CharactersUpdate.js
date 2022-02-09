@@ -78,6 +78,7 @@ function CharacterUpdate({ updateCharacter, location }) {
       characterSeq,
       introduction: introduction.value,
       nickname: nickname.value,
+      representativeAchievement: 0,
     };
     formData.append("file", imgFile);
     formData.append("request", new Blob([JSON.stringify(character)], { type: "application/json" }));
