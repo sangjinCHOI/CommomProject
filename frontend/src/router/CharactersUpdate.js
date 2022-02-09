@@ -26,6 +26,14 @@ const useInput = (initialValue, validator) => {
 };
 
 function CharacterUpdate({ updateCharacter, location }) {
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const getCategories = () => {
+    Send.get("/character/categorys").then((res) => {
+      const nowCategory = res.data.find((category) => category.characterCategoryNumber === 0);
+      setSelectedCategory([nowCategory.characterCategoryName, nowCategory.characterCategoryNumber]);
+    });
+  };
+
   const convertByte = (word) => {
     let totalByte = 0;
     for (let i = 0; i < word.length; i++) {
@@ -44,19 +52,18 @@ function CharacterUpdate({ updateCharacter, location }) {
   const nickname = useInput("", nicknameMaxLen);
   const introduction = useInput("", introductionMaxLen);
 
-  // const [nickname, setNickname] = useState("");
   const history = useHistory();
 
   const characterSeq = location.state.characterSeq;
   const getCharacter = () => {
     Send.get(`/character/${characterSeq}`).then((res) => {
-      // setNickname(res.data.nickname);
       nickname.setValue(res.data.nickname);
       introduction.setValue(res.data.introduction);
     });
   };
 
   useEffect(() => {
+    getCategories();
     getCharacter();
   }, []);
 
@@ -80,10 +87,6 @@ function CharacterUpdate({ updateCharacter, location }) {
     history.push("../characters/select");
   };
 
-  // const onNicknameHandler = (e) => {
-  //   setNickname(e.target.value);
-  // };
-
   return (
     <>
       <Link to="../characters/select">
@@ -105,17 +108,15 @@ function CharacterUpdate({ updateCharacter, location }) {
             outline={true}
             iconName="edit"
             placeholder="닉네임을 입력하세요."
-            // onChange={onNicknameHandler}
-            // value={nickname}
             {...nickname}
           />
         </div>
         <div className="bg-white rounded-lg text-gray-400 my-8">
           <input
             type="text"
-            value="요리"
+            value={selectedCategory[0] || ""}
             disabled
-            className="my-3 block w-full px-3 py-2 border border-slate-300 rounded-md disabled:bg-slate-300 disabled:text-black-500"
+            className="my-3 block w-full px-3 py-2 border border-slate-300 rounded-md disabled:bg-slate-200 text-gray-400"
           />
         </div>
         <div className="relative bg-white rounded-lg" style={{ height: 185 }}>

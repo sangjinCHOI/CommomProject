@@ -35,6 +35,18 @@ const useInput = (initialValue, validator) => {
 
 function SettingsCharacter({ characterSlice, updateCharacter }) {
   const [showModal, setShowModal] = React.useState(false);
+
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const getCategories = () => {
+    Send.get("/character/categorys").then((res) => {
+      const nowCategory = res.data.find((category) => category.characterCategoryNumber === 0);
+      setSelectedCategory([nowCategory.characterCategoryName, nowCategory.characterCategoryNumber]);
+    });
+  };
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   const convertByte = (word) => {
     let totalByte = 0;
     for (let i = 0; i < word.length; i++) {
@@ -120,9 +132,9 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
           </div>
           <input
             type="text"
-            value="요리"
+            value={selectedCategory[0] || ""}
             disabled
-            className="my-3 block w-full px-3 py-2 border border-slate-300 rounded-md disabled:bg-slate-300 disabled:text-black-500"
+            className="my-3 block w-full px-3 py-2 border border-slate-300 rounded-md disabled:bg-slate-200 text-gray-400"
           />
           <div className="relative bg-white rounded-md rounded-lg" style={{ height: 185 }}>
             <Textarea
