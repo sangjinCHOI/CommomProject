@@ -52,9 +52,8 @@ function ContentCreate(props) {
   };
   const postContent = () => {
     const data = {
-      categorySeq: props.characterSlice.categorySeq,
-      // characterSeq: props.characterSlice.characterSeq,
-      characterNumber: props.characterSlice.characterNumber,
+      categoryNumber: props.characterSlice.categoryNumber,
+      characterSeq: props.characterSlice.characterSeq,
       contentIsMedia: false,
       contentIsPublic: isPublic,
       contentText: contentText,
@@ -93,17 +92,11 @@ function ContentCreate(props) {
           onChange={onTagChange}
           onKeyPress={onSubmit}
         />
-        <div
-          className="bg-slate-100 h-9 rounded mb-1 h-fit flex flex-wrap items-center"
-          style={{ width: 574 }}
-        >
+        <div className="bg-slate-100 h-9 rounded mb-1 h-fit flex flex-wrap items-center" style={{ width: 574 }}>
           {tags.map((item, id) => (
             <div className="m-1 px-2 rounded-md bg-purple-200 flex" key={id}>
               {item}
-              <button
-                className="material-icons text-sm ml-2 pt-0.5"
-                onClick={() => onRemoveTags(id)}
-              >
+              <button className="material-icons text-sm ml-2 pt-0.5" onClick={() => onRemoveTags(id)}>
                 close
               </button>
             </div>
