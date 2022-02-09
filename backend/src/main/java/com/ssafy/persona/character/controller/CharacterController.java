@@ -87,12 +87,22 @@ public class CharacterController {
 		return new ResponseEntity<Map<String, String>>(result, status);
 	}
 	@PutMapping("")
-	public ResponseEntity<Map<String, String>> modifyCharacter(@RequestBody CharacterUpdateRequest request) {
+	public ResponseEntity<Map<String, String>> modifyCharacter(@RequestPart(value="file", required = false) MultipartFile[] file,
+															   @RequestPart(value="request") SendCharacterUpdateRequest request) {
+
+		CharacterUpdateRequest sendRequest = new CharacterUpdateRequest(
+				file,
+				request.getCharacterSeq(),
+				request.getNickname(),
+				request.getIntroduction(),
+				request.getRepresentativeAchievement()
+		);
+
 		logger.info("캐릭터 정보 수정 요청 - 요청 캐릭터 번호: " + request.getCharacterSeq());
 		String message = "";
 		HttpStatus status = null;
 
-		if (characterService.update(request) == 1) {
+		if (characterService.update(sendRequest) == 1) {
 			message = SUCCESS;
 			status = HttpStatus.OK;
 		} else {
