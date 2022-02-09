@@ -31,8 +31,8 @@ public class StorageServiceImpl implements StorageService {
 	}
 
 	@Override
-	public boolean storageDelete(StorageDeleteRequest storageDeleteRequest) {
-		return storageMapper.storageDelete(storageDeleteRequest) == 1;
+	public boolean storageDelete(int storageSeq) {
+		return storageMapper.storageDelete(storageSeq) == 1;
 	}
 
 	@Override

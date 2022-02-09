@@ -14,7 +14,7 @@ import com.ssafy.persona.storage.model.dto.StorageModifyRequest;
 public interface StorageService {
 	boolean storageCreate(StorageCreateRequest storageCreateRequest);
 	boolean storageModify(StorageModifyRequest storageModifyRequest);
-	boolean storageDelete(StorageDeleteRequest storageDeleteRequest);
+	boolean storageDelete(int storageSeq);
 	
 	List<StorageListResponse> storageList(int characterSeq);
 	
