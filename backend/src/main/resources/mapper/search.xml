@@ -11,6 +11,7 @@
 		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_character'
 		AND f.relation_seq = c.character_seq
 		where c.nickname like CONCAT(#{text}, '%')
+		AND c.character_active = 1
 	</select>
 
 	<select id="searchContent" resultType="SearchContentResponse">
@@ -23,6 +24,9 @@
 		AND f.relation_seq = c.character_seq
 		JOIN tb_content co ON co.character_seq = c.character_seq
 		where co.content_text like CONCAT('%', #{text}, '%')
+		AND co.content_is_public = 1
+		AND co.content_is_active = 1
+		AND c.character_active = 1
 		ORDER BY co.content_created_date DESC
 	</select>
 
@@ -34,6 +38,7 @@
 		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_storage'
 		AND f.relation_seq = s.storage_seq
 		where s.storage_name like CONCAT('%', #{text}, '%')
+		AND s.storage_public = 1
 	</select>
 
 	<select id="searchTag" resultType="SearchTagResponse">

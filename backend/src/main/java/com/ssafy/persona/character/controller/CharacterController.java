@@ -1,25 +1,20 @@
 package com.ssafy.persona.character.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.ssafy.persona.character.model.AlarmEnum;
+import com.ssafy.persona.character.model.dto.*;
+import com.ssafy.persona.character.service.AchievementService;
+import com.ssafy.persona.character.service.AlarmService;
+import com.ssafy.persona.character.service.CharacterService;
+import com.ssafy.persona.character.service.FollowService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.persona.character.model.AlarmEnum;
 import com.ssafy.persona.character.model.dto.AchievementGetRequest;
@@ -27,6 +22,8 @@ import com.ssafy.persona.character.model.dto.AchievementGetResponse;
 import com.ssafy.persona.character.model.dto.AlarmCreateRequest;
 import com.ssafy.persona.character.model.dto.AlarmGetResponse;
 import com.ssafy.persona.character.model.dto.AlarmSettingUpdateRequest;
+import com.ssafy.persona.character.model.dto.CategoryGetRequest;
+import com.ssafy.persona.character.model.dto.CategoryGetResponse;
 import com.ssafy.persona.character.model.dto.CharacterCreatRequest;
 import com.ssafy.persona.character.model.dto.CharacterDeleteRequest;
 import com.ssafy.persona.character.model.dto.CharacterGetResponse;
@@ -38,10 +35,14 @@ import com.ssafy.persona.character.model.dto.FollowerListRequest;
 import com.ssafy.persona.character.model.dto.FollowerListResponse;
 import com.ssafy.persona.character.service.AchievementService;
 import com.ssafy.persona.character.service.AlarmService;
+import com.ssafy.persona.character.service.CategoryService;
 import com.ssafy.persona.character.service.CharacterService;
 import com.ssafy.persona.character.service.FollowService;
 
-@CrossOrigin(origins = { "*" }, maxAge = 6000)
+import java.util.*;
+
+//@CrossOrigin(origins = { "*" }, maxAge = 6000)
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/character")
 public class CharacterController {
@@ -58,14 +59,23 @@ public class CharacterController {
 	private AlarmService alarmService;
 	@Autowired
 	private AchievementService achievementService;
+	@Autowired
+	private CategoryService categoryService;
 
 	@PostMapping("")
-	public ResponseEntity<Map<String, String>> createCharacter(@RequestBody CharacterCreatRequest request) {
+	public ResponseEntity<Map<String, String>> createCharacter(@RequestPart(value="file", required = false) MultipartFile[] file,
+															   @RequestPart(value="request") SendCharacterCreateRequest request) {
 		logger.info("캐릭터 생성 요청 - 요청 유저 번호: " + request.getUserSeq());
 		String message = "";
 		HttpStatus status = null;
-
-		if (characterService.regist(request) == 1) {
+		CharacterCreatRequest sendRequest = new CharacterCreatRequest(
+								0,
+										file,
+										request.getUserSeq(),
+										request.getCategorySeq(),
+										request.getNickname(),
+										request.getIntroduction());
+		if (characterService.regist(sendRequest) == 1) {
 			message = SUCCESS;
 			status = HttpStatus.OK;
 		} else {
@@ -76,7 +86,6 @@ public class CharacterController {
 		result.put("message", message);
 		return new ResponseEntity<Map<String, String>>(result, status);
 	}
-
 	@PutMapping("")
 	public ResponseEntity<Map<String, String>> modifyCharacter(@RequestBody CharacterUpdateRequest request) {
 		logger.info("캐릭터 정보 수정 요청 - 요청 캐릭터 번호: " + request.getCharacterSeq());
@@ -169,6 +178,16 @@ public class CharacterController {
 
 	}
 
+	@GetMapping("/categorys")
+	public ResponseEntity<List<CategoryGetResponse>> categoryList(@RequestParam(required = false) String order, @RequestParam(required = false) String searchText) {
+		CategoryGetRequest param = CategoryGetRequest.builder()
+				.order(order)
+				.searchText(searchText)
+				.build();
+		
+		return new ResponseEntity<List<CategoryGetResponse>>(categoryService.getCategoryList(param), HttpStatus.OK);
+	} 
+	
 	@PutMapping("/achievement/representative")
 	public ResponseEntity<Map<String, String>> updateRepresentativeAchievement(
 			@RequestBody CharacterUpdateRequest cur) {

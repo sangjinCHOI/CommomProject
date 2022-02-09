@@ -19,7 +19,7 @@ public class CharacterGetResponse {
 	private String userId;
 	private String filePath;
 	private String nickname;
-	private int categorySeq;
+	private int categoryNumber;
 	private String introduction;
 	private int representativeAchievement;
 	private boolean alarmAllow;

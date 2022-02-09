@@ -7,9 +7,11 @@
 
 	<insert id="regist" useGeneratedKeys="true" keyProperty="characterSeq">
 		insert into tb_character
-			(user_seq, category_seq, nickname, introduction, character_created_date)
+			(user_seq, category_number, nickname, introduction, character_created_date,
+			alarm_allow, like_alarm, reply_alarm, follow_alarm, modify_alarm)
 		values
-			(#{userSeq}, #{categorySeq}, #{nickname}, #{introduction}, now())
+			(#{userSeq}, #{categoryNumber}, #{nickname}, #{introduction}, now(),
+			true, true, true, true, true)
 	</insert>
 
 	<update id="update">
@@ -27,6 +29,27 @@
 		character_modified_date = now()
 		where character_seq=#{characterSeq}
 	</update>
+	
+	<update id="updateAlarmStatus">
+		update tb_character set 
+		<if test="alarmAllow != null">
+			alarm_allow=#{alarmAllow},
+		</if>
+		<if test="likeAlarm != null">
+			like_alarm=#{likeAlarm},
+		</if>
+		<if test="replyAlarm != null">
+			reply_alarm=#{replyAlarm},
+		</if>
+		<if test="followAlarm != null">
+			follow_alarm=#{followAlarm},
+		</if>
+		<if test="modifyAlarm != null">
+			modify_alarm=#{modifyAlarm},
+		</if>
+		character_modified_date = now()
+		where character_seq=#{characterSeq}
+	</update>
 
 	<update id="delete">
 		update tb_character set
@@ -37,7 +60,7 @@
 	</update>
 
 	<select id="detail"	resultType="CharacterGetResponse">
-		select c.character_seq, c.user_seq, c.nickname, c.category_seq, c.introduction, 
+		select c.character_seq, c.user_seq, c.nickname, c.category_number, c.introduction, 
 			c.representative_achievement, c.alarm_allow, c.like_alarm, c.reply_alarm,
 			c.follow_alarm, c.modify_alarm, c.reported_time, character_active,
 			c.character_created_date, c.character_modified_date,
@@ -65,7 +88,7 @@
 			(SELECT count(*) FROM tb_follow where follower = c.character_seq) AS followee_count
 		from
 			tb_character c
-		LEFT OUTER JOIN tb_character_category ca ON ca.character_category_seq = c.category_seq
+		LEFT OUTER JOIN tb_character_category ca ON ca.character_category_number = c.category_number
 		LEFT OUTER JOIN tb_file achieveFile ON achieveFile.relation_tb = 'tb_achievement'
 		AND achieveFile.relation_seq = c.representative_achievement
 		LEFT OUTER JOIN tb_file characterFile ON characterFile.relation_tb = 'tb_character'
@@ -76,7 +99,7 @@
 
 	<select id="list"
 		resultType="com.ssafy.persona.character.model.dto.CharacterGetResponse">
-		select c.character_seq, c.user_seq, c.nickname, c.category_seq, c.introduction, 
+		select c.character_seq, c.user_seq, c.nickname, c.category_number, c.introduction, 
 			c.representative_achievement, c.alarm_allow, c.like_alarm, c.reply_alarm,
 			c.follow_alarm, c.modify_alarm, c.reported_time, character_active,
 			c.character_created_date, c.character_modified_date,
