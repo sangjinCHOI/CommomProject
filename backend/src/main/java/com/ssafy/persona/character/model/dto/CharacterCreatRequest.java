@@ -13,7 +13,7 @@ public class CharacterCreatRequest {
 	private int characterSeq;
 	private MultipartFile[] myfile;
 	private int userSeq;
-	private int categorySeq;
+	private int categoryNumber;
 	private String nickname;
 	private String introduction;
 	
