@@ -5,6 +5,7 @@ import CharacterImg from "./CharacterImg";
 import { connect } from "react-redux";
 import Send from "../config/Send";
 import { useHistory } from "react-router-dom";
+import styles from "./AlarmShow.module.css";
 
 // DB상에서 현재 한국 시간을 기준으로 불러옴
 const timeDifference = (time) => {
@@ -27,6 +28,16 @@ const timeDifference = (time) => {
     .split(":")
     .map((item) => parseInt(item));
 
+  // n일 전을 정확하게 구하기 위한 presetMonth
+  let presetMonth = 30;
+  if (month === 2) {
+    presetMonth = 28;
+  } else if ([1, 3, 5, 7, 8, 10, 12].includes(month)) {
+    presetMonth = 31;
+  } else {
+    presetMonth = 30;
+  }
+
   // n년 전
   if (nowYear > year) {
     if ((nowYear - year) * 12 + nowMonth - month >= 12) {
@@ -41,6 +52,9 @@ const timeDifference = (time) => {
       let n = nowMonth - month;
       return `${n}달 전`;
     }
+  } else if (nowMonth < month) {
+    let n = nowMonth + 12 - month;
+    return `${n}달 전`;
   }
   // n일 전
   if (nowDay > day) {
@@ -48,6 +62,9 @@ const timeDifference = (time) => {
       let n = nowDay - day;
       return `${n}일 전`;
     }
+  } else if (nowDay < day && nowMonth % 12 === (month + 1) % 12) {
+    let n = nowDay + presetMonth - day;
+    return `${n}일 전`;
   }
   // n시간 전
   if (nowHour > hour) {
@@ -55,6 +72,9 @@ const timeDifference = (time) => {
       let n = nowHour - hour;
       return `${n}시간 전`;
     }
+  } else if (nowHour < hour && nowDay % 30 === (day + 1) % 30) {
+    let n = nowHour + 24 - hour;
+    return `${n}시간 전`;
   }
   // n분 전
   if (nowMinute > minute) {
@@ -62,10 +82,16 @@ const timeDifference = (time) => {
       let n = nowMinute - minute;
       return `${n}분 전`;
     }
+  } else if (nowMinute < minute && nowHour % 24 === (hour + 1) % 24) {
+    let n = nowMinute + 60 - minute;
+    return `${n}분 전`;
   }
   // n초 전
   if (nowSecond > second) {
     let n = nowSecond - second;
+    return `${n}초 전`;
+  } else if (nowSecond < second && nowMinute % 60 === (minute + 1) % 60) {
+    let n = nowSecond + 60 - second;
     return `${n}초 전`;
   }
   // n초 전 예외
@@ -73,7 +99,7 @@ const timeDifference = (time) => {
     let n = nowSecond + 60 - second;
     return `${n}초 전`;
   }
-  return `미래에서 오셨나요?`;
+  return `방금 전`;
 };
 
 function AlarmShow({ characterSlice }) {
@@ -82,8 +108,8 @@ function AlarmShow({ characterSlice }) {
 
   const getAlarmList = () => {
     Send.get(`/character/alarms/${characterSlice.characterSeq}`).then((res) => {
-      setAlarmList(res.data.filter((alarm) => !alarm.alarmIsRead));
-      console.log(res.data);
+      const alarmList = res.data.reverse();
+      setAlarmList(alarmList.filter((alarm) => !alarm.alarmIsRead));
     });
   };
 
@@ -129,32 +155,34 @@ function AlarmShow({ characterSlice }) {
         </div>
         <hr className="mb-1 mx-2" />
         <div className="px-4 py-2">신규 알림</div>
-        {alarmList.map((alarm) => (
-          <Menu.Item key={alarm.alarmSeq}>
-            <div className="px-4 py-2">
-              {/* 현재 링크 안걸려있음 */}
-              <Link
-                to=""
-                className="text-sm text-gray-700 flex justify-center items-center"
-                onClick={(e) => {
-                  alarmClick(
-                    alarm.alarmSeq,
-                    alarm.alarmType,
-                    alarm.targetSeq,
-                    alarm.targetNickname,
-                    e
-                  );
-                }}
-              >
-                <CharacterImg imgWidth="40px" classes="mr-4" />
-                <div style={{ width: "220px" }}>{alarm.alarmText}</div>
-              </Link>
-              <div className="flex justify-end mr-2" style={{ fontSize: "12px" }}>
-                {timeDifference(alarm.alarmDate)}
+        <div className={`overflow-y-auto ${styles.box}`} style={{ maxHeight: "550px" }}>
+          {alarmList.map((alarm) => (
+            <Menu.Item key={alarm.alarmSeq}>
+              <div className="px-4 py-2">
+                {/* 현재 링크 안걸려있음 */}
+                <Link
+                  to=""
+                  className="text-sm text-gray-700 flex justify-center items-center"
+                  onClick={(e) => {
+                    alarmClick(
+                      alarm.alarmSeq,
+                      alarm.alarmType,
+                      alarm.targetSeq,
+                      alarm.targetNickname,
+                      e
+                    );
+                  }}
+                >
+                  <CharacterImg imgWidth="40px" classes="mr-4" />
+                  <div style={{ width: "220px" }}>{alarm.alarmText}</div>
+                </Link>
+                <div className="flex justify-end mr-2" style={{ fontSize: "12px" }}>
+                  {timeDifference(alarm.alarmDate)}
+                </div>
               </div>
-            </div>
-          </Menu.Item>
-        ))}
+            </Menu.Item>
+          ))}
+        </div>
       </Menu.Items>
     </Menu>
   );

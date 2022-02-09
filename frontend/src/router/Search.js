@@ -4,17 +4,13 @@ import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
 import MainCard from "../components/MainCard";
 import StorageCardSmall from "../components/StorageCardSmall";
-
+import styles from "./Search.module.css";
 import Send from "../config/Send";
 
 export default function Search({ location }) {
   const queryString = location.search;
   const params = new URLSearchParams(queryString);
   const query = params.get("query");
-
-  const tempText =
-    "맛있는 김치찌개 만드는 방법을 알아봅시다. 요리를 처음 하시는 분들은 그냥 따라만 오셔도 됩니다!!";
-  const nicknameList = ["닉네임은여덟글자", "테스트1", "TEST2", "테3"];
 
   const colorList = [
     "blueGray",
@@ -148,26 +144,28 @@ export default function Search({ location }) {
           </Link>
         </div>
         <MainCard classes="border rounded-2xl py-3">
-          {contentsResultList.map((content) => (
-            <div className="flex justify-center items-center py-2" key={content[1].contentSeq}>
-              <Link to={`../${content[0].nickname}`}>
-                <div className="m-3">
-                  <CharacterImg imgWidth="50px" />
+          <div className={`overflow-y-auto ${styles.box}`} style={{ maxHeight: "550px" }}>
+            {contentsResultList.map((content) => (
+              <div className="flex justify-center items-center py-2" key={content[1].contentSeq}>
+                <Link to={`../${content[0].nickname}`}>
+                  <div className="m-3">
+                    <CharacterImg imgWidth="50px" />
+                  </div>
+                </Link>
+                <div style={{ width: "126px" }}>
+                  <Link to={`../${content[0].nickname}`}>{content[0].nickname}</Link>
                 </div>
-              </Link>
-              <div style={{ width: "126px" }}>
-                <Link to={`../${content[0].nickname}`}>{content[0].nickname}</Link>
+                {/* 현재 해당 내용으로 이동 아직 미구현 */}
+                <Link to="">
+                  <div className="ml-8 w-72">
+                    {content[1].contentText.length < 40
+                      ? content[1].contentText
+                      : content[1].contentText.slice(0, 40) + ".."}
+                  </div>
+                </Link>
               </div>
-              {/* 현재 해당 내용으로 이동 아직 미구현 */}
-              <Link to="">
-                <div className="ml-8 w-72">
-                  {content[1].contentText.length < 40
-                    ? content[1].contentText
-                    : content[1].contentText.slice(0, 40) + ".."}
-                </div>
-              </Link>
-            </div>
-          ))}
+            ))}
+          </div>
         </MainCard>
       </div>
 

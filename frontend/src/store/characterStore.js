@@ -5,7 +5,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialCharacterState = {
   alarmAllow: false,
-  categorySeq: 0,
+  // categorySeq: 0,
+  categoryNumber: 0,
   characterActive: true,
   characterCreatedDate: null,
   characterModifiedDate: null,
@@ -28,7 +29,8 @@ const characterSlice = createSlice({
   reducers: {
     save: (state, action) => {
       state.alarmAllow = action.payload.alarmAllow;
-      state.categorySeq = action.payload.categorySeq;
+      // state.categorySeq = action.payload.categorySeq;
+      state.categoryNumber = action.payload.categoryNumber;
       state.characterActive = action.payload.characterActive;
       state.characterCreatedDate = action.payload.characterCreatedDate;
       state.characterModifiedDate = action.payload.characterModifiedDate;
@@ -48,8 +50,17 @@ const characterSlice = createSlice({
       state.introduction = action.payload.introduction;
       state.nickname = action.payload.nickname;
     },
+    alarmUpdate: (state, action) => {
+      console.log("알람 업데이트 완료", action.payload);
+      state.characterSeq = action.payload.characterSeq;
+      state.alarmAllow = action.payload.alarmAllow;
+      state.likeAlarm = action.payload.likeAlarm;
+      state.replyAlarm = action.payload.replyAlarm;
+      state.followAlarm = action.payload.followAlarm;
+      state.modifyAlarm = action.payload.modifyAlarm;
+    },
   },
 });
 
-export const { save, update } = characterSlice.actions;
+export const { save, update, alarmUpdate } = characterSlice.actions;
 export default characterSlice.reducer;

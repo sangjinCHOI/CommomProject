@@ -46,10 +46,10 @@ function Characters({ userSlice, saveCharacter }) {
           to={{
             pathname: isLock
               ? null
-              : isManagement
-              ? "../characters/update"
               : isExist
-              ? "../"
+              ? isManagement
+                ? "../characters/update"
+                : "../"
               : "../characters/create",
             state: {
               characterSeq,
@@ -117,7 +117,7 @@ function Characters({ userSlice, saveCharacter }) {
           isManagement={isManagement}
           isExist={characterLen >= 2 ? true : false}
           isLock={userCreatableCount >= 2 ? false : true}
-          imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
+          imgSrc="https://cdn2.thecatapi.com/images/kFemmj2_z.jpg"
           characterSeq={characterLen >= 2 ? characterList[1].characterSeq : null}
         />
       </div>
@@ -127,7 +127,7 @@ function Characters({ userSlice, saveCharacter }) {
           isManagement={isManagement}
           isExist={characterLen >= 3 ? true : false}
           isLock={userCreatableCount >= 3 ? false : true}
-          imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
+          imgSrc="https://cdn2.thecatapi.com/images/9gg.jpg"
           characterSeq={characterLen >= 3 ? characterList[2].characterSeq : null}
         />
         <Character

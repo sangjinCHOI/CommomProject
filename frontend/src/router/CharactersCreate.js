@@ -27,13 +27,33 @@ const useInput = (initialValue, validator) => {
   return { value, onChange };
 };
 
-function CharactersCreate({ characterSlice, saveCharacter, location }) {
-  const maxLen = (value) => value.length <= 50;
-  const introduction = useInput("", maxLen);
+function CharactersCreate({ saveCharacter, location }) {
+  const convertByte = (word) => {
+    let totalByte = 0;
+    for (let i = 0; i < word.length; i++) {
+      if (escape(word[i]).length > 4) {
+        totalByte += 2;
+      } else {
+        totalByte += 1;
+      }
+    }
+    return totalByte;
+  };
 
+<<<<<<< HEAD
   const [categorySeq, setCategorySeq] = useState(0);
   const [nickname, setNickname] = useState("");
   const [imgFile, setimgFile] = useState(null);
+=======
+  // 닉네임만 Byte로 제한
+  const nicknameMaxLen = (value) => convertByte(value) <= 16;
+  const introductionMaxLen = (value) => value.length <= 50;
+  const nickname = useInput("", nicknameMaxLen);
+  const introduction = useInput("", introductionMaxLen);
+
+  // const [categorySeq, setCategorySeq] = useState(0);
+  const [categoryNumber, setCategoryNumber] = useState(0);
+>>>>>>> 11cb5d83869c73e41b8c4c812ac7a51792d3d674
   const history = useHistory();
 
   const { userSeq, userId } = location.state;
@@ -43,8 +63,9 @@ function CharactersCreate({ characterSlice, saveCharacter, location }) {
     e.preventDefault();
     const request = {
       userSeq,
-      categorySeq: parseInt(categorySeq),
-      nickname,
+      // categorySeq: parseInt(categorySeq),
+      categoryNumber: parseInt(categoryNumber),
+      nickname: nickname.value,
       introduction: introduction.value,
     };
     formData.append("file", imgFile);
@@ -67,6 +88,7 @@ function CharactersCreate({ characterSlice, saveCharacter, location }) {
       .catch((err) => console.log(err));
   };
 
+<<<<<<< HEAD
   const imgChangeHandler = (e) => {
     setimgFile(e.target.files[0]);
     console.log(e.target.files[0]);
@@ -75,9 +97,17 @@ function CharactersCreate({ characterSlice, saveCharacter, location }) {
   const onNicknameHandler = (e) => {
     setNickname(e.target.value);
   };
+=======
+  // const onNicknameHandler = (e) => {
+  //   setNickname(e.target.value);
+  // };
+>>>>>>> 11cb5d83869c73e41b8c4c812ac7a51792d3d674
 
-  const onCategorySeqHandler = (e) => {
-    setCategorySeq(e.target.value);
+  // const onCategorySeqHandler = (e) => {
+  //   setCategorySeq(e.target.value);
+  // };
+  const onCategoryNumberHandler = (e) => {
+    setCategoryNumber(e.target.value);
   };
 
   return (
@@ -90,11 +120,31 @@ function CharactersCreate({ characterSlice, saveCharacter, location }) {
       <div className="w-96 mx-auto mt-8">
         <input type="file" onChange={imgChangeHandler} />
         <div className="bg-white rounded-lg">
+<<<<<<< HEAD
           <InputIcon type="text" color="lightBlue" outline={true} iconName="edit" placeholder="닉네임을 입력하세요." onChange={onNicknameHandler} />
         </div>
         <div className="bg-white rounded-lg text-gray-400">
           <div className="my-8">
             <select className="bg-white rounded-lg w-96 h-11 p-2 border border-gray-300 outline-sky-500 text-black" onChange={onCategorySeqHandler}>
+=======
+          <InputIcon
+            type="text"
+            color="lightBlue"
+            outline={true}
+            iconName="edit"
+            placeholder="닉네임을 입력하세요."
+            // onChange={onNicknameHandler}
+            {...nickname}
+          />
+        </div>
+        <div className="bg-white rounded-lg text-gray-400">
+          <div className="my-8">
+            <select
+              className="bg-white rounded-lg w-96 h-11 p-2 border border-gray-300 outline-sky-500 text-black"
+              // onChange={onCategorySeqHandler}
+              onChange={onCategoryNumberHandler}
+            >
+>>>>>>> 11cb5d83869c73e41b8c4c812ac7a51792d3d674
               <option className="rounded-lg h-10" value="0">
                 미정
               </option>

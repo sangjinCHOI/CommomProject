@@ -1,3 +1,23 @@
 .customRadius {
   border-radius: 4px !important;
 }
+
+.clickFollowBtn:active {
+  transform: translateY(-4px);
+  background-color: skyblue;
+}
+
+.clickAchievementBtn:active {
+  transform: translateY(-4px);
+  background-color: mediumseagreen;
+}
+
+.clickSubcharacterBtn:active {
+  transform: translateY(-4px);
+  background-color: burlywood;
+}
+
+.clickProfileBtn:active {
+  transform: translateY(-4px);
+  background-color: rosybrown;
+}

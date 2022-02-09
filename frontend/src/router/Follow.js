@@ -108,20 +108,31 @@ function Follow({ characterSlice }) {
       followee: followerSeq,
       follower: characterSlice.characterSeq,
     };
+    // 팔로우 알람 보내기
     Send.post("/character/follow", JSON.stringify(data))
       .then((res) => {
         if (res.status === 200) {
-          const alarmData = {
-            alarmDate: new Date().toISOString(),
-            // alarmIsRead: false,
-            // alarmText: `${followerNickname}님이 회원님을 팔로우하기 시작했습니다.`,
-            alarmType: 1,
-            characterSeq: followerSeq, // 상대방
-            relationTb: "tb_character",
-            targetSeq: characterSlice.characterSeq, // 본인 캐릭터or저장소or업적
-            // userSeq: 0
-          };
-          Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => console.log(res));
+          // 상대방 캐릭터 정보 가져와서
+          Send.get(`/character/${followerSeq}`).then((res) => {
+            const character = res.data;
+            // 팔로우 알람 보내기
+            if (character.followAlarm || character.alarmAllow) {
+              const alarmData = {
+                alarmDate: new Date().toISOString(),
+                // alarmIsRead: false,
+                // alarmText: `${followerNickname}님이 회원님을 팔로우하기 시작했습니다.`,
+                alarmType: 1,
+                characterSeq: followerSeq, // 상대방
+                relationTb: "tb_character",
+                targetSeq: characterSlice.characterSeq, // 본인 캐릭터or저장소or업적
+                // userSeq: 0
+              };
+              console.log(alarmData);
+              Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) =>
+                console.log(res)
+              );
+            }
+          });
         }
       })
       .catch((err) => console.log(err));
@@ -213,7 +224,10 @@ function Follow({ characterSlice }) {
                                 follow(follower[0].characterSeq, e);
                               }}
                             >
-                              <Label color="lightBlue" className={`${styles.customRadius}`}>
+                              <Label
+                                color="lightBlue"
+                                className={`${styles.customRadius} ${styles.clickFollowBtn}`}
+                              >
                                 팔로우
                               </Label>
                             </Link>
@@ -226,7 +240,7 @@ function Follow({ characterSlice }) {
                             >
                               <Label
                                 color="blueGray"
-                                className={`ml-3 mr-2 ${styles.customRadius}`}
+                                className={`ml-3 mr-2 ${styles.customRadius} ${styles.clickUnfollowBtn}`}
                               >
                                 삭제
                               </Label>
@@ -260,7 +274,10 @@ function Follow({ characterSlice }) {
                               follow(follower[0].characterSeq, e);
                             }}
                           >
-                            <Label color="lightBlue" className={`${styles.customRadius}`}>
+                            <Label
+                              color="lightBlue"
+                              className={`${styles.customRadius} ${styles.clickFollowBtn}`}
+                            >
                               팔로우
                             </Label>
                           </Link>
@@ -271,7 +288,10 @@ function Follow({ characterSlice }) {
                               deleteFollow(follower[0].characterSeq, e);
                             }}
                           >
-                            <Label color="blueGray" className={`ml-3 mr-2 ${styles.customRadius}`}>
+                            <Label
+                              color="blueGray"
+                              className={`ml-3 mr-2 ${styles.customRadius} ${styles.clickUnfollowBtn}`}
+                            >
                               삭제
                             </Label>
                           </Link>
@@ -306,7 +326,10 @@ function Follow({ characterSlice }) {
                             unfollow(followee.characterSeq, e);
                           }}
                         >
-                          <Label color="blueGray" className={`${styles.customRadius}`}>
+                          <Label
+                            color="blueGray"
+                            className={`${styles.customRadius} ${styles.clickUnfollowBtn}`}
+                          >
                             언팔로우
                           </Label>
                         </Link>
@@ -337,7 +360,10 @@ function Follow({ characterSlice }) {
                           unfollow(followee.characterSeq, e);
                         }}
                       >
-                        <Label color="blueGray" className={`${styles.customRadius}`}>
+                        <Label
+                          color="blueGray"
+                          className={`${styles.customRadius} ${styles.clickUnfollowBtn}`}
+                        >
                           언팔로우
                         </Label>
                       </Link>

@@ -28,27 +28,35 @@ function CharacterProfile({
 
   const follow = (followerSeq, e) => {
     e.preventDefault();
-    const data2 = {
+    const data = {
       followee: followerSeq,
       follower: characterSlice.characterSeq,
     };
-    Send.post("/character/follow", JSON.stringify(data2))
+    Send.post("/character/follow", JSON.stringify(data))
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           getCharacterProfile();
-          const alarmData = {
-            alarmDate: new Date().toISOString(),
-            // alarmIsRead: false,
-            // alarmText: `${followerNickname}님이 회원님을 팔로우하기 시작했습니다.`,
-            alarmType: 1,
-            characterSeq: followerSeq, // 상대방
-            relationTb: "tb_character",
-            targetSeq: characterSlice.characterSeq, // 본인 캐릭터or저장소or업적
-            // userSeq: 0
-          };
-          console.log(alarmData);
-          Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => console.log(res));
+          // 상대방 캐릭터 정보 가져와서
+          Send.get(`/character/${followerSeq}`).then((res) => {
+            const character = res.data;
+            // 팔로우 알람 보내기
+            if (character.followAlarm || character.alarmAllow) {
+              const alarmData = {
+                alarmDate: new Date().toISOString(),
+                // alarmIsRead: false,
+                // alarmText: `${followerNickname}님이 회원님을 팔로우하기 시작했습니다.`,
+                alarmType: 1,
+                characterSeq: followerSeq, // 상대방
+                relationTb: "tb_character",
+                targetSeq: characterSlice.characterSeq, // 본인 캐릭터or저장소or업적
+                // userSeq: 0
+              };
+              console.log(alarmData);
+              Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) =>
+                console.log(res)
+              );
+            }
+          });
         }
       })
       .catch((err) => console.log(err));
@@ -92,19 +100,27 @@ function CharacterProfile({
           </div>
         </div>
 
-        <div className="text-sm w-80 h-7">{characterProfile.introduction}</div>
+        <div className="w-80 h-7" style={{ fontSize: "13px" }}>
+          {characterProfile.introduction}
+        </div>
         {isMe ? (
           <div className="mt-3">
             <div className="inline-block px-2">
               <Link to={`../${nickname}/achievement`}>
-                <Label color="blueGray" className={`${styles.customRadius}`}>
+                <Label
+                  color="green"
+                  className={`${styles.customRadius} ${styles.clickAchievementBtn}`}
+                >
                   업적 보기
                 </Label>
               </Link>
             </div>
             <div className="inline-block px-2">
               <Link to="../characters/select">
-                <Label color="blueGray" className={`${styles.customRadius}`}>
+                <Label
+                  color="orange"
+                  className={`${styles.customRadius} ${styles.clickSubcharacterBtn}`}
+                >
                   부캐 보기
                 </Label>
               </Link>
@@ -118,7 +134,7 @@ function CharacterProfile({
                   },
                 }}
               >
-                <Label color="blueGray" className={`${styles.customRadius}`}>
+                <Label color="brown" className={`${styles.customRadius} ${styles.clickProfileBtn}`}>
                   프로필 편집
                 </Label>
               </Link>
@@ -128,7 +144,10 @@ function CharacterProfile({
           <div className="mt-2">
             <div className="inline-block px-2">
               <Link to={`../${nickname}/achievement`}>
-                <Label color="blueGray" className={`${styles.customRadius}`}>
+                <Label
+                  color="green"
+                  className={`${styles.customRadius} ${styles.clickAchievementBtn}`}
+                >
                   업적 보기
                 </Label>
               </Link>
@@ -140,7 +159,10 @@ function CharacterProfile({
                   follow(characterProfile.characterSeq, e);
                 }}
               >
-                <Label color="lightBlue" className={`${styles.customRadius}`}>
+                <Label
+                  color="lightBlue"
+                  className={`${styles.customRadius} ${styles.clickFollowBtn}`}
+                >
                   팔로우
                 </Label>
               </Link>

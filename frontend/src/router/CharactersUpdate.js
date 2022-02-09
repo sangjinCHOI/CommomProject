@@ -22,23 +22,37 @@ const useInput = (initialValue, validator) => {
       setValue(value);
     }
   };
-  return { value, onChange };
+  return { value, onChange, setValue };
 };
 
 function CharacterUpdate({ updateCharacter, location }) {
-  const maxLen = (value) => value.length <= 50;
-  const introduction = useInput("", maxLen);
+  const convertByte = (word) => {
+    let totalByte = 0;
+    for (let i = 0; i < word.length; i++) {
+      if (escape(word[i]).length > 4) {
+        totalByte += 2;
+      } else {
+        totalByte += 1;
+      }
+    }
+    return totalByte;
+  };
 
-  const [nickname, setNickname] = useState("");
+  // 닉네임만 Byte로 제한
+  const nicknameMaxLen = (value) => convertByte(value) <= 16;
+  const introductionMaxLen = (value) => value.length <= 50;
+  const nickname = useInput("", nicknameMaxLen);
+  const introduction = useInput("", introductionMaxLen);
+
+  // const [nickname, setNickname] = useState("");
   const history = useHistory();
 
   const characterSeq = location.state.characterSeq;
-  // const [character, setCharacter] = useState({});
   const getCharacter = () => {
     Send.get(`/character/${characterSeq}`).then((res) => {
-      // setCharacter(res.data);
-      setNickname(res.data.nickname);
-      // introduction은 useInput으로 하면 렌더링 안되는 문제 있어서 추후 수정 예정
+      // setNickname(res.data.nickname);
+      nickname.setValue(res.data.nickname);
+      introduction.setValue(res.data.introduction);
     });
   };
 
@@ -52,7 +66,7 @@ function CharacterUpdate({ updateCharacter, location }) {
     const character = {
       characterSeq,
       introduction: introduction.value,
-      nickname,
+      nickname: nickname.value,
     };
 
     updateCharacter({ character });
@@ -66,13 +80,12 @@ function CharacterUpdate({ updateCharacter, location }) {
     history.push("../characters/select");
   };
 
-  const onNicknameHandler = (e) => {
-    setNickname(e.target.value);
-  };
+  // const onNicknameHandler = (e) => {
+  //   setNickname(e.target.value);
+  // };
 
   return (
     <>
-      {introduction.value}
       <Link to="../characters/select">
         <span className="material-icons text-xl m-4 absolute top-0">arrow_back 취소</span>
       </Link>
@@ -81,7 +94,9 @@ function CharacterUpdate({ updateCharacter, location }) {
         alt="main_logo"
         className="mx-auto my-24 w-96"
       />
-      <CharacterImg underText="변경" />
+
+      <CharacterImg isChange={true} underText="변경" />
+
       <div className="w-96 mx-auto mt-8">
         <div className="bg-white rounded-lg">
           <InputIcon
@@ -90,8 +105,9 @@ function CharacterUpdate({ updateCharacter, location }) {
             outline={true}
             iconName="edit"
             placeholder="닉네임을 입력하세요."
-            onChange={onNicknameHandler}
-            value={nickname}
+            // onChange={onNicknameHandler}
+            // value={nickname}
+            {...nickname}
           />
         </div>
         <div className="bg-white rounded-lg text-gray-400 my-8">

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ClosingAlert } from "@material-tailwind/react";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "@material-tailwind/react";
 import Send from "../config/Send";
 
 function ContentCreate(props) {
@@ -10,7 +10,9 @@ function ContentCreate(props) {
   const [tags, setTags] = useState([]);
   const onTagChange = (e) => setTag(e.target.value);
   const onSubmit = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
+    if (e.charCode === 124) {
+      e.preventDefault();
+    } else if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       if (tag === "") {
         return;
@@ -23,6 +25,12 @@ function ContentCreate(props) {
   };
   const onRemoveTags = (index) => {
     setTags(tags.filter((tag, tagIndex) => index != tagIndex));
+  };
+
+  // 태그 작성
+  const postTags = (tags, contentSeq) => {
+    const hashtag = tags;
+    Send.post(`/content/tag/${contentSeq}`, JSON.stringify(hashtag));
   };
 
   // 모달
@@ -40,19 +48,19 @@ function ContentCreate(props) {
   };
   const handleIsPublic = (e) => {
     setIsPublic(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
   const postContent = () => {
     const data = {
-      categorySeq: props.characterSlice.categorySeq,
+      categoryNumber: props.characterSlice.categoryNumber,
       characterSeq: props.characterSlice.characterSeq,
       contentIsMedia: false,
       contentIsPublic: isPublic,
       contentText: contentText,
     };
     Send.post("/content", JSON.stringify(data)).then((res) => {
-      console.log(res.data);
       history.push("");
+      postTags(tags, res.data.content_seq);
     });
   };
 

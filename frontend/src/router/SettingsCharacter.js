@@ -1,7 +1,15 @@
 import React from "react";
-import { Button, Input, Textarea, Modal, ModalHeader, ModalBody, ModalFooter, Dropdown, DropdownItem } from "@material-tailwind/react";
+import {
+  Button,
+  Input,
+  Textarea,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "@material-tailwind/react";
 import CharacterImg from "../components/CharacterImg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Send from "../config/Send";
@@ -22,16 +30,40 @@ const useInput = (initialValue, validator) => {
       setValue(value);
     }
   };
-  return { value, onChange };
+  return { value, onChange, setValue };
 };
 
 function SettingsCharacter({ characterSlice, updateCharacter }) {
   const [showModal, setShowModal] = React.useState(false);
-  const maxLen = (value) => value.length <= 50;
-  const introduction = useInput("", maxLen);
-  const nickname = useInput("");
+  const convertByte = (word) => {
+    let totalByte = 0;
+    for (let i = 0; i < word.length; i++) {
+      if (escape(word[i]).length > 4) {
+        totalByte += 2;
+      } else {
+        totalByte += 1;
+      }
+    }
+    return totalByte;
+  };
+
+  // 닉네임만 Byte로 제한
+  const nicknameMaxLen = (value) => convertByte(value) <= 16;
+  const introductionMaxLen = (value) => value.length <= 50;
+  const nickname = useInput("", nicknameMaxLen);
+  const introduction = useInput("", introductionMaxLen);
   // const [nickname, setNickname] = useState("");
+
   const history = useHistory();
+
+  const initialSetting = () => {
+    nickname.setValue(characterSlice.nickname);
+    introduction.setValue(characterSlice.introduction);
+  };
+
+  useEffect(() => {
+    initialSetting();
+  }, []);
 
   const [characterDeleteReason, setcharacterDeleteReason] = useState(0);
 
@@ -86,10 +118,22 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
           <div className="bg-white rounded-lg">
             <Input placeholder={"NICKNAME"} outline={true} color="lightBlue" {...nickname} />
           </div>
-          <input type="text" value="요리" disabled className="my-3 block w-full px-3 py-2 border border-slate-300 rounded-md disabled:bg-slate-300 disabled:text-black-500" />
+          <input
+            type="text"
+            value="요리"
+            disabled
+            className="my-3 block w-full px-3 py-2 border border-slate-300 rounded-md disabled:bg-slate-300 disabled:text-black-500"
+          />
           <div className="relative bg-white rounded-md rounded-lg" style={{ height: 185 }}>
-            <Textarea placeholder={"한 줄 소개를 입력하세요."} outline={true} color="lightBlue" {...introduction} />
-            <div className="absolute right-5 bottom-3 text-gray-400">{introduction.value.length} / 50</div>
+            <Textarea
+              placeholder={"한 줄 소개를 입력하세요."}
+              outline={true}
+              color="lightBlue"
+              {...introduction}
+            />
+            <div className="absolute right-5 bottom-3 text-gray-400">
+              {introduction.value.length} / 50
+            </div>
           </div>
           <Button className="my-3" onClick={saveCharacter}>
             저장
@@ -103,8 +147,13 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
         </ModalHeader>
         <hr className="mb-5" />
         <ModalBody>
-          <p className="text-base leading-relaxed text-gray-600 font-normal">캐릭터를 삭제하려는 이유가 무엇인가요?</p>
-          <select className="bg-white rounded-lg w-96 h-11 p-2 mb-16 border border-gray-300 outline-sky-500 text-black" onChange={oncharacterDeleteReasonHandler}>
+          <p className="text-base leading-relaxed text-gray-600 font-normal">
+            캐릭터를 삭제하려는 이유가 무엇인가요?
+          </p>
+          <select
+            className="bg-white rounded-lg w-96 h-11 p-2 mb-16 border border-gray-300 outline-sky-500 text-black"
+            onChange={oncharacterDeleteReasonHandler}
+          >
             <option className="rounded-lg h-10" value="0">
               개인정보 보호 문제
             </option>
@@ -119,11 +168,18 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
             </option>
           </select>
           <br />
-          <p className="text-base leading-relaxed text-gray-600 font-normal">비밀번호를 다시 입력하세요.</p>
+          <p className="text-base leading-relaxed text-gray-600 font-normal">
+            비밀번호를 다시 입력하세요.
+          </p>
           <Input type="password" placeholder=""></Input>
         </ModalBody>
         <ModalFooter>
-          <Button color="black" buttonType="link" onClick={(e) => setShowModal(false)} ripple="dark">
+          <Button
+            color="black"
+            buttonType="link"
+            onClick={(e) => setShowModal(false)}
+            ripple="dark"
+          >
             Close
           </Button>
 

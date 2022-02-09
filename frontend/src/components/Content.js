@@ -1,12 +1,109 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Menu } from "@headlessui/react";
 import { Label } from "@material-tailwind/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as hs } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as hr } from "@fortawesome/free-regular-svg-icons";
 import MainCard from "../components/MainCard";
 import Report from "../components/Report";
 import NewStorage from "./NewStorage";
 import Comment from "./Comment";
 import Send from "../config/Send";
+
+const timeDifference = (time) => {
+  const offset = new Date().getTimezoneOffset() * 60000;
+  const nowTime = new Date(Date.parse(new Date()) - offset).toISOString(); // 현재 한국 시간
+  const [nowYear, nowMonth, nowDay] = nowTime
+    .split("T")[0]
+    .split("-")
+    .map((item) => parseInt(item));
+  const [nowHour, nowMinute, nowSecond] = nowTime
+    .split("T")[1]
+    .split(":")
+    .map((item) => parseInt(item));
+  const [year, month, day] = time
+    .split("T")[0]
+    .split("-")
+    .map((item) => parseInt(item));
+  const [hour, minute, second] = time
+    .split("T")[1]
+    .split(":")
+    .map((item) => parseInt(item));
+
+  // n일 전을 정확하게 구하기 위한 presetMonth
+  let presetMonth = 30;
+  if (month === 2) {
+    presetMonth = 28;
+  } else if ([1, 3, 5, 7, 8, 10, 12].includes(month)) {
+    presetMonth = 31;
+  } else {
+    presetMonth = 30;
+  }
+
+  // n년 전
+  if (nowYear > year) {
+    if ((nowYear - year) * 12 + nowMonth - month >= 12) {
+      let n = nowYear - year;
+      return `${n}년 전`;
+    }
+  }
+  // n달 전
+  // 한 달이 28, 29, 30, 31일인 경우는 현재 고려하지 않은 상태
+  if (nowMonth > month) {
+    if ((nowMonth - month) * 30 + nowDay - day >= 30) {
+      let n = nowMonth - month;
+      return `${n}달 전`;
+    }
+  } else if (nowMonth < month) {
+    let n = nowMonth + 12 - month;
+    return `${n}달 전`;
+  }
+  // n일 전
+  if (nowDay > day) {
+    if ((nowDay - day) * 24 + nowHour - hour >= 24) {
+      let n = nowDay - day;
+      return `${n}일 전`;
+    }
+  } else if (nowDay < day && nowMonth % 12 === (month + 1) % 12) {
+    let n = nowDay + presetMonth - day;
+    return `${n}일 전`;
+  }
+  // n시간 전
+  if (nowHour > hour) {
+    if ((nowHour - hour) * 60 + nowMinute - minute >= 60) {
+      let n = nowHour - hour;
+      return `${n}시간 전`;
+    }
+  } else if (nowHour < hour && nowDay % 30 === (day + 1) % 30) {
+    let n = nowHour + 24 - hour;
+    return `${n}시간 전`;
+  }
+  // n분 전
+  if (nowMinute > minute) {
+    if ((nowMinute - minute) * 60 + nowSecond - second >= 60) {
+      let n = nowMinute - minute;
+      return `${n}분 전`;
+    }
+  } else if (nowMinute < minute && nowHour % 24 === (hour + 1) % 24) {
+    let n = nowMinute + 60 - minute;
+    return `${n}분 전`;
+  }
+  // n초 전
+  if (nowSecond > second) {
+    let n = nowSecond - second;
+    return `${n}초 전`;
+  } else if (nowSecond < second && nowMinute % 60 === (minute + 1) % 60) {
+    let n = nowSecond + 60 - second;
+    return `${n}초 전`;
+  }
+  // n초 전 예외
+  if (nowMinute !== minute) {
+    let n = nowSecond + 60 - second;
+    return `${n}초 전`;
+  }
+  return `방금 전`;
+};
 
 function Content(props) {
   const [reportModal, setReportModal] = useState(false);
@@ -41,7 +138,7 @@ function Content(props) {
       contentSeq: contentSeq,
       replyText: replyText,
     };
-    Send.post("/content/reply", JSON.stringify(data)).then((res) => console.log(res.data));
+    Send.post("/content/reply", JSON.stringify(data)).then((res) => setReplyText(""));
   };
 
   //댓글 불러오기
@@ -61,13 +158,39 @@ function Content(props) {
       })
       .catch((err) => console.log(err));
   };
+
+  // 좋아요
+  const postLike = (contentSeq, e) => {
+    e.preventDefault();
+    const data = {
+      characterSeq: props.characterSlice.characterSeq,
+      contentSeq: contentSeq,
+    };
+    Send.post("/content/like", JSON.stringify(data)).then((res) => {
+      console.log(res.data);
+    });
+  };
+
+  // 좋아요취소
+  const deleteLike = (contentSeq, e) => {
+    e.preventDefault();
+    Send.delete("/content/like", {
+      params: {
+        characterSeq: props.characterSlice.characterSeq,
+        contentSeq: contentSeq,
+      },
+    }).then((res) => {
+      console.log(res.data);
+    });
+  };
+
   return (
     <>
       {feedContents.reverse().map((content, index) => {
         return (
           <div key={index}>
             <Comment comments={comments} isOpen={commentModal} onCancel={handleCommentClose} style={{ zIndex: 2 }} />
-            <Report isOpen={reportModal} onCancel={handleReportClose} style={{ zIndex: 2 }} />
+            <Report content={content} isOpen={reportModal} onCancel={handleReportClose} style={{ zIndex: 2 }} />
             <NewStorage isOpen={newStorageModal} onCancel={handleNewStorageClose} style={{ zIndex: 2 }} />
             <MainCard classes="mb-3" max-height="900px">
               <div style={{ height: 60 }} className="p-4 flex justify-between">
@@ -127,16 +250,20 @@ function Content(props) {
                     })
                   : null}
               </div>
-              <div className="text-slate-400 px-4">
-                {content.contentCreatedDate.slice(0, 10)} {content.contentCreatedDate.slice(11, 16)}
-              </div>
+              <div className="text-slate-400 px-4">{timeDifference(content.contentCreatedDate)}</div>
               <div className="px-4 py-2 flex justify-between">
                 <div className="flex items-center">
                   <button className="flex items-center">
-                    <span className="material-icons">favorite_border</span>
-                    <span className="pb-1">{content.contentLike}</span>
+                    {content.contentIsLike ? (
+                      <FontAwesomeIcon icon={hs} size="lg" style={{ color: "red" }} onClick={(e) => deleteLike(content.contentSeq, e)} />
+                    ) : (
+                      <FontAwesomeIcon icon={hr} size="lg" onClick={(e) => postLike(content.contentSeq, e)} />
+                    )}
                   </button>
-                  <div className="invisible">---</div>
+                  <button className="mx-1 pb-1">
+                    <span>{content.contentLike}</span>
+                  </button>
+                  <div className="invisible">--</div>
                   <button
                     className="flex items-center"
                     onClick={(e) => {
@@ -144,7 +271,7 @@ function Content(props) {
                       getComment(content.contentSeq, e);
                     }}
                   >
-                    <span className="material-icons">chat_bubble_outline</span>
+                    <span className="material-icons mr-1">chat_bubble_outline</span>
                     <span className="pb-1">{content.replyCount}</span>
                   </button>
                 </div>
