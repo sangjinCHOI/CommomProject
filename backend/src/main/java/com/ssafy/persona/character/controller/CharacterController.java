@@ -27,6 +27,8 @@ import com.ssafy.persona.character.model.dto.AchievementGetResponse;
 import com.ssafy.persona.character.model.dto.AlarmCreateRequest;
 import com.ssafy.persona.character.model.dto.AlarmGetResponse;
 import com.ssafy.persona.character.model.dto.AlarmSettingUpdateRequest;
+import com.ssafy.persona.character.model.dto.CategoryGetRequest;
+import com.ssafy.persona.character.model.dto.CategoryGetResponse;
 import com.ssafy.persona.character.model.dto.CharacterCreatRequest;
 import com.ssafy.persona.character.model.dto.CharacterDeleteRequest;
 import com.ssafy.persona.character.model.dto.CharacterGetResponse;
@@ -38,6 +40,7 @@ import com.ssafy.persona.character.model.dto.FollowerListRequest;
 import com.ssafy.persona.character.model.dto.FollowerListResponse;
 import com.ssafy.persona.character.service.AchievementService;
 import com.ssafy.persona.character.service.AlarmService;
+import com.ssafy.persona.character.service.CategoryService;
 import com.ssafy.persona.character.service.CharacterService;
 import com.ssafy.persona.character.service.FollowService;
 
@@ -58,6 +61,8 @@ public class CharacterController {
 	private AlarmService alarmService;
 	@Autowired
 	private AchievementService achievementService;
+	@Autowired
+	private CategoryService categoryService;
 
 	@PostMapping("")
 	public ResponseEntity<Map<String, String>> createCharacter(@RequestBody CharacterCreatRequest request) {
@@ -169,6 +174,16 @@ public class CharacterController {
 
 	}
 
+	@GetMapping("/categorys")
+	public ResponseEntity<List<CategoryGetResponse>> categoryList(@RequestParam(required = false) String order, @RequestParam(required = false) String searchText) {
+		CategoryGetRequest param = CategoryGetRequest.builder()
+				.order(order)
+				.searchText(searchText)
+				.build();
+		
+		return new ResponseEntity<List<CategoryGetResponse>>(categoryService.getCategoryList(param), HttpStatus.OK);
+	} 
+	
 	@PutMapping("/achievement/representative")
 	public ResponseEntity<Map<String, String>> updateRepresentativeAchievement(
 			@RequestBody CharacterUpdateRequest cur) {
