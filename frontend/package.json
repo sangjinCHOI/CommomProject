@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/free-regular-svg-icons": "^6.0.0-beta3",
+    "@fortawesome/free-solid-svg-icons": "^6.0.0-beta3",
+    "@fortawesome/react-fontawesome": "^0.1.17",
     "@headlessui/react": "^1.4.3",
     "@material-tailwind/react": "0.3.4",
     "@reduxjs/toolkit": "^1.7.1",

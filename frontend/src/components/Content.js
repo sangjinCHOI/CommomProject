@@ -2,6 +2,9 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { Menu } from "@headlessui/react";
 import { Label } from "@material-tailwind/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as hs } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as hr } from "@fortawesome/free-regular-svg-icons";
 import MainCard from "../components/MainCard";
 import Report from "../components/Report";
 import NewStorage from "./NewStorage";
@@ -155,6 +158,32 @@ function Content(props) {
       })
       .catch((err) => console.log(err));
   };
+
+  // 좋아요
+  const postLike = (contentSeq, e) => {
+    e.preventDefault();
+    const data = {
+      characterSeq: props.characterSlice.characterSeq,
+      contentSeq: contentSeq,
+    };
+    Send.post("/content/like", JSON.stringify(data)).then((res) => {
+      console.log(res.data);
+    });
+  };
+
+  // 좋아요취소
+  const deleteLike = (contentSeq, e) => {
+    e.preventDefault();
+    Send.delete("/content/like", {
+      params: {
+        characterSeq: props.characterSlice.characterSeq,
+        contentSeq: contentSeq,
+      },
+    }).then((res) => {
+      console.log(res.data);
+    });
+  };
+
   return (
     <>
       {feedContents.reverse().map((content, index) => {
@@ -225,10 +254,16 @@ function Content(props) {
               <div className="px-4 py-2 flex justify-between">
                 <div className="flex items-center">
                   <button className="flex items-center">
-                    <span className="material-icons">favorite_border</span>
-                    <span className="pb-1">{content.contentLike}</span>
+                    {content.contentIsLike ? (
+                      <FontAwesomeIcon icon={hs} size="lg" style={{ color: "red" }} onClick={(e) => deleteLike(content.contentSeq, e)} />
+                    ) : (
+                      <FontAwesomeIcon icon={hr} size="lg" onClick={(e) => postLike(content.contentSeq, e)} />
+                    )}
                   </button>
-                  <div className="invisible">---</div>
+                  <button className="mx-1 pb-1">
+                    <span>{content.contentLike}</span>
+                  </button>
+                  <div className="invisible">--</div>
                   <button
                     className="flex items-center"
                     onClick={(e) => {
@@ -236,7 +271,7 @@ function Content(props) {
                       getComment(content.contentSeq, e);
                     }}
                   >
-                    <span className="material-icons">chat_bubble_outline</span>
+                    <span className="material-icons mr-1">chat_bubble_outline</span>
                     <span className="pb-1">{content.replyCount}</span>
                   </button>
                 </div>
