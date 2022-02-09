@@ -44,7 +44,8 @@ function CharactersCreate({ saveCharacter, location }) {
   const nickname = useInput("", nicknameMaxLen);
   const introduction = useInput("", introductionMaxLen);
 
-  const [categorySeq, setCategorySeq] = useState(0);
+  // const [categorySeq, setCategorySeq] = useState(0);
+  const [categoryNumber, setCategoryNumber] = useState(0);
   const history = useHistory();
 
   const { userSeq, userId } = location.state;
@@ -53,7 +54,8 @@ function CharactersCreate({ saveCharacter, location }) {
     e.preventDefault();
     const data = {
       userSeq,
-      categorySeq: parseInt(categorySeq),
+      // categorySeq: parseInt(categorySeq),
+      categoryNumber: parseInt(categoryNumber),
       nickname: nickname.value,
       introduction: introduction.value,
     };
@@ -81,8 +83,11 @@ function CharactersCreate({ saveCharacter, location }) {
   //   setNickname(e.target.value);
   // };
 
-  const onCategorySeqHandler = (e) => {
-    setCategorySeq(e.target.value);
+  // const onCategorySeqHandler = (e) => {
+  //   setCategorySeq(e.target.value);
+  // };
+  const onCategoryNumberHandler = (e) => {
+    setCategoryNumber(e.target.value);
   };
 
   return (
@@ -112,7 +117,8 @@ function CharactersCreate({ saveCharacter, location }) {
           <div className="my-8">
             <select
               className="bg-white rounded-lg w-96 h-11 p-2 border border-gray-300 outline-sky-500 text-black"
-              onChange={onCategorySeqHandler}
+              // onChange={onCategorySeqHandler}
+              onChange={onCategoryNumberHandler}
             >
               <option className="rounded-lg h-10" value="0">
                 미정

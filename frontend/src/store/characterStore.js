@@ -5,7 +5,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialCharacterState = {
   alarmAllow: false,
-  categorySeq: 0,
+  // categorySeq: 0,
+  categoryNumber: 0,
   characterActive: true,
   characterCreatedDate: null,
   characterModifiedDate: null,
@@ -28,7 +29,8 @@ const characterSlice = createSlice({
   reducers: {
     save: (state, action) => {
       state.alarmAllow = action.payload.alarmAllow;
-      state.categorySeq = action.payload.categorySeq;
+      // state.categorySeq = action.payload.categorySeq;
+      state.categoryNumber = action.payload.categoryNumber;
       state.characterActive = action.payload.characterActive;
       state.characterCreatedDate = action.payload.characterCreatedDate;
       state.characterModifiedDate = action.payload.characterModifiedDate;
