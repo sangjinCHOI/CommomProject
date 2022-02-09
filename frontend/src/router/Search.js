@@ -89,7 +89,7 @@ export default function Search({ location }) {
         </div>
         <MainCard classes="border rounded-2xl py-2">
           <div
-            className={`flex overflow-x-auto ${
+            className={`flex overflow-x-auto ${styles.widthScroll} ${
               charactersResultList.length <= 2 ? "justify-center" : ""
             }`}
           >

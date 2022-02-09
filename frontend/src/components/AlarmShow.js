@@ -155,7 +155,7 @@ function AlarmShow({ characterSlice }) {
         </div>
         <hr className="mb-1 mx-2" />
         <div className="px-4 py-2">신규 알림</div>
-        <div className={`overflow-y-auto ${styles.box}`} style={{ maxHeight: "550px" }}>
+        <div className={`overflow-y-auto ${styles.heightScroll}`} style={{ maxHeight: "550px" }}>
           {alarmList.map((alarm) => (
             <Menu.Item key={alarm.alarmSeq}>
               <div className="px-4 py-2">
