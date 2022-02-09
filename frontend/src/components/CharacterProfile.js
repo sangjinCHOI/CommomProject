@@ -107,14 +107,20 @@ function CharacterProfile({
           <div className="mt-3">
             <div className="inline-block px-2">
               <Link to={`../${nickname}/achievement`}>
-                <Label color="blueGray" className={`${styles.customRadius}`}>
+                <Label
+                  color="green"
+                  className={`${styles.customRadius} ${styles.clickAchievementBtn}`}
+                >
                   업적 보기
                 </Label>
               </Link>
             </div>
             <div className="inline-block px-2">
               <Link to="../characters/select">
-                <Label color="blueGray" className={`${styles.customRadius}`}>
+                <Label
+                  color="orange"
+                  className={`${styles.customRadius} ${styles.clickSubcharacterBtn}`}
+                >
                   부캐 보기
                 </Label>
               </Link>
@@ -128,7 +134,7 @@ function CharacterProfile({
                   },
                 }}
               >
-                <Label color="blueGray" className={`${styles.customRadius}`}>
+                <Label color="brown" className={`${styles.customRadius} ${styles.clickProfileBtn}`}>
                   프로필 편집
                 </Label>
               </Link>
@@ -138,7 +144,10 @@ function CharacterProfile({
           <div className="mt-2">
             <div className="inline-block px-2">
               <Link to={`../${nickname}/achievement`}>
-                <Label color="blueGray" className={`${styles.customRadius}`}>
+                <Label
+                  color="green"
+                  className={`${styles.customRadius} ${styles.clickAchievementBtn}`}
+                >
                   업적 보기
                 </Label>
               </Link>
@@ -150,7 +159,10 @@ function CharacterProfile({
                   follow(characterProfile.characterSeq, e);
                 }}
               >
-                <Label color="lightBlue" className={`${styles.customRadius}`}>
+                <Label
+                  color="lightBlue"
+                  className={`${styles.customRadius} ${styles.clickFollowBtn}`}
+                >
                   팔로우
                 </Label>
               </Link>

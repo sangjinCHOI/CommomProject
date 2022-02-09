@@ -9,3 +9,13 @@
 .customRadius {
   border-radius: 4px !important;
 }
+
+.clickFollowBtn:active {
+  transform: translateY(-4px);
+  background-color: skyblue;
+}
+
+.clickUnfollowBtn:active {
+  transform: translateY(-4px);
+  background-color: lightslategray;
+}
