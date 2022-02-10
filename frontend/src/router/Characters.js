@@ -18,14 +18,13 @@ function Characters({ userSlice, saveCharacter }) {
         .then((res) => {
           setCharacterList(res.data);
           setCharacterLen(res.data.length);
-          return userSeq;
         })
         .catch((err) => console.log(err));
     });
   };
   useEffect(() => {
     getCharacterList();
-  }, []);
+  }, [characterLen]);
 
   const management = (event) => {
     event.preventDefault();

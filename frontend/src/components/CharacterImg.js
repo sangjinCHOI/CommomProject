@@ -10,6 +10,7 @@ export default function CharacterImg({
   classes,
   lock = false,
   isChange = false,
+  imgChangeHandler,
 }) {
   const [isClick, setIsClick] = useState(false);
 
@@ -23,6 +24,8 @@ export default function CharacterImg({
   const readImage = (input) => {
     // 인풋 태그에 파일이 있는 경우
     if (input.files && input.files[0]) {
+      // 부모 컴포넌트의 함수를 통해 이미지 전달
+      imgChangeHandler(input.files[0]);
       // 이미지 파일인지 검사 (생략)
 
       // FileReader 인스턴스 생성
@@ -30,7 +33,7 @@ export default function CharacterImg({
       // 이미지가 로드가 된 경우
       reader.onload = (e) => {
         const previewImage = document.getElementById("profileImg");
-        console.log(e.target);
+        // console.log(e.target);
         previewImage.src = e.target.result;
       };
       // reader가 이미지 읽도록 하기

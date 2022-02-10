@@ -66,7 +66,7 @@ function CharactersCreate({ saveCharacter, location }) {
 
   // const [categorySeq, setCategorySeq] = useState(0);
   // const [nickname, setNickname] = useState("");
-  const [imgFile, setimgFile] = useState(null);
+  const [imgFile, setImgFile] = useState(null);
 
   // 닉네임만 Byte로 제한
   const nicknameMaxLen = (value) => convertByte(value) <= 16;
@@ -114,9 +114,9 @@ function CharactersCreate({ saveCharacter, location }) {
       .catch((err) => console.log(err));
   };
 
-  const imgChangeHandler = (e) => {
-    setimgFile(e.target.files[0]);
-    //console.log(e.target.files[0]);
+  const imgChangeHandler = (propsImg) => {
+    setImgFile(propsImg);
+    console.log(propsImg);
   };
 
   // const onNicknameHandler = (e) => {
@@ -144,7 +144,7 @@ function CharactersCreate({ saveCharacter, location }) {
         alt="main_logo"
         className="mx-auto my-24 w-96"
       />
-      <CharacterImg underText="변경" />
+      <CharacterImg imgChangeHandler={imgChangeHandler} isChange={true} underText="변경" />
       <div className="w-96 mx-auto mt-8">
         <input type="file" onChange={imgChangeHandler} />
         <div className="bg-white rounded-lg">

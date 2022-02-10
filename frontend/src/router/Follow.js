@@ -33,13 +33,13 @@ const useInput = (initialValue, validator) => {
 // 현재 내 캐릭터의 팔로우 현황만 볼 수 있는데, characterSlice로 하는게 아니라 남의 캐릭도 볼 수 있게 바꿔야 함
 // 다른 사람이 들어왔을 때 보이는 버튼 적절히 수정해야 함!
 function Follow({ characterSlice }) {
+  const [changePage, setChangePage] = useState(false);
   const { nickname } = useParams();
   const [character, setCharacter] = useState([]);
   const getCharacter = () => {
     Send.get(`/character/profile/${nickname}`).then((res) => {
       const characterSeq = res.data.characterSeq;
       Send.get(`/character/${characterSeq}`).then((res) => {
-        console.log(res.data);
         setCharacter(res.data); // 페이지 유저 데이터
         // character 가져온 뒤 리스트 가져오는 함수 실행
         getFollowerList(res.data);
@@ -53,8 +53,6 @@ function Follow({ characterSlice }) {
   const [followerList, setFollowerList] = useState([]);
   const [followeeList, setFolloweeList] = useState([]);
   const getFollowerList = (character) => {
-    console.log("getFollowerList 실행됨");
-    console.log("asdasd", character);
     // 해당 페이지의 캐릭터를 기준으로 리스트를 불러오는데
     // 버튼도 역시 그 캐릭터를 기준으로 랜더링 하는 현황
     const data = {
@@ -76,7 +74,6 @@ function Follow({ characterSlice }) {
     });
   };
   const getFolloweeList = (character) => {
-    console.log("getFolloweeList 실행됨");
     const data = {
       follower: character.characterSeq, // 해당 페이지의 캐릭터
       nickname: "",
@@ -96,9 +93,12 @@ function Follow({ characterSlice }) {
 
   useEffect(() => {
     getCharacter();
-    // getFollowerList();
-    // getFolloweeList();
   }, []);
+
+  useEffect(() => {
+    getFollowerList(character);
+    getFolloweeList(character);
+  }, [changePage]);
 
   const [isFollowerTab, setIsFollowerTab] = useState(true);
 
@@ -112,6 +112,7 @@ function Follow({ characterSlice }) {
     Send.post("/character/follow", JSON.stringify(data))
       .then((res) => {
         if (res.status === 200) {
+          setChangePage(!changePage);
           // 상대방 캐릭터 정보 가져와서
           Send.get(`/character/${followerSeq}`).then((res) => {
             const character = res.data;
@@ -145,7 +146,10 @@ function Follow({ characterSlice }) {
       follower: followerSeq,
     };
     Send.delete("/character/follow", { data: JSON.stringify(data) })
-      .then((res) => console.log(res))
+      .then((res) => {
+        setChangePage(!changePage);
+        console.log(res);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -156,7 +160,10 @@ function Follow({ characterSlice }) {
       follower: characterSlice.characterSeq,
     };
     Send.delete("/character/follow", { data: JSON.stringify(data) })
-      .then((res) => console.log(res))
+      .then((res) => {
+        setChangePage(!changePage);
+        console.log(res);
+      })
       .catch((err) => console.log(err));
   };
 
