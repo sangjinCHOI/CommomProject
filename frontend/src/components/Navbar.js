@@ -48,7 +48,7 @@ function Navbar({ characterSlice }) {
     return (
       <div
         className="absolute right-0 top-10 border border-gray-400 rounded-lg bg-white"
-        style={{ width: "300px", height: "400px" }}
+        style={{ width: "300px", height: "400px", opacity: "0.95" }}
       >
         <div className="flex justify-between text-xl text-gray-400">
           <div
