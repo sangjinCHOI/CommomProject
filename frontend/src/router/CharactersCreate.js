@@ -1,11 +1,4 @@
-import {
-  InputIcon,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-  Textarea,
-} from "@material-tailwind/react";
+import { InputIcon, Modal, ModalBody, ModalHeader, Textarea } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -15,7 +8,7 @@ import CharacterImg from "../components/CharacterImg";
 import { save } from "../store/characterStore";
 import Send from "../config/Send";
 import File from "../config/File";
-import axios from "axios";
+import styles from "./CharactersCreate.module.css";
 
 const useInput = (initialValue, validator) => {
   const [value, setValue] = useState(initialValue);
@@ -75,7 +68,7 @@ function CharactersCreate({ saveCharacter, location }) {
   const introduction = useInput("", introductionMaxLen);
 
   // const [categorySeq, setCategorySeq] = useState(0);
-  const [categoryNumber, setCategoryNumber] = useState(0);
+  // const [categoryNumber, setCategoryNumber] = useState(0);
 
   const history = useHistory();
 
@@ -97,7 +90,7 @@ function CharactersCreate({ saveCharacter, location }) {
 
     File.post("/character", formData)
       .then((res) => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           alert("캐릭터 생성이 완료되었습니다.");
           Send.get(`/character/characters/${userSeq}`).then((res) => {
             saveCharacter(res.data[res.data.length - 1]);
@@ -130,9 +123,9 @@ function CharactersCreate({ saveCharacter, location }) {
   // const onCategorySeqHandler = (e) => {
   //   setCategorySeq(e.target.value);
   // };
-  const onCategoryNumberHandler = (e) => {
-    setCategoryNumber(e.target.value);
-  };
+  // const onCategoryNumberHandler = (e) => {
+  //   setCategoryNumber(e.target.value);
+  // };
 
   return (
     <>
@@ -146,7 +139,7 @@ function CharactersCreate({ saveCharacter, location }) {
       />
       <CharacterImg imgChangeHandler={imgChangeHandler} isChange={true} underText="변경" />
       <div className="w-96 mx-auto mt-8">
-        <input type="file" onChange={imgChangeHandler} />
+        {/* <input type="file" onChange={imgChangeHandler} /> */}
         <div className="bg-white rounded-lg">
           {/* <InputIcon type="text" color="lightBlue" outline={true} iconName="edit" placeholder="닉네임을 입력하세요." onChange={onNicknameHandler} />
         </div>
@@ -209,6 +202,7 @@ function CharactersCreate({ saveCharacter, location }) {
           <span>캐릭터 저장</span>
         </Link>
       </div>
+
       <Modal active={showCategoryModal} toggler={() => setShowCategoryModal(false)}>
         <ModalHeader toggler={() => setShowCategoryModal(false)}>
           <span>카테고리 선택</span>
@@ -217,7 +211,8 @@ function CharactersCreate({ saveCharacter, location }) {
           <div className="overflow-y-auto px-4 py-2" style={{ maxHeight: "300px", width: "640px" }}>
             {categories.map((category) => (
               <button
-                className="m-2 p-1"
+                key={category.characterCategoryNumber}
+                className={`m-2 p-1 ${styles.clickCategoryBtn} ${styles.customBtn}`}
                 onClick={() => {
                   setSelectedCategory([
                     category.characterCategoryName,

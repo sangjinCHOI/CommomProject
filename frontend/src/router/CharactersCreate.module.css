@@ -1,0 +1,10 @@
+.clickCategoryBtn:active {
+  transform: translateY(-4px);
+  transition: transform 0.1s ease-in-out;
+  background-color: #e2eff2;
+}
+
+.customBtn:hover {
+  background-color: #e2eff2;
+  border-radius: 8px;
+}

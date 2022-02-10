@@ -16,6 +16,7 @@ function Characters({ userSlice, saveCharacter }) {
     Send.get(`/user/${userId}`).then((res) => {
       Send.get(`/character/characters/${userSeq}`)
         .then((res) => {
+          console.log("what", res.data);
           setCharacterList(res.data);
           setCharacterLen(res.data.length);
         })
