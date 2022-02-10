@@ -59,7 +59,7 @@ public class StorageController {
 		Map<String, Object> result = new HashMap<String, Object>();
 		String message = FAIL;
 		HttpStatus status = HttpStatus.ACCEPTED;
-		if (storageService.storageCreate(storageCreateRequest)) {
+		if (storageService.storageCreate(storageCreateRequest) == 1) {
 			message = SUCCESS;
 			status = HttpStatus.OK;
 			result.put("message", message);

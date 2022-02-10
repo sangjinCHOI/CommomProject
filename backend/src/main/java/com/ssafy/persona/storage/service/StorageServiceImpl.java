@@ -30,7 +30,9 @@ public class StorageServiceImpl implements StorageService {
 	
 	@Transactional
 	@Override
-	public boolean storageCreate(StorageCreateRequest storageCreateRequest) {
+	public int storageCreate(StorageCreateRequest storageCreateRequest) {
+		int result = 0;
+		result = storageMapper.storageCreate(storageCreateRequest);
 		if (storageCreateRequest.getMyfile() != null) {
 			FileUploadRequest file = FileUploadRequest.builder()
 					.myfile(storageCreateRequest.getMyfile())
@@ -44,7 +46,7 @@ public class StorageServiceImpl implements StorageService {
 				e.printStackTrace();
 			}
 		}
-		return storageMapper.storageCreate(storageCreateRequest) == 1;
+		return result;
 	}
 
 	@Transactional
