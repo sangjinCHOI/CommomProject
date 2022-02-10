@@ -38,8 +38,9 @@
         (select file_path from tb_file where relation_tb = 'tb_character' AND relation_seq = tb_content.character_seq) AS writerProfile,
         (select count(*) from tb_tag where content_seq = tb_content.content_seq) AS tagCount,
         (select GROUP_CONCAT(tag_text separator '|') from tb_tag where content_seq = tb_content.content_seq GROUP BY content_seq) AS tags,
-        (select count(*) from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.character_seq ) AS fileCount,
-        (select GROUP_CONCAT(file_path separator '|') from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.character_seq GROUP BY relation_seq) AS files
+        (select count(*) from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.content_seq ) AS fileCount,
+        (select GROUP_CONCAT(file_path separator '|') from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.content_seq GROUP BY relation_seq) AS contentFilePath,
+        (select GROUP_CONCAT(file_name separator '|') from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.content_seq GROUP BY relation_seq) AS contentFileName
 		from tb_content
 		where content_seq = #{contentSeq} and content_is_active = 1
 	</select>
@@ -53,7 +54,8 @@
         (select count(*) from tb_tag where content_seq = tb_content.content_seq) AS tagCount,
         (select GROUP_CONCAT(tag_text separator '|') from tb_tag where content_seq = tb_content.content_seq GROUP BY content_seq) AS tags,
         (select count(*) from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.character_seq ) AS fileCount,
-        (select GROUP_CONCAT(file_path separator '|') from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.character_seq GROUP BY relation_seq) AS files
+        (select GROUP_CONCAT(file_path separator '|') from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.content_seq GROUP BY relation_seq) AS contentFilePath,
+        (select GROUP_CONCAT(file_name separator '|') from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.content_seq GROUP BY relation_seq) AS contentFileName
 		from tb_content
 		where
 		<choose>
