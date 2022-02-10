@@ -23,6 +23,7 @@ import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.storage.model.dto.ContentStoreListResponse;
 import com.ssafy.persona.storage.model.dto.ContentStoreRequest;
 import com.ssafy.persona.storage.model.dto.SendStorageCreateRequest;
+import com.ssafy.persona.storage.model.dto.SendStorageModifyRequest;
 import com.ssafy.persona.storage.model.dto.StorageContentListRequest;
 import com.ssafy.persona.storage.model.dto.StorageCreateRequest;
 import com.ssafy.persona.storage.model.dto.StorageListResponse;
@@ -69,7 +70,14 @@ public class StorageController {
 	
 	@ApiOperation(value = "storage modify", notes = "storage 수정, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping("/storage")
-	public ResponseEntity<String> storageModify(@RequestBody @ApiParam(value = "저장소 수정 정보.", required = true) StorageModifyRequest storageModifyRequest) {
+	public ResponseEntity<String> storageModify(@RequestPart(value="file", required = false) MultipartFile[] file,
+											    @RequestPart(value="sendStorageModifyRequest") SendStorageModifyRequest sendStorageModifyRequest) {
+		StorageModifyRequest storageModifyRequest = new StorageModifyRequest(
+													sendStorageModifyRequest.getStorageSeq(),
+													sendStorageModifyRequest.getStorageName(),
+													sendStorageModifyRequest.isStoragePublic(),
+													file
+													);
 		if (storageService.storageModify(storageModifyRequest)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}

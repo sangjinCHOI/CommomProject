@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.persona.character.model.dto.SendCharacterUpdateRequest;
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
 import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.content.model.dto.ContentLikeRequest;
@@ -28,6 +31,7 @@ import com.ssafy.persona.content.model.dto.ReplyGetResponse;
 import com.ssafy.persona.content.model.dto.ReplyLikeRequest;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
 import com.ssafy.persona.content.model.dto.ReplyReportRequest;
+import com.ssafy.persona.content.model.dto.SendContentCreateRequest;
 import com.ssafy.persona.content.service.ContentService;
 
 import io.swagger.annotations.Api;
@@ -46,10 +50,20 @@ public class ContentController {
 
 	@ApiOperation(value = "content create", notes = "content 작성, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/content")
-	public ResponseEntity<Map<String, Object>> contentCreate(@RequestBody @ApiParam(value = "게시글 정보.", required = true) ContentCreateRequest contentCreateRequest) {
+	public ResponseEntity<Map<String, Object>> contentCreate(@RequestPart(value="file", required = false) MultipartFile[] file,
+			   												 @RequestPart(value="sendContentCreaterequest") SendContentCreateRequest sendContentCreaterequest){
 		Map<String, Object> result = new HashMap<String, Object>();
 		String message = FAIL;
 		HttpStatus status = HttpStatus.ACCEPTED;
+		ContentCreateRequest contentCreateRequest = new ContentCreateRequest(
+											0,
+											file,
+											sendContentCreaterequest.getCharacterSeq(),
+											sendContentCreaterequest.getCategoryNumber(),
+											sendContentCreaterequest.getContentText(),
+											sendContentCreaterequest.isContentIsPublic(),
+											sendContentCreaterequest.isContentIsMedia());
+		
 		if (contentService.contentCreate(contentCreateRequest)) {
 			message = SUCCESS;
 			status = HttpStatus.OK;
