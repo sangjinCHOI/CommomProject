@@ -84,7 +84,7 @@ public class ContentController {
 	}
 
 	@ApiOperation(value = "content tag list", notes = "특정 태그의 게시물 리스트 조회", response = ContentGetResponse.class)
-	@GetMapping("/content/tag/{tagText}")
+	@GetMapping("/content/tags/{tagText}")
 	public ResponseEntity<List<ContentGetResponse>> contentTagList(@RequestParam @ApiParam(value = "접속한 캐릭터 번호.", required = true) int characterNow, @PathVariable("tagText") @ApiParam(value = "조회할 태그.", required = true) String tagText) {
 		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentTagList(characterNow, tagText), HttpStatus.OK);
 	}
