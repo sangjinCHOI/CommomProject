@@ -1,19 +1,25 @@
 package com.ssafy.persona.character.controller;
 
-import com.ssafy.persona.character.model.AlarmEnum;
-import com.ssafy.persona.character.model.dto.*;
-import com.ssafy.persona.character.service.AchievementService;
-import com.ssafy.persona.character.service.AlarmService;
-import com.ssafy.persona.character.service.CharacterService;
-import com.ssafy.persona.character.service.FollowService;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.persona.character.model.AlarmEnum;
@@ -33,13 +39,13 @@ import com.ssafy.persona.character.model.dto.FollowRequest;
 import com.ssafy.persona.character.model.dto.FolloweeListRequest;
 import com.ssafy.persona.character.model.dto.FollowerListRequest;
 import com.ssafy.persona.character.model.dto.FollowerListResponse;
+import com.ssafy.persona.character.model.dto.SendCharacterCreateRequest;
+import com.ssafy.persona.character.model.dto.SendCharacterUpdateRequest;
 import com.ssafy.persona.character.service.AchievementService;
 import com.ssafy.persona.character.service.AlarmService;
 import com.ssafy.persona.character.service.CategoryService;
 import com.ssafy.persona.character.service.CharacterService;
 import com.ssafy.persona.character.service.FollowService;
-
-import java.util.*;
 
 //@CrossOrigin(origins = { "*" }, maxAge = 6000)
 //@CrossOrigin(origins = "http://localhost:3000")
@@ -86,6 +92,7 @@ public class CharacterController {
 		result.put("message", message);
 		return new ResponseEntity<Map<String, String>>(result, status);
 	}
+	
 	@PutMapping("")
 	public ResponseEntity<Map<String, String>> modifyCharacter(@RequestPart(value="file", required = false) MultipartFile[] file,
 															   @RequestPart(value="request") SendCharacterUpdateRequest request) {
@@ -163,6 +170,23 @@ public class CharacterController {
 		
 		return new ResponseEntity<CharacterProfileResponse>(characterService.getCharacterProfile(nickname), HttpStatus.OK);
 	} // 예외처리 필요
+	
+	@DeleteMapping("/profile/{characterSeq}")
+	public ResponseEntity<Map<String, String>> deleteProfile(@PathVariable int characterSeq) {
+		String message = "";
+		HttpStatus status = null;
+
+		if (characterService.setCharacterProfileDefault(characterSeq) == 1) {
+			message = SUCCESS;
+			status = HttpStatus.OK;
+		} else {
+			message = FAIL;
+			status = HttpStatus.ACCEPTED;
+		}
+		Map<String, String> result = new HashMap<String, String>();
+		result.put("message", message);
+		return new ResponseEntity<Map<String, String>>(result, status);
+	}
 	
 	@GetMapping("characters/{userSeq}")
 	public ResponseEntity<List<CharacterGetResponse>> characterList(@PathVariable int userSeq) {

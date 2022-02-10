@@ -20,6 +20,8 @@ public interface CharacterMapper {
 
 	int delete(CharacterDeleteRequest request);
 
+	int setCharacterProfileDefault(int characterSeq);
+	
 	CharacterGetResponse detail(int characterSeq);
 
 	CharacterProfileResponse getCharacterProfile(String nickname);
