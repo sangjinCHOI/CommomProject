@@ -50,6 +50,19 @@ public class StorageServiceImpl implements StorageService {
 	@Transactional
 	@Override
 	public boolean storageModify(StorageModifyRequest storageModifyRequest) {
+		if (storageModifyRequest.getMyfile() != null) {
+			FileUploadRequest file = FileUploadRequest.builder()
+					.myfile(storageModifyRequest.getMyfile())
+					.fileType('2')
+					.relationTb("tb_storage")
+					.relationSeq(storageModifyRequest.getStorageSeq())
+					.build();
+			try {
+				fileService.modifyFile(file);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+		}
 		return storageMapper.storageModify(storageModifyRequest) == 1;
 	}
 

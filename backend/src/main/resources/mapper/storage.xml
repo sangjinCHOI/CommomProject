@@ -11,7 +11,7 @@
 	<update id="storageModify" parameterType="storageModifyRequest">
 		update tb_storage
 		set storage_name = #{storageName}, storage_public = #{storagePublic}, storage_modified_date = now()
-		where storage_seq = #{storageSeq} and character_seq = #{characterSeq}
+		where storage_seq = #{storageSeq}
 	</update>
 	
 	<delete id="storageDelete" parameterType="int">
