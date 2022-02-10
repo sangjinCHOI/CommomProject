@@ -61,6 +61,19 @@ public class ContentServiceImpl implements ContentService {
 
 	@Override
 	public boolean contentModify(ContentModifyRequest contentModifyRequest) {
+		if (contentModifyRequest.getMyfile() != null) {
+			FileUploadRequest file = FileUploadRequest.builder()
+					.myfile(contentModifyRequest.getMyfile())
+					.fileType('2')
+					.relationTb("tb_content")
+					.relationSeq(contentModifyRequest.getContentSeq())
+					.build();
+			try {
+				fileService.modifyFile(file);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+		}
 		return contentMapper.contentModify(contentModifyRequest) == 1;
 	}
 

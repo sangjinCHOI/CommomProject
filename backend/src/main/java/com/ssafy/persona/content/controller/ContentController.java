@@ -32,6 +32,7 @@ import com.ssafy.persona.content.model.dto.ReplyLikeRequest;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
 import com.ssafy.persona.content.model.dto.ReplyReportRequest;
 import com.ssafy.persona.content.model.dto.SendContentCreateRequest;
+import com.ssafy.persona.content.model.dto.SendContentModifyRequest;
 import com.ssafy.persona.content.service.ContentService;
 
 import io.swagger.annotations.Api;
@@ -62,8 +63,8 @@ public class ContentController {
 											sendContentCreaterequest.getCategoryNumber(),
 											sendContentCreaterequest.getContentText(),
 											sendContentCreaterequest.isContentIsPublic(),
-											sendContentCreaterequest.isContentIsMedia());
-		
+											sendContentCreaterequest.isContentIsMedia()
+											);
 		if (contentService.contentCreate(contentCreateRequest)) {
 			message = SUCCESS;
 			status = HttpStatus.OK;
@@ -75,7 +76,15 @@ public class ContentController {
 
 	@ApiOperation(value = "content modify", notes = "content 수정, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping("/content")
-	public ResponseEntity<String> contentModify(@RequestBody @ApiParam(value = "수정할 글정보.", required = true) ContentModifyRequest contentModifyRequest) {
+	public ResponseEntity<String> contentModify(@RequestPart(value="file", required = false) MultipartFile[] file,
+												@RequestPart(value="sendContentModifyrequest") SendContentModifyRequest sendContentModifyrequest) {
+		ContentModifyRequest contentModifyRequest = new ContentModifyRequest(
+										sendContentModifyrequest.getContentSeq(),
+										file,
+										sendContentModifyrequest.getContentText(),
+										sendContentModifyrequest.isContentIsPublic(),
+										sendContentModifyrequest.isContentIsMedia()
+										);
 		if (contentService.contentModify(contentModifyRequest)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
