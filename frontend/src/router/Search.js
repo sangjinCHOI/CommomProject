@@ -63,8 +63,8 @@ function Search({ characterSlice, location }) {
           // console.log([res.data, content]);
           setContentsResultList((contentsResultList) => [
             // [캐릭터 정보, 게시글 정보]
-            [res.data, content],
             ...contentsResultList,
+            [res.data, content],
           ]);
         });
       });
