@@ -62,7 +62,7 @@ public class FileServiceImpl implements FileService{
 				
 				FileUploadDTO dto = new FileUploadDTO(
 //						files.getOriginalFilename(),
-						saveName,
+						uuid.toString()+"_"+files.getOriginalFilename(),
 						path,
 						files.getSize(),
 						request.getFileType(),
@@ -99,7 +99,7 @@ public class FileServiceImpl implements FileService{
 				
 				FileUploadDTO dto = new FileUploadDTO(
 //						files.getOriginalFilename(),
-						saveName,
+						uuid.toString()+"_"+files.getOriginalFilename(),
 						path,
 						files.getSize(),
 						request.getFileType(),
