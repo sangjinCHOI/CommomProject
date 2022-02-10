@@ -121,8 +121,10 @@ function Content(props) {
 
   // 피드 게시물
   const feedContents = props.contents;
-  if (feedContents.length > 1) {
-    feedContents.sort((a, b) => (a.contentSeq > b.contentSeq ? 1 : -1));
+  if (feedContents) {
+    if (feedContents.length > 1) {
+      feedContents.sort((a, b) => (a.contentSeq > b.contentSeq ? 1 : -1));
+    }
   }
   // console.log(feedContents);
 
