@@ -21,6 +21,7 @@ const initialCharacterState = {
   userSeq: 0,
   userId: "initialUserId",
   filePath: null,
+  fileName: null,
 };
 
 const characterSlice = createSlice({
@@ -45,10 +46,13 @@ const characterSlice = createSlice({
       state.userSeq = action.payload.userSeq;
       state.userId = action.payload.userId;
       state.filePath = action.payload.filePath;
+      state.fileName = action.payload.fileName;
     },
     update: (state, action) => {
       state.introduction = action.payload.introduction;
       state.nickname = action.payload.nickname;
+      state.filePath = action.payload.filePath;
+      state.fileName = action.payload.fileName;
     },
     alarmUpdate: (state, action) => {
       console.log("알람 업데이트 완료", action.payload);

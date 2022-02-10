@@ -6,8 +6,9 @@ import MainCard from "../components/MainCard";
 import StorageCardSmall from "../components/StorageCardSmall";
 import styles from "./Search.module.css";
 import Send from "../config/Send";
+import { connect } from "react-redux";
 
-export default function Search({ location }) {
+function Search({ characterSlice, location }) {
   const queryString = location.search;
   const params = new URLSearchParams(queryString);
   const query = params.get("query");
@@ -61,6 +62,7 @@ export default function Search({ location }) {
         Send.get(`/character/${content.characterSeq}`).then((res) => {
           // console.log([res.data, content]);
           setContentsResultList((contentsResultList) => [
+            // [캐릭터 정보, 게시글 정보]
             [res.data, content],
             ...contentsResultList,
           ]);
@@ -74,6 +76,10 @@ export default function Search({ location }) {
     getTagsResult();
     getContentsResult();
   }, [query]);
+
+  const moveContentDetail = (myCharacterSeq, contentSeq, e) => {
+    e.preventDefault();
+  };
 
   return (
     <>
@@ -156,7 +162,12 @@ export default function Search({ location }) {
                   <Link to={`../${content[0].nickname}`}>{content[0].nickname}</Link>
                 </div>
                 {/* 현재 해당 내용으로 이동 아직 미구현 */}
-                <Link to="">
+                <Link
+                  to=""
+                  onClick={(e) =>
+                    moveContentDetail(characterSlice.characterSeq, content[1].contentSeq, e)
+                  }
+                >
                   <div className="ml-8 w-72">
                     {content[1].contentText.length < 40
                       ? content[1].contentText
@@ -198,3 +209,9 @@ export default function Search({ location }) {
     </>
   );
 }
+
+function mapStateToProps(state) {
+  return { characterSlice: state.character };
+}
+
+export default connect(mapStateToProps)(Search);

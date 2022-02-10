@@ -19,7 +19,6 @@ function CharacterProfile({
   const getCharacterProfile = () => {
     Send.get(`/character/profile/${nickname}`).then((res) => {
       setCharacterProfile(res.data);
-      console.log(res.data);
     });
   };
   useEffect(() => {
@@ -116,12 +115,12 @@ function CharacterProfile({
               </Link>
             </div>
             <div className="inline-block px-2">
-              <Link to="../characters/select">
+              <Link to={`${characterProfile.nickname}/storages`}>
                 <Label
                   color="orange"
                   className={`${styles.customRadius} ${styles.clickSubcharacterBtn}`}
                 >
-                  부캐 보기
+                  저장목록
                 </Label>
               </Link>
             </div>
@@ -149,6 +148,16 @@ function CharacterProfile({
                   className={`${styles.customRadius} ${styles.clickAchievementBtn}`}
                 >
                   업적 보기
+                </Label>
+              </Link>
+            </div>
+            <div className="inline-block px-2">
+              <Link to={`${nickname}/storages`}>
+                <Label
+                  color="orange"
+                  className={`${styles.customRadius} ${styles.clickSubcharacterBtn}`}
+                >
+                  저장목록
                 </Label>
               </Link>
             </div>
