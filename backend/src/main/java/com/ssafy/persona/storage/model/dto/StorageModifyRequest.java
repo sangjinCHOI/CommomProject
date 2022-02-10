@@ -1,6 +1,6 @@
 package com.ssafy.persona.storage.model.dto;
 
-import com.ssafy.persona.storage.model.entity.Storage;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,17 +10,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class StorageModifyRequest {
-	private int characterSeq;
 	private int storageSeq;
 	private String storageName;
 	private boolean storagePublic;
+	private MultipartFile[] myfile;
 	
-	public Storage toStorage() {
-		return Storage.builder()
-					  .characterSeq(characterSeq)
-					  .storageSeq(storageSeq)
-					  .storageName(storageName)
-					  .storagePublic(storagePublic)
-					  .build();
-	}
 }

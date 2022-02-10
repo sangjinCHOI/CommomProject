@@ -1,17 +1,14 @@
 package com.ssafy.persona.storage.model.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@NoArgsConstructor
 @Getter
+@AllArgsConstructor
 @ToString
-public class StorageListResponse {
+public class SendStorageModifyRequest {
 	private int storageSeq;
 	private String storageName;
 	private boolean storagePublic;
-	private String storageImagePath;
-	private String storageImageName;
-
 }

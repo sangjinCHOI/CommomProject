@@ -1,6 +1,8 @@
 package com.ssafy.persona.storage.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,11 +15,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.storage.model.dto.ContentStoreListResponse;
 import com.ssafy.persona.storage.model.dto.ContentStoreRequest;
+import com.ssafy.persona.storage.model.dto.SendStorageCreateRequest;
+import com.ssafy.persona.storage.model.dto.SendStorageModifyRequest;
 import com.ssafy.persona.storage.model.dto.StorageContentListRequest;
 import com.ssafy.persona.storage.model.dto.StorageCreateRequest;
 import com.ssafy.persona.storage.model.dto.StorageListResponse;
@@ -40,16 +46,38 @@ public class StorageController {
 	
 	@ApiOperation(value = "storage create", notes = "storage 생성, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/storage")
-	public ResponseEntity<String> storageCreate(@RequestBody @ApiParam(value = "저장소 정보.", required = true) StorageCreateRequest storageCreateRequest) {
+	public ResponseEntity<Map<String, Object>> storageCreate(@RequestPart(value="file", required = false) MultipartFile[] file,
+			   												 @RequestPart(value="sendStorageCreateRequest") SendStorageCreateRequest sendStorageCreateRequest) {
+		
+		StorageCreateRequest storageCreateRequest = new StorageCreateRequest(
+													0,
+													file,
+													sendStorageCreateRequest.getCharacterSeq(),
+													sendStorageCreateRequest.getStorageName(),
+													sendStorageCreateRequest.isStoragePublic());
+				
+		Map<String, Object> result = new HashMap<String, Object>();
+		String message = FAIL;
+		HttpStatus status = HttpStatus.ACCEPTED;
 		if (storageService.storageCreate(storageCreateRequest)) {
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+			message = SUCCESS;
+			status = HttpStatus.OK;
+			result.put("message", message);
+			result.put("storage_seq", storageCreateRequest.getStorageSeq());
 		}
-		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+		return new ResponseEntity<Map<String, Object>>(result, status);
 	}
 	
 	@ApiOperation(value = "storage modify", notes = "storage 수정, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping("/storage")
-	public ResponseEntity<String> storageModify(@RequestBody @ApiParam(value = "저장소 수정 정보.", required = true) StorageModifyRequest storageModifyRequest) {
+	public ResponseEntity<String> storageModify(@RequestPart(value="file", required = false) MultipartFile[] file,
+											    @RequestPart(value="sendStorageModifyRequest") SendStorageModifyRequest sendStorageModifyRequest) {
+		StorageModifyRequest storageModifyRequest = new StorageModifyRequest(
+													sendStorageModifyRequest.getStorageSeq(),
+													sendStorageModifyRequest.getStorageName(),
+													sendStorageModifyRequest.isStoragePublic(),
+													file
+													);
 		if (storageService.storageModify(storageModifyRequest)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}

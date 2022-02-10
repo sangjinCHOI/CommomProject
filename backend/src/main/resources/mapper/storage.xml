@@ -3,7 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.persona.storage.mapper.StorageMapper">
-	<insert id="storageCreate" parameterType="storageCreateRequest">
+	<insert id="storageCreate" parameterType="storageCreateRequest" useGeneratedKeys="true" keyProperty="storageSeq">
 		insert into tb_storage (character_seq, storage_name, storage_public, storage_created_date)
 		values (#{characterSeq}, #{storageName}, #{storagePublic}, now())
 	</insert>
@@ -11,7 +11,7 @@
 	<update id="storageModify" parameterType="storageModifyRequest">
 		update tb_storage
 		set storage_name = #{storageName}, storage_public = #{storagePublic}, storage_modified_date = now()
-		where storage_seq = #{storageSeq} and character_seq = #{characterSeq}
+		where storage_seq = #{storageSeq}
 	</update>
 	
 	<delete id="storageDelete" parameterType="int">
@@ -20,8 +20,11 @@
 	</delete>
 	
 	<select id="storageList" parameterType="int" resultType="StorageListResponse">
-		select storage_name as storageName, storage_public as storagePublic
-		from tb_storage
+		select storage_seq as storageSeq, storage_name as storageName, storage_public as storagePublic, storageFile.file_path as storageImagePath, storageFile.file_name as storageImageName
+		from tb_storage 
+		left outer join tb_file storageFile on storageFile.relation_tb = 'tb_storage'
+		and storageFile.relation_seq = tb_storage.storage_seq
+		and storageFile.file_is_active = 1
 		where character_seq = #{characterSeq}
 	</select>
 	

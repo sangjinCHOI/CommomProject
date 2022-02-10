@@ -1,5 +1,6 @@
 package com.ssafy.persona.content.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,13 @@ import com.ssafy.persona.content.model.dto.ReplyGetResponse;
 import com.ssafy.persona.content.model.dto.ReplyLikeRequest;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
 import com.ssafy.persona.content.model.dto.ReplyReportRequest;
+import com.ssafy.persona.file.model.dto.FileUploadRequest;
+import com.ssafy.persona.file.service.FileServiceImpl;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class ContentServiceImpl implements ContentService {
 	@Autowired
 	ContentMapper contentMapper;
@@ -31,10 +37,24 @@ public class ContentServiceImpl implements ContentService {
 	LikeMapper likeMapper;
 	@Autowired
 	ReportMapper reportMapper;
-
 	
+	private final FileServiceImpl fileService;
+
 	@Override
 	public boolean contentCreate(ContentCreateRequest contentCreateRequest) {
+		if (contentCreateRequest.getMyfile() != null) {
+			FileUploadRequest file = FileUploadRequest.builder()
+					.myfile(contentCreateRequest.getMyfile())
+					.fileType('2')
+					.relationTb("tb_content")
+					.relationSeq(contentCreateRequest.getContentSeq())
+					.build();
+			try {
+				fileService.uploadFile(file);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+		}
 		return contentMapper.contentCreate(contentCreateRequest) == 1;
 	}
 
