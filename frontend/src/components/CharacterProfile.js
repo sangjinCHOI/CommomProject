@@ -51,9 +51,7 @@ function CharacterProfile({
                 // userSeq: 0
               };
               console.log(alarmData);
-              Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) =>
-                console.log(res)
-              );
+              Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => console.log(res));
             }
           });
         }
@@ -67,12 +65,7 @@ function CharacterProfile({
       <div className="ml-10">
         <div>
           <div className="inline-block bg-red-500 px-1 mr-1 rounded-xl">
-            <img
-              src={require("../assets/images/sample_achievement.png")}
-              alt="sample_achievement_img"
-              width="16px"
-              className="inline-block"
-            />
+            <img src={require("../assets/images/sample_achievement.png")} alt="sample_achievement_img" width="16px" className="inline-block" />
             {/* <span className="text-xs text-yellow-300">요리왕</span> */}
           </div>
           {nickname} ({characterProfile.categoryName})
@@ -106,20 +99,14 @@ function CharacterProfile({
           <div className="mt-3">
             <div className="inline-block px-2">
               <Link to={`../${nickname}/achievement`}>
-                <Label
-                  color="green"
-                  className={`${styles.customRadius} ${styles.clickAchievementBtn}`}
-                >
+                <Label color="green" className={`${styles.customRadius} ${styles.clickAchievementBtn}`}>
                   업적 보기
                 </Label>
               </Link>
             </div>
             <div className="inline-block px-2">
-              <Link to={`${characterProfile.nickname}/storages`}>
-                <Label
-                  color="orange"
-                  className={`${styles.customRadius} ${styles.clickSubcharacterBtn}`}
-                >
+              <Link to={`${nickname}/storages`}>
+                <Label color="orange" className={`${styles.customRadius} ${styles.clickSubcharacterBtn}`}>
                   저장목록
                 </Label>
               </Link>
@@ -143,20 +130,14 @@ function CharacterProfile({
           <div className="mt-2">
             <div className="inline-block px-2">
               <Link to={`../${nickname}/achievement`}>
-                <Label
-                  color="green"
-                  className={`${styles.customRadius} ${styles.clickAchievementBtn}`}
-                >
+                <Label color="green" className={`${styles.customRadius} ${styles.clickAchievementBtn}`}>
                   업적 보기
                 </Label>
               </Link>
             </div>
             <div className="inline-block px-2">
-              <Link to={`${nickname}/storages`}>
-                <Label
-                  color="orange"
-                  className={`${styles.customRadius} ${styles.clickSubcharacterBtn}`}
-                >
+              <Link to={`../${nickname}/storages`}>
+                <Label color="orange" className={`${styles.customRadius} ${styles.clickSubcharacterBtn}`}>
                   저장목록
                 </Label>
               </Link>
@@ -168,10 +149,7 @@ function CharacterProfile({
                   follow(characterProfile.characterSeq, e);
                 }}
               >
-                <Label
-                  color="lightBlue"
-                  className={`${styles.customRadius} ${styles.clickFollowBtn}`}
-                >
+                <Label color="lightBlue" className={`${styles.customRadius} ${styles.clickFollowBtn}`}>
                   팔로우
                 </Label>
               </Link>
