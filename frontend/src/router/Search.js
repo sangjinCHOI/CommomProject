@@ -7,8 +7,10 @@ import StorageCardSmall from "../components/StorageCardSmall";
 import styles from "./Search.module.css";
 import Send from "../config/Send";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function Search({ characterSlice, location }) {
+  const history = useHistory();
   const queryString = location.search;
   const params = new URLSearchParams(queryString);
   const query = params.get("query");
@@ -79,6 +81,20 @@ function Search({ characterSlice, location }) {
 
   const moveContentDetail = (myCharacterSeq, contentSeq, e) => {
     e.preventDefault();
+    Send.get(`/content/${contentSeq}`, {
+      params: {
+        characterNow: myCharacterSeq,
+        contentSeq,
+      },
+    }).then((res) => {
+      console.log(res);
+      const contentDetail = res.data;
+      history.push({
+        pathname: `../search/texts`,
+        search: `?query=${query}`,
+        props: { contentDetail },
+      });
+    });
   };
 
   return (
