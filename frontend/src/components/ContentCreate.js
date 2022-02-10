@@ -24,7 +24,7 @@ function ContentCreate(props) {
     }
   };
   const onRemoveTags = (index) => {
-    setTags(tags.filter((tag, tagIndex) => index != tagIndex));
+    setTags(tags.filter((tag, tagIndex) => index !== tagIndex));
   };
 
   // 태그 작성
@@ -62,6 +62,17 @@ function ContentCreate(props) {
       history.push("");
       postTags(tags, res.data.content_seq);
     });
+  };
+
+  // 첨부파일
+  const readImage = (input) => {
+    // 인풋 태그에 파일이 있는 경우
+    console.log(input.files);
+    if (input.files) {
+      // console.log(URL.createObjectURL(input.files[0]));
+      // const reader = new FileReader();
+      // console.log(reader.readAsDataURL(input.files));
+    }
   };
 
   return (
@@ -113,7 +124,7 @@ function ContentCreate(props) {
           placeholder="이 곳에 게시글을 작성해주세요."
         ></textarea>
         <div className="bg-slate-100 rounded mb-1 flex justify-between">
-          <input id="upload-file" type="file" multiple="multiple" accept="image/*" />
+          <input id="upload-file" type="file" multiple="multiple" accept="image/*" onChange={(e) => readImage(e.target)} />
           {/* <Button color="red">파일삭제</Button> */}
         </div>
       </ModalBody>
