@@ -106,6 +106,8 @@ const timeDifference = (time) => {
 };
 
 function Content(props) {
+  const priorityContent = props.priorityContent ? props.priorityContent : null;
+  console.log("priorityContent", priorityContent);
   const [reportModal, setReportModal] = useState(false);
   const handleReportClose = () => {
     setReportModal(false);
@@ -120,11 +122,16 @@ function Content(props) {
   };
 
   // 피드 게시물
-  const feedContents = props.contents;
+  let feedContents = props.contents;
   if (feedContents) {
     if (feedContents.length > 1) {
       feedContents.sort((a, b) => (a.contentSeq > b.contentSeq ? 1 : -1));
+      if (priorityContent) {
+        feedContents.push(priorityContent);
+      }
     }
+  } else if (priorityContent) {
+    feedContents = priorityContent;
   }
   // console.log(feedContents);
 
@@ -191,9 +198,23 @@ function Content(props) {
       {feedContents.reverse().map((content, index) => {
         return (
           <div key={index}>
-            <Comment comments={comments} isOpen={commentModal} onCancel={handleCommentClose} style={{ zIndex: 2 }} />
-            <Report content={content} isOpen={reportModal} onCancel={handleReportClose} style={{ zIndex: 2 }} />
-            <NewStorage isOpen={newStorageModal} onCancel={handleNewStorageClose} style={{ zIndex: 2 }} />
+            <Comment
+              comments={comments}
+              isOpen={commentModal}
+              onCancel={handleCommentClose}
+              style={{ zIndex: 2 }}
+            />
+            <Report
+              content={content}
+              isOpen={reportModal}
+              onCancel={handleReportClose}
+              style={{ zIndex: 2 }}
+            />
+            <NewStorage
+              isOpen={newStorageModal}
+              onCancel={handleNewStorageClose}
+              style={{ zIndex: 2 }}
+            />
             <MainCard classes="mb-3" max-height="900px">
               <div style={{ height: 60 }} className="p-4 flex justify-between">
                 <div className="text-xl">
@@ -238,7 +259,11 @@ function Content(props) {
                 </Menu>
               </div>
               <div className="flex justify-center bg-slate-100" style={{ height: 600 }}>
-                <img style={{ maxWidth: 600, maxHeight: 600, objectFit: "cover" }} src="https://url.kr/4ce1sl" alt="" />
+                <img
+                  style={{ maxWidth: 600, maxHeight: 600, objectFit: "cover" }}
+                  src="https://url.kr/4ce1sl"
+                  alt=""
+                />
               </div>
               <div className="px-4 py-2">{content.contentText}</div>
               <div className="px-4 pt-2 flex flex-wrap">
@@ -252,14 +277,25 @@ function Content(props) {
                     })
                   : null}
               </div>
-              <div className="text-slate-400 px-4">{timeDifference(content.contentCreatedDate)}</div>
+              <div className="text-slate-400 px-4">
+                {timeDifference(content.contentCreatedDate)}
+              </div>
               <div className="px-4 py-2 flex justify-between">
                 <div className="flex items-center">
                   <button className="flex items-center">
                     {content.contentIsLike ? (
-                      <FontAwesomeIcon icon={hs} size="lg" style={{ color: "red" }} onClick={(e) => deleteLike(content.contentSeq, e)} />
+                      <FontAwesomeIcon
+                        icon={hs}
+                        size="lg"
+                        style={{ color: "red" }}
+                        onClick={(e) => deleteLike(content.contentSeq, e)}
+                      />
                     ) : (
-                      <FontAwesomeIcon icon={hr} size="lg" onClick={(e) => postLike(content.contentSeq, e)} />
+                      <FontAwesomeIcon
+                        icon={hr}
+                        size="lg"
+                        onClick={(e) => postLike(content.contentSeq, e)}
+                      />
                     )}
                   </button>
                   <button className="mx-1 pb-1">
