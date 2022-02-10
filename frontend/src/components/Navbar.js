@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Disclosure, Menu } from "@headlessui/react";
 import Logo from "../assets/images/main_logo.png";
@@ -7,8 +7,118 @@ import Search from "../assets/images/search.png";
 import ContentCreate from "./ContentCreate";
 import AlarmShow from "./AlarmShow";
 import { connect } from "react-redux";
+import Send from "../config/Send";
+import CustomModal from "./CustomModal";
+import styles from "./Navbar.module.css";
 
 function Navbar({ characterSlice }) {
+  function SearchClick({ isOpenModal, setIsOpenModal, character }) {
+    const [isRealTime, setIsRealTime] = useState(false);
+    const [searchHistories, setSearchHistories] = useState([]);
+    const [realTimeChart, setRealTimeChart] = useState([]);
+
+    const getHistory = () => {
+      Send.get(`/search/history/${character.characterSeq}`).then((res) => {
+        console.log(res);
+        setSearchHistories(res.data);
+      });
+    };
+    const getRealTime = () => {
+      Send.get(`/search/realTimeChart`).then((res) => {
+        console.log(res);
+        setRealTimeChart(res.data);
+      });
+    };
+
+    const moveToSearchResult = (searchWord, e) => {
+      const data = {
+        characterSeq: characterSlice.characterSeq,
+        searchHistoryText: searchWord,
+      };
+      Send.post("/search", JSON.stringify(data)).then((res) => console.log(res));
+      history.push(`/search?query=${searchWord}`);
+      setIsSearchClick(false);
+    };
+
+    useEffect(() => {
+      getHistory();
+      getRealTime();
+    }, [isRealTime]);
+
+    return (
+      <div
+        className="absolute right-0 top-10 border border-gray-400 rounded-lg bg-white"
+        style={{ width: "300px", height: "400px" }}
+      >
+        <div className="flex justify-between text-xl text-gray-400">
+          <div
+            className={`px-8 py-2 w-32 text-center ${
+              isRealTime ? "" : "border-b-2 border-blue-500 text-black"
+            }`}
+            style={{
+              width: "50%",
+              cursor: "pointer",
+            }}
+            onClick={() => setIsRealTime(false)}
+          >
+            최근 검색
+          </div>
+          <div
+            className={`px-8 py-2 w-32 text-center ${
+              isRealTime ? "border-b-2 border-blue-500 text-black" : ""
+            }`}
+            style={{
+              width: "50%",
+              cursor: "pointer",
+            }}
+            onClick={() => setIsRealTime(true)}
+          >
+            실시간
+          </div>
+        </div>
+        <hr />
+
+        <div
+          className={`p-2 overflow-y-auto ${styles.heightScroll}`}
+          style={{ maxHeight: "350px" }}
+        >
+          {!isRealTime ? (
+            <div>
+              {searchHistories.map((history) => (
+                <div key={history} className="flex items-center mt-1">
+                  <div
+                    className="mx-4 text-lg"
+                    style={{ cursor: "pointer" }}
+                    onClick={(e) => moveToSearchResult(history, e)}
+                  >
+                    {history.length >= 14 ? history.slice(0, 14) + ".." : history}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div>
+              {realTimeChart.slice(0, 10).map((issue, index) => (
+                <div key={issue} className="flex items-center mt-1">
+                  <div className="mx-4 w-10 text-blue-600 text-xl">{index + 1}.</div>
+                  <div
+                    className="text-lg"
+                    style={{ cursor: "pointer" }}
+                    onClick={(e) => moveToSearchResult(issue, e)}
+                  >
+                    {issue.length >= 11 ? issue.slice(0, 11) + ".." : issue}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  const [isSearchClick, setIsSearchClick] = useState(false);
+
   const [word, setWord] = React.useState("");
   const history = useHistory();
   const onChange = (event) => {
@@ -16,6 +126,11 @@ function Navbar({ characterSlice }) {
   };
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
+      const data = {
+        characterSeq: characterSlice.characterSeq,
+        searchHistoryText: word,
+      };
+      Send.post("/search", JSON.stringify(data)).then((res) => console.log(res));
       history.push(`/search?query=${word}`);
     }
   };
@@ -48,17 +163,23 @@ function Navbar({ characterSlice }) {
 
               <div className="relative">
                 <input
-                  className="rounded-full h-10 ml-10 pl-5 pr-10"
+                  className="rounded-lg h-10 ml-10 pl-5 pr-10"
                   style={{ width: "300px" }}
                   type="text"
                   placeholder="search"
                   value={word}
                   onChange={onChange}
                   onKeyPress={handleKeyPress}
+                  onClick={() => setIsSearchClick(true)}
                 />
                 <Link to={{ pathname: "/search", search: `?query=${word}` }}>
                   <img className="absolute inset-y-2 right-3" src={Search} alt="" />
                 </Link>
+                {isSearchClick && (
+                  <CustomModal isOpenModal={isSearchClick} setIsOpenModal={setIsSearchClick}>
+                    <SearchClick character={characterSlice} />
+                  </CustomModal>
+                )}
               </div>
 
               <div className="flex items-center static inset-auto ml-6 pr-0">
