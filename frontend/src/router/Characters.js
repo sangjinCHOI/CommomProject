@@ -110,6 +110,21 @@ function Characters({ userSlice, saveCharacter }) {
           isExist={characterLen >= 1 ? true : false}
           isLock={userCreatableCount >= 1 ? false : true}
           // imgSrc="https://cdn2.thecatapi.com/images/ba2.jpg"
+          // 아마 최종 형태?
+          // imgSrc={
+          //   characterLen >= 1
+          //     ? characterList[0].filePath !== null && characterList[0].fileName !== null
+          //       ? `${characterList[0].filePath}\\${characterList[0].fileName}`
+          //       : null
+          //     : null
+          // }
+          imgSrc={
+            characterLen >= 1
+              ? characterList[0].filePath !== null && characterList[0].fileName !== null
+                ? `https://cdn2.thecatapi.com/images/9gg.jpg`
+                : null
+              : null
+          }
           characterSeq={characterLen >= 1 ? characterList[0].characterSeq : null}
         />
         <Character
@@ -118,6 +133,13 @@ function Characters({ userSlice, saveCharacter }) {
           isExist={characterLen >= 2 ? true : false}
           isLock={userCreatableCount >= 2 ? false : true}
           // imgSrc="https://cdn2.thecatapi.com/images/kFemmj2_z.jpg"
+          imgSrc={
+            characterLen >= 2
+              ? characterList[1].filePath !== null && characterList[1].fileName !== null
+                ? `https://cdn2.thecatapi.com/images/9gg.jpg`
+                : null
+              : null
+          }
           characterSeq={characterLen >= 2 ? characterList[1].characterSeq : null}
         />
       </div>
@@ -128,6 +150,13 @@ function Characters({ userSlice, saveCharacter }) {
           isExist={characterLen >= 3 ? true : false}
           isLock={userCreatableCount >= 3 ? false : true}
           // imgSrc="https://cdn2.thecatapi.com/images/9gg.jpg"
+          imgSrc={
+            characterLen >= 3
+              ? characterList[2].filePath !== null && characterList[2].fileName !== null
+                ? `https://cdn2.thecatapi.com/images/9gg.jpg`
+                : null
+              : null
+          }
           characterSeq={characterLen >= 3 ? characterList[2].characterSeq : null}
         />
         <Character
@@ -136,6 +165,13 @@ function Characters({ userSlice, saveCharacter }) {
           isExist={characterLen >= 4 ? true : false}
           isLock={userCreatableCount >= 4 ? false : true}
           // imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
+          imgSrc={
+            characterLen >= 4
+              ? characterList[3].filePath !== null && characterList[3].fileName !== null
+                ? `https://cdn2.thecatapi.com/images/9gg.jpg`
+                : null
+              : null
+          }
           characterSeq={characterLen >= 4 ? characterList[3].characterSeq : null}
         />
       </div>
