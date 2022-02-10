@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Content from "../components/Content";
 import Send from "../config/Send";
+import File from "../config/File";
 
 function Home({ characterSlice }) {
   const [feedContents, setFeedContents] = useState([]);
 
   const getFeed = () => {
-    Send.get("/contents", {
+    File.get("/contents", {
       params: {
         characterNow: characterSlice.characterSeq,
       },
