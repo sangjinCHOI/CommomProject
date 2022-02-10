@@ -5,6 +5,7 @@ import java.util.List;
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
 import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.content.model.dto.ContentLikeRequest;
+import com.ssafy.persona.content.model.dto.ContentListRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
@@ -19,7 +20,6 @@ public interface ContentService {
 	boolean contentModify(ContentModifyRequest contentModifyRequest);
 	boolean contentDelete(int contentSeq);
 	ContentGetResponse contentGet(int characterNow, int contentSeq);
-	List<ContentGetResponse> contentList(int characterNow);
 	
 	boolean hashtagCreate(String[] hashtag, int contentSeq);
 	boolean hashtagModify(String[] hashtag, int contentSeq);
@@ -38,9 +38,6 @@ public interface ContentService {
 	void replyReportUpdate(int reportedReply);
 	void characterReplyReportUpdate(int reportedReply);
 	
-	List<ContentGetResponse> contentPersonalList(int characterNow, int characterSeq);
-	List<ContentGetResponse> contentTagList(int characterNow, String tagText);
-	
 	boolean contentLike(ContentLikeRequest contentLikeRequest);
 	void contentLikeUpdate(int contentSeq);
 	
@@ -55,5 +52,7 @@ public interface ContentService {
 	
 	boolean replyDislike(int characterSeq, int replySeq);
 	void replyDislikeUpdate(int replySeq);
+	
+	List<ContentGetResponse> contentList(ContentListRequest contentListRequest);
 
 }

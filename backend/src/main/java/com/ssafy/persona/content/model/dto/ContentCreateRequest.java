@@ -2,8 +2,6 @@ package com.ssafy.persona.content.model.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ssafy.persona.content.model.entity.Content;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
