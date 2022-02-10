@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Menu } from "@headlessui/react";
 import { Label } from "@material-tailwind/react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as hs } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as hr } from "@fortawesome/free-regular-svg-icons";
@@ -126,7 +128,6 @@ function Content(props) {
       feedContents.sort((a, b) => (a.contentSeq > b.contentSeq ? 1 : -1));
     }
   }
-  // console.log(feedContents);
 
   // 댓글 작성
   const [replyText, setReplyText] = useState("");
@@ -237,9 +238,24 @@ function Content(props) {
                   )}
                 </Menu>
               </div>
-              <div className="flex justify-center bg-slate-100" style={{ height: 600 }}>
-                <img style={{ maxWidth: 600, maxHeight: 600, objectFit: "cover" }} src="https://url.kr/4ce1sl" alt="" />
+              <div>
+                <Carousel dynamicHeight={true} showArrows={true} showThumbs={false} width="600px" className="flex items-center">
+                  <div>
+                    <img style={{ maxWidth: 600, maxHeight: 600, width: "auto", height: "auto", objectFit: "cover" }} src="https://url.kr/ziaxwj" />
+                  </div>
+                  <div>
+                    <img style={{ maxWidth: 600, minHeight: 600, width: "auto", height: "auto", objectFit: "cover" }} src="https://url.kr/uig7kl" />
+                  </div>
+                  <div>
+                    <img style={{ maxWidth: 600, maxHeight: 600, width: "auto", height: "auto", objectFit: "cover" }} src="https://url.kr/9obfye" />
+                  </div>
+                </Carousel>
               </div>
+              {/* {content.contentFileName ? (
+                <div className="flex justify-center bg-slate-100" style={{ height: 600 }}>
+                  <img style={{ maxWidth: 600, maxHeight: 600, objectFit: "cover" }} src={content.contentFileName} alt="" />
+                </div>
+              ) : null} */}
               <div className="px-4 py-2">{content.contentText}</div>
               <div className="px-4 pt-2 flex flex-wrap">
                 {content.tags
