@@ -51,7 +51,10 @@
    			big.tag_text,
     		(select count(*) from tb_tag small where small.tag_text = big.tag_text) AS tag_count
 		FROM tb_tag big 
+		LEFT OUTER JOIN tb_content content ON big.content_seq = content.content_seq
 		where big.tag_text like CONCAT('%', #{text}, '%')
+		AND content.content_is_active = 1
+        AND content.content_is_public = 1
 		GROUP BY tag_text
 		ORDER BY tag_count DESC;
 	</select>
