@@ -61,7 +61,8 @@ public class FileServiceImpl implements FileService{
 				//db에 저장하는 작업 필요함
 				
 				FileUploadDTO dto = new FileUploadDTO(
-						files.getOriginalFilename(),
+//						files.getOriginalFilename(),
+						uuid.toString()+"_"+files.getOriginalFilename(),
 						path,
 						files.getSize(),
 						request.getFileType(),
@@ -97,7 +98,8 @@ public class FileServiceImpl implements FileService{
 				//db에 저장하는 작업 필요함
 				
 				FileUploadDTO dto = new FileUploadDTO(
-						files.getOriginalFilename(),
+//						files.getOriginalFilename(),
+						uuid.toString()+"_"+files.getOriginalFilename(),
 						path,
 						files.getSize(),
 						request.getFileType(),
