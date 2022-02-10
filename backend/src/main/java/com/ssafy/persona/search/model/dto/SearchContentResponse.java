@@ -10,7 +10,8 @@ import lombok.ToString;
 public class SearchContentResponse {
 	private int characterSeq;
 	private String nickname;
-	private int filePath;
+	private String filePath;
+	private String fileName;
 	private int contentSeq;
 	private String contentText;
 

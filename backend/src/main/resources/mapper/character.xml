@@ -70,6 +70,7 @@
 			tb_character c
 		JOIN tb_user u ON c.user_seq = u.user_seq
 		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_character'
+		AND f.file_is_active = 1
 		AND f.relation_seq = c.character_seq
 		where character_seq=#{characterSeq} 
 		AND character_active = 1
@@ -80,8 +81,10 @@
 			c.character_seq,
 			c.introduction,
 			c.representative_achievement, 
-			achieveFile.file_path AS achievement_image,
-			characterFile.file_path AS profile_image,
+			characterFile.file_path AS profileImagePath,
+			characterFile.file_name AS profileImageName,
+			achieveFile.file_path AS achievementImagePath,
+			achieveFile.file_name AS achievementImageName,
 			ca.character_category_name AS category_name,
 			(SELECT count(*) FROM tb_content where character_seq = c.character_seq AND content_is_active = 1) AS content_count,
 			(SELECT count(*) FROM tb_follow where followee = c.character_seq) AS follower_count,
@@ -91,22 +94,24 @@
 		LEFT OUTER JOIN tb_character_category ca ON ca.character_category_number = c.category_number
 		LEFT OUTER JOIN tb_file achieveFile ON achieveFile.relation_tb = 'tb_achievement'
 		AND achieveFile.relation_seq = c.representative_achievement
+		AND achieveFile.file_is_active = 1
 		LEFT OUTER JOIN tb_file characterFile ON characterFile.relation_tb = 'tb_character'
 		AND characterFile.relation_seq = c.character_seq
+		AND characterFile.file_is_active = 1
 		where nickname=#{nickname} 
 		AND character_active = 1
 	</select>
 
-	<select id="list"
-		resultType="com.ssafy.persona.character.model.dto.CharacterGetResponse">
+	<select id="list" resultType="CharacterGetResponse">
 		select c.character_seq, c.user_seq, c.nickname, c.category_number, c.introduction, 
 			c.representative_achievement, c.alarm_allow, c.like_alarm, c.reply_alarm,
 			c.follow_alarm, c.modify_alarm, c.reported_time, character_active,
 			c.character_created_date, c.character_modified_date,
-			f.file_path
+			f.file_path, f.file_name 
 		from tb_character c
 		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_character'
 		AND f.relation_seq = c.character_seq
+		AND f.file_is_active = 1
 		where user_seq=#{userSeq}
 		AND character_active = 1
 	</select>

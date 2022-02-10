@@ -13,8 +13,10 @@ public class CharacterProfileResponse {
 	private int characterSeq;
 	private String introduction;
 	private int representativeAchievement;
-	private String profileImage;
-	private String achievementImage;
+	private String profileImagePath;
+	private String profileImageName;
+	private String achievementImagePath;
+	private String achievementImageName;
 	private String categoryName;
 	private int contentCount;
 	private int followerCount;
