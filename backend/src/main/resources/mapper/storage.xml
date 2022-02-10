@@ -20,8 +20,11 @@
 	</delete>
 	
 	<select id="storageList" parameterType="int" resultType="StorageListResponse">
-		select storage_name as storageName, storage_public as storagePublic
-		from tb_storage
+		select storage_seq as storageSeq, storage_name as storageName, storage_public as storagePublic, storageFile.file_path as storageImagePath, storageFile.file_name as storageImageName
+		from tb_storage 
+		left outer join tb_file storageFile on storageFile.relation_tb = 'tb_storage'
+		and storageFile.relation_seq = tb_storage.storage_seq
+		and storageFile.file_is_active = 1
 		where character_seq = #{characterSeq}
 	</select>
 	
