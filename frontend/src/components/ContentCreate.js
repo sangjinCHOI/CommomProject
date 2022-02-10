@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "@material-tailwind/react";
 import Send from "../config/Send";
+import File from "../config/File";
 
 function ContentCreate(props) {
   // 태그
@@ -40,9 +41,18 @@ function ContentCreate(props) {
   };
 
   // 게시글 작성
+  const [imgFiles, setImgFiles] = useState([]);
   const [contentText, setContentText] = useState("");
   const [isPublic, setIsPublic] = useState(true);
   const history = useHistory();
+  const readImg = (input) => {
+    if (input.files) {
+      setImgFiles(input.files);
+      // for (let i = 0; i < input.files.length; i++) {
+      //   setImgFiles((currentArray) => [...currentArray, input.files[i]]);
+      // }
+    }
+  };
   const handleTextChange = (e) => {
     setContentText(e.target.value);
   };
@@ -51,6 +61,7 @@ function ContentCreate(props) {
     // console.log(e.target.value);
   };
   const postContent = () => {
+    const formData = new FormData();
     const data = {
       categoryNumber: props.characterSlice.categoryNumber,
       characterSeq: props.characterSlice.characterSeq,
@@ -58,21 +69,16 @@ function ContentCreate(props) {
       contentIsPublic: isPublic,
       contentText: contentText,
     };
-    Send.post("/content", JSON.stringify(data)).then((res) => {
-      history.push("");
-      postTags(tags, res.data.content_seq);
-    });
-  };
-
-  // 첨부파일
-  const readImage = (input) => {
-    // 인풋 태그에 파일이 있는 경우
-    console.log(input.files);
-    if (input.files) {
-      // console.log(URL.createObjectURL(input.files[0]));
-      // const reader = new FileReader();
-      // console.log(reader.readAsDataURL(input.files));
+    for (let i = 0; i < imgFiles.length; i++) {
+      formData.append("file", imgFiles[i]);
     }
+    formData.append("sendContentCreaterequest", new Blob([JSON.stringify(data)], { type: "application/json" }));
+    File.post("/content", formData).then((res) => {
+      if (tags.length !== 0) {
+        postTags(tags, res.data.content_seq);
+      }
+      history.push("/");
+    });
   };
 
   return (
@@ -124,7 +130,7 @@ function ContentCreate(props) {
           placeholder="이 곳에 게시글을 작성해주세요."
         ></textarea>
         <div className="bg-slate-100 rounded mb-1 flex justify-between">
-          <input id="upload-file" type="file" multiple="multiple" accept="image/*" onChange={(e) => readImage(e.target)} />
+          <input id="upload-file" type="file" multiple="multiple" accept="image/*" onChange={(e) => readImg(e.target)} />
           {/* <Button color="red">파일삭제</Button> */}
         </div>
       </ModalBody>
