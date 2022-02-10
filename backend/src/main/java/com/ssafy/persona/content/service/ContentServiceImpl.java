@@ -13,6 +13,7 @@ import com.ssafy.persona.content.mapper.ReportMapper;
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
 import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.content.model.dto.ContentLikeRequest;
+import com.ssafy.persona.content.model.dto.ContentListRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
@@ -60,6 +61,19 @@ public class ContentServiceImpl implements ContentService {
 
 	@Override
 	public boolean contentModify(ContentModifyRequest contentModifyRequest) {
+		if (contentModifyRequest.getMyfile() != null) {
+			FileUploadRequest file = FileUploadRequest.builder()
+					.myfile(contentModifyRequest.getMyfile())
+					.fileType('2')
+					.relationTb("tb_content")
+					.relationSeq(contentModifyRequest.getContentSeq())
+					.build();
+			try {
+				fileService.modifyFile(file);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+		}
 		return contentMapper.contentModify(contentModifyRequest) == 1;
 	}
 
@@ -87,16 +101,6 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public List<ReplyGetResponse> replyList(int characterNow, int contentSeq) {
 		return replyMapper.replyList(characterNow, contentSeq);
-	}
-
-	@Override
-	public List<ContentGetResponse> contentPersonalList(int characterNow, int characterSeq) {
-		return contentMapper.contentPersonalList(characterNow, characterSeq);
-	}
-
-	@Override
-	public List<ContentGetResponse> contentTagList(int characterNow, String tagText) {
-		return contentMapper.contentTagList(characterNow, tagText);
 	}
 
 	@Override
@@ -191,11 +195,6 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public List<ContentGetResponse> contentList(int characterNow) {
-		return contentMapper.contentList(characterNow);
-	}
-
-	@Override
 	public boolean hashtagCreate(String[] hashtag, int contentSeq) {
 		return contentMapper.hashtagCreate(hashtag, contentSeq) == 1;
 	}
@@ -209,5 +208,10 @@ public class ContentServiceImpl implements ContentService {
 	public List<String> hashtagGet(int contentSeq) {
 		return contentMapper.hashtagGet(contentSeq);
 	}
-	
+
+	@Override
+	public List<ContentGetResponse> contentList(ContentListRequest contentListRequest) {
+		return contentMapper.contentList(contentListRequest);
+	}
+
 }

@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ssafy.persona.character.model.dto.SendCharacterUpdateRequest;
 import com.ssafy.persona.content.model.dto.ContentCreateRequest;
 import com.ssafy.persona.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.content.model.dto.ContentLikeRequest;
+import com.ssafy.persona.content.model.dto.ContentListRequest;
 import com.ssafy.persona.content.model.dto.LikeListResponse;
 import com.ssafy.persona.content.model.dto.ContentModifyRequest;
 import com.ssafy.persona.content.model.dto.ContentReportRequest;
@@ -32,6 +32,7 @@ import com.ssafy.persona.content.model.dto.ReplyLikeRequest;
 import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
 import com.ssafy.persona.content.model.dto.ReplyReportRequest;
 import com.ssafy.persona.content.model.dto.SendContentCreateRequest;
+import com.ssafy.persona.content.model.dto.SendContentModifyRequest;
 import com.ssafy.persona.content.service.ContentService;
 
 import io.swagger.annotations.Api;
@@ -62,8 +63,8 @@ public class ContentController {
 											sendContentCreaterequest.getCategoryNumber(),
 											sendContentCreaterequest.getContentText(),
 											sendContentCreaterequest.isContentIsPublic(),
-											sendContentCreaterequest.isContentIsMedia());
-		
+											sendContentCreaterequest.isContentIsMedia()
+											);
 		if (contentService.contentCreate(contentCreateRequest)) {
 			message = SUCCESS;
 			status = HttpStatus.OK;
@@ -75,7 +76,15 @@ public class ContentController {
 
 	@ApiOperation(value = "content modify", notes = "content 수정, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping("/content")
-	public ResponseEntity<String> contentModify(@RequestBody @ApiParam(value = "수정할 글정보.", required = true) ContentModifyRequest contentModifyRequest) {
+	public ResponseEntity<String> contentModify(@RequestPart(value="file", required = false) MultipartFile[] file,
+												@RequestPart(value="sendContentModifyrequest") SendContentModifyRequest sendContentModifyrequest) {
+		ContentModifyRequest contentModifyRequest = new ContentModifyRequest(
+										sendContentModifyrequest.getContentSeq(),
+										file,
+										sendContentModifyrequest.getContentText(),
+										sendContentModifyrequest.isContentIsPublic(),
+										sendContentModifyrequest.isContentIsMedia()
+										);
 		if (contentService.contentModify(contentModifyRequest)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
@@ -94,13 +103,46 @@ public class ContentController {
 	@ApiOperation(value = "content personal list", notes = "특정 인물의 게시물 리스트 조회", response = ContentGetResponse.class)
 	@GetMapping("/content/person/{characterSeq}")
 	public ResponseEntity<List<ContentGetResponse>> contentPersonalList(@RequestParam @ApiParam(value = "접속한 캐릭터 번호.", required = true) int characterNow, @PathVariable("characterSeq") @ApiParam(value = "조회할 캐릭터번호.", required = true) int characterSeq) {
-		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentPersonalList(characterNow, characterSeq), HttpStatus.OK);
+		ContentListRequest contentListRequest = ContentListRequest.builder()
+																  .condition("person")
+																  .characterNow(characterNow)
+																  .characterSeq(characterSeq)
+																  .build();
+		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentList(contentListRequest), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "content tag list", notes = "특정 태그의 게시물 리스트 조회", response = ContentGetResponse.class)
 	@GetMapping("/content/tags/{tagText}")
 	public ResponseEntity<List<ContentGetResponse>> contentTagList(@RequestParam @ApiParam(value = "접속한 캐릭터 번호.", required = true) int characterNow, @PathVariable("tagText") @ApiParam(value = "조회할 태그.", required = true) String tagText) {
-		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentTagList(characterNow, tagText), HttpStatus.OK);
+		ContentListRequest contentListRequest = ContentListRequest.builder()
+				  .condition("tag")
+				  .characterNow(characterNow)
+				  .tagText(tagText)
+				  .build();
+		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentList(contentListRequest), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "content Text list", notes = "게시글의 특정 문구 게시물 리스트 조회", response = ContentGetResponse.class)
+	@GetMapping("/content/text/{contentText}")
+	public ResponseEntity<List<ContentGetResponse>> contentContentList(@RequestParam @ApiParam(value = "접속한 캐릭터 번호.", required = true) int characterNow, @PathVariable("contentText") @ApiParam(value = "조회할 문구.", required = true) String contentText) {
+		ContentListRequest contentListRequest = ContentListRequest.builder()
+				  .condition("text")
+				  .characterNow(characterNow)
+				  .contentText(contentText)
+				  .build();
+		
+		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentList(contentListRequest), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "content list", notes = "게시글 리스트(메인페이지)", response = List.class)
+	@GetMapping("/contents")
+	public ResponseEntity<List<ContentGetResponse>> contentList(@RequestParam @ApiParam(value = "리스트를 조회할 캐릭터번호.", required = true) int characterNow) {
+		ContentListRequest contentListRequest = ContentListRequest.builder()
+				  .condition("main")
+				  .characterNow(characterNow)
+				  .build();
+		
+		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentList(contentListRequest), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "reply create", notes = "reply 작성, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
@@ -233,11 +275,6 @@ public class ContentController {
 		return new ResponseEntity<ContentGetResponse>(contentService.contentGet(characterNow, contentSeq), HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "content list", notes = "게시글 리스트(메인페이지)", response = List.class)
-	@GetMapping("/contents")
-	public ResponseEntity<List<ContentGetResponse>> contentList(@RequestParam @ApiParam(value = "리스트를 조회할 캐릭터번호.", required = true) int characterNow) {
-		return new ResponseEntity<List<ContentGetResponse>>(contentService.contentList(characterNow), HttpStatus.OK);
-	}
 	
 	@ApiOperation(value = "hashtag create", notes = "hashtag 작성, DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/content/tag/{contentSeq}")

@@ -2,8 +2,6 @@ package com.ssafy.persona.content.model.dto;
 
 import java.time.LocalDateTime;
 
-import com.ssafy.persona.content.model.entity.Content;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -31,21 +29,6 @@ public class ContentGetResponse {
 	private int tagCount;
 	private String tags;
 	private int fileCount;
-	
-	public ContentGetResponse(Content content) {
-		super();
-		this.contentSeq = content.getContentSeq();
-		this.contentIsActive = content.isContentIsActive();
-		this.contentIsPublic = content.isContentIsPublic();
-		this.characterSeq = content.getCharacterSeq();
-		this.categoryNumber = content.getCategoryNumber();
-		this.contentText = content.getContentText();
-		this.contentLike = content.getContentLike();
-		this.contentSave = content.getContentSave();
-		this.contentIsMedia = content.isContentIsMedia();
-		this.contentCreatedDate = content.getContentCreatedDate();
-		this.contentModifiedDate = content.getContentModifiedDate();
-		this.contentIsLike = content.getContentIsLike();
-		this.contentIsStore = content.getContentIsStore();
-	}
+	private String contentFilePath;
+	private String contentFileName;
 }
