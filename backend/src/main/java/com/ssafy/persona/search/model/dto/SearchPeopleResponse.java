@@ -10,6 +10,7 @@ import lombok.ToString;
 public class SearchPeopleResponse {
 	private int characterSeq;
 	private String nickname;
-	private int filePath;
+	private String filePath;
+	private String fileName;
 
 }

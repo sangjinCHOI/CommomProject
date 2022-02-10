@@ -6,10 +6,13 @@
 	namespace="com.ssafy.persona.search.mapper.SearchMapper">
 
 	<select id="searchPeople" resultType="SearchPeopleResponse">
-		select c.character_seq, c.nickname, f.file_path
+		select 
+		c.character_seq, c.nickname, 
+		f.file_path, f.file_name
 		from tb_character c
 		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_character'
 		AND f.relation_seq = c.character_seq
+		AND f.file_is_active = 1
 		where c.nickname like CONCAT(#{text}, '%')
 		AND c.character_active = 1
 	</select>
@@ -17,11 +20,12 @@
 	<select id="searchContent" resultType="SearchContentResponse">
 		select 
 			c.character_seq, c.nickname, 
-			f.file_path, 
+			f.file_path, f.file_name, 
 			co.content_seq, co.content_text
 		from tb_character c
 		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_character'
 		AND f.relation_seq = c.character_seq
+		AND f.file_is_active = 1
 		JOIN tb_content co ON co.character_seq = c.character_seq
 		where co.content_text like CONCAT('%', #{text}, '%')
 		AND co.content_is_public = 1
@@ -33,10 +37,11 @@
 	<select id="searchStorage" resultType="SearchStorageResponse">
 		select 
 			s.storage_seq, s.storage_name, 
-			f.file_path 
+			f.file_path, f.file_name
 		from tb_storage s
 		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_storage'
 		AND f.relation_seq = s.storage_seq
+		AND f.file_is_active = 1
 		where s.storage_name like CONCAT('%', #{text}, '%')
 		AND s.storage_public = 1
 	</select>

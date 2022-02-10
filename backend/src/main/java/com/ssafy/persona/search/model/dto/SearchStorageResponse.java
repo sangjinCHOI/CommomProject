@@ -10,6 +10,7 @@ import lombok.ToString;
 public class SearchStorageResponse {
 	private int storageSeq;
 	private String storageName;
-	private int filePath;
+	private String filePath;
+	private String fileName;
 
 }

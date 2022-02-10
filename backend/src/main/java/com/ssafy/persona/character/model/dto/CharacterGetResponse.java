@@ -18,6 +18,7 @@ public class CharacterGetResponse {
 	private int userSeq;
 	private String userId;
 	private String filePath;
+	private String fileName;
 	private String nickname;
 	private int categoryNumber;
 	private String introduction;
