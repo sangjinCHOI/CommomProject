@@ -109,7 +109,7 @@ function Characters({ userSlice, saveCharacter }) {
           isManagement={isManagement}
           isExist={characterLen >= 1 ? true : false}
           isLock={userCreatableCount >= 1 ? false : true}
-          imgSrc="https://cdn2.thecatapi.com/images/ba2.jpg"
+          // imgSrc="https://cdn2.thecatapi.com/images/ba2.jpg"
           characterSeq={characterLen >= 1 ? characterList[0].characterSeq : null}
         />
         <Character
@@ -117,7 +117,7 @@ function Characters({ userSlice, saveCharacter }) {
           isManagement={isManagement}
           isExist={characterLen >= 2 ? true : false}
           isLock={userCreatableCount >= 2 ? false : true}
-          imgSrc="https://cdn2.thecatapi.com/images/kFemmj2_z.jpg"
+          // imgSrc="https://cdn2.thecatapi.com/images/kFemmj2_z.jpg"
           characterSeq={characterLen >= 2 ? characterList[1].characterSeq : null}
         />
       </div>
@@ -127,7 +127,7 @@ function Characters({ userSlice, saveCharacter }) {
           isManagement={isManagement}
           isExist={characterLen >= 3 ? true : false}
           isLock={userCreatableCount >= 3 ? false : true}
-          imgSrc="https://cdn2.thecatapi.com/images/9gg.jpg"
+          // imgSrc="https://cdn2.thecatapi.com/images/9gg.jpg"
           characterSeq={characterLen >= 3 ? characterList[2].characterSeq : null}
         />
         <Character
@@ -135,7 +135,7 @@ function Characters({ userSlice, saveCharacter }) {
           isManagement={isManagement}
           isExist={characterLen >= 4 ? true : false}
           isLock={userCreatableCount >= 4 ? false : true}
-          imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
+          // imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
           characterSeq={characterLen >= 4 ? characterList[3].characterSeq : null}
         />
       </div>

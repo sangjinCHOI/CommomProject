@@ -16,8 +16,9 @@ export default function CharacterImg({
 
   const resetImage = () => {
     const previewImage = document.getElementById("profileImg");
-    // 기본 이미지도 서버에 저장해야함!(require 이슈)
-    previewImage.src = "https://cdn2.thecatapi.com/images/9gg.jpg";
+    // 기본 이미지도 서버에 저장해야함!(require 이슈) -> 아닐수도
+    // previewImage.src = "https://cdn2.thecatapi.com/images/9gg.jpg";
+    previewImage.src = defaultUserImg;
     setIsClick(!isClick);
   };
 

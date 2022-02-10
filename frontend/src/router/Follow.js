@@ -59,8 +59,8 @@ function Follow({ characterSlice }) {
       followee: character.characterSeq, // 해당 페이지의 캐릭터
       nickname: "",
     };
-    setFollowerList([]); // 이게 있어야 코드 수정 후 저장할 때 중복으로 안가져옴
     Send.post("/character/followers", JSON.stringify(data)).then((res) => {
+      setFollowerList([]); // 이게 있어야 코드 수정 후 저장할 때 중복으로 안가져옴
       res.data.forEach((follower) => {
         Send.get(`/character/${follower.follower}`).then((res) => {
           // 캐릭터 데이터가 있다면
@@ -78,8 +78,8 @@ function Follow({ characterSlice }) {
       follower: character.characterSeq, // 해당 페이지의 캐릭터
       nickname: "",
     };
-    setFolloweeList([]); // 이게 있어야 코드 수정 후 저장할 때 중복으로 안가져옴
     Send.post("/character/followees", JSON.stringify(data)).then((res) => {
+      setFolloweeList([]); // 이게 있어야 코드 수정 후 저장할 때 중복으로 안가져옴
       res.data.forEach((followee) => {
         Send.get(`/character/${followee.followee}`).then((res) => {
           // 캐릭터 데이터가 있다면
