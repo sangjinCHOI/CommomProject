@@ -15,6 +15,8 @@ public interface CharacterService {
 	int update(CharacterUpdateRequest request);
 
 	int delete(CharacterDeleteRequest request);
+	
+	int setCharacterProfileDefault(int characterSeq);
 
 	CharacterGetResponse detail(int characterSeq);
 

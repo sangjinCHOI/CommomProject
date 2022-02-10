@@ -89,6 +89,11 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
+	public int setCharacterProfileDefault(int characterSeq) {
+		return characterMapper.setCharacterProfileDefault(characterSeq);
+	}
+	
+	@Override
 	public CharacterGetResponse detail(int characterSeq) {
 		return characterMapper.detail(characterSeq);
 	}
