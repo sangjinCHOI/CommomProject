@@ -42,7 +42,10 @@ public class ContentServiceImpl implements ContentService {
 	private final FileServiceImpl fileService;
 
 	@Override
-	public boolean contentCreate(ContentCreateRequest contentCreateRequest) {
+	public int contentCreate(ContentCreateRequest contentCreateRequest) {
+		int result = 0;
+		result = contentMapper.contentCreate(contentCreateRequest);
+		
 		if (contentCreateRequest.getMyfile() != null) {
 			FileUploadRequest file = FileUploadRequest.builder()
 					.myfile(contentCreateRequest.getMyfile())
@@ -56,7 +59,7 @@ public class ContentServiceImpl implements ContentService {
 				e.printStackTrace();
 			}
 		}
-		return contentMapper.contentCreate(contentCreateRequest) == 1;
+		return result;
 	}
 
 	@Override

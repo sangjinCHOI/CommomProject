@@ -16,7 +16,7 @@ import com.ssafy.persona.content.model.dto.ReplyModifyRequest;
 import com.ssafy.persona.content.model.dto.ReplyReportRequest;
 
 public interface ContentService {
-	boolean contentCreate(ContentCreateRequest contentCreateRequest);
+	int contentCreate(ContentCreateRequest contentCreateRequest);
 	boolean contentModify(ContentModifyRequest contentModifyRequest);
 	boolean contentDelete(int contentSeq);
 	ContentGetResponse contentGet(int characterNow, int contentSeq);

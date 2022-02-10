@@ -65,7 +65,7 @@ public class ContentController {
 											sendContentCreaterequest.isContentIsPublic(),
 											sendContentCreaterequest.isContentIsMedia()
 											);
-		if (contentService.contentCreate(contentCreateRequest)) {
+		if (contentService.contentCreate(contentCreateRequest) == 1) {
 			message = SUCCESS;
 			status = HttpStatus.OK;
 			result.put("message", message);
