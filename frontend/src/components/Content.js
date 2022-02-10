@@ -108,6 +108,8 @@ const timeDifference = (time) => {
 };
 
 function Content(props) {
+  const priorityContent = props.priorityContent ? props.priorityContent : null;
+  console.log("priorityContent", priorityContent);
   const [reportModal, setReportModal] = useState(false);
   const handleReportClose = () => {
     setReportModal(false);
@@ -122,11 +124,16 @@ function Content(props) {
   };
 
   // 피드 게시물
-  const feedContents = props.contents;
+  let feedContents = props.contents;
   if (feedContents) {
     if (feedContents.length > 1) {
       feedContents.sort((a, b) => (a.contentSeq > b.contentSeq ? 1 : -1));
+      if (priorityContent) {
+        feedContents.push(priorityContent);
+      }
     }
+  } else if (priorityContent) {
+    feedContents = priorityContent;
   }
 
   // 댓글 작성
