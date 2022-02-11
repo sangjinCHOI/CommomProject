@@ -4,15 +4,10 @@ import styles from "./StorageCardLarge.module.css";
 export default function StorageCardLarge({ storageName, imgSrc }) {
   const [isMouseOver, setIsMouseOver] = useState(false);
   return (
-    <div
-      className={`relative flex justify-center items-center px-4 py-2`}
-      style={{ height: "200px" }}
-      onMouseOver={() => setIsMouseOver(true)}
-      onMouseOut={() => setIsMouseOver(false)}
-    >
+    <div className={`relative flex justify-center items-center px-4 py-2`} style={{ height: "200px" }} onMouseOver={() => setIsMouseOver(true)} onMouseOut={() => setIsMouseOver(false)}>
       <img
-        src={imgSrc}
-        alt={imgSrc}
+        src={require(imgSrc)}
+        alt={require(imgSrc)}
         className={`w-80 h-40 border rounded ${isMouseOver ? `${styles.highlight}` : `opacity-60`}`}
         style={{
           width: "100%",
@@ -23,9 +18,7 @@ export default function StorageCardLarge({ storageName, imgSrc }) {
         }}
       />
       <div
-        className={`absolute top-auto left-auto w-auto px-2 ${
-          isMouseOver ? `${styles.textActive}` : `${styles.textInactive} text-xl`
-        }`}
+        className={`absolute top-auto left-auto w-auto px-2 ${isMouseOver ? `${styles.textActive}` : `${styles.textInactive} text-xl`}`}
         style={{
           cursor: "pointer",
         }}
