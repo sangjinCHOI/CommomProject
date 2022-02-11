@@ -22,6 +22,15 @@ function CharacterProfile({
       setCharacterProfile(res.data);
     });
   };
+  // 일단 characterProfile 가져올 수 있는 코드 but Error가 먼저 발생함
+  // Error가 발생하기 전에 가져와야 함!
+  // 결국 둘 중 하나
+  // 1. return 아래가 랜더링되기 전에 함수들을 실행하는 방법 찾기!
+  // 2. 없는 파일을 참조할 때에 Error가 발생하지 않게 만들기!
+  if (!characterProfile.nickname) {
+    // getCharacterProfile();
+  }
+
   useEffect(() => {
     getCharacterProfile();
   }, []);
