@@ -58,10 +58,12 @@ function CharacterUpdate({ updateCharacter, location }) {
   const history = useHistory();
 
   const characterSeq = location.state.characterSeq;
+  const [nowCharacter, setNowCharacter] = useState([]);
   const getCharacter = () => {
     Send.get(`/character/${characterSeq}`).then((res) => {
       nickname.setValue(res.data.nickname);
       introduction.setValue(res.data.introduction);
+      setNowCharacter(res.data);
     });
   };
 
@@ -117,7 +119,16 @@ function CharacterUpdate({ updateCharacter, location }) {
         className="mx-auto my-24"
         style={{ width: "450px" }}
       />
-      <CharacterImg imgChangeHandler={imgChangeHandler} isChange={true} underText="변경" />
+      <CharacterImg
+        imgSrc={
+          nowCharacter.filePath !== null && nowCharacter.fileName !== null
+            ? nowCharacter.filePath + nowCharacter.fileName
+            : "/images/default_user.png"
+        }
+        imgChangeHandler={imgChangeHandler}
+        isChange={true}
+        underText="변경"
+      />
       <div className="w-96 mx-auto mt-8">
         <div className="bg-white rounded-lg">
           <InputIcon
