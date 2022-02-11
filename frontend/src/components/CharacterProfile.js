@@ -18,6 +18,7 @@ function CharacterProfile({
   const [characterProfile, setCharacterProfile] = useState({});
   const getCharacterProfile = () => {
     Send.get(`/character/profile/${nickname}`).then((res) => {
+      console.log("!!!!!!!", res.data);
       setCharacterProfile(res.data);
     });
   };
