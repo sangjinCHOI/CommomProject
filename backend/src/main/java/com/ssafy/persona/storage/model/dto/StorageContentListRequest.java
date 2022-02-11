@@ -10,5 +10,4 @@ import lombok.ToString;
 public class StorageContentListRequest {
 	private int storageSeq;
 	private int characterNow;
-	private int characterSeq;
 }

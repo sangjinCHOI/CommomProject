@@ -67,7 +67,7 @@
         (select count(*) from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.character_seq ) AS fileCount,
         (select GROUP_CONCAT(file_path separator '|') from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.character_seq GROUP BY relation_seq) AS files
 		from tb_content
-		where content_seq In (select content_seq from tb_stored_content where storage_seq = #{storageSeq} and character_seq = #{characterSeq}) and content_is_active = 1
+		where content_seq In (select content_seq from tb_stored_content where storage_seq = #{storageSeq}) and content_is_active = 1
 	</select>
 	
 	
