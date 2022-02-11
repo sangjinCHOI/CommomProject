@@ -109,7 +109,7 @@ const timeDifference = (time) => {
 
 function Content(props) {
   const priorityContent = props.priorityContent ? props.priorityContent : null;
-  console.log("priorityContent", priorityContent);
+  // console.log("priorityContent", priorityContent);
   const [reportModal, setReportModal] = useState(false);
   const handleReportClose = () => {
     setReportModal(false);
@@ -311,12 +311,15 @@ function Content(props) {
                           새 저장목록 생성
                         </button>
                       </Menu.Item>
-                      <Menu.Item>
-                        <button className="mx-4">요리</button>
-                      </Menu.Item>
-                      <Menu.Item>
-                        <button className="mx-4">맛집</button>
-                      </Menu.Item>
+                      {props.storeges
+                        ? props.storeges.map((storage, index) => {
+                            return (
+                              <Menu.Item key={index}>
+                                <button className="mx-4">{storage.storageName}</button>
+                              </Menu.Item>
+                            );
+                          })
+                        : null}
                     </Menu.Items>
                   </Menu>
                   <span className="pb-1">{content.contentSave}</span>

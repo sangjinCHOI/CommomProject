@@ -6,6 +6,7 @@ import File from "../config/File";
 
 function Home({ characterSlice }) {
   const [feedContents, setFeedContents] = useState([]);
+  const [storeges, setStorages] = useState([]);
 
   const getFeed = () => {
     File.get("/contents", {
@@ -16,6 +17,9 @@ function Home({ characterSlice }) {
       .then((res) => {
         if (res.data) {
           setFeedContents(res.data);
+          Send.get(`/storage/${characterSlice.characterSeq}`).then((res) => {
+            setStorages(res.data);
+          });
         }
       })
       .catch((err) => console.log(err));
@@ -28,7 +32,7 @@ function Home({ characterSlice }) {
   return (
     <>
       <div className="mb-4">
-        <Content contents={feedContents} />
+        <Content contents={feedContents} storeges={storeges} />
       </div>
     </>
   );
