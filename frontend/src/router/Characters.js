@@ -211,6 +211,11 @@ function Characters({ userSlice, saveCharacter }) {
           </span>
         </Link>
       </div>
+      <div className="mt-8 text-center">
+        <Link to="../accounts/login" className="text-gray-400">
+          로그아웃
+        </Link>
+      </div>
     </>
   );
 }

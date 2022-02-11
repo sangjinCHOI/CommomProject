@@ -123,7 +123,7 @@ function Navbar({ characterSlice }) {
     setWord(event.target.value);
   };
   const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && word) {
       const data = {
         characterSeq: characterSlice.characterSeq,
         searchHistoryText: word,
@@ -133,6 +133,20 @@ function Navbar({ characterSlice }) {
       setIsSearchClick(false);
     }
   };
+
+  const sendSearchData = (word, e) => {
+    e.preventDefault();
+    if (word) {
+      const data = {
+        characterSeq: characterSlice.characterSeq,
+        searchHistoryText: word,
+      };
+      Send.post("/search", JSON.stringify(data)).then((res) => console.log(res));
+      history.push(`/search?query=${word}`);
+      setIsSearchClick(false);
+    }
+  };
+
   const [contentCreateModal, setContentCreateModal] = React.useState(false);
   const handleClose = () => {
     setContentCreateModal(false);
@@ -171,9 +185,15 @@ function Navbar({ characterSlice }) {
                   onKeyPress={handleKeyPress}
                   onClick={() => setIsSearchClick(true)}
                 />
-                <Link to={{ pathname: "/search", search: `?query=${word}` }}>
-                  <img className="absolute inset-y-2 right-3" src={Search} alt="" />
-                </Link>
+                <img
+                  className="absolute inset-y-2 right-3"
+                  src={Search}
+                  alt=""
+                  onClick={(e) => sendSearchData(word, e)}
+                  style={{
+                    cursor: "pointer",
+                  }}
+                />
                 {isSearchClick && (
                   <CustomModal isOpenModal={isSearchClick} setIsOpenModal={setIsSearchClick}>
                     <SearchClick character={characterSlice} />
