@@ -6,8 +6,8 @@ export default function StorageCardLarge({ storageName, imgSrc }) {
   return (
     <div className={`relative flex justify-center items-center px-4 py-2`} style={{ height: "200px" }} onMouseOver={() => setIsMouseOver(true)} onMouseOut={() => setIsMouseOver(false)}>
       <img
-        src={require(imgSrc)}
-        alt={require(imgSrc)}
+        src={require(`../assets${imgSrc}`)}
+        alt={require(`../assets${imgSrc}`)}
         className={`w-80 h-40 border rounded ${isMouseOver ? `${styles.highlight}` : `opacity-60`}`}
         style={{
           width: "100%",
