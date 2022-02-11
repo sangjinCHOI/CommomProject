@@ -220,7 +220,7 @@ function Content(props) {
                 <div className="text-xl">
                   <p>{content.contentWriter}</p>
                 </div>
-                <Menu as="div" className="mx-2 relative">
+                <Menu as="div" className="mx-2 relative" style={{ zIndex: 5 }}>
                   <Menu.Button className="flex text-sm">
                     <span className="material-icons">more_horiz</span>
                   </Menu.Button>
@@ -314,7 +314,7 @@ function Content(props) {
                   </button>
                 </div>
                 <div className="flex items-center">
-                  <Menu as="div" className="mx-2 relative">
+                  <Menu as="div" className="mx-2 relative" style={{ zIndex: 5 }}>
                     <Menu.Button className="flex text-sm">
                       {content.contentIsStore ? (
                         <span className="material-icons">library_add_check</span>
