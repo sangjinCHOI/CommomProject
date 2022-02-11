@@ -7,7 +7,6 @@ import Send from "../config/Send";
 import File from "../config/File";
 
 function NewStorage(props) {
-  console.log(props.content);
   const { isOpen, onCancel } = props;
   const handleClose = () => {
     onCancel();
@@ -26,9 +25,7 @@ function NewStorage(props) {
   const handleIsPublic = () => {
     setPublic(!isPublic);
   };
-  // console.log(props);
   const newStorage = (contentSeq, e) => {
-    console.log(props.content);
     const formData = new FormData();
     const data = {
       characterSeq: props.characterSlice.characterSeq,
