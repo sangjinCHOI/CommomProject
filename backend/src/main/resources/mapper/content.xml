@@ -31,9 +31,9 @@
 	
 	
 	<select id="contentGet" resultType="ContentGetResponse">
-		select content_seq as contentSeq, content_is_active as contentIsActive, content_is_public as contentIsPublic, character_seq as characterSeq, category_number as categoryNumber, content_text as contentText, content_like as contentLike, content_save as contentSave, content_is_media as contentIsMedia, content_created_date contentCreatedDate, content_modified_Date as contentModifiedDate, (select count(*) 
+		select content_seq as contentSeq, content_is_active as contentIsActive, content_is_public as contentIsPublic, character_seq as characterSeq, category_number as categoryNumber, content_text as contentText, content_like as contentLike, content_save as contentSave, content_is_media as contentIsMedia, content_created_date contentCreatedDate, content_modified_Date as contentModifiedDate, (select count(distinct content_seq) 
 		from tb_content_like
-		where content_seq = #{contentSeq} and character_seq = #{characterNow}) as contentIsLike, (select count(*) from tb_stored_content where content_seq = #{contentSeq} and character_seq = #{characterNow}) as contentIsStore, (select count(*) from tb_reply where content_seq = tb_content.content_seq and reply_is_active = 1) AS replyCount,
+		where content_seq = #{contentSeq} and character_seq = #{characterNow}) as contentIsLike, (select count(distinct content_seq) from tb_stored_content where content_seq = #{contentSeq} and character_seq = #{characterNow}) as contentIsStore, (select count(*) from tb_reply where content_seq = tb_content.content_seq and reply_is_active = 1) AS replyCount,
         (select nickname from tb_character where character_seq = tb_content.character_seq) AS contentWriter,
         (select file_path from tb_file where relation_tb = 'tb_character' AND relation_seq = tb_content.character_seq) AS writerProfile,
         (select count(*) from tb_tag where content_seq = tb_content.content_seq) AS tagCount,
@@ -46,9 +46,9 @@
 	</select>
 	
 	<select id="contentList" resultType="ContentGetResponse">
-		select content_seq as contentSeq, content_is_active as contentIsActive, content_is_public as contentIsPublic, character_seq as characterSeq, category_number as categoryNumber, content_text as contentText, content_like as contentLike, content_save as contentSave, content_is_media as contentIsMedia, content_created_date contentCreatedDate, content_modified_Date as contentModifiedDate, (select count(*) 
+		select content_seq as contentSeq, content_is_active as contentIsActive, content_is_public as contentIsPublic, character_seq as characterSeq, category_number as categoryNumber, content_text as contentText, content_like as contentLike, content_save as contentSave, content_is_media as contentIsMedia, content_created_date contentCreatedDate, content_modified_Date as contentModifiedDate, (select count(distinct content_seq) 
 		from tb_content_like
-		where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsLike, (select count(*) from tb_stored_content where content_seq = tb_content.content_seq and character_seq = #{characterNow}) as contentIsStore, (select count(*) from tb_reply where content_seq = tb_content.content_seq and reply_is_active = 1) AS replyCount,
+		where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsLike, (select count(distinct content_seq) from tb_stored_content where content_seq = tb_content.content_seq and character_seq = #{characterNow}) as contentIsStore, (select count(*) from tb_reply where content_seq = tb_content.content_seq and reply_is_active = 1) AS replyCount,
         (select nickname from tb_character where character_seq = tb_content.character_seq) AS contentWriter,
         (select file_path from tb_file where relation_tb = 'tb_character' AND relation_seq = tb_content.character_seq) AS writerProfile,
         (select count(*) from tb_tag where content_seq = tb_content.content_seq) AS tagCount,
