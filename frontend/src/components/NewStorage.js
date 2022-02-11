@@ -3,9 +3,11 @@ import { connect } from "react-redux";
 import { Switch } from "@headlessui/react";
 import { Button, Modal, ModalHeader, ModalBody } from "@material-tailwind/react";
 import StoreCompleted from "./StoreCompleted";
+import Send from "../config/Send";
 import File from "../config/File";
 
 function NewStorage(props) {
+  console.log(props.content);
   const { isOpen, onCancel } = props;
   const handleClose = () => {
     onCancel();
@@ -24,8 +26,9 @@ function NewStorage(props) {
   const handleIsPublic = () => {
     setPublic(!isPublic);
   };
-
-  const newStorage = () => {
+  // console.log(props);
+  const newStorage = (contentSeq, e) => {
+    console.log(props.content);
     const formData = new FormData();
     const data = {
       characterSeq: props.characterSlice.characterSeq,
@@ -36,7 +39,12 @@ function NewStorage(props) {
     formData.append("sendStorageCreateRequest", new Blob([JSON.stringify(data)], { type: "application/json" }));
     File.post("/storage", formData)
       .then((res) => {
-        console.log(res);
+        const data = {
+          characterSeq: props.characterSlice.characterSeq,
+          contentSeq: contentSeq,
+          storageSeq: res.data.storage_seq,
+        };
+        Send.post("/content/store", JSON.stringify(data));
       })
       .catch((err) => console.log(err));
   };
@@ -82,10 +90,10 @@ function NewStorage(props) {
               className="mt-5"
               color="lightBlue"
               ripple="light"
-              onClick={() => {
+              onClick={(e) => {
                 setStoreCompletedModal(true);
                 handleClose(false);
-                newStorage();
+                newStorage(props.content.contentSeq, e);
               }}
             >
               추가
