@@ -126,14 +126,15 @@ function Content(props) {
   if (feedContents) {
     if (feedContents.length > 1) {
       feedContents.sort((a, b) => (a.contentSeq > b.contentSeq ? 1 : -1));
+      // priorityContent가 있다면 맨 뒤에 push(나중에 reverse 하기 때문)
       if (priorityContent) {
         feedContents.push(priorityContent);
       }
     }
+    // 피드 게시물은 없지만 priorityContent가 있을 때
   } else if (priorityContent) {
     feedContents = priorityContent;
   }
-  // console.log(feedContents);
 
   // 댓글 작성
   const [replyText, setReplyText] = useState("");

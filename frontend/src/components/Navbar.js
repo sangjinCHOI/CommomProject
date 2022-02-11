@@ -19,13 +19,11 @@ function Navbar({ characterSlice }) {
 
     const getHistory = () => {
       Send.get(`/search/history/${character.characterSeq}`).then((res) => {
-        console.log(res);
         setSearchHistories(res.data);
       });
     };
     const getRealTime = () => {
       Send.get(`/search/realTimeChart`).then((res) => {
-        console.log(res);
         setRealTimeChart(res.data);
       });
     };
@@ -132,6 +130,7 @@ function Navbar({ characterSlice }) {
       };
       Send.post("/search", JSON.stringify(data)).then((res) => console.log(res));
       history.push(`/search?query=${word}`);
+      setIsSearchClick(false);
     }
   };
   const [contentCreateModal, setContentCreateModal] = React.useState(false);
