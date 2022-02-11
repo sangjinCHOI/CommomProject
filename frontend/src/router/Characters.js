@@ -11,6 +11,7 @@ function Characters({ userSlice, saveCharacter }) {
   const [characterList, setCharacterList] = useState([]);
   const [characterLen, setCharacterLen] = useState(0);
   const { userId, userSeq, userCreatableCount } = userSlice;
+  const [isMouseOver, setIsMouseOver] = useState(false);
 
   const getCharacterList = () => {
     Send.get(`/user/${userId}`).then((res) => {
@@ -96,11 +97,12 @@ function Characters({ userSlice, saveCharacter }) {
       <img
         src={require("../assets/images/main_logo.png")}
         alt="main_logo"
-        className="mx-auto my-24 w-96"
+        className="mx-auto my-24"
+        style={{ width: "450px" }}
       />
-      <div className="text-center text-2xl mt-8 mb-4">
-        <span>
-          {isManagement ? "수정할 캐릭터를 선택하세요." : "PERSONA를 사용할 캐릭터를 선택하세요."}
+      <div className="text-center text-3xl mt-8 mb-4">
+        <span style={{ fontSize: "26px" }}>
+          {isManagement ? "수정할 캐릭터를 선택하세요." : "사용할 캐릭터를 선택하세요."}
         </span>
       </div>
       <div className="flex justify-center m-8">
@@ -197,8 +199,16 @@ function Characters({ userSlice, saveCharacter }) {
         />
       </div>
       <div className="text-center text-2xl mt-24">
-        <Link to="" onClick={management}>
-          {isManagement ? "취소" : "캐릭터 관리"}
+        <Link
+          to=""
+          onClick={management}
+          className={`px-5 py-1.5 rounded-sm`}
+          onMouseOver={() => setIsMouseOver(true)}
+          onMouseOut={() => setIsMouseOver(false)}
+        >
+          <span className={`${isMouseOver ? "text-gray-800" : "text-gray-400"}`}>
+            {isManagement ? "완료" : "캐릭터 관리"}
+          </span>
         </Link>
       </div>
     </>

@@ -114,7 +114,8 @@ function CharacterUpdate({ updateCharacter, location }) {
       <img
         src={require("../assets/images/main_logo.png")}
         alt="main_logo"
-        className="mx-auto my-24 w-96"
+        className="mx-auto my-24"
+        style={{ width: "450px" }}
       />
       <CharacterImg imgChangeHandler={imgChangeHandler} isChange={true} underText="변경" />
       <div className="w-96 mx-auto mt-8">
