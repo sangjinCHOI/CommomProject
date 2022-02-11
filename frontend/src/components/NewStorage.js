@@ -1,17 +1,44 @@
-import React from "react";
+import { useState } from "react";
+import { connect } from "react-redux";
 import { Switch } from "@headlessui/react";
 import { Button, Modal, ModalHeader, ModalBody } from "@material-tailwind/react";
 import StoreCompleted from "./StoreCompleted";
+import File from "../config/File";
 
-export default function NewStorage(props) {
-  const [isPublic, setPublic] = React.useState(true);
+function NewStorage(props) {
   const { isOpen, onCancel } = props;
   const handleClose = () => {
     onCancel();
   };
-  const [storeCompletedModal, setStoreCompletedModal] = React.useState(false);
+  const [storeCompletedModal, setStoreCompletedModal] = useState(false);
   const handleStoreCompletedClose = () => {
     setStoreCompletedModal(false);
+  };
+
+  // 저장목록 만들기
+  const [storageName, setStorageName] = useState("");
+  const handleStorageName = (e) => {
+    setStorageName(e.target.value);
+  };
+  const [isPublic, setPublic] = useState(true);
+  const handleIsPublic = () => {
+    setPublic(!isPublic);
+  };
+
+  const newStorage = () => {
+    const formData = new FormData();
+    const data = {
+      characterSeq: props.characterSlice.characterSeq,
+      storageName: storageName,
+      storagePublic: isPublic,
+    };
+    formData.append("file", []);
+    formData.append("sendStorageCreateRequest", new Blob([JSON.stringify(data)], { type: "application/json" }));
+    File.post("/storage", formData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -25,6 +52,8 @@ export default function NewStorage(props) {
         <ModalBody>
           <div className="flex flex-col items-center">
             <input
+              value={storageName}
+              onChange={handleStorageName}
               placeholder="새 저장목록 이름"
               className="bg-white rounded-lg w-full h-9 mb-3 p-2 text-xs border border-gray-300 outline-sky-500 text-black"
             />
@@ -34,7 +63,7 @@ export default function NewStorage(props) {
                 <div className="flex items-center">
                   <Switch
                     checked={isPublic}
-                    onChange={setPublic}
+                    onChange={handleIsPublic}
                     className={`${
                       isPublic ? "bg-green-500" : "bg-red-500"
                     } relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
@@ -56,6 +85,7 @@ export default function NewStorage(props) {
               onClick={() => {
                 setStoreCompletedModal(true);
                 handleClose(false);
+                newStorage();
               }}
             >
               추가
@@ -66,3 +96,9 @@ export default function NewStorage(props) {
     </>
   );
 }
+
+function mapStateToProps(state) {
+  return { characterSlice: state.character };
+}
+
+export default connect(mapStateToProps)(NewStorage);
