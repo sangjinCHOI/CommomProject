@@ -322,7 +322,10 @@ function Content(props) {
                         <span className="material-icons-outlined">library_add</span>
                       )}
                     </Menu.Button>
-                    <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md border-2 shadow-lg py-1 bg-white flex flex-col">
+                    <Menu.Items
+                      className="origin-top-right absolute right-0 mt-2 w-48 rounded-md border-2 shadow-lg py-1 bg-white flex flex-col"
+                      style={{ overflowY: "scroll", height: 120 }}
+                    >
                       <Menu.Item>
                         <button className="mx-4" onClick={() => setNewStorageModal(true)}>
                           새 저장목록 생성
