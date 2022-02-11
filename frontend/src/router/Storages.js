@@ -46,7 +46,7 @@ function SearchCharacters({ location, characterSlice }) {
                 },
               }}
             >
-              <StorageCardLarge key={content.storageSeq} storageName={content.storageName} imgSrc={content.storageImagePath} {..."/"} {...content.storageImageName}></StorageCardLarge>
+              <StorageCardLarge key={content.storageSeq} storageName={content.storageName} imgSrc={content.storageImagePath + content.storageImageName}></StorageCardLarge>
             </Link>
           ))}
         </div>
