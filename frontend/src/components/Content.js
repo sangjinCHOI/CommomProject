@@ -204,7 +204,7 @@ function Content(props) {
     };
     Send.post("/content/store", JSON.stringify(data));
   };
-  console.log(props);
+
   return (
     <>
       {feedContents.reverse().map((content, index) => {
