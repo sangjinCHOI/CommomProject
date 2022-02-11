@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Menu } from "@headlessui/react";
 import { Label } from "@material-tailwind/react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as hs } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as hr } from "@fortawesome/free-regular-svg-icons";
@@ -107,7 +109,7 @@ const timeDifference = (time) => {
 
 function Content(props) {
   const priorityContent = props.priorityContent ? props.priorityContent : null;
-  console.log("priorityContent", priorityContent);
+  // console.log("priorityContent", priorityContent);
   const [reportModal, setReportModal] = useState(false);
   const handleReportClose = () => {
     setReportModal(false);
@@ -199,23 +201,9 @@ function Content(props) {
       {feedContents.reverse().map((content, index) => {
         return (
           <div key={index}>
-            <Comment
-              comments={comments}
-              isOpen={commentModal}
-              onCancel={handleCommentClose}
-              style={{ zIndex: 2 }}
-            />
-            <Report
-              content={content}
-              isOpen={reportModal}
-              onCancel={handleReportClose}
-              style={{ zIndex: 2 }}
-            />
-            <NewStorage
-              isOpen={newStorageModal}
-              onCancel={handleNewStorageClose}
-              style={{ zIndex: 2 }}
-            />
+            <Comment comments={comments} isOpen={commentModal} onCancel={handleCommentClose} style={{ zIndex: 2 }} />
+            <Report content={content} isOpen={reportModal} onCancel={handleReportClose} style={{ zIndex: 2 }} />
+            <NewStorage isOpen={newStorageModal} onCancel={handleNewStorageClose} style={{ zIndex: 2 }} />
             <MainCard classes="mb-3" max-height="900px">
               <div style={{ height: 60 }} className="p-4 flex justify-between">
                 <div className="text-xl">
@@ -259,13 +247,24 @@ function Content(props) {
                   )}
                 </Menu>
               </div>
-              <div className="flex justify-center bg-slate-100" style={{ height: 600 }}>
-                <img
-                  style={{ maxWidth: 600, maxHeight: 600, objectFit: "cover" }}
-                  src="https://url.kr/4ce1sl"
-                  alt=""
-                />
+              <div>
+                <Carousel dynamicHeight={true} showArrows={true} showThumbs={false} width="600px" className="flex items-center">
+                  <div>
+                    <img style={{ maxWidth: 600, maxHeight: 600, width: "auto", height: "auto", objectFit: "cover" }} src="https://url.kr/ziaxwj" />
+                  </div>
+                  <div>
+                    <img style={{ maxWidth: 600, minHeight: 600, width: "auto", height: "auto", objectFit: "cover" }} src="https://url.kr/uig7kl" />
+                  </div>
+                  <div>
+                    <img style={{ maxWidth: 600, maxHeight: 600, width: "auto", height: "auto", objectFit: "cover" }} src="https://url.kr/9obfye" />
+                  </div>
+                </Carousel>
               </div>
+              {/* {content.contentFileName ? (
+                <div className="flex justify-center bg-slate-100" style={{ height: 600 }}>
+                  <img style={{ maxWidth: 600, maxHeight: 600, objectFit: "cover" }} src={content.contentFileName} alt="" />
+                </div>
+              ) : null} */}
               <div className="px-4 py-2">{content.contentText}</div>
               <div className="px-4 pt-2 flex flex-wrap">
                 {content.tags
@@ -278,25 +277,14 @@ function Content(props) {
                     })
                   : null}
               </div>
-              <div className="text-slate-400 px-4">
-                {timeDifference(content.contentCreatedDate)}
-              </div>
+              <div className="text-slate-400 px-4">{timeDifference(content.contentCreatedDate)}</div>
               <div className="px-4 py-2 flex justify-between">
                 <div className="flex items-center">
                   <button className="flex items-center">
                     {content.contentIsLike ? (
-                      <FontAwesomeIcon
-                        icon={hs}
-                        size="lg"
-                        style={{ color: "red" }}
-                        onClick={(e) => deleteLike(content.contentSeq, e)}
-                      />
+                      <FontAwesomeIcon icon={hs} size="lg" style={{ color: "red" }} onClick={(e) => deleteLike(content.contentSeq, e)} />
                     ) : (
-                      <FontAwesomeIcon
-                        icon={hr}
-                        size="lg"
-                        onClick={(e) => postLike(content.contentSeq, e)}
-                      />
+                      <FontAwesomeIcon icon={hr} size="lg" onClick={(e) => postLike(content.contentSeq, e)} />
                     )}
                   </button>
                   <button className="mx-1 pb-1">
@@ -325,12 +313,15 @@ function Content(props) {
                           새 저장목록 생성
                         </button>
                       </Menu.Item>
-                      <Menu.Item>
-                        <button className="mx-4">요리</button>
-                      </Menu.Item>
-                      <Menu.Item>
-                        <button className="mx-4">맛집</button>
-                      </Menu.Item>
+                      {props.storeges
+                        ? props.storeges.map((storage, index) => {
+                            return (
+                              <Menu.Item key={index}>
+                                <button className="mx-4">{storage.storageName}</button>
+                              </Menu.Item>
+                            );
+                          })
+                        : null}
                     </Menu.Items>
                   </Menu>
                   <span className="pb-1">{content.contentSave}</span>

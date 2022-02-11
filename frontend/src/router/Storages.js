@@ -1,5 +1,5 @@
 import MainCard from "../components/MainCard";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import StorageCardLarge from "../components/StorageCardLarge";
 import { connect } from "react-redux";
 import Send from "../config/Send";
@@ -37,8 +37,17 @@ function SearchCharacters({ location, characterSlice }) {
       <MainCard classes="border rounded py-2">
         <div>
           {contentArr.map((content) => (
-            <StorageCardLarge key={content.storageSeq} storageName={content.storageName} imgSrc={content.storageImagePath} {..."/"} {...content.storageImageName}></StorageCardLarge>
-            //            <div key={content.storageSeq}>{content.storageName}</div>
+            <Link
+              to={{
+                pathname: `./storages/${content.storageSeq}`,
+                state: {
+                  characterSeq: characterSlice.characterSeq,
+                  storageSeq: content.storageSeq,
+                },
+              }}
+            >
+              <StorageCardLarge key={content.storageSeq} storageName={content.storageName} imgSrc={content.storageImagePath + content.storageImageName}></StorageCardLarge>
+            </Link>
           ))}
         </div>
       </MainCard>
