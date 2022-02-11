@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { Menu } from "@headlessui/react";
 import { Label } from "@material-tailwind/react";
 import { Carousel } from "react-responsive-carousel";
@@ -281,9 +282,9 @@ function Content(props) {
                 {content.tags
                   ? content.tags.split("|").map((tag, index) => {
                       return (
-                        <Label className="mb-1" color="lightGreen" key={index}>
-                          {tag}
-                        </Label>
+                        <Link to={{ pathname: "/search/tag", search: `?detail=${tag}` }} className="mb-1 mr-1" key={index}>
+                          <Label color="lightGreen">{tag}</Label>
+                        </Link>
                       );
                     })
                   : null}
