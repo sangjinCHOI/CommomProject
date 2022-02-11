@@ -94,15 +94,13 @@ function CharactersCreate({ saveCharacter, location }) {
           alert("캐릭터 생성이 완료되었습니다.");
           Send.get(`/character/characters/${userSeq}`).then((res) => {
             saveCharacter(res.data[res.data.length - 1]);
-            setTimeout(() => {
-              history.push({
-                pathname: "../characters/select",
-                props: {
-                  userId,
-                  userSeq,
-                },
-              });
-            }, 2000);
+            history.push({
+              pathname: "../characters/select",
+              props: {
+                userId,
+                userSeq,
+              },
+            });
           });
         } else alert("캐릭터 생성에 실패했습니다.");
       })
