@@ -136,7 +136,16 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
     <>
       <div className="flex mx-10 mt-10">
         <div className="text-center text-md flex flex-col justify-evenly">
-          <CharacterImg imgChangeHandler={imgChangeHandler} isChange={true} underText="변경" />
+          <CharacterImg
+            imgSrc={
+              characterSlice.filePath !== null && characterSlice.fileName !== null
+                ? characterSlice.filePath + characterSlice.fileName
+                : `/images/default_user.png`
+            }
+            imgChangeHandler={imgChangeHandler}
+            isChange={true}
+            underText="변경"
+          />
           <button onClick={(e) => setShowModal(true)}>캐릭터 삭제</button>
         </div>
         <div className="w-96 mx-auto mt-10 flex flex-col justify-center">

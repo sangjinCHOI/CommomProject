@@ -1,26 +1,26 @@
 // import { Image } from "@material-tailwind/react";
 import styles from "./CharacterImg.module.css";
-import defaultUserImg from "../assets/images/default_user.png";
 import { useState } from "react";
 
 export default function CharacterImg({
   underText,
   imgWidth = "100px",
-  imgSrc = defaultUserImg,
+  imgSrc = "/images/default_user.png",
   classes,
   lock = false,
   isChange = false,
   imgChangeHandler,
 }) {
   const [isClick, setIsClick] = useState(false);
-
   console.log("3번", imgSrc);
 
   const resetImage = () => {
     const previewImage = document.getElementById("profileImg");
     // 기본 이미지도 서버에 저장해야함!(require 이슈) -> 아닐수도
     // previewImage.src = "https://cdn2.thecatapi.com/images/9gg.jpg";
-    previewImage.src = defaultUserImg; // 이건 겉보기
+    // previewImage.src = defaultUserImg; // 이건 겉보기
+    // previewImage.src = "/images/default_user.png"; // 서버일 때 기본 이미지 주소
+    previewImage.src = require(`../assets/images/default_user.png`);
 
     //// is_active = 0으로 만드는 API 호출 추가 예정
     // 부모 컴포넌트의 함수를 통해 이미지 전달(뺄수도?)
@@ -84,7 +84,8 @@ export default function CharacterImg({
           id="profileImg"
           // src={imgSrc}
           src={require(`../assets${imgSrc}`)}
-          alt="user_img"
+          alt={require(`../assets${imgSrc}`)}
+          // src={require(`../assets/files/2022/2/11/7f922745-e5f5-43f2-bff1-15a56bc8c704_Cross.png`)}
           className={`rounded-full ${styles.profileWrapper} ${styles.ProfileImg} ${
             lock ? "bg-gray-400" : null
           }`}

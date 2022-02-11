@@ -118,7 +118,14 @@ function Search({ characterSlice, location }) {
             {charactersResultList.map((character) => (
               <Link to={`../${character.nickname}`} key={character.characterSeq}>
                 <div className="mx-8 my-6 w-32">
-                  <CharacterImg underText={`${character.nickname}`} />
+                  <CharacterImg
+                    imgSrc={
+                      character.filePath !== null && character.fileName !== null
+                        ? character.filePath + character.fileName
+                        : `/images/default_user.png`
+                    }
+                    underText={`${character.nickname}`}
+                  />
                 </div>
               </Link>
             ))}
@@ -171,7 +178,14 @@ function Search({ characterSlice, location }) {
               <div className="flex justify-center items-center py-2" key={content[1].contentSeq}>
                 <Link to={`../${content[0].nickname}`}>
                   <div className="m-3">
-                    <CharacterImg imgWidth="50px" />
+                    <CharacterImg
+                      imgSrc={
+                        content[0].filePath !== null && content[0].fileName !== null
+                          ? content[0].filePath + content[0].fileName
+                          : `/images/default_user.png`
+                      }
+                      imgWidth="50px"
+                    />
                   </div>
                 </Link>
                 <div style={{ width: "126px" }}>

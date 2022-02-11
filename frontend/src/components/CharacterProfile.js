@@ -64,7 +64,13 @@ function CharacterProfile({
   return (
     <div className={`flex justify-center items-center p-4 my-4 ${classes}`}>
       <Link to={`../${nickname}`}>
-        <CharacterImg />
+        <CharacterImg
+          imgSrc={
+            characterProfile.filePath !== null && characterProfile.fileName !== null
+              ? characterProfile.filePath + characterProfile.fileName
+              : `/images/default_user.png`
+          }
+        />
       </Link>
       <div className="ml-10">
         <div>
