@@ -74,7 +74,8 @@
 			c.follow_alarm, c.modify_alarm, c.reported_time, character_active,
 			c.character_created_date, c.character_modified_date,
 			u.user_id,
-			f.file_path
+			f.file_path,
+		    f.file_name
 		from
 			tb_character c
 		JOIN tb_user u ON c.user_seq = u.user_seq
