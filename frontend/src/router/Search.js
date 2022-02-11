@@ -109,7 +109,7 @@ function Search({ characterSlice, location }) {
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard classes="border rounded-2xl py-2">
+        <MainCard classes="border rounded-xl py-2">
           <div
             className={`flex overflow-x-auto ${styles.widthScroll} ${
               charactersResultList.length <= 2 ? "justify-center" : ""
@@ -135,7 +135,7 @@ function Search({ characterSlice, location }) {
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard classes="border rounded-2xl py-2">
+        <MainCard classes="border rounded-xl py-2">
           <div className={`flex overflow-x-auto justify-center items-center text-xl mx-8`}>
             {/* 태그는 최대 5개만 가져옴 + 6글자 까지 보여줌 */}
             {/* 현재 태그 상세보기 미구현 */}
@@ -165,7 +165,7 @@ function Search({ characterSlice, location }) {
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard classes="border rounded-2xl py-3">
+        <MainCard classes="border rounded-xl py-3">
           <div className={`overflow-y-auto ${styles.box}`} style={{ maxHeight: "550px" }}>
             {contentsResultList.map((content) => (
               <div className="flex justify-center items-center py-2" key={content[1].contentSeq}>
@@ -205,7 +205,7 @@ function Search({ characterSlice, location }) {
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard classes="border rounded-2xl py-3">
+        <MainCard classes="border rounded-xl py-3">
           <div className="flex justify-center">
             <StorageCardSmall
               storageName="요리하는 부부 저장소"

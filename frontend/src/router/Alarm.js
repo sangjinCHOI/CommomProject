@@ -140,7 +140,7 @@ function Alarm({ characterSlice }) {
 
   return (
     <div className="px-16">
-      <MainCard classes="border rounded pb-8">
+      <MainCard classes="border rounded-xl pb-8">
         <div className="text-2xl px-4 py-4 text-center">알림</div>
         <hr className="mb-1 mx-2" />
         <div className="px-4 py-2 ml-4">신규 알림</div>
