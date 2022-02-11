@@ -194,6 +194,17 @@ function Content(props) {
     });
   };
 
+  // 저장하기
+  const postStore = (contentSeq, storageSeq, e) => {
+    e.preventDefault();
+    const data = {
+      characterSeq: props.characterSlice.characterSeq,
+      contentSeq: contentSeq,
+      storageSeq: storageSeq,
+    };
+    Send.post("/content/store", JSON.stringify(data));
+  };
+  console.log(props);
   return (
     <>
       {feedContents.reverse().map((content, index) => {
@@ -303,7 +314,11 @@ function Content(props) {
                 <div className="flex items-center">
                   <Menu as="div" className="mx-2 relative">
                     <Menu.Button className="flex text-sm">
-                      <span className="material-icons">library_add_check</span>
+                      {content.contentIsStore ? (
+                        <span className="material-icons">library_add_check</span>
+                      ) : (
+                        <span className="material-icons-outlined">library_add</span>
+                      )}
                     </Menu.Button>
                     <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md border-2 shadow-lg py-1 bg-white flex flex-col">
                       <Menu.Item>
@@ -315,7 +330,9 @@ function Content(props) {
                         ? props.storeges.map((storage, index) => {
                             return (
                               <Menu.Item key={index}>
-                                <button className="mx-4">{storage.storageName}</button>
+                                <button className="mx-4" onClick={(e) => postStore(content.contentSeq, storage.storageSeq, e)}>
+                                  {storage.storageName}
+                                </button>
                               </Menu.Item>
                             );
                           })
