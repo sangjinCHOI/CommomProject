@@ -65,11 +65,12 @@ function CharacterProfile({
     <div className={`flex justify-center items-center p-4 my-4 ${classes}`}>
       <Link to={`../${nickname}`}>
         <CharacterImg
-          imgSrc={
-            characterProfile.profileImagePath !== null && characterProfile.profileImageName !== null
-              ? `${characterProfile.profileImagePath + characterProfile.profileImageName}`
-              : `/images/default_user.png`
-          }
+          // imgSrc={
+          //   characterProfile.profileImagePath !== null && characterProfile.profileImageName !== null
+          //     ? `${characterProfile.profileImagePath + characterProfile.profileImageName}`
+          //     : `/images/default_user.png`
+          // }
+          imgSrc="/images/default_user.png"
         />
       </Link>
       <div className="ml-10">
