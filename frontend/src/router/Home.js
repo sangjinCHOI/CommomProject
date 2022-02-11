@@ -6,7 +6,7 @@ import File from "../config/File";
 
 function Home({ characterSlice }) {
   const [feedContents, setFeedContents] = useState([]);
-  const [storeges, setStorages] = useState([]);
+  const [storages, setStorages] = useState([]);
 
   const getFeed = () => {
     File.get("/contents", {
@@ -32,7 +32,7 @@ function Home({ characterSlice }) {
   return (
     <>
       <div className="mb-4">
-        <Content contents={feedContents} storeges={storeges} />
+        <Content contents={feedContents} storages={storages} />
       </div>
     </>
   );
