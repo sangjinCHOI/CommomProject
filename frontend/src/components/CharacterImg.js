@@ -14,6 +14,8 @@ export default function CharacterImg({
 }) {
   const [isClick, setIsClick] = useState(false);
 
+  console.log("3번", imgSrc);
+
   const resetImage = () => {
     const previewImage = document.getElementById("profileImg");
     // 기본 이미지도 서버에 저장해야함!(require 이슈) -> 아닐수도
@@ -80,7 +82,8 @@ export default function CharacterImg({
       >
         <img
           id="profileImg"
-          src={imgSrc}
+          // src={imgSrc}
+          src={require(`../assets${imgSrc}`)}
           alt="user_img"
           className={`rounded-full ${styles.profileWrapper} ${styles.ProfileImg} ${
             lock ? "bg-gray-400" : null
