@@ -35,6 +35,7 @@ const useInput = (initialValue, validator) => {
 };
 
 function SettingsCharacter({ characterSlice, updateCharacter }) {
+  console.log("111", characterSlice);
   const [showModal, setShowModal] = React.useState(false);
 
   const [selectedCategory, setSelectedCategory] = useState([]);
@@ -139,7 +140,7 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
           <CharacterImg
             imgSrc={
               characterSlice.filePath !== null && characterSlice.fileName !== null
-                ? characterSlice.filePath + characterSlice.fileName
+                ? `${characterSlice.filePath + characterSlice.fileName}`
                 : `/images/default_user.png`
             }
             imgChangeHandler={imgChangeHandler}

@@ -66,8 +66,8 @@ function CharacterProfile({
       <Link to={`../${nickname}`}>
         <CharacterImg
           imgSrc={
-            characterProfile.filePath !== null && characterProfile.fileName !== null
-              ? characterProfile.filePath + characterProfile.fileName
+            characterProfile.profileImagePath !== null && characterProfile.profileImageName !== null
+              ? `${characterProfile.profileImagePath + characterProfile.profileImageName}`
               : `/images/default_user.png`
           }
         />

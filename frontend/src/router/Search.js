@@ -41,7 +41,7 @@ function Search({ characterSlice, location }) {
   const getCharactersResult = () => {
     setCharactersResultList([]);
     Send.get(`/search/characters/${query}`).then((res) => {
-      // console.log(res);
+      console.log(res);
       setCharactersResultList(res.data);
     });
   };
@@ -51,7 +51,7 @@ function Search({ characterSlice, location }) {
     setTagsResultList([]);
     Send.get(`/search/tags/${query}`).then((res) => {
       // console.log(res);
-      setTagsResultList(res.data);
+      // setTagsResultList("111", res.data);
     });
   };
 
@@ -59,10 +59,10 @@ function Search({ characterSlice, location }) {
   const getContentsResult = () => {
     setContentsResultList([]);
     Send.get(`/search/contents/${query}`).then((res) => {
-      // console.log(res.data);
+      console.log("111111", res.data);
       res.data.forEach((content) => {
         Send.get(`/character/${content.characterSeq}`).then((res) => {
-          // console.log([res.data, content]);
+          console.log("222", [res.data, content]);
           setContentsResultList((contentsResultList) => [
             // [캐릭터 정보, 게시글 정보]
             ...contentsResultList,
