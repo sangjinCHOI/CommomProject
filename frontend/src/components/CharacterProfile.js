@@ -76,9 +76,12 @@ function CharacterProfile({
       <Link to={`../${nickname}`}>
         <CharacterImg
           imgSrc={
-            characterProfile.profileImagePath !== null && characterProfile.profileImageName !== null
-              ? `${characterProfile.profileImagePath + characterProfile.profileImageName}`
-              : "/images/default_user.png"
+            isNaN(characterProfile.profileImagePath + characterProfile.profileImageName) ||
+            characterProfile.profileImagePath === null ||
+            characterProfile.profileImageName === null
+              ? // characterProfile.profileImagePath !== null && characterProfile.profileImageName !== null
+                "/images/default_user.png"
+              : `${characterProfile.profileImagePath + characterProfile.profileImageName}`
           }
           // imgSrc="/images/default_user.png"
         />

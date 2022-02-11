@@ -120,10 +120,13 @@ function CharacterUpdate({ updateCharacter, location }) {
         style={{ width: "450px" }}
       />
       <CharacterImg
+        // 임시?
         imgSrc={
-          nowCharacter.filePath !== null && nowCharacter.fileName !== null
-            ? nowCharacter.filePath + nowCharacter.fileName
-            : "/images/default_user.png"
+          isNaN(nowCharacter.filePath + nowCharacter.fileName) ||
+          nowCharacter.filePath === null ||
+          nowCharacter.fileName === null
+            ? "/images/default_user.png"
+            : `${nowCharacter.filePath + nowCharacter.fileName}`
         }
         imgChangeHandler={imgChangeHandler}
         isChange={true}
