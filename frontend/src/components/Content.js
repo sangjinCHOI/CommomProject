@@ -128,10 +128,12 @@ function Content(props) {
   if (feedContents) {
     if (feedContents.length > 1) {
       feedContents.sort((a, b) => (a.contentSeq > b.contentSeq ? 1 : -1));
+      // priorityContent가 있다면 맨 뒤에 push(나중에 reverse 하기 때문)
       if (priorityContent) {
         feedContents.push(priorityContent);
       }
     }
+    // 피드 게시물은 없지만 priorityContent가 있을 때
   } else if (priorityContent) {
     feedContents = priorityContent;
   }
@@ -218,7 +220,7 @@ function Content(props) {
                 <div className="text-xl">
                   <p>{content.contentWriter}</p>
                 </div>
-                <Menu as="div" className="mx-2 relative">
+                <Menu as="div" className="mx-2 relative" style={{ zIndex: 5 }}>
                   <Menu.Button className="flex text-sm">
                     <span className="material-icons">more_horiz</span>
                   </Menu.Button>
@@ -312,7 +314,7 @@ function Content(props) {
                   </button>
                 </div>
                 <div className="flex items-center">
-                  <Menu as="div" className="mx-2 relative">
+                  <Menu as="div" className="mx-2 relative" style={{ zIndex: 5 }}>
                     <Menu.Button className="flex text-sm">
                       {content.contentIsStore ? (
                         <span className="material-icons">library_add_check</span>

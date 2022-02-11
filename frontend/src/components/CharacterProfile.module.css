@@ -4,20 +4,20 @@
 
 .clickFollowBtn:active {
   transform: translateY(-4px);
-  background-color: skyblue;
+  /* background-color: skyblue; */
 }
 
 .clickAchievementBtn:active {
   transform: translateY(-4px);
-  background-color: mediumseagreen;
+  /* background-color: mediumseagreen; */
 }
 
 .clickSubcharacterBtn:active {
   transform: translateY(-4px);
-  background-color: burlywood;
+  /* background-color: burlywood; */
 }
 
 .clickProfileBtn:active {
   transform: translateY(-4px);
-  background-color: rosybrown;
+  /* background-color: rosybrown; */
 }

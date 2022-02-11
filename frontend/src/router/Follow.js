@@ -169,7 +169,7 @@ function Follow({ characterSlice }) {
 
   return (
     <div className="px-16">
-      <MainCard classes="border rounded pb-8">
+      <MainCard classes="border rounded-xl pb-8">
         <div className="flex justify-center items-center">
           <Button
             className={`px-20 py-5 w-60 text-center text-xl border-2 border-white ${
