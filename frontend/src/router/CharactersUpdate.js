@@ -122,7 +122,7 @@ function CharacterUpdate({ updateCharacter, location }) {
       <CharacterImg
         imgSrc={
           nowCharacter.filePath !== null && nowCharacter.fileName !== null
-            ? `${nowCharacter.filePath + nowCharacter.fileName}`
+            ? nowCharacter.filePath + nowCharacter.fileName
             : "/images/default_user.png"
         }
         imgChangeHandler={imgChangeHandler}
