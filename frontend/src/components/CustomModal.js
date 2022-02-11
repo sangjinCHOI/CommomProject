@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-function CustomModal({ isOpenModal, setIsOpenModal, children }) {
+function CustomModal({ isOpenModal, setIsOpenModal, children, classes }) {
   const wrapperRef = useRef();
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -18,7 +18,7 @@ function CustomModal({ isOpenModal, setIsOpenModal, children }) {
   };
 
   return (
-    <div ref={wrapperRef} value={isOpenModal} className="modal">
+    <div ref={wrapperRef} value={isOpenModal} className={`modal ${classes}`}>
       {children}
     </div>
   );
