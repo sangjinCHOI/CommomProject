@@ -13,14 +13,13 @@ function Characters({ userSlice, saveCharacter }) {
   const { userId, userSeq, userCreatableCount } = userSlice;
   const [isMouseOver, setIsMouseOver] = useState(false);
 
-  console.log("1번", characterList[1].filePath + characterList[1].fileName);
-
   const getCharacterList = () => {
     Send.get(`/user/${userId}`).then((res) => {
       Send.get(`/character/characters/${userSeq}`)
         .then((res) => {
           console.log("what", res.data);
           setCharacterList(res.data);
+          console.log("1번", res.data[0].filePath + res.data[0].fileName);
           setCharacterLen(res.data.length);
         })
         .catch((err) => console.log(err));
@@ -77,16 +76,27 @@ function Characters({ userSlice, saveCharacter }) {
           <CharacterImg
             underText={nickname}
             // 캐릭터 잠금 상태인지, 캐릭터가 존재하는지, 캐릭터 관리 상태인지, 이미지가 있는지에 따라 분기(순서 중요)
+            // imgSrc={
+            //   isLock
+            //     ? require("../assets/images/character_lock.png")
+            //     : isExist
+            //     ? isManagement
+            //       ? require("../assets/images/character_edit.png")
+            //       : imgSrc // 여기가 실제 이미지
+            //       ? imgSrc
+            //       : require("../assets/images/default_user.png") // 여기가 기본 이미지
+            //     : require("../assets/images/character_plus.png")
+            // }
             imgSrc={
               isLock
-                ? require("../assets/images/character_lock.png")
+                ? "/images/character_lock.png"
                 : isExist
                 ? isManagement
-                  ? require("../assets/images/character_edit.png")
+                  ? "/images/character_edit.png"
                   : imgSrc // 여기가 실제 이미지
                   ? imgSrc
-                  : require("../assets/images/default_user.png") // 여기가 기본 이미지
-                : require("../assets/images/character_plus.png")
+                  : "/images/default_user.png" // 여기가 기본 이미지
+                : "/images/character_plus.png"
             }
             lock={isLock}
           />

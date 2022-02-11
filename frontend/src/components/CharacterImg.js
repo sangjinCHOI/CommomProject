@@ -84,7 +84,8 @@ export default function CharacterImg({
           id="profileImg"
           // src={imgSrc}
           src={require(`../assets${imgSrc}`)}
-          alt="user_img"
+          alt={require(`../assets${imgSrc}`)}
+          // src={require(`../assets/files/2022/2/11/7f922745-e5f5-43f2-bff1-15a56bc8c704_Cross.png`)}
           className={`rounded-full ${styles.profileWrapper} ${styles.ProfileImg} ${
             lock ? "bg-gray-400" : null
           }`}
