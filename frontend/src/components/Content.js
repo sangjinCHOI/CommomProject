@@ -282,10 +282,8 @@ function Content(props) {
                 {content.tags
                   ? content.tags.split("|").map((tag, index) => {
                       return (
-                        <Link to={{ pathname: "/search/tag", search: `?detail=${tag}` }} className="mb-1 mr-1">
-                          <Label color="lightGreen" key={index}>
-                            {tag}
-                          </Label>
+                        <Link to={{ pathname: "/search/tag", search: `?detail=${tag}` }} className="mb-1 mr-1" key={index}>
+                          <Label color="lightGreen">{tag}</Label>
                         </Link>
                       );
                     })
