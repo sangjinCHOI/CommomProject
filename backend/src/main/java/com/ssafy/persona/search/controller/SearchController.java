@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.persona.search.model.dto.HistoryCreateRequest;
+import com.ssafy.persona.search.model.dto.HistoryGetRequest;
+import com.ssafy.persona.search.model.dto.RealTimeRequest;
 import com.ssafy.persona.search.model.dto.SearchContentResponse;
 import com.ssafy.persona.search.model.dto.SearchPeopleResponse;
 import com.ssafy.persona.search.model.dto.SearchStorageResponse;
@@ -95,10 +98,14 @@ public class SearchController {
 		return new ResponseEntity<List<String>>(searchService.getHistory(characterSeq), HttpStatus.OK);
 	}
 	
-	@GetMapping("autoComplete/{text}")
-	public ResponseEntity<List<String>> autoComplete(@PathVariable String text){
+	@GetMapping("autoComplete/{characterSeq}")
+	public ResponseEntity<Map<String, List<String>>> autoComplete(@PathVariable int characterSeq, @RequestParam String text){
 		logger.info("검색어 자동 완성 - 요청 text: "+ text);
-		return new ResponseEntity<List<String>>(new ArrayList<String>() , HttpStatus.OK);
+		HistoryGetRequest request = HistoryGetRequest.builder()
+				.characterSeq(characterSeq)
+				.searchWord(text).build();
+		
+		return new ResponseEntity<Map<String, List<String>>>(searchService.getHistory(request), HttpStatus.OK);
 	}
 	
 }

@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.persona.search.model.dto.CloudCreateRequest;
 import com.ssafy.persona.search.model.dto.HistoryCreateRequest;
+import com.ssafy.persona.search.model.dto.HistoryGetRequest;
+import com.ssafy.persona.search.model.dto.RealTimeRequest;
 import com.ssafy.persona.search.model.dto.SearchContentResponse;
 import com.ssafy.persona.search.model.dto.SearchPeopleResponse;
 import com.ssafy.persona.search.model.dto.SearchStorageResponse;
@@ -34,9 +36,9 @@ public interface SearchMapper {
 	
 	int increaseWeightCloud(CloudCreateRequest request);
 	
-	List<String> realTimePopularWord(String searchDate);
+	List<String> realTimePopularWord(RealTimeRequest request);
 	
-	List<String> getHistory(int characterSeq);
+	List<String> getHistory(HistoryGetRequest request);
 	
 	List<String> SearchAutoCompletion(String text);
 }

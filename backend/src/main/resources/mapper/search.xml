@@ -107,7 +107,13 @@
 		select 
 			search_word
 		FROM tb_search_cloud
-		where search_date = #{searchDate}
+		WHERE 1 = 1
+		<if test="searchWord == null || searchWord == ''">
+			AND search_date = #{searchDate}
+		</if>
+		<if test="searchWord != null and searchWord != ''">
+			AND search_word like CONCAT(#{searchWord}, '%')
+		</if>
 		ORDER BY search_weight DESC 
 		LIMIT 10;
 	</select>
@@ -117,12 +123,11 @@
 			search_history_text
 		FROM tb_search_history 
 		WHERE character_seq = #{characterSeq} 
+		<if test="searchWord != null and searchWord != ''">
+			AND search_history_text like CONCAT(#{searchWord}, '%')
+		</if>
 		ORDER BY search_date DESC 
 		LIMIT 10;
-	</select>
-
-	<select id="SearchAutoCompletion">
-		
 	</select>
 
 </mapper>
