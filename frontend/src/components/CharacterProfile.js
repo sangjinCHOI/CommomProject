@@ -18,7 +18,6 @@ function CharacterProfile({
   const [characterProfile, setCharacterProfile] = useState({});
   const getCharacterProfile = () => {
     Send.get(`/character/profile/${nickname}`).then((res) => {
-      console.log("123123123123", res.data);
       setCharacterProfile(res.data);
     });
   };
@@ -68,8 +67,8 @@ function CharacterProfile({
         <CharacterImg
           imgSrc={
             characterProfile.profileImagePath !== null && characterProfile.profileImageName !== null
-              ? characterProfile.profileImagePath + characterProfile.profileImageName
-              : `/images/default_user.png`
+              ? `${characterProfile.profileImagePath + characterProfile.profileImageName}`
+              : "/images/default_user.png"
           }
           // imgSrc="/images/default_user.png"
         />
