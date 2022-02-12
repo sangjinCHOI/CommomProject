@@ -19,14 +19,6 @@ function CharacterProfile({
   const getCharacterProfile = () => {
     Send.get(`/character/profile/${nickname}`).then((res) => {
       console.log("!!!!!!!", res.data);
-      console.log(
-        "이건NaN아니지않나1",
-        `${typeof (res.data.profileImagePath + res.data.profileImageName)}`
-      );
-      console.log(
-        "이건NaN아니지않나1의 타입",
-        `${typeof (res.data.profileImagePath + res.data.profileImageName)}`
-      );
       setCharacterProfile(res.data);
     });
   };
@@ -38,7 +30,7 @@ function CharacterProfile({
 
   useEffect(() => {
     getCharacterProfile();
-  }, []);
+  }, [characterProfile.profileImageName]);
 
   const follow = (followerSeq, e) => {
     e.preventDefault();
@@ -84,8 +76,7 @@ function CharacterProfile({
             isNaN(characterProfile.profileImagePath + characterProfile.profileImageName) ||
             characterProfile.profileImagePath === null ||
             characterProfile.profileImageName === null
-              ? // characterProfile.profileImagePath !== null && characterProfile.profileImageName !== null
-                "/images/default_user.png"
+              ? "/images/default_user.png"
               : `${characterProfile.profileImagePath + characterProfile.profileImageName}`
           }
           // imgSrc="/images/default_user.png"
