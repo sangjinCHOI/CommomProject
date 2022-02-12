@@ -14,6 +14,7 @@ function CharacterProfile({
   classes,
   isMe = true,
   characterSlice,
+  imgSrc = "/images/default_user.png",
 }) {
   const [characterProfile, setCharacterProfile] = useState({});
   const getCharacterProfile = () => {
@@ -71,8 +72,7 @@ function CharacterProfile({
             // isNaN(characterProfile.profileImagePath + characterProfile.profileImageName) ||
             characterProfile.profileImagePath === null || characterProfile.profileImageName === null
               ? "/images/default_user.png"
-              : String(characterProfile.profileImagePath) +
-                String(characterProfile.profileImageName)
+              : imgSrc
           }
         />
       </Link>

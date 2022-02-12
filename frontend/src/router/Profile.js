@@ -39,12 +39,16 @@ function Profile({ characterSlice }) {
   return (
     <div>
       <MainCard classes="border">
-        {/* CharacterProfile에서 요청 보내고 받는게 좋은거 같은데... */}
         <CharacterProfile
           isMe={characterSlice.nickname === nickname ? true : false}
           nickname={nickname}
           category={characterProfile.categoryName}
-          introduction={characterSlice.nickname === nickname ? characterSlice.introduction : "내 캐릭터가 아니랍니다"}
+          introduction={
+            characterSlice.nickname === nickname
+              ? characterSlice.introduction
+              : characterProfile.introduction
+          }
+          imgSrc={characterProfile.profileImagePath + characterProfile.profileImageName}
         />
       </MainCard>
       <div className="border">
