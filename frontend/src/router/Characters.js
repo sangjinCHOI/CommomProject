@@ -19,7 +19,7 @@ function Characters({ userSlice, saveCharacter }) {
         .then((res) => {
           console.log("what", res.data);
           setCharacterList(res.data);
-          console.log("1번", res.data[0].filePath + res.data[0].fileName);
+          console.log("1번", res.data[0].filePath + res.data[0].fileName); // 캐릭터 생성 과정에서 서버 테스트 할 때 이게 0이 나왔다?
           setCharacterLen(res.data.length);
         })
         .catch((err) => console.log(err));

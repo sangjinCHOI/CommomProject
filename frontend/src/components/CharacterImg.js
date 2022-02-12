@@ -83,6 +83,7 @@ export default function CharacterImg({
         <img
           id="profileImg"
           // src={imgSrc}
+          // 캐릭터 생성 후 DB에 있고 imgSrc 잘 넘어 오는데 Cannot find module './assets/files/......'?
           src={require(`../assets${imgSrc}`)}
           alt={require(`../assets${imgSrc}`)}
           // src={require(`../assets/files/2022/2/11/7f922745-e5f5-43f2-bff1-15a56bc8c704_Cross.png`)}

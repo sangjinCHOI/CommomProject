@@ -45,7 +45,6 @@ function Search({ characterSlice, location }) {
       setCharactersResultList(res.data);
     });
   };
-
   const [tagsResultList, setTagsResultList] = useState([]);
   const getTagsResult = () => {
     setTagsResultList([]);
