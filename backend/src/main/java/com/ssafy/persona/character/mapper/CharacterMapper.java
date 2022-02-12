@@ -22,6 +22,8 @@ public interface CharacterMapper {
 
 	int setCharacterProfileDefault(int characterSeq);
 	
+	int checkNicknameDuplicate(String nickname);
+	
 	CharacterGetResponse detail(int characterSeq);
 
 	CharacterProfileResponse getCharacterProfile(String nickname);

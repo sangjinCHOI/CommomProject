@@ -14,6 +14,8 @@ import com.ssafy.persona.character.model.dto.CharacterDeleteRequest;
 import com.ssafy.persona.character.model.dto.CharacterGetResponse;
 import com.ssafy.persona.character.model.dto.CharacterProfileResponse;
 import com.ssafy.persona.character.model.dto.CharacterUpdateRequest;
+import com.ssafy.persona.exception.handler.CustomException;
+import com.ssafy.persona.exception.model.ErrorCode;
 import com.ssafy.persona.file.model.dto.FileUploadRequest;
 import com.ssafy.persona.file.service.FileServiceImpl;
 import com.ssafy.persona.user.mapper.UserMapper;
@@ -37,14 +39,13 @@ public class CharacterServiceImpl implements CharacterService {
 	public int regist(CharacterCreatRequest request) {
 		int result = 0; // 기본 상태 
 		
-		try {
-			int creatableCount = userMapper.getCreatableCount(request.getUserSeq());
-			int nowCount = characterMapper.getCharacterCount(request.getUserSeq());
-			if (nowCount < creatableCount) {
-				result = characterMapper.regist(request); // set character_seq
-			}
-		} catch (NullPointerException e) {
-			e.printStackTrace();
+		int check = characterMapper.checkCharacterNickname(request.getNickname());
+		if (check == 1) throw new CustomException(ErrorCode.NICKNAME_CONFLICT);
+		
+		int creatableCount = userMapper.getCreatableCount(request.getUserSeq());
+		int nowCount = characterMapper.getCharacterCount(request.getUserSeq());
+		if (nowCount < creatableCount) {
+			result = characterMapper.regist(request);
 		}
 		
 		if (request.getMyfile() != null) {

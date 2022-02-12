@@ -67,7 +67,16 @@
 		AND file_is_active = 1
 		AND relation_seq = #{characterSeq}
 	</update>
-
+	
+	<select id="checkNicknameDuplicate"	resultType="int">
+		select 
+			count(*)
+		from
+			tb_character
+		where nickname=#{nickname} 
+		AND character_active = 1
+	</select>
+	
 	<select id="detail"	resultType="CharacterGetResponse">
 		select c.character_seq, c.user_seq, c.nickname, c.category_number, c.introduction, 
 			c.representative_achievement, c.alarm_allow, c.like_alarm, c.reply_alarm,
