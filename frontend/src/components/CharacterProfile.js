@@ -19,6 +19,12 @@ function CharacterProfile({
   const getCharacterProfile = () => {
     Send.get(`/character/profile/${nickname}`).then((res) => {
       console.log("!!!!!!!", res.data);
+      console.log("이건NaN아니지않나1", `${res.data.profileImagePath + res.data.profileImageName}`);
+      console.log("이건NaN아니지않나2", res.data.profileImagePath + res.data.profileImageName);
+      console.log(
+        "이건NaN아니지않나3",
+        `${res.data.profileImagePath}``${res.data.profileImageName}`
+      );
       setCharacterProfile(res.data);
     });
   };
