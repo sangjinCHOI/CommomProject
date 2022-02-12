@@ -50,17 +50,21 @@ function Navbar({ characterSlice }) {
       >
         <div className="flex justify-between text-xl text-gray-400">
           <div
-            className={`px-8 py-2 w-32 text-center ${isRealTime ? "" : "border-b-2 border-blue-500 text-black"}`}
+            className={`px-8 py-2 w-32 text-center ${
+              isRealTime ? "" : "border-b-2 border-blue-500 text-black"
+            }`}
             style={{
               width: "50%",
               cursor: "pointer",
             }}
             onClick={() => setIsRealTime(false)}
           >
-            최근 검색
+            {word.length === 0 ? <span>최근 검색</span> : <span>추천 검색</span>}
           </div>
           <div
-            className={`px-8 py-2 w-32 text-center ${isRealTime ? "border-b-2 border-blue-500 text-black" : ""}`}
+            className={`px-8 py-2 w-32 text-center ${
+              isRealTime ? "border-b-2 border-blue-500 text-black" : ""
+            }`}
             style={{
               width: "50%",
               cursor: "pointer",
@@ -72,23 +76,52 @@ function Navbar({ characterSlice }) {
         </div>
         <hr />
 
-        <div className={`p-2 overflow-y-auto ${styles.heightScroll}`} style={{ maxHeight: "350px" }}>
+        <div
+          className={`p-2 overflow-y-auto ${styles.heightScroll}`}
+          style={{ maxHeight: "350px" }}
+        >
           {!isRealTime ? (
-            <div>
-              {searchHistories.map((history) => (
-                <div key={history} className="flex items-center mt-1">
-                  <div className="mx-4 text-lg" style={{ cursor: "pointer" }} onClick={(e) => moveToSearchResult(history, e)}>
-                    {history.length >= 14 ? history.slice(0, 14) + ".." : history}
+            word.length === 0 ? (
+              <div>
+                {searchHistories.map((history) => (
+                  <div key={history} className="flex items-center mt-1">
+                    <div
+                      className="mx-4 text-lg"
+                      style={{ cursor: "pointer" }}
+                      onClick={(e) => moveToSearchResult(history, e)}
+                    >
+                      {history.length >= 14 ? history.slice(0, 14) + ".." : history}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div>
+                {recommendationChart.map((recommendationWord) => (
+                  <div key={recommendationWord} className="flex items-center mt-1">
+                    <div
+                      className="mx-4 text-lg"
+                      style={{ cursor: "pointer" }}
+                      onClick={(e) => moveToSearchResult(recommendationWord, e)}
+                    >
+                      {recommendationWord.length >= 14
+                        ? recommendationWord.slice(0, 14) + ".."
+                        : recommendationWord}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )
           ) : (
             <div>
               {realTimeChart.slice(0, 10).map((issue, index) => (
                 <div key={issue} className="flex items-center mt-1">
                   <div className="mx-4 w-10 text-blue-600 text-xl">{index + 1}.</div>
-                  <div className="text-lg" style={{ cursor: "pointer" }} onClick={(e) => moveToSearchResult(issue, e)}>
+                  <div
+                    className="text-lg"
+                    style={{ cursor: "pointer" }}
+                    onClick={(e) => moveToSearchResult(issue, e)}
+                  >
                     {issue.length >= 11 ? issue.slice(0, 11) + ".." : issue}
                   </div>
                 </div>
@@ -104,8 +137,24 @@ function Navbar({ characterSlice }) {
 
   const [word, setWord] = React.useState("");
   const history = useHistory();
+
+  const [recommendationChart, setRecommendationChart] = useState([]);
   const onChange = (event) => {
     setWord(event.target.value);
+    Send.get(`/search/autoComplete/${characterSlice.characterSeq}`, {
+      params: {
+        characterSeq: characterSlice.characterSeq,
+        text: event.target.value,
+      },
+    }).then((res) => {
+      let temp = [];
+      // 각각에서 10개씩 추천 후 중복 제거
+      temp.push(...res.data.history.slice(0, 10));
+      temp.push(...res.data.chart.slice(0, 10));
+      let recommendationWords = [...new Set(temp)];
+      console.log(recommendationWords);
+      setRecommendationChart(recommendationWords);
+    });
   };
   const handleKeyPress = (event) => {
     if (event.key === "Enter" && word) {
@@ -198,7 +247,10 @@ function Navbar({ characterSlice }) {
                 <AlarmShow />
 
                 <Link to={`../${characterSlice.nickname}`}>
-                  <span className="hidden md:block material-icons h-10 w-10 mt-1 mx-2" style={{ fontSize: 40 }}>
+                  <span
+                    className="hidden md:block material-icons h-10 w-10 mt-1 mx-2"
+                    style={{ fontSize: 40 }}
+                  >
                     person_outline
                   </span>
                 </Link>
@@ -214,7 +266,11 @@ function Navbar({ characterSlice }) {
                   </div>
                   <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white">
                     <Menu.Item>
-                      <Link to="/" className="block md:hidden px-4 py-2 text-sm text-gray-700" onClick={() => setContentCreateModal(true)}>
+                      <Link
+                        to="/"
+                        className="block md:hidden px-4 py-2 text-sm text-gray-700"
+                        onClick={() => setContentCreateModal(true)}
+                      >
                         게시글 작성
                       </Link>
                     </Menu.Item>
@@ -229,17 +285,26 @@ function Navbar({ characterSlice }) {
                       </Link>
                     </Menu.Item>
                     <Menu.Item>
-                      <Link to="../characters/select" className="block px-4 py-2 text-sm text-gray-700">
+                      <Link
+                        to="../characters/select"
+                        className="block px-4 py-2 text-sm text-gray-700"
+                      >
                         캐릭터 변경
                       </Link>
                     </Menu.Item>
                     <Menu.Item>
-                      <Link to="/settings/character" className="block px-4 py-2 text-sm text-gray-700">
+                      <Link
+                        to="/settings/character"
+                        className="block px-4 py-2 text-sm text-gray-700"
+                      >
                         설정
                       </Link>
                     </Menu.Item>
                     <Menu.Item>
-                      <Link to="../accounts/login" className="block px-4 py-2 text-sm text-gray-700">
+                      <Link
+                        to="../accounts/login"
+                        className="block px-4 py-2 text-sm text-gray-700"
+                      >
                         로그아웃
                       </Link>
                     </Menu.Item>
