@@ -33,6 +33,7 @@ import Storages from "./router/Storages";
 import StoragesDetail from "./router/StoragesDetail";
 
 import ErrorBoundary from "./components/ErrorBoundary";
+import NotFound from "./router/NotFound";
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
                   <Route exact path="/settings/account" component={SettingsAccount} />
                   <Route exact path="/settings/alarm" component={SettingsAlarm} />
                   <Route exact path="/settings/help" component={SettingsHelp} />
+                  <Route path="*" component={NotFound} />
                 </Switch>
               </SettingLayout>
             </Route>
@@ -82,9 +84,11 @@ function App() {
                   <Route exact path="/:nickname/achievement" component={Achievement} />
                   <Route exact path="/:nickname/storages" component={Storages} />
                   <Route exact path="/:nickname/storages/:storage_seq" component={StoragesDetail} />
+                  <Route path="*" component={NotFound} />
                 </Switch>
               </Layout>
             </Route>
+            <Route path="*" component={NotFound} />
           </Switch>
         </Router>
       </ErrorBoundary>
