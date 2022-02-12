@@ -48,7 +48,6 @@ function Profile({ characterSlice }) {
               ? characterSlice.introduction
               : characterProfile.introduction
           }
-          imgSrc={characterProfile.profileImagePath + characterProfile.profileImageName}
         />
       </MainCard>
       <div className="border">

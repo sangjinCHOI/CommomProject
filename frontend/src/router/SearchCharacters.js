@@ -32,7 +32,6 @@ function SearchCharacters({ characterSlice, location }) {
             isMe={characterSlice.characterSeq === character.characterSeq}
             key={character.characterSeq}
             classes="my-8"
-            imgSrc={character.filePath + character.fileName}
           />
         ))}
       </MainCard>

@@ -14,7 +14,6 @@ function CharacterProfile({
   classes,
   isMe = true,
   characterSlice,
-  imgSrc = "/images/default_user.png",
 }) {
   const [characterProfile, setCharacterProfile] = useState({});
   const getCharacterProfile = () => {
@@ -69,10 +68,11 @@ function CharacterProfile({
       <Link to={`../${nickname}`}>
         <CharacterImg
           imgSrc={
-            // isNaN(characterProfile.profileImagePath + characterProfile.profileImageName) ||
-            characterProfile.profileImagePath === null || characterProfile.profileImageName === null
+            isNaN(characterProfile.profileImagePath + characterProfile.profileImageName) ||
+            characterProfile.profileImagePath === null ||
+            characterProfile.profileImageName === null
               ? "/images/default_user.png"
-              : imgSrc
+              : characterProfile.profileImagePath + characterProfile.profileImageName
           }
         />
       </Link>
