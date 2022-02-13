@@ -257,23 +257,22 @@ function ContentItem(props) {
           </Menu>
         </div>
         <div>
-          <Carousel dynamicHeight={true} showArrows={true} showThumbs={false} width="600px" className="flex items-center">
-            <div>
-              <img style={{ maxWidth: 600, maxHeight: 600, width: "auto", height: "auto", objectFit: "cover" }} src="https://url.kr/ziaxwj" />
-            </div>
-            <div>
-              <img style={{ maxWidth: 600, minHeight: 600, width: "auto", height: "auto", objectFit: "cover" }} src="https://url.kr/uig7kl" />
-            </div>
-            <div>
-              <img style={{ maxWidth: 600, maxHeight: 600, width: "auto", height: "auto", objectFit: "cover" }} src="https://url.kr/9obfye" />
-            </div>
-          </Carousel>
+          {content.contentFileName ? (
+            <Carousel dynamicHeight={true} showArrows={true} showThumbs={false} width="600px" className="flex items-center">
+              {props.content.contentFilePath.split("|").map((filePath, index) => {
+                return (
+                  <div className="flex justify-center bg-slate-100" style={{ height: 600 }}>
+                    <img
+                      style={{ maxWidth: 600, maxHeight: 600, width: "auto", height: "auto", objectFit: "cover" }}
+                      src={filePath + props.content.contentFileName.split("|")[index]}
+                      alt=""
+                    />
+                  </div>
+                );
+              })}
+            </Carousel>
+          ) : null}
         </div>
-        {/* {content.contentFileName ? (
-                <div className="flex justify-center bg-slate-100" style={{ height: 600 }}>
-                  <img style={{ maxWidth: 600, maxHeight: 600, objectFit: "cover" }} src={content.contentFileName} alt="" />
-                </div>
-              ) : null} */}
         <div className="px-4 py-2">{props.content.contentText}</div>
         <div className="px-4 pt-2 flex flex-wrap">
           {props.content.tags
