@@ -55,12 +55,7 @@ function ContentCreate(props) {
     }
   };
   const handleTextChange = (e) => {
-    console.log(e.target.value);
-    if (e.target.value.substr(-1) == "\n") {
-      setContentText(e.target.value + "<br />");
-    } else {
-      setContentText(e.target.value);
-    }
+    setContentText(e.target.value);
   };
   const handleIsPublic = (e) => {
     setIsPublic(e.target.value);
