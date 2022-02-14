@@ -161,7 +161,15 @@ function Alarm({ characterSlice }) {
                   );
                 }}
               >
-                <CharacterImg imgWidth="50px" classes="mr-4" />
+                <CharacterImg
+                  imgWidth="50px"
+                  classes="mr-4"
+                  imgSrc={
+                    alarm.filePath === null || alarm.fileName === null
+                      ? "/images/default_user.png"
+                      : alarm.filePath + alarm.fileName
+                  }
+                />
                 <div style={{ width: "292px" }}>{alarm.alarmText}</div>
               </Link>
               <div className="flex justify-end mr-10" style={{ fontSize: "12px" }}>
@@ -232,7 +240,16 @@ function Alarm({ characterSlice }) {
                   );
                 }}
               >
-                <CharacterImg imgWidth="50px" classes="mr-4" />
+                <CharacterImg
+                  imgWidth="50px"
+                  classes="mr-4"
+                  // 나중에 default_user.png 말고 일반적인 default 알림 사진으로 변경해야 함
+                  imgSrc={
+                    alarm.filePath === null || alarm.fileName === null
+                      ? "/images/default_user.png"
+                      : alarm.filePath + alarm.fileName
+                  }
+                />
                 <div style={{ width: "292px" }}>{alarm.alarmText}</div>
               </Link>
               <div className="flex justify-end mr-10" style={{ fontSize: "12px" }}>
