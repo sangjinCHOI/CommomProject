@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as hs } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as hr } from "@fortawesome/free-regular-svg-icons";
 import MainCard from "../components/MainCard";
+import ContentUpdate from "./ContentUpdate";
 import Report from "../components/Report";
 import NewStorage from "./NewStorage";
 import Comment from "./Comment";
@@ -139,6 +140,12 @@ function ContentItem(props) {
     feedContents = priorityContent;
   }
 
+  // 게시글 수정
+  const [contentCreateModal, setContentCreateModal] = useState(false);
+  const handleClose = () => {
+    setContentCreateModal(false);
+  };
+
   // 댓글 작성
   const [replyText, setReplyText] = useState("");
   const handleReplyTextChange = (e) => {
@@ -213,6 +220,7 @@ function ContentItem(props) {
       <Comment comments={comments} isOpen={commentModal} onCancel={handleCommentClose} style={{ zIndex: 2 }} />
       <Report content={props.content} isOpen={reportModal} onCancel={handleReportClose} style={{ zIndex: 2 }} />
       <NewStorage content={props.content} isOpen={newStorageModal} onCancel={handleNewStorageClose} style={{ zIndex: 2 }} />
+      <ContentUpdate content={props.content} isOpen={contentCreateModal} onCancel={handleClose} style={{ zIndex: 2 }} />
       <MainCard classes="mb-3" max-height="900px">
         <div style={{ height: 60 }} className="p-4 flex justify-between">
           <div className="text-xl">
@@ -224,6 +232,9 @@ function ContentItem(props) {
             </Menu.Button>
             {props.content.characterSeq === props.characterSlice.characterSeq ? (
               <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white flex flex-col border-2">
+                <Menu.Item>
+                  <button onClick={() => setContentCreateModal(true)}>수정</button>
+                </Menu.Item>
                 <Menu.Item>
                   <button
                     className="mx-4"
@@ -257,23 +268,22 @@ function ContentItem(props) {
           </Menu>
         </div>
         <div>
-          <Carousel dynamicHeight={true} showArrows={true} showThumbs={false} width="600px" className="flex items-center">
-            <div>
-              <img style={{ maxWidth: 600, maxHeight: 600, width: "auto", height: "auto", objectFit: "cover" }} src="https://url.kr/ziaxwj" />
-            </div>
-            <div>
-              <img style={{ maxWidth: 600, minHeight: 600, width: "auto", height: "auto", objectFit: "cover" }} src="https://url.kr/uig7kl" />
-            </div>
-            <div>
-              <img style={{ maxWidth: 600, maxHeight: 600, width: "auto", height: "auto", objectFit: "cover" }} src="https://url.kr/9obfye" />
-            </div>
-          </Carousel>
+          {props.content.contentFileName ? (
+            <Carousel dynamicHeight={true} showArrows={true} showThumbs={false} width="600px" className="flex items-center">
+              {props.content.contentFilePath.split("|").map((filePath, index) => {
+                return (
+                  <div className="flex justify-center bg-slate-100" style={{ height: 600 }} key={index}>
+                    <img
+                      style={{ maxWidth: 600, maxHeight: 600, width: "auto", height: "auto", objectFit: "cover" }}
+                      src={require(`../assets${filePath + props.content.contentFileName.split("|")[index]}`)}
+                      alt=""
+                    />
+                  </div>
+                );
+              })}
+            </Carousel>
+          ) : null}
         </div>
-        {/* {content.contentFileName ? (
-                <div className="flex justify-center bg-slate-100" style={{ height: 600 }}>
-                  <img style={{ maxWidth: 600, maxHeight: 600, objectFit: "cover" }} src={content.contentFileName} alt="" />
-                </div>
-              ) : null} */}
         <div className="px-4 py-2">{props.content.contentText}</div>
         <div className="px-4 pt-2 flex flex-wrap">
           {props.content.tags
