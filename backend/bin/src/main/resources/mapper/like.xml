@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.persona.content.mapper.LikeMapper">
+<mapper namespace="com.ssafy.persona.domain.content.mapper.LikeMapper">
 	<select id="contentLikeList" parameterType="int" resultType="LikeListResponse">
 		select character_seq, nickname
 		from tb_character

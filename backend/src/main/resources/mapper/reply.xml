@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.persona.content.mapper.ReplyMapper">
+<mapper namespace="com.ssafy.persona.domain.content.mapper.ReplyMapper">
 	<insert id="replyCreate" parameterType="replyCreateRequest">
 		insert into tb_reply (content_seq, character_seq, reply_text, reply_created_date)
 		values (#{contentSeq}, #{characterSeq}, #{replyText}, now())

@@ -3,7 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper
-	namespace="com.ssafy.persona.character.mapper.AlarmMapper">
+	namespace="com.ssafy.persona.domain.character.mapper.AlarmMapper">
 
 	<insert id="createAlarm">
 		insert into tb_alarm

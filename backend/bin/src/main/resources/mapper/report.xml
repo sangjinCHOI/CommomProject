@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.persona.content.mapper.ReportMapper">
+<mapper namespace="com.ssafy.persona.domain.content.mapper.ReportMapper">
 
 	<insert id="contentReport" parameterType="contentReportRequest">
 		insert into tb_content_report (reporting_character, reported_content, report_type, report_text, report_date)

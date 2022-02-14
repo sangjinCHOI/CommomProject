@@ -3,7 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper
-	namespace="com.ssafy.persona.character.mapper.CharacterMapper">
+	namespace="com.ssafy.persona.domain.character.mapper.CharacterMapper">
 
 	<insert id="regist" useGeneratedKeys="true" keyProperty="characterSeq">
 		insert into tb_character

@@ -3,7 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper
-	namespace="com.ssafy.persona.character.mapper.FollowMapper">
+	namespace="com.ssafy.persona.domain.character.mapper.FollowMapper">
 
 	<insert id="follow">
 		insert into tb_follow
@@ -21,7 +21,7 @@
 	</delete>
 
 	<select id="getFollowerList"
-		resultType="com.ssafy.persona.character.model.dto.FollowerListResponse">
+		resultType="com.ssafy.persona.domain.character.model.dto.FollowerListResponse">
 		select
 		follower,
 		(select count(*) from tb_follow i where i.follower = #{followee} and i.followee = follower) as isFollowToo

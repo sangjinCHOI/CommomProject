@@ -3,7 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper
-	namespace="com.ssafy.persona.search.mapper.SearchMapper">
+	namespace="com.ssafy.persona.domain.search.mapper.SearchMapper">
 
 	<select id="searchPeople" resultType="SearchPeopleResponse">
 		select 
