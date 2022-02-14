@@ -110,7 +110,6 @@ function CharactersCreate({ saveCharacter, location }) {
 
   const imgChangeHandler = (propsImg) => {
     setImgFile(propsImg);
-    console.log(propsImg);
   };
 
   // const onNicknameHandler = (e) => {

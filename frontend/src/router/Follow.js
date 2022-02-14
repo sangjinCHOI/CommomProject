@@ -128,7 +128,6 @@ function Follow({ characterSlice }) {
                 targetSeq: characterSlice.characterSeq, // 본인 캐릭터or저장소or업적
                 // userSeq: 0
               };
-              console.log(alarmData);
               Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) =>
                 console.log(res)
               );
@@ -162,7 +161,6 @@ function Follow({ characterSlice }) {
     Send.delete("/character/follow", { data: JSON.stringify(data) })
       .then((res) => {
         setChangePage(!changePage);
-        console.log(res);
       })
       .catch((err) => console.log(err));
   };

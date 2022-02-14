@@ -35,13 +35,14 @@ const useInput = (initialValue, validator) => {
 };
 
 function SettingsCharacter({ characterSlice, updateCharacter }) {
-  console.log("111", characterSlice);
   const [showModal, setShowModal] = React.useState(false);
 
   const [selectedCategory, setSelectedCategory] = useState([]);
   const getCategories = () => {
     Send.get("/character/categorys").then((res) => {
-      const nowCategory = res.data.find((category) => category.characterCategoryNumber === 0);
+      const nowCategory = res.data.find(
+        (category) => category.characterCategoryNumber === characterSlice.categoryNumber
+      );
       setSelectedCategory([nowCategory.characterCategoryName, nowCategory.characterCategoryNumber]);
     });
   };
