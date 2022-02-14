@@ -30,10 +30,7 @@ export default function Content() {
                 </div>
               </div>
               <div className="flex justify-end bg-slate-100">
-                <img
-                  style={{ maxWidth: 150, maxHeight: 150, objectFit: "cover" }}
-                  src={ExAchievment}
-                />
+                <img style={{ maxWidth: 150, maxHeight: 150, objectFit: "cover" }} src={ExAchievment} />
               </div>
             </div>
           </div>
@@ -61,7 +58,7 @@ export default function Content() {
               </div>
               <div className="flex justify-end bg-slate-100">
                 <img
-                  className={`${styles.gray}`}
+                  //className={`${styles.gray}`}
                   style={{ maxWidth: 150, maxHeight: 150, objectFit: "cover" }}
                   src={ExAchievment}
                 />
