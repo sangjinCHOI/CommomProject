@@ -275,7 +275,7 @@ function ContentItem(props) {
                   <div className="flex justify-center bg-slate-100" style={{ height: 600 }} key={index}>
                     <img
                       style={{ maxWidth: 600, maxHeight: 600, width: "auto", height: "auto", objectFit: "cover" }}
-                      src={filePath + props.content.contentFileName.split("|")[index]}
+                      src={require(`../assets${filePath + props.content.contentFileName.split("|")[index]}`)}
                       alt=""
                     />
                   </div>
