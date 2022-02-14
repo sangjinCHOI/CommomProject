@@ -55,7 +55,6 @@ const characterSlice = createSlice({
       state.fileName = action.payload.fileName;
     },
     alarmUpdate: (state, action) => {
-      console.log("알람 업데이트 완료", action.payload);
       state.characterSeq = action.payload.characterSeq;
       state.alarmAllow = action.payload.alarmAllow;
       state.likeAlarm = action.payload.likeAlarm;
