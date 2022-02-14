@@ -190,7 +190,11 @@ function Characters({ userSlice, saveCharacter }) {
         </Link>
       </div>
       <div className="mt-8 text-center">
-        <Link to="../accounts/login" className="text-gray-400">
+        <Link
+          to="../accounts/login"
+          className="text-gray-400"
+          onClick={() => window.localStorage.clear()}
+        >
           로그아웃
         </Link>
       </div>
