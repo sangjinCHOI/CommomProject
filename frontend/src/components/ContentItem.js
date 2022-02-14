@@ -272,7 +272,7 @@ function ContentItem(props) {
             <Carousel dynamicHeight={true} showArrows={true} showThumbs={false} width="600px" className="flex items-center">
               {props.content.contentFilePath.split("|").map((filePath, index) => {
                 return (
-                  <div className="flex justify-center bg-slate-100" style={{ height: 600 }}>
+                  <div className="flex justify-center bg-slate-100" style={{ height: 600 }} key={index}>
                     <img
                       style={{ maxWidth: 600, maxHeight: 600, width: "auto", height: "auto", objectFit: "cover" }}
                       src={filePath + props.content.contentFileName.split("|")[index]}
