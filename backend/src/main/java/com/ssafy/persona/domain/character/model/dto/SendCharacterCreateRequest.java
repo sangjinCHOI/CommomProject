@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class SendCharacterCreateRequest {
     private int userSeq;
-    private int categorySeq;
+    private int categoryNumber;
     private String nickname;
     private String introduction;
 }
