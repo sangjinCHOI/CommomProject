@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Menu } from "@headlessui/react";
-import { Image, Label } from "@material-tailwind/react";
+import { Label } from "@material-tailwind/react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -110,7 +110,6 @@ const timeDifference = (time) => {
 };
 
 function ContentItem(props) {
-  console.log(props.content);
   const priorityContent = props.priorityContent ? props.priorityContent : null;
   // console.log("priorityContent", priorityContent);
   const [reportModal, setReportModal] = useState(false);
@@ -224,19 +223,8 @@ function ContentItem(props) {
       <ContentUpdate content={props.content} isOpen={contentCreateModal} onCancel={handleClose} style={{ zIndex: 2 }} />
       <MainCard classes="mb-3" max-height="900px">
         <div style={{ height: 60 }} className="p-4 flex justify-between">
-          <div className="text-xl flex">
-            {props.content.contentFilePath ? (
-              <Image
-                src={require(`../assets${props.content.contentFilePath + props.content.contentFileName}`)}
-                width="32px"
-                rounded={true}
-                raised={false}
-                alt=""
-              />
-            ) : (
-              <Image src="/images/default_user.png" width="32px" rounded={true} raised={false} alt="" />
-            )}
-            <p className="ml-2">{props.content.contentWriter}</p>
+          <div className="text-xl">
+            <p>{props.content.contentWriter}</p>
           </div>
           <Menu as="div" className="mx-2 relative" style={{ zIndex: 5 }}>
             <Menu.Button className="flex text-sm">
@@ -370,19 +358,7 @@ function ContentItem(props) {
         <hr />
         <div className="px-4 py-2 flex justify-between self-center">
           <div className="flex">
-            <div>
-              {props.characterSlice.filePath ? (
-                <Image
-                  src={require(`../assets${props.characterSlice.filePath + props.characterSlice.fileName}`)}
-                  width="32px"
-                  rounded={true}
-                  raised={false}
-                  alt=""
-                />
-              ) : (
-                <Image src="/images/default_user.png" width="32px" rounded={true} raised={false} alt="" />
-              )}
-            </div>
+            <div>프로필사진</div>
             <textarea
               value={replyText}
               onChange={handleReplyTextChange}
