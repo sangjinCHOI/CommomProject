@@ -16,6 +16,8 @@ public class AlarmGetResponse {
 	private String relationTb;
 	private String targetNickname;
 	private int targetSeq;
+	private String filePath;
+	private String fileName;
 	private boolean alarmIsRead;
 	private LocalDateTime alarmDate;
 	
