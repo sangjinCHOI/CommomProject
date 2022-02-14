@@ -55,7 +55,12 @@ function ContentCreate(props) {
     }
   };
   const handleTextChange = (e) => {
-    setContentText(e.target.value);
+    console.log(e.target.value);
+    if (e.target.value.substr(-1) == "\n") {
+      setContentText(e.target.value + "<br />");
+    } else {
+      setContentText(e.target.value);
+    }
   };
   const handleIsPublic = (e) => {
     setIsPublic(e.target.value);
@@ -88,11 +93,7 @@ function ContentCreate(props) {
     <Modal size="regular" active={isOpen} toggler={() => handleClose(false)}>
       <ModalHeader className="text-center" toggler={() => handleClose(false)}>
         <span>게시글 작성</span>
-        <select
-          className="bg-white rounded-lg w-24 h-9 mx-3 p-2 text-xs border border-gray-300 outline-sky-500 text-black"
-          value={isPublic}
-          onChange={handleIsPublic}
-        >
+        <select className="bg-white rounded-lg w-24 h-9 mx-3 p-2 text-xs border border-gray-300 outline-sky-500 text-black" value={isPublic} onChange={handleIsPublic}>
           <option className="rounded-lg h-10" value="true">
             공개
           </option>
@@ -122,16 +123,7 @@ function ContentCreate(props) {
             </div>
           ))}
         </div>
-        <textarea
-          value={contentText}
-          onChange={handleTextChange}
-          className="bg-slate-100 rounded"
-          name=""
-          id=""
-          cols="70"
-          rows="10"
-          placeholder="이 곳에 게시글을 작성해주세요."
-        ></textarea>
+        <textarea value={contentText} onChange={handleTextChange} className="bg-slate-100 rounded" name="" id="" cols="70" rows="10" placeholder="이 곳에 게시글을 작성해주세요."></textarea>
         <div className="bg-slate-100 rounded mb-1 flex justify-between">
           <input id="upload-file" type="file" multiple="multiple" accept="image/*" onChange={(e) => readImg(e.target)} />
           {/* <Button color="red">파일삭제</Button> */}
