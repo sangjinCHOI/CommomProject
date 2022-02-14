@@ -6,7 +6,6 @@ import Send from "../config/Send";
 import File from "../config/File";
 
 function ContentUpdate(props) {
-  // console.log(props.content.tags.split("|"));
   // 태그
   let initialTags = [];
   if (props.content.tags) {
@@ -34,7 +33,7 @@ function ContentUpdate(props) {
   const onRemoveTags = (index) => {
     setTags(tags.filter((tag, tagIndex) => index !== tagIndex));
   };
-  console.log(tags);
+
   // 태그 작성
   const putTags = (tags, contentSeq) => {
     const hashtag = tags;
@@ -47,10 +46,11 @@ function ContentUpdate(props) {
     onCancel();
   };
 
-  // 게시글 작성
+  // 게시글 수정
   const [imgFiles, setImgFiles] = useState([]);
   const [contentText, setContentText] = useState(props.content.contentText);
-  const [isPublic, setIsPublic] = useState(true);
+  const [isMedia, setIsMedia] = useState(props.content.contentIsMedia);
+  const [isPublic, setIsPublic] = useState(props.content.contentIsPublic);
   const history = useHistory();
   const readImg = (input) => {
     if (input.files) {
@@ -78,15 +78,16 @@ function ContentUpdate(props) {
 
   const putContent = () => {
     const formData = new FormData();
-    const data = {
-      categoryNumber: props.characterSlice.categoryNumber,
-      characterSeq: props.characterSlice.characterSeq,
-      contentIsPublic: isPublic,
-      contentText: contentText,
-    };
     for (let i = 0; i < imgFiles.length; i++) {
       formData.append("file", imgFiles[i]);
+      setIsMedia(true);
     }
+    const data = {
+      contentIsMedia: isMedia,
+      contentIsPublic: isPublic,
+      contentSeq: props.content.contentSeq,
+      contentText: contentText,
+    };
     formData.append("sendContentModifyrequest", new Blob([JSON.stringify(data)], { type: "application/json" }));
     File.put("/content", formData).then((res) => {
       if (tags.length !== 0) {
@@ -162,7 +163,7 @@ function ContentUpdate(props) {
             }
           }}
         >
-          작성
+          수정
         </Button>
       </ModalFooter>
     </Modal>

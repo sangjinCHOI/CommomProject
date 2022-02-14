@@ -43,6 +43,7 @@ function ContentCreate(props) {
   // 게시글 작성
   const [imgFiles, setImgFiles] = useState([]);
   const [contentText, setContentText] = useState("");
+  const [isMedia, setIsMedia] = useState(false);
   const [isPublic, setIsPublic] = useState(true);
   const history = useHistory();
   const readImg = (input) => {
@@ -62,15 +63,18 @@ function ContentCreate(props) {
   };
   const postContent = () => {
     const formData = new FormData();
+    for (let i = 0; i < imgFiles.length; i++) {
+      formData.append("file", imgFiles[i]);
+      setIsMedia(true);
+    }
+
     const data = {
       categoryNumber: props.characterSlice.categoryNumber,
       characterSeq: props.characterSlice.characterSeq,
+      contentIsMedia: isMedia,
       contentIsPublic: isPublic,
       contentText: contentText,
     };
-    for (let i = 0; i < imgFiles.length; i++) {
-      formData.append("file", imgFiles[i]);
-    }
     formData.append("sendContentCreaterequest", new Blob([JSON.stringify(data)], { type: "application/json" }));
     File.post("/content", formData).then((res) => {
       if (tags.length !== 0) {
