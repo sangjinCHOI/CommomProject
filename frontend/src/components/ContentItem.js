@@ -268,7 +268,7 @@ function ContentItem(props) {
           </Menu>
         </div>
         <div>
-          {content.contentFileName ? (
+          {props.content.contentFileName ? (
             <Carousel dynamicHeight={true} showArrows={true} showThumbs={false} width="600px" className="flex items-center">
               {props.content.contentFilePath.split("|").map((filePath, index) => {
                 return (
