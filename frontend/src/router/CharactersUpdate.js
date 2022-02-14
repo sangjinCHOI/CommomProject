@@ -97,10 +97,8 @@ function CharacterUpdate({ updateCharacter, location }) {
     File.put("/character", formData)
       .then(() => {
         alert("캐릭터 수정이 완료되었습니다.");
-        console.log("imgFile", typeof imgFile); // null이 object네
         if (imgFile === null) {
           Send.delete(`/character/profile/${character.characterSeq}`).then((res) => {
-            console.log("업뎃?", character);
             updateCharacter({ character });
           });
         } else {

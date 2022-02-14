@@ -218,7 +218,14 @@ function Follow({ characterSlice }) {
                         className="flex justify-between items-center"
                       >
                         <div className="m-3">
-                          <CharacterImg imgWidth="50px" />
+                          <CharacterImg
+                            imgWidth="50px"
+                            imgSrc={
+                              follower[0].filePath === null || follower[0].fileName === null
+                                ? "/images/default_user.png"
+                                : follower[0].filePath + follower[0].fileName
+                            }
+                          />
                         </div>
                         <div className="w-36">{follower[0].nickname}</div>
                       </Link>
@@ -268,7 +275,14 @@ function Follow({ characterSlice }) {
                       className="flex justify-between items-center"
                     >
                       <div className="m-3">
-                        <CharacterImg imgWidth="50px" />
+                        <CharacterImg
+                          imgWidth="50px"
+                          imgSrc={
+                            follower[0].filePath === null || follower[0].fileName === null
+                              ? "/images/default_user.png"
+                              : follower[0].filePath + follower[0].fileName
+                          }
+                        />
                       </div>
                       <div className="w-36">{follower[0].nickname}</div>
                     </Link>
@@ -321,7 +335,14 @@ function Follow({ characterSlice }) {
                       className="flex justify-between items-center"
                     >
                       <div className="m-3">
-                        <CharacterImg imgWidth="50px" />
+                        <CharacterImg
+                          imgWidth="50px"
+                          imgSrc={
+                            followee.filePath === null || followee.fileName === null
+                              ? "/images/default_user.png"
+                              : followee.filePath + followee.fileName
+                          }
+                        />
                       </div>
                       <div className="w-36">{followee.nickname}</div>
                     </Link>
@@ -355,7 +376,14 @@ function Follow({ characterSlice }) {
                     className="flex justify-between items-center"
                   >
                     <div className="m-3">
-                      <CharacterImg imgWidth="50px" />
+                      <CharacterImg
+                        imgWidth="50px"
+                        imgSrc={
+                          followee.filePath === null || followee.fileName === null
+                            ? "/images/default_user.png"
+                            : followee.filePath + followee.fileName
+                        }
+                      />
                     </div>
                     <div className="w-36">{followee.nickname}</div>
                   </Link>
