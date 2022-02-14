@@ -40,14 +40,16 @@
 		SELECT 
 		a.alarm_seq, a.user_seq, a.character_seq, 
 		a.alarm_type, a.alarm_text, a.relation_tb, 
-           CASE a.relation_tb
-	           WHEN 'tb_character'
-	           THEN (select nickname from tb_character where character_seq = a.target_seq)
-	           WHEN 'tb_storage'
-	           THEN (select nickname from tb_character where character_seq = (select character_seq from tb_storage where storage_seq = a.target_seq))
-	           WHEN 'tb_achivement'
-	           THEN (select nickname from tb_character where character_seq = a.character_seq)
-           END AS target_nickname, 
+			CASE a.relation_tb
+				WHEN 'tb_character'
+				THEN (select nickname from tb_character where character_seq = a.target_seq)
+				WHEN 'tb_storage'
+				THEN (select nickname from tb_character where character_seq = (select character_seq from tb_storage where storage_seq = a.target_seq))
+				WHEN 'tb_achivement'
+				THEN (select nickname from tb_character where character_seq = a.character_seq)
+			END AS target_nickname, 
+			(SELECT file_path from tb_file f WHERE f.relation_tb = a.relation_tb AND f.relation_seq = a.target_seq) AS file_path,
+			(SELECT file_name from tb_file f WHERE f.relation_tb = a.relation_tb AND f.relation_seq = a.target_seq) AS file_name,
        	a.target_seq, a.alarm_is_read, a.alarm_date
 		FROM
 			tb_alarm a
