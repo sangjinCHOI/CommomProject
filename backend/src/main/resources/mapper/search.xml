@@ -37,8 +37,10 @@
 	<select id="searchStorage" resultType="SearchStorageResponse">
 		select 
 			s.storage_seq, s.storage_name, 
-			f.file_path, f.file_name
+			f.file_path, f.file_name,
+			c.nickname
 		from tb_storage s
+		JOIN tb_character c ON c.character_seq = s.character_seq
 		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_storage'
 		AND f.relation_seq = s.storage_seq
 		AND f.file_is_active = 1
