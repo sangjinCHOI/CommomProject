@@ -16,7 +16,7 @@ function CharacterProfile({
   characterSlice,
 }) {
   const [characterProfile, setCharacterProfile] = useState({});
-  const [tempImgSrc, setTempImgSrc] = useState("");
+  const [tempImgSrc, setTempImgSrc] = useState("/images/default_user.png");
   const getCharacterProfile = () => {
     Send.get(`/character/profile/${nickname}`).then((res) => {
       console.log("!!!!!!!", res.data);
