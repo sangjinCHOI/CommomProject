@@ -25,6 +25,7 @@ export default function CharacterImg({
     //// is_active = 0으로 만드는 API 호출 추가 예정
     // 부모 컴포넌트의 함수를 통해 이미지 전달(뺄수도?)
     imgChangeHandler(null);
+    console.log("null만듬");
 
     setIsClick(!isClick);
   };
