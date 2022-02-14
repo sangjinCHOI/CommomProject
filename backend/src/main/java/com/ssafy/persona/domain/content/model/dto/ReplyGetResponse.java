@@ -2,8 +2,6 @@ package com.ssafy.persona.domain.content.model.dto;
 
 import java.time.LocalDateTime;
 
-import com.ssafy.persona.domain.content.model.entity.Reply;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -20,15 +18,6 @@ public class ReplyGetResponse {
 	private LocalDateTime replyModifiedDate;
 	private int replyIsLike;
 	private String replyWriter;
+	private String writerProfile;
 	
-	public ReplyGetResponse(Reply reply) {
-		super();
-		this.replySeq = reply.getReplySeq();
-		this.characterSeq = reply.getCharacterSeq();
-		this.replyText = reply.getReplyText();
-		this.replyLike = reply.getReplyLike();
-		this.replyCreatedDate = reply.getReplyCreatedDate();
-		this.replyModifiedDate = reply.getReplyModifiedDate();
-		this.replyIsLike = reply.getReplyIsLike();
-	}
 }
