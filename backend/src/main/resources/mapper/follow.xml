@@ -29,8 +29,7 @@
 		followee=#{followee}
 	</delete>
 
-	<select id="getFollowerList"
-		resultType="com.ssafy.persona.character.model.dto.FollowerListResponse">
+	<select id="getFollowerList" resultType="FollowerListResponse">
 		select
 		follower,
 		(select count(*) from tb_follow i where i.follower = #{followee} and i.followee = f.follower) as isFollowToo
