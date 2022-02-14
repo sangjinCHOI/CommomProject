@@ -57,7 +57,7 @@
 	</select>
 	
 	<select id="storageContentList" parameterType="StorageContentListRequest" resultType="ContentGetResponse">
-		select content_seq as contentSeq, content_is_active as contentIsActive, content_is_public as contentIsPublic, character_seq as characterSeq, category_number as categorySeq, content_text as contentText, content_like as contentLike, content_save as contentSave, content_is_media as contentIsMedia, content_created_date contentCreatedDate, content_modified_Date as contentModifiedDate, (select count(distinct content_seq)
+		select content_seq as contentSeq, content_is_active as contentIsActive, content_is_public as contentIsPublic, character_seq as characterSeq, category_number, content_text as contentText, content_like as contentLike, content_save as contentSave, content_is_media as contentIsMedia, content_created_date contentCreatedDate, content_modified_Date as contentModifiedDate, (select count(distinct content_seq)
 		from tb_content_like
 		where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsLike, (select count(distinct content_seq) from tb_stored_content where content_seq = tb_content.content_seq and character_seq = #{characterNow}) as contentIsStore, (select count(*) from tb_reply where content_seq = tb_content.content_seq) AS replyCount,
         (select nickname from tb_character where character_seq = tb_content.character_seq) AS contentWriter,

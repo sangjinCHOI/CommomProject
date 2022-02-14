@@ -78,7 +78,7 @@ public class CharacterController {
 								0,
 										file,
 										request.getUserSeq(),
-										request.getCategorySeq(),
+										request.getCategoryNumber(),
 										request.getNickname(),
 										request.getIntroduction());
 		if (characterService.regist(sendRequest) == 1) {

@@ -9,7 +9,7 @@
 		insert into tb_character
 			(user_seq, category_number, nickname, introduction, character_created_date)
 		values
-			(#{userSeq}, #{categorySeq}, #{nickname}, #{introduction}, now())
+			(#{userSeq}, #{categoryNumber}, #{nickname}, #{introduction}, now())
 	</insert>
 
 	<update id="update">
