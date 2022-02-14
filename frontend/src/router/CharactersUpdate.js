@@ -87,9 +87,6 @@ function CharacterUpdate({ updateCharacter, location }) {
     };
     formData.append("file", imgFile);
     formData.append("request", new Blob([JSON.stringify(character)], { type: "application/json" }));
-
-    updateCharacter({ character });
-
     // Send.put("/character", JSON.stringify(character))
     //   .then(() => {
     //     alert("캐릭터 수정이 완료되었습니다.");
@@ -100,11 +97,19 @@ function CharacterUpdate({ updateCharacter, location }) {
     File.put("/character", formData)
       .then(() => {
         alert("캐릭터 수정이 완료되었습니다.");
+        if (imgFile === null) {
+          Send.delete(`/character/profile/${character.characterSeq}`).then((res) =>
+            updateCharacter({ character })
+          );
+        } else {
+          updateCharacter({ character });
+        }
         history.push("../characters/select");
         window.location.reload();
       })
       .catch((err) => console.log(err));
     history.push("../characters/select");
+    window.location.reload();
   };
 
   const imgChangeHandler = (propsImg) => {

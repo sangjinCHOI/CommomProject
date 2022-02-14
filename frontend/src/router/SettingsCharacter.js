@@ -98,8 +98,14 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
     File.put("/character", formData)
       .then((res) => {
         if (res.status == 200) {
-          updateCharacter({ data });
           alert("변경되었습니다!");
+          if (imgFile === null) {
+            Send.delete(`/character/profile/${characterSlice.characterSeq}`).then((res) =>
+              updateCharacter({ data })
+            );
+          } else {
+            updateCharacter({ data });
+          }
           history.push("../..");
         } else alert("다시 로그인해주세요");
       })
