@@ -59,11 +59,13 @@ function CharacterUpdate({ updateCharacter, location }) {
 
   const characterSeq = location.state.characterSeq;
   const [nowCharacter, setNowCharacter] = useState([]);
+  const [tempImgSrc, setTempImgSrc] = useState("/images/default_user.png");
   const getCharacter = () => {
     Send.get(`/character/${characterSeq}`).then((res) => {
       nickname.setValue(res.data.nickname);
       introduction.setValue(res.data.introduction);
       setNowCharacter(res.data);
+      setTempImgSrc(res.data.filePath + res.data.fileName);
       console.log(res.data);
     });
   };
@@ -99,6 +101,7 @@ function CharacterUpdate({ updateCharacter, location }) {
       .then(() => {
         alert("캐릭터 수정이 완료되었습니다.");
         history.push("../characters/select");
+        window.location.reload();
       })
       .catch((err) => console.log(err));
     history.push("../characters/select");
@@ -123,11 +126,9 @@ function CharacterUpdate({ updateCharacter, location }) {
       <CharacterImg
         // 임시? 여기도 NaN...?
         imgSrc={
-          isNaN(nowCharacter.filePath + nowCharacter.fileName) ||
-          nowCharacter.filePath === null ||
-          nowCharacter.fileName === null
+          nowCharacter.filePath === null || nowCharacter.fileName === null
             ? "/images/default_user.png"
-            : `${nowCharacter.filePath + nowCharacter.fileName}`
+            : tempImgSrc
         }
         imgChangeHandler={imgChangeHandler}
         isChange={true}
