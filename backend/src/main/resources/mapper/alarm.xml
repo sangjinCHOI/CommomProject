@@ -48,8 +48,8 @@
 				WHEN 'tb_achivement'
 				THEN (select nickname from tb_character where character_seq = a.character_seq)
 			END AS target_nickname, 
-			(SELECT file_path from tb_file f WHERE f.relation_tb = a.relation_tb AND f.relation_seq = a.target_seq) AS file_path,
-			(SELECT file_name from tb_file f WHERE f.relation_tb = a.relation_tb AND f.relation_seq = a.target_seq) AS file_name,
+			(SELECT file_path from tb_file f WHERE f.relation_tb = a.relation_tb AND f.relation_seq = a.target_seq AND f.file_is_active = 1) AS file_path,
+			(SELECT file_name from tb_file f WHERE f.relation_tb = a.relation_tb AND f.relation_seq = a.target_seq AND f.file_is_active = 1) AS file_name,
        	a.target_seq, a.alarm_is_read, a.alarm_date
 		FROM
 			tb_alarm a
