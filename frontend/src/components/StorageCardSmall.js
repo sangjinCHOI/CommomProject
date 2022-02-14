@@ -1,11 +1,11 @@
 import { useState } from "react";
 import styles from "./StorageCardSmall.module.css";
 
-export default function StorageCardSmall({ storageName, imgSrc }) {
+export default function StorageCardSmall({ storageName, imgSrc, classes }) {
   const [isMouseOver, setIsMouseOver] = useState(false);
   return (
     <div
-      className="relative flex justify-center items-center"
+      className={`relative flex justify-center items-center ${classes}`}
       onMouseOver={() => setIsMouseOver(true)}
       onMouseOut={() => setIsMouseOver(false)}
     >

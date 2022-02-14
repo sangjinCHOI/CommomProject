@@ -64,6 +64,7 @@ function CharacterUpdate({ updateCharacter, location }) {
       nickname.setValue(res.data.nickname);
       introduction.setValue(res.data.introduction);
       setNowCharacter(res.data);
+      console.log(res.data);
     });
   };
 
@@ -120,7 +121,7 @@ function CharacterUpdate({ updateCharacter, location }) {
         style={{ width: "450px" }}
       />
       <CharacterImg
-        // 임시?
+        // 임시? 여기도 NaN...?
         imgSrc={
           isNaN(nowCharacter.filePath + nowCharacter.fileName) ||
           nowCharacter.filePath === null ||

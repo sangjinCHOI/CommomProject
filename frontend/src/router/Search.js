@@ -41,7 +41,7 @@ function Search({ characterSlice, location }) {
   const getCharactersResult = () => {
     setCharactersResultList([]);
     Send.get(`/search/characters/${query}`).then((res) => {
-      console.log(res);
+      console.log(res.data);
       setCharactersResultList(res.data);
     });
   };
@@ -49,19 +49,16 @@ function Search({ characterSlice, location }) {
   const getTagsResult = () => {
     setTagsResultList([]);
     Send.get(`/search/tags/${query}`).then((res) => {
-      // console.log(res);
-      // setTagsResultList("111", res.data);
+      console.log(res.data);
+      setTagsResultList(res.data);
     });
   };
-
   const [contentsResultList, setContentsResultList] = useState([]);
   const getContentsResult = () => {
     setContentsResultList([]);
     Send.get(`/search/contents/${query}`).then((res) => {
-      console.log("111111", res.data);
       res.data.forEach((content) => {
         Send.get(`/character/${content.characterSeq}`).then((res) => {
-          console.log("222", [res.data, content]);
           setContentsResultList((contentsResultList) => [
             // [캐릭터 정보, 게시글 정보]
             ...contentsResultList,
@@ -71,11 +68,20 @@ function Search({ characterSlice, location }) {
       });
     });
   };
+  const [storagesResultList, setStoragesResultList] = useState([]);
+  const getStoragesResult = () => {
+    setContentsResultList([]);
+    Send.get(`/search/storages/${query}`).then((res) => {
+      console.log(res.data);
+      setStoragesResultList(res.data);
+    });
+  };
 
   useEffect(() => {
     getCharactersResult();
     getTagsResult();
     getContentsResult();
+    getStoragesResult();
   }, [query]);
 
   const moveContentDetail = (myCharacterSeq, contentSeq, e) => {
@@ -144,7 +150,6 @@ function Search({ characterSlice, location }) {
         <MainCard classes="border rounded-xl py-2">
           <div className={`flex overflow-x-auto justify-center items-center text-xl mx-8`}>
             {/* 태그는 최대 5개만 가져옴 + 6글자 까지 보여줌 */}
-            {/* 현재 태그 상세보기 미구현 */}
             {tagsResultList.slice(0, 4).map((tag) => (
               <Link
                 to={{ pathname: "/search/tag", search: `?detail=${tag.tagText}` }}
@@ -190,7 +195,6 @@ function Search({ characterSlice, location }) {
                 <div style={{ width: "126px" }}>
                   <Link to={`../${content[0].nickname}`}>{content[0].nickname}</Link>
                 </div>
-                {/* 현재 해당 내용으로 이동 아직 미구현 */}
                 <Link
                   to=""
                   onClick={(e) =>
@@ -219,19 +223,25 @@ function Search({ characterSlice, location }) {
           </Link>
         </div>
         <MainCard classes="border rounded-xl py-3">
-          <div className="flex justify-center">
-            <StorageCardSmall
-              storageName="요리하는 부부 저장소"
-              imgSrc="https://cdn2.thecatapi.com/images/43n.png"
-            />
-            <StorageCardSmall
-              storageName="맛있는 요리 모음"
-              imgSrc="https://cdn2.thecatapi.com/images/dnz0xXA6a.jpg"
-            />
-            <StorageCardSmall
-              storageName="불타는 요리 맛집"
-              imgSrc="https://cdn2.thecatapi.com/images/cna.jpg"
-            />
+          {/* 현재 이미지가 여러개 생기면 크기가 줄어들면서 스크롤 동작X 상태 */}
+          <div
+            className={`flex overflow-x-auto ${styles.widthScroll} ${
+              storagesResultList.length <= 2 ? "justify-center" : ""
+            }`}
+          >
+            {storagesResultList.slice(0, 3).map((storage) => (
+              // 테스트 아직
+              <Link to={`${storage.nickname}/storages/${storage.storageSeq}`}>
+                <StorageCardSmall
+                  storageName={storage.storageName}
+                  imgSrc={
+                    storage.fileName && storage.filePath
+                      ? require(`../assets${storage.fileName + storage.filePath}`)
+                      : null
+                  }
+                />
+              </Link>
+            ))}
           </div>
         </MainCard>
       </div>
