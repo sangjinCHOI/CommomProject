@@ -30,7 +30,9 @@ function CharacterUpdate({ updateCharacter, location }) {
   const [selectedCategory, setSelectedCategory] = useState([]);
   const getCategories = () => {
     Send.get("/character/categorys").then((res) => {
-      const nowCategory = res.data.find((category) => category.characterCategoryNumber === 0);
+      const nowCategory = res.data.find(
+        (category) => category.characterCategoryNumber === nowCharacter.categoryNumber
+      );
       setSelectedCategory([nowCategory.characterCategoryName, nowCategory.characterCategoryNumber]);
     });
   };
@@ -66,7 +68,6 @@ function CharacterUpdate({ updateCharacter, location }) {
       introduction.setValue(res.data.introduction);
       setNowCharacter(res.data);
       setTempImgSrc(res.data.filePath + res.data.fileName);
-      console.log(res.data);
     });
   };
 
@@ -97,10 +98,8 @@ function CharacterUpdate({ updateCharacter, location }) {
     File.put("/character", formData)
       .then(() => {
         alert("캐릭터 수정이 완료되었습니다.");
-        console.log("imgFile", typeof imgFile); // null이 object네
         if (imgFile === null) {
           Send.delete(`/character/profile/${character.characterSeq}`).then((res) => {
-            console.log("업뎃?", character);
             updateCharacter({ character });
           });
         } else {
@@ -116,7 +115,6 @@ function CharacterUpdate({ updateCharacter, location }) {
 
   const imgChangeHandler = (propsImg) => {
     setImgFile(propsImg);
-    console.log(propsImg);
   };
 
   return (

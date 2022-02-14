@@ -41,7 +41,6 @@ function Search({ characterSlice, location }) {
   const getCharactersResult = () => {
     setCharactersResultList([]);
     Send.get(`/search/characters/${query}`).then((res) => {
-      console.log(res.data);
       setCharactersResultList(res.data);
     });
   };
@@ -49,7 +48,6 @@ function Search({ characterSlice, location }) {
   const getTagsResult = () => {
     setTagsResultList([]);
     Send.get(`/search/tags/${query}`).then((res) => {
-      console.log(res.data);
       setTagsResultList(res.data);
     });
   };
@@ -72,7 +70,6 @@ function Search({ characterSlice, location }) {
   const getStoragesResult = () => {
     setContentsResultList([]);
     Send.get(`/search/storages/${query}`).then((res) => {
-      console.log(res.data);
       setStoragesResultList(res.data);
     });
   };
@@ -92,7 +89,6 @@ function Search({ characterSlice, location }) {
         contentSeq,
       },
     }).then((res) => {
-      console.log(res);
       const contentDetail = res.data;
       history.push({
         pathname: `../search/texts`,

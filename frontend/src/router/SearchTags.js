@@ -12,7 +12,6 @@ export default function SearchTags({ location }) {
   const getTagsResult = () => {
     setTagsResultList([]);
     Send.get(`/search/tags/${query}`).then((res) => {
-      console.log(res);
       setTagsResultList(res.data);
     });
   };

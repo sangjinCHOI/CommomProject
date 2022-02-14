@@ -128,7 +128,6 @@ function Follow({ characterSlice }) {
                 targetSeq: characterSlice.characterSeq, // 본인 캐릭터or저장소or업적
                 // userSeq: 0
               };
-              console.log(alarmData);
               Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) =>
                 console.log(res)
               );
@@ -162,7 +161,6 @@ function Follow({ characterSlice }) {
     Send.delete("/character/follow", { data: JSON.stringify(data) })
       .then((res) => {
         setChangePage(!changePage);
-        console.log(res);
       })
       .catch((err) => console.log(err));
   };
@@ -218,7 +216,14 @@ function Follow({ characterSlice }) {
                         className="flex justify-between items-center"
                       >
                         <div className="m-3">
-                          <CharacterImg imgWidth="50px" />
+                          <CharacterImg
+                            imgWidth="50px"
+                            imgSrc={
+                              follower[0].filePath === null || follower[0].fileName === null
+                                ? "/images/default_user.png"
+                                : follower[0].filePath + follower[0].fileName
+                            }
+                          />
                         </div>
                         <div className="w-36">{follower[0].nickname}</div>
                       </Link>
@@ -268,7 +273,14 @@ function Follow({ characterSlice }) {
                       className="flex justify-between items-center"
                     >
                       <div className="m-3">
-                        <CharacterImg imgWidth="50px" />
+                        <CharacterImg
+                          imgWidth="50px"
+                          imgSrc={
+                            follower[0].filePath === null || follower[0].fileName === null
+                              ? "/images/default_user.png"
+                              : follower[0].filePath + follower[0].fileName
+                          }
+                        />
                       </div>
                       <div className="w-36">{follower[0].nickname}</div>
                     </Link>
@@ -321,7 +333,14 @@ function Follow({ characterSlice }) {
                       className="flex justify-between items-center"
                     >
                       <div className="m-3">
-                        <CharacterImg imgWidth="50px" />
+                        <CharacterImg
+                          imgWidth="50px"
+                          imgSrc={
+                            followee.filePath === null || followee.fileName === null
+                              ? "/images/default_user.png"
+                              : followee.filePath + followee.fileName
+                          }
+                        />
                       </div>
                       <div className="w-36">{followee.nickname}</div>
                     </Link>
@@ -355,7 +374,14 @@ function Follow({ characterSlice }) {
                     className="flex justify-between items-center"
                   >
                     <div className="m-3">
-                      <CharacterImg imgWidth="50px" />
+                      <CharacterImg
+                        imgWidth="50px"
+                        imgSrc={
+                          followee.filePath === null || followee.fileName === null
+                            ? "/images/default_user.png"
+                            : followee.filePath + followee.fileName
+                        }
+                      />
                     </div>
                     <div className="w-36">{followee.nickname}</div>
                   </Link>
