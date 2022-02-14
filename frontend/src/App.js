@@ -34,6 +34,26 @@ import StoragesDetail from "./router/StoragesDetail";
 
 import ErrorBoundary from "./components/ErrorBoundary";
 import NotFound from "./router/NotFound";
+import { Redirect } from "react-router-dom";
+
+function PrivateRoute({ component: Component, ...rest }) {
+  let token = localStorage.getItem("idToken")
+    ? JSON.parse(localStorage.getItem("idToken")).token
+    : false;
+  let authed = Boolean(token);
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        authed === true ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={{ pathname: "/accounts/login", state: { from: props.location } }} />
+        )
+      }
+    />
+  );
+}
 
 function App() {
   return (
@@ -50,17 +70,17 @@ function App() {
             <Route exact path="/accounts/pw_inquiry" component={PwInquiry} />
             <Route exact path="/accounts/pw_inquiry/result" component={PwInquiryResult} />
             <Route exact path="/characters/select" component={Characters} />
-            <Route exact path="/characters/create" component={CharactersCreate} />
-            <Route exact path="/characters/update" component={CharactersUpdate} />
+            <PrivateRoute exact path="/characters/create" component={CharactersCreate} />
+            <PrivateRoute exact path="/characters/update" component={CharactersUpdate} />
 
             {/* SettingLayout 필요한 주소 */}
             <Route path="/settings/:path?" exact>
               <SettingLayout>
                 <Switch>
-                  <Route exact path="/settings/character" component={SettingsCharacter} />
-                  <Route exact path="/settings/account" component={SettingsAccount} />
-                  <Route exact path="/settings/alarm" component={SettingsAlarm} />
-                  <Route exact path="/settings/help" component={SettingsHelp} />
+                  <PrivateRoute exact path="/settings/character" component={SettingsCharacter} />
+                  <PrivateRoute exact path="/settings/account" component={SettingsAccount} />
+                  <PrivateRoute exact path="/settings/alarm" component={SettingsAlarm} />
+                  <PrivateRoute exact path="/settings/help" component={SettingsHelp} />
                   <Route path="*" component={NotFound} />
                 </Switch>
               </SettingLayout>
@@ -70,20 +90,25 @@ function App() {
             <Route>
               <Layout>
                 <Switch>
+                  <PrivateRoute exact path="/" component={Home} />
                   <Route exact path="/" component={Home} />
-                  <Route exact path="/alarm/center" component={Alarm} />
-                  <Route exact path="/search" component={Search} />
-                  <Route exact path="/search/characters" component={SearchCharacters} />
-                  <Route exact path="/search/storages" component={SearchStorages} />
-                  <Route exact path="/search/tags" component={SearchTags} />
-                  <Route exact path="/search/tag" component={SearchTagsDetail} />
-                  <Route exact path="/search/texts" component={SearchTexts} />
+                  <PrivateRoute exact path="/alarm/center" component={Alarm} />
+                  <PrivateRoute exact path="/search" component={Search} />
+                  <PrivateRoute exact path="/search/characters" component={SearchCharacters} />
+                  <PrivateRoute exact path="/search/storages" component={SearchStorages} />
+                  <PrivateRoute exact path="/search/tags" component={SearchTags} />
+                  <PrivateRoute exact path="/search/tag" component={SearchTagsDetail} />
+                  <PrivateRoute exact path="/search/texts" component={SearchTexts} />
                   {/* characters, login, signup같은 닉네임이 있다면 문제 발생 가능 주의 */}
-                  <Route exact path="/:nickname" component={Profile} />
-                  <Route exact path="/:nickname/follow" component={Follow} />
-                  <Route exact path="/:nickname/achievement" component={Achievement} />
-                  <Route exact path="/:nickname/storages" component={Storages} />
-                  <Route exact path="/:nickname/storages/:storage_seq" component={StoragesDetail} />
+                  <PrivateRoute exact path="/:nickname" component={Profile} />
+                  <PrivateRoute exact path="/:nickname/follow" component={Follow} />
+                  <PrivateRoute exact path="/:nickname/achievement" component={Achievement} />
+                  <PrivateRoute exact path="/:nickname/storages" component={Storages} />
+                  <PrivateRoute
+                    exact
+                    path="/:nickname/storages/:storage_seq"
+                    component={StoragesDetail}
+                  />
                   <Route path="*" component={NotFound} />
                 </Switch>
               </Layout>
