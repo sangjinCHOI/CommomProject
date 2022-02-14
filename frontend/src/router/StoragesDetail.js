@@ -9,7 +9,7 @@ function StoragesDetail(props) {
   //^^ characterNow, characterSeq 차이점 알아내면 새로 적어야함
   const data = {
     characterNow: props.location.state.characterSeq,
-    characterSeq: props.location.state.characterSeq,
+    //characterSeq: props.location.state.characterSeq,
     storageSeq: props.location.state.storageSeq,
   };
   const getStorage = () => {

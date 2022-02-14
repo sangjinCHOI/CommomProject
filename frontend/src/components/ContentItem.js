@@ -275,7 +275,7 @@ function ContentItem(props) {
         <div>
           {props.content.contentFileName ? (
             <Carousel dynamicHeight={true} showArrows={true} showThumbs={false} width="600px" className="flex items-center">
-              {/* {props.content.contentFilePath.split("|").map((filePath, index) => {
+              {props.content.contentFilePath.split("|").map((filePath, index) => {
                 return (
                   <div className="flex justify-center bg-slate-100" style={{ height: 600 }} key={index}>
                     <img
@@ -285,11 +285,20 @@ function ContentItem(props) {
                     />
                   </div>
                 );
-              })} */}
+              })}
             </Carousel>
           ) : null}
         </div>
-        <div className="px-4 py-2">{props.content.contentText}</div>
+        <div className="px-4 py-2">
+          {props.content.contentText.split("\n").map((line, index) => {
+            return (
+              <span key={index}>
+                {line}
+                <br />
+              </span>
+            );
+          })}
+        </div>
         <div className="px-4 pt-2 flex flex-wrap">
           {props.content.tags
             ? props.content.tags.split("|").map((tag, index) => {
