@@ -35,7 +35,7 @@
 		from tb_content_like
 		where content_seq = #{contentSeq} and character_seq = #{characterNow}) as contentIsLike, (select count(distinct content_seq) from tb_stored_content where content_seq = #{contentSeq} and character_seq = #{characterNow}) as contentIsStore, (select count(*) from tb_reply where content_seq = tb_content.content_seq and reply_is_active = 1) AS replyCount,
         (select nickname from tb_character where character_seq = tb_content.character_seq) AS contentWriter,
-        (select file_path from tb_file where relation_tb = 'tb_character' AND relation_seq = tb_content.character_seq) AS writerProfile,
+        (select concat(file_path, file_name) from tb_file where relation_tb = 'tb_character' AND relation_seq = tb_content.character_seq) AS writerProfile,
         (select count(*) from tb_tag where content_seq = tb_content.content_seq) AS tagCount,
         (select GROUP_CONCAT(tag_text separator '|') from tb_tag where content_seq = tb_content.content_seq GROUP BY content_seq) AS tags,
         (select count(*) from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.content_seq ) AS fileCount,
@@ -50,7 +50,7 @@
 		from tb_content_like
 		where content_seq = tb_content.content_Seq and character_seq = #{characterNow}) as contentIsLike, (select count(distinct content_seq) from tb_stored_content where content_seq = tb_content.content_seq and character_seq = #{characterNow}) as contentIsStore, (select count(*) from tb_reply where content_seq = tb_content.content_seq and reply_is_active = 1) AS replyCount,
         (select nickname from tb_character where character_seq = tb_content.character_seq) AS contentWriter,
-        (select file_path from tb_file where relation_tb = 'tb_character' AND relation_seq = tb_content.character_seq) AS writerProfile,
+        (select concat(file_path, file_name) from tb_file where relation_tb = 'tb_character' AND relation_seq = tb_content.character_seq) AS writerProfile,
         (select count(*) from tb_tag where content_seq = tb_content.content_seq) AS tagCount,
         (select GROUP_CONCAT(tag_text separator '|') from tb_tag where content_seq = tb_content.content_seq GROUP BY content_seq) AS tags,
         (select count(*) from tb_file where relation_tb = 'tb_content' AND relation_seq = tb_content.character_seq ) AS fileCount,
