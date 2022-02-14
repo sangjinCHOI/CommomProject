@@ -19,7 +19,7 @@ function Content({ characterSlice }) {
     characterSeq: characterSlice.characterSeq,
     level: 0,
   };
-  Send.post(`/character/acievements`, JSON.stringify(data))
+  Send.post(`/character/achievements`, JSON.stringify(data))
     .then((res) => {
       if (res.status == 200) setAchievements(res.data);
       else alert("error!!");
