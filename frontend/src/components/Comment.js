@@ -204,7 +204,14 @@ function Comment(props) {
                               readMoreStyle={{ color: "gray" }}
                               readLessStyle={{ color: "gray" }}
                             >
-                              {comment.replyText}
+                              {comment.replyText.split("\n").map((line, index) => {
+                                return (
+                                  <span key={index}>
+                                    {line}
+                                    <br />
+                                  </span>
+                                );
+                              })}
                             </ReactReadMoreReadLess>
                           </div>
                           <div style={{ paddingRight: 50 }}>
