@@ -16,10 +16,16 @@ function CharacterProfile({
   characterSlice,
 }) {
   const [characterProfile, setCharacterProfile] = useState({});
+  const [tempImgSrc, setTempImgSrc] = useState("");
   const getCharacterProfile = () => {
     Send.get(`/character/profile/${nickname}`).then((res) => {
       console.log("!!!!!!!", res.data);
       setCharacterProfile(res.data);
+      setTempImgSrc(res.data.profileImagePath + res.data.profileImageName);
+      console.log(
+        res.data.profileImagePath + res.data.profileImageName,
+        typeof (res.data.profileImagePath + res.data.profileImageName)
+      );
     });
   };
 
@@ -67,12 +73,17 @@ function CharacterProfile({
     <div className={`flex justify-center items-center p-4 my-4 ${classes}`}>
       <Link to={`../${nickname}`}>
         <CharacterImg
+          // imgSrc={
+          //   isNaN(characterProfile.profileImagePath + characterProfile.profileImageName) ||
+          //   characterProfile.profileImagePath === null ||
+          //   characterProfile.profileImageName === null
+          //     ? "/images/default_user.png"
+          //     : characterProfile.profileImagePath + characterProfile.profileImageName
+          // }
           imgSrc={
-            isNaN(characterProfile.profileImagePath + characterProfile.profileImageName) ||
-            characterProfile.profileImagePath === null ||
-            characterProfile.profileImageName === null
+            characterProfile.profileImagePath === null || characterProfile.profileImageName === null
               ? "/images/default_user.png"
-              : characterProfile.profileImagePath + characterProfile.profileImageName
+              : tempImgSrc
           }
         />
       </Link>
