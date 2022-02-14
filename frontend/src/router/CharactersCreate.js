@@ -101,6 +101,7 @@ function CharactersCreate({ saveCharacter, location }) {
                 userSeq,
               },
             });
+            window.location.reload();
           });
         } else alert("캐릭터 생성에 실패했습니다.");
       })
