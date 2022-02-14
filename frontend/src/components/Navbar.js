@@ -163,7 +163,7 @@ function Navbar({ characterSlice }) {
   };
 
   const LogoutFun = () => {
-    window.localStorage.setItem("idToken", "");
+    window.localStorage.clear();
   };
 
   return (
