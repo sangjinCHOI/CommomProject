@@ -41,6 +41,9 @@ function Content({ characterSlice, achievements }) {
   const tmpTest = (seq) => {
     console.log(seq);
     console.log("!");
+    return () => {
+      console.log("@");
+    };
   };
 
   // function tmpTest(seq) {

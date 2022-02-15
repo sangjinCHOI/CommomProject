@@ -66,7 +66,7 @@ function Profile({ characterSlice }) {
         <hr />
         <div className="px-9 my-3">
           <H4 color="black">Achievement</H4>
-          <Progress color="lightBlue" value={(100 * count) / achievements.length} percentage={false} />
+          <Progress color="lightBlue" value={Number((100 * count) / achievements.length)} percentage={false} />
           <H5 color="black">
             total: {count}/{achievements.length}
           </H5>
