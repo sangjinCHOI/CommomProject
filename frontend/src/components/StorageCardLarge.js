@@ -8,8 +8,9 @@ function StorageCardLarge({ storageName, imgSrc, ownerNickname, characterSlice }
   console.log(imgSrc);
   if (imgSrc === 0) imgSrc = "/images/save_box.jpg";
   // if (imgSrc === 0) imgSrc = "../assets/images/save_box.jpg";
+  console.log("own, slice", ownerNickname, characterSlice.nickname);
   const isMe = ownerNickname === characterSlice.nickname ? true : false;
-
+  console.log("isMe", isMe);
   const [isOptionClick, setIsOptionClick] = useState(false);
   function OptionClick() {
     return (

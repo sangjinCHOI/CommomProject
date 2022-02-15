@@ -12,7 +12,9 @@ function SearchCharacters({ location, characterSlice }) {
   const queryString = location.search;
   const params = new URLSearchParams(queryString);
   //const query = params.get("query");
-  const isMe = characterSlice.nickname === nickname ? true : false;
+  const tempNickname = nickname;
+  console.log("nickname", nickname);
+  console.log("tempNickname", tempNickname);
 
   // console.log(location);
   // console.log(characterSlice);
@@ -39,6 +41,7 @@ function SearchCharacters({ location, characterSlice }) {
         <div>
           {contentArr.map((content) => (
             <Link
+              key={content.storageSeq}
               to={{
                 pathname: `./storages/${content.storageSeq}`,
                 state: {
@@ -48,7 +51,6 @@ function SearchCharacters({ location, characterSlice }) {
               }}
             >
               <StorageCardLarge
-                key={content.storageSeq}
                 storageName={content.storageName}
                 imgSrc={content.storageImagePath + content.storageImageName}
                 ownerNickname={nickname}
