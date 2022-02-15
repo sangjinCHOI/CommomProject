@@ -17,6 +17,8 @@ function Content({ characterSlice, achievements }) {
   const [isRepresentative, setIsRepresentative] = useState(0);
 
   const initFun = () => {
+    console.log("@@");
+    console.log(achievements);
     achievements.map((achieve, index) => {
       console.log(achieve);
       if (achieve.isGained == 1) console.log(index);
