@@ -220,6 +220,7 @@ function Search({ characterSlice, location }) {
         </div>
         <MainCard classes="border rounded-xl py-3">
           {/* 현재 이미지가 여러개 생기면 크기가 줄어들면서 스크롤 동작X 상태 */}
+          {/* 우선 최대 3개만 보이게 구현 */}
           <div
             className={`flex overflow-x-auto ${styles.widthScroll} ${
               storagesResultList.length <= 2 ? "justify-center" : ""
@@ -233,7 +234,7 @@ function Search({ characterSlice, location }) {
                   imgSrc={
                     storage.fileName && storage.filePath
                       ? require(`../assets${storage.fileName + storage.filePath}`)
-                      : null
+                      : require(`../assets/images/save_box.jpg`)
                   }
                 />
               </Link>
