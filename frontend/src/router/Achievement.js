@@ -10,7 +10,7 @@ import AchievementContent from "../components/AchievementContent";
 export default function Profile() {
   const { nickname } = useParams();
   const [achievements, setAchievements] = useState([]);
-  const [count, setCount] = userState(0);
+  const [count, setCount] = useState(0);
 
   const data = {
     achievementType: 1,
