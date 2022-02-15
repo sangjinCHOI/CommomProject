@@ -1,12 +1,14 @@
 import { useState } from "react";
+import { connect } from "react-redux";
 import CustomModal from "./CustomModal";
 import styles from "./StorageCardLarge.module.css";
 
-export default function StorageCardLarge({ storageName, imgSrc, isMe = false }) {
+function StorageCardLarge({ storageName, imgSrc, ownerNickname, characterSlice }) {
   const [isMouseOver, setIsMouseOver] = useState(false);
   console.log(imgSrc);
   if (imgSrc === 0) imgSrc = "/images/save_box.jpg";
   // if (imgSrc === 0) imgSrc = "../assets/images/save_box.jpg";
+  const isMe = ownerNickname === characterSlice.nickname ? true : false;
 
   const [isOptionClick, setIsOptionClick] = useState(false);
   function OptionClick() {
@@ -70,3 +72,9 @@ export default function StorageCardLarge({ storageName, imgSrc, isMe = false }) 
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  return { characterSlice: state.character };
+}
+
+export default connect(mapStateToProps)(StorageCardLarge);
