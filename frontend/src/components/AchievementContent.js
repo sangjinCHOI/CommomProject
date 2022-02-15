@@ -38,21 +38,21 @@ function Content({ characterSlice, achievements }) {
   //   initFun();
   // }, []);
 
-  // const tmpTest = (seq) => {
-  //   console.log(seq);
-  //   console.log("!");
-  //   return () => {
-  //     console.log("@");
-  //   };
-  // };
-
-  function tmpTest(seq) {
+  const tmpTest = (seq) => {
     console.log(seq);
     console.log("!");
     return () => {
       console.log("@");
     };
-  }
+  };
+
+  // function tmpTest(seq) {
+  //   console.log(seq);
+  //   console.log("!");
+  //   return () => {
+  //     console.log("@");
+  //   };
+  // }
 
   return (
     <>
@@ -80,13 +80,13 @@ function Content({ characterSlice, achievements }) {
                       </div>
                       <div className="relative flex justify-end bg-slate-100">
                         <img
-                          onClick={tmpTest(achieve.achievementSeq)}
                           style={{ maxWidth: 150, maxHeight: 150, objectFit: "cover" }}
                           src={ExAchievment}
                           className={isRepresentative ? "border-4 border-yellow-400 rounded-lg" : "border-4 border-gray-400 rounded-lg"}
                         />
                         {/* isRepresentative로 임시로 대표 업적에 따라 색깔 바뀌개 해놨습니다. */}
                         <div
+                          onClick={tmpTest(achieve.achievementSeq)}
                           className={`absolute right-7 px-4 py-0.5 rounded-lg font-semibold ${isRepresentative ? "bg-gray-200 text-gray-400" : "bg-orange-200 text-orange-500"}`}
                           style={{ cursor: "pointer", top: "155px" }}
                         >
