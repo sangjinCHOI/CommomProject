@@ -12,9 +12,6 @@ function SearchCharacters({ location, characterSlice }) {
   const queryString = location.search;
   const params = new URLSearchParams(queryString);
   //const query = params.get("query");
-  const tempNickname = nickname;
-  console.log("nickname", nickname);
-  console.log("tempNickname", tempNickname);
 
   // console.log(location);
   // console.log(characterSlice);
@@ -40,22 +37,24 @@ function SearchCharacters({ location, characterSlice }) {
       <MainCard classes="border rounded py-2">
         <div>
           {contentArr.map((content) => (
-            <Link
+            // <Link
+            //   to={{
+            //     pathname: `./storages/${content.storageSeq}`,
+            //     state: {
+            //       characterSeq: characterSlice.characterSeq,
+            //       storageSeq: content.storageSeq,
+            //     },
+            //   }}
+            // >
+            <StorageCardLarge
               key={content.storageSeq}
-              to={{
-                pathname: `./storages/${content.storageSeq}`,
-                state: {
-                  characterSeq: characterSlice.characterSeq,
-                  storageSeq: content.storageSeq,
-                },
-              }}
-            >
-              <StorageCardLarge
-                storageName={content.storageName}
-                imgSrc={content.storageImagePath + content.storageImageName}
-                ownerNickname={nickname}
-              ></StorageCardLarge>
-            </Link>
+              storageName={content.storageName}
+              imgSrc={content.storageImagePath + content.storageImageName}
+              ownerNickname={nickname}
+              characterSeq={characterSlice.characterSeq}
+              storageSeq={content.storageSeq}
+            ></StorageCardLarge>
+            // </Link>
           ))}
         </div>
       </MainCard>

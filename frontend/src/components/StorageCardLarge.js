@@ -1,17 +1,24 @@
 import { useState } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import CustomModal from "./CustomModal";
 import styles from "./StorageCardLarge.module.css";
 
-function StorageCardLarge({ storageName, imgSrc, ownerNickname, characterSlice }) {
+function StorageCardLarge({
+  storageName,
+  imgSrc,
+  ownerNickname,
+  characterSeq,
+  storageSeq,
+  characterSlice,
+}) {
   const [isMouseOver, setIsMouseOver] = useState(false);
   console.log(imgSrc);
   if (imgSrc === 0) imgSrc = "/images/save_box.jpg";
   // if (imgSrc === 0) imgSrc = "../assets/images/save_box.jpg";
-  console.log("own, slice", ownerNickname, characterSlice.nickname);
   const isMe = ownerNickname === characterSlice.nickname ? true : false;
-  console.log("isMe", isMe);
   const [isOptionClick, setIsOptionClick] = useState(false);
+
   function OptionClick() {
     return (
       <div
@@ -45,31 +52,43 @@ function StorageCardLarge({ storageName, imgSrc, ownerNickname, characterSlice }
           <OptionClick />
         </CustomModal>
       )}
-      <img
-        src=""
-        alt=""
-        src={require(`../assets${imgSrc}`)}
-        alt={require(`../assets/images/save_box.jpg`)}
-        // alt={require(`../assets${imgSrc}`)}
-        className={`w-80 h-40 border rounded ${isMouseOver ? `${styles.highlight}` : `opacity-60`}`}
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          cursor: "pointer",
-          boxShadow: "rgba(0, 0, 0, 0.8) 0px 4px 4px",
-        }}
-      />
-      <div
-        className={`absolute top-auto left-auto w-auto px-2 ${
-          isMouseOver ? `${styles.textActive}` : `${styles.textInactive} text-xl`
-        }`}
-        style={{
-          cursor: "pointer",
+      <Link
+        to={{
+          pathname: `./storages/storageSeq`,
+          state: {
+            characterSeq,
+            storageSeq,
+          },
         }}
       >
-        {storageName}
-      </div>
+        <img
+          src=""
+          alt=""
+          src={require(`../assets${imgSrc}`)}
+          alt={require(`../assets/images/save_box.jpg`)}
+          // alt={require(`../assets${imgSrc}`)}
+          className={`w-80 h-40 border rounded ${
+            isMouseOver ? `${styles.highlight}` : `opacity-60`
+          }`}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            cursor: "pointer",
+            boxShadow: "rgba(0, 0, 0, 0.8) 0px 4px 4px",
+          }}
+        />
+        <div
+          className={`absolute top-auto left-auto w-auto px-2 ${
+            isMouseOver ? `${styles.textActive}` : `${styles.textInactive} text-xl`
+          }`}
+          style={{
+            cursor: "pointer",
+          }}
+        >
+          {storageName}
+        </div>
+      </Link>
     </div>
   );
 }
