@@ -38,21 +38,17 @@ function Content({ characterSlice, achievements }) {
   //   initFun();
   // }, []);
 
-  const tmpTest = (seq) => {
-    console.log(seq);
-    console.log("!");
+  const updateAchievement = (seq) => {
+    const data = {
+      characterSeq: characterSlice.characterSeq,
+      representativeAchievement: seq,
+    };
     return () => {
-      console.log("@");
+      Send.put(`/character/achievement/representative`, JSON.stringify(data))
+        .then((res) => console.log(res))
+        .catch((e) => console.log(e));
     };
   };
-
-  // function tmpTest(seq) {
-  //   console.log(seq);
-  //   console.log("!");
-  //   return () => {
-  //     console.log("@");
-  //   };
-  // }
 
   return (
     <>
@@ -73,7 +69,7 @@ function Content({ characterSlice, achievements }) {
                             <img src={trophy} style={{ width: 73, height: 73 }} />
                             <div>
                               <H5>Achieve!!</H5>
-                              <H6>{achieve.achievementCreatedDate}</H6>
+                              <H6>{achieve.achievementCreatedDate.substrint(0, 10)}</H6>
                             </div>
                           </div>
                         </div>
@@ -86,7 +82,7 @@ function Content({ characterSlice, achievements }) {
                         />
                         {/* isRepresentative로 임시로 대표 업적에 따라 색깔 바뀌개 해놨습니다. */}
                         <div
-                          onClick={tmpTest(achieve.achievementSeq)}
+                          onClick={updateAchievement(achieve.achievementSeq)}
                           className={`absolute right-7 px-4 py-0.5 rounded-lg font-semibold ${isRepresentative ? "bg-gray-200 text-gray-400" : "bg-orange-200 text-orange-500"}`}
                           style={{ cursor: "pointer", top: "155px" }}
                         >
