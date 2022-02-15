@@ -9,78 +9,36 @@ import AchievementContent from "../components/AchievementContent";
 
 export default function Profile() {
   const { nickname } = useParams();
+  const [achievements, setAchievements] = useState([]);
+  const [count, setCount] = useState(0);
+
+  const data = {
+    achievementType: 1,
+    characterSeq: characterSlice.characterSeq,
+    level: 0,
+  };
+  const initFun = () => {
+    Send.post(`/character/achievements`, JSON.stringify(data))
+      .then((res) => {
+        if (res.status == 200) {
+          setAchievements(res.data);
+          console.log(achievements);
+        } else alert("error!!");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    initFun();
+  }, []);
+
   return (
     <div className={`${styles.textCenter}`}>
       <MainCard classes="border">
         <div>
           <H2 color="black">업적 모아보기</H2>
-          <div className="inline-block px-2 mb-3">
-            <Button
-              color="gray"
-              buttonType="filled"
-              size="regular"
-              rounded={true}
-              block={false}
-              iconOnly={false}
-              ripple="light"
-            >
-              전체보기
-            </Button>
-          </div>
-          <div className="inline-block px-2">
-            <Button
-              color="gray"
-              buttonType="filled"
-              size="regular"
-              rounded={true}
-              block={false}
-              iconOnly={false}
-              ripple="light"
-            >
-              임시
-            </Button>
-          </div>
-          <div className="inline-block px-2">
-            <Button
-              color="gray"
-              buttonType="filled"
-              size="regular"
-              rounded={true}
-              block={false}
-              iconOnly={false}
-              ripple="light"
-            >
-              활동
-            </Button>
-          </div>
-        </div>
-        <div className="mb-3">
-          <div className="inline-block px-2">
-            <Button
-              color="gray"
-              buttonType="filled"
-              size="regular"
-              rounded={true}
-              block={false}
-              iconOnly={false}
-              ripple="light"
-            >
-              캐릭터
-            </Button>
-          </div>
-          <div className="inline-block px-2">
-            <Button
-              color="gray"
-              buttonType="filled"
-              size="regular"
-              rounded={true}
-              block={false}
-              iconOnly={false}
-              ripple="light"
-            >
-              이벤트
-            </Button>
-          </div>
           <br />
         </div>
         <hr />
@@ -91,7 +49,7 @@ export default function Profile() {
         </div>
       </MainCard>
       <div className="border">
-        <AchievementContent />
+        <AchievementContent prop={achievements} />
       </div>
       {/* <div className="border">
         <AchievementContent />
