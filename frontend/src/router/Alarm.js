@@ -174,22 +174,22 @@ function Alarm({ characterSlice }) {
                 <CharacterImg
                   imgWidth="50px"
                   classes="mr-4"
-                  // imgSrc={
-                  //   alarm.filePath === null || alarm.fileName === null
-                  //     ? alarm.alarmType === 1
-                  //       ? "/images/default_user.png"
-                  //       : 2 <= alarm.alarmType && alarm.alarmType <= 6
-                  //       ? "/images/default_storage.png"
-                  //       : alarm.filePath + alarm.fileName
-                  //     : alarm.filePath + alarm.fileName
-                  // }
                   imgSrc={
                     alarm.filePath === null || alarm.fileName === null
                       ? alarm.alarmType === 1
                         ? "/images/default_user.png"
-                        : "/images/default_storage.png"
+                        : 2 <= alarm.alarmType && alarm.alarmType <= 6
+                        ? "/images/default_storage.png"
+                        : "/images/default_achievement.png"
                       : alarm.filePath + alarm.fileName
                   }
+                  // imgSrc={
+                  //   alarm.filePath === null || alarm.fileName === null
+                  //     ? alarm.alarmType === 1
+                  //       ? "/images/default_user.png"
+                  //       : "/images/default_storage.png"
+                  //     : alarm.filePath + alarm.fileName
+                  // }
                 />
                 <div style={{ width: "292px" }}>{alarm.alarmText}</div>
               </Link>
@@ -264,24 +264,22 @@ function Alarm({ characterSlice }) {
                 <CharacterImg
                   imgWidth="50px"
                   classes="mr-4"
-                  // 나중에 default_user.png 말고 일반적인 default 알림 사진으로 변경해야 함
-                  // default_achievement는 없음(무조건 이미지가 있기 때문)
-                  // imgSrc={
-                  //   alarm.filePath === null || alarm.fileName === null
-                  //     ? alarm.alarmType === 1
-                  //       ? "/images/default_user.png"
-                  //       : 2 <= alarm.alarmType && alarm.alarmType <= 6
-                  //       ? "/images/default_storage.png"
-                  //       : alarm.filePath + alarm.fileName
-                  //     : alarm.filePath + alarm.fileName
-                  // }
                   imgSrc={
                     alarm.filePath === null || alarm.fileName === null
                       ? alarm.alarmType === 1
                         ? "/images/default_user.png"
-                        : "/images/default_storage.png"
+                        : 2 <= alarm.alarmType && alarm.alarmType <= 6
+                        ? "/images/default_storage.png"
+                        : "/images/default_achievement.png"
                       : alarm.filePath + alarm.fileName
                   }
+                  // imgSrc={
+                  //   alarm.filePath === null || alarm.fileName === null
+                  //     ? alarm.alarmType === 1
+                  //       ? "/images/default_user.png"
+                  //       : "/images/default_storage.png"
+                  //     : alarm.filePath + alarm.fileName
+                  // }
                 />
                 <div style={{ width: "292px" }}>{alarm.alarmText}</div>
               </Link>

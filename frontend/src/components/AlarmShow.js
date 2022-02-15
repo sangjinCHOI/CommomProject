@@ -186,7 +186,7 @@ function AlarmShow({ characterSlice }) {
                           ? "/images/default_user.png"
                           : 2 <= alarm.alarmType && alarm.alarmType <= 6
                           ? "/images/default_storage.png"
-                          : alarm.filePath + alarm.fileName
+                          : "/images/default_achievement.png"
                         : alarm.filePath + alarm.fileName
                     }
 
