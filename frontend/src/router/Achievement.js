@@ -27,7 +27,7 @@ function Profile({ characterSlice }) {
           // setAchievements(res.data);
           console.log(characterSlice.characterSeq);
           console.log(res.data);
-          setAchieve(res.data);
+          setAchieve(setAchievements, res.data);
           //setAchievements(() => res.data);
           console.log(achievements);
         } else alert("error!!");
@@ -37,8 +37,8 @@ function Profile({ characterSlice }) {
       });
   };
 
-  function setAchieve(data) {
-    setAchievements(data);
+  function setAchieve(func, data) {
+    func(data);
   }
 
   useEffect(() => {
@@ -46,11 +46,12 @@ function Profile({ characterSlice }) {
   }, []);
 
   useEffect(() => {
-    console.log(achievements.length);
+    //console.log(achievements.length);
     achievements.map((check) => {
+      //console.log(check.isGained);
       if (check.isGained == 1) setCount((prev) => prev + 1);
     });
-  }, achievements);
+  }, [achievements]);
 
   return (
     <div className={`${styles.textCenter}`}>
