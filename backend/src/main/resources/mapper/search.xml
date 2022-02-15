@@ -13,7 +13,7 @@
 		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_character'
 		AND f.relation_seq = c.character_seq
 		AND f.file_is_active = 1
-		where c.nickname like CONCAT(#{text}, '%')
+		where c.nickname like CONCAT('%', #{text}, '%')
 		AND c.character_active = 1
 	</select>
 
@@ -114,7 +114,7 @@
 			AND search_date = #{searchDate}
 		</if>
 		<if test="searchWord != null and searchWord != ''">
-			AND search_word like CONCAT(#{searchWord}, '%')
+			AND search_word like CONCAT('%', #{searchWord}, '%')
 		</if>
 		ORDER BY search_weight DESC 
 		LIMIT 10;
@@ -126,7 +126,7 @@
 		FROM tb_search_history 
 		WHERE character_seq = #{characterSeq} 
 		<if test="searchWord != null and searchWord != ''">
-			AND search_history_text like CONCAT(#{searchWord}, '%')
+			AND search_history_text like CONCAT('%', #{searchWord}, '%')
 		</if>
 		ORDER BY search_date DESC 
 		LIMIT 10;

@@ -9,14 +9,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Builder
-public class AlarmCreateRequest {
+public class AchievementRegistRequest {
 	private int characterSeq;
-	private int alarmType;
-	private String alarmText;
-	private String relationTb;
-	private int targetSeq;
-	
-	public void setAlarmText(String alarmText) {
-		this.alarmText = alarmText;
-	}
+	private int achievementSeq;
 }
