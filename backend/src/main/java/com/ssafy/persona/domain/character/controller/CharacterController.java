@@ -241,9 +241,9 @@ public class CharacterController {
 		return new ResponseEntity<Map<String, String>>(result, status);
 	}
 
-	@PutMapping("/achievement/delete")
+	@PutMapping("/achievement/delete/{characterSeq}")
 	public ResponseEntity<Map<String, String>> deleteRepresentativeAchievement(
-			@RequestBody int characterSeq) {
+			@PathVariable int characterSeq) {
 		logger.info("대표 업적 삭제 - 요청 캐릭터 번호: " + characterSeq);
 		String message = "";
 		HttpStatus status = null;
