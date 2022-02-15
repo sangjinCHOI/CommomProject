@@ -214,7 +214,20 @@ function ContentItem(props) {
       contentSeq: contentSeq,
       storageSeq: storageSeq,
     };
-    Send.post("/content/store", JSON.stringify(data));
+    Send.post("/content/store", JSON.stringify(data)).then((res) => {
+      if (res.status === 200) {
+        if (props.characterSlice.alarmAllow || props.characterSlice.modifyAlarm) {
+          const alarmData = {
+            alarmDate: new Date().toISOString(),
+            alarmType: 4,
+            characterSeq: props.characterSlice.characterSeq, // 상대방(알람을 받을) 캐릭터
+            relationTb: "tb_storage", // 관련 테이블(tb_character or tb_storage or tb_achievement)
+            targetSeq: storageSeq, // 본인 캐릭터or저장소or업적의 일련번호(storageSeq or achievementSeq)
+          };
+          Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => console.log(res));
+        }
+      }
+    });
   };
 
   return (
