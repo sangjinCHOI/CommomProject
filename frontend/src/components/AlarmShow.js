@@ -121,11 +121,15 @@ function AlarmShow({ characterSlice }) {
     if (alarmType === 1) {
       // targetSeq === characterSeq
       Send.get(`/character/${targetSeq}`).then((res) => history.push(`../${res.data.nickname}`));
-    } else if (2 <= alarmType <= 6) {
+    } else if (2 <= alarmType <= 3) {
+      // 내 저장소로 이동
+      history.push(`../${targetNickname}/storages`);
+    } else if (4 <= alarmType <= 6) {
       // targetSeq === storageSeq
-      // 내 저장소면 상관 없지만 상대방 저장소 가려면 닉네임도 필요함
+      // 해당 저장소 상세로 이동
       history.push(`../${targetNickname}/storages/${targetSeq}`);
     } else if (alarmType === 7) {
+      // 내 업적으로 이동
       history.push(`../${targetNickname}/achievement`);
     }
   };
@@ -176,10 +180,13 @@ function AlarmShow({ characterSlice }) {
                   <CharacterImg
                     imgWidth="40px"
                     classes="mr-4"
-                    // 나중에 default_user.png 말고 일반적인 default 알림 사진으로 변경해야 함
                     imgSrc={
                       alarm.filePath === null || alarm.fileName === null
-                        ? "/images/default_user.png"
+                        ? alarm.alarmType === 1
+                          ? "/images/default_user.png"
+                          : 2 <= alarm.alarmType <= 6
+                          ? "/images/default_storage.png"
+                          : alarm.filePath + alarm.fileName
                         : alarm.filePath + alarm.fileName
                     }
                   />

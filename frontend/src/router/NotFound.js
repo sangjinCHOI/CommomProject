@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <MainCard classes="rounded-xl h-80 mt-12">
       <div className="flex justify-center items-center">
-        <div className="text-center mt-12" style={{ width: "250px" }}>
+        <div className="text-center mt-14" style={{ width: "250px" }}>
           <div style={{ fontSize: "80px" }}>404</div>
           <div style={{ fontSize: "20px" }}>NOT FOUND</div>
         </div>
@@ -23,7 +23,7 @@ export default function NotFound() {
       </div>
       <div
         onClick={() => history.goBack()}
-        className="flex justify-center mt-12"
+        className="flex justify-center mt-10"
         style={{ cursor: "pointer" }}
       >
         이전 페이지로
