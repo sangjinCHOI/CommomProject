@@ -28,4 +28,6 @@ public interface StorageMapper {
 	
 	List<ContentStoreListResponse> contentStoreList(int contentSeq);
 	List<ContentGetResponse> storageContentList(StorageContentListRequest storageContentListRequeset);
+	String selectStorageName(int storageSeq);
+	int deleteStoragecharcterSeq(int storageSeq);
 }

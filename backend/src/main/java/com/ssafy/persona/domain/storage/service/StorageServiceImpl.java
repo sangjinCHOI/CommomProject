@@ -8,10 +8,14 @@ import com.ssafy.persona.domain.storage.model.dto.ContentStoreListResponse;
 import com.ssafy.persona.domain.storage.model.dto.ContentStoreRequest;
 import com.ssafy.persona.domain.storage.model.dto.StorageContentListRequest;
 import com.ssafy.persona.domain.storage.model.dto.StorageCreateRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.persona.domain.character.mapper.AlarmMapper;
+import com.ssafy.persona.domain.character.model.AlarmEnum;
+import com.ssafy.persona.domain.character.model.dto.AlarmCreateRequest;
 import com.ssafy.persona.domain.content.model.dto.ContentGetResponse;
 import com.ssafy.persona.domain.file.model.dto.FileUploadRequest;
 import com.ssafy.persona.domain.file.service.FileServiceImpl;
@@ -25,6 +29,8 @@ import lombok.RequiredArgsConstructor;
 public class StorageServiceImpl implements StorageService {
 	@Autowired
 	StorageMapper storageMapper;
+	@Autowired
+	AlarmMapper alarmMapper;
 	
 	private final FileServiceImpl fileService;
 	
@@ -33,6 +39,16 @@ public class StorageServiceImpl implements StorageService {
 	public int storageCreate(StorageCreateRequest storageCreateRequest) {
 		int result = 0;
 		result = storageMapper.storageCreate(storageCreateRequest);
+		
+		AlarmCreateRequest alarm = AlarmCreateRequest.builder()
+				.characterSeq(storageCreateRequest.getCharacterSeq())
+				.alarmType(2)
+				.alarmText(AlarmEnum.ALARM_STORAGE_CREATE.creatResultText(storageCreateRequest.getStorageName()))
+				.relationTb("tb_storage")
+				.targetSeq(storageCreateRequest.getCharacterSeq())
+				.build();
+		alarmMapper.createAlarm(alarm);
+		
 		if (storageCreateRequest.getMyfile() != null) {
 			FileUploadRequest file = FileUploadRequest.builder()
 					.myfile(storageCreateRequest.getMyfile())
@@ -70,6 +86,17 @@ public class StorageServiceImpl implements StorageService {
 
 	@Override
 	public boolean storageDelete(int storageSeq) {
+		int characterSeq = storageMapper.deleteStoragecharcterSeq(storageSeq);
+		String storageName = storageMapper.selectStorageName(storageSeq);
+		AlarmCreateRequest alarm = AlarmCreateRequest.builder()
+				.characterSeq(characterSeq)
+				.alarmType(3)
+				.alarmText(AlarmEnum.ALARM_STORAGE_DELETE.creatResultText(storageName))
+				.relationTb("tb_storage")
+				.targetSeq(characterSeq)
+				.build();
+		alarmMapper.createAlarm(alarm);
+		
 		return storageMapper.storageDelete(storageSeq) == 1;
 	}
 
@@ -80,6 +107,16 @@ public class StorageServiceImpl implements StorageService {
 
 	@Override
 	public boolean contentStore(ContentStoreRequest contentStoreRequest) {
+		String storageName = storageMapper.selectStorageName(contentStoreRequest.getStorageSeq());
+		AlarmCreateRequest alarm = AlarmCreateRequest.builder()
+				.characterSeq(contentStoreRequest.getCharacterSeq())
+				.alarmType(4)
+				.alarmText(AlarmEnum.ALARM_STORAGE_CONTENT_ADD.creatResultText(storageName))
+				.relationTb("tb_storage")
+				.targetSeq(contentStoreRequest.getCharacterSeq())
+				.build();
+		alarmMapper.createAlarm(alarm);
+		
 		return storageMapper.contentStore(contentStoreRequest) == 1;
 	}
 
