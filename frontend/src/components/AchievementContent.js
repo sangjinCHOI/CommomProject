@@ -16,14 +16,16 @@ function Content({ characterSlice, achievements }) {
   console.log(achievements);
 
   const [isRepresentative, setIsRepresentative] = useState(0);
-
+  //representativeAchievement
   const initFun = () => {
-    console.log("@@");
-    console.log(achievements);
-    achievements.map((achieve, index) => {
-      console.log(achieve);
-      if (achieve.isGained == 1) console.log(index);
-    });
+    console.log(isRepresentative);
+    console.log(characterSlice.representativeAchievement);
+    // console.log("@@");
+    // console.log(achievements);
+    // achievements.map((achieve, index) => {
+    //   console.log(achieve);
+    //   if (achieve.isGained == 1) console.log(index);
+    // });
   };
   //console.log(props);
   // const [achievements, setAchievements] = useState([]);
