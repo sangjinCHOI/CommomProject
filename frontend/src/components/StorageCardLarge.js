@@ -35,8 +35,8 @@ function StorageCardLarge({
 
   return (
     <div
-      className={`relative flex justify-center items-center px-5 my-4`}
-      style={{ height: "200px" }}
+      className={`relative flex justify-center items-center px-5 py-2 my-2`}
+      // style={{ height: "200px" }}
       onMouseOver={() => setIsMouseOver(true)}
       onMouseOut={() => setIsMouseOver(false)}
     >
