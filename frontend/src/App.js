@@ -37,19 +37,13 @@ import NotFound from "./router/NotFound";
 import { Redirect } from "react-router-dom";
 
 function PrivateRoute({ component: Component, ...rest }) {
-  let token = localStorage.getItem("idToken")
-    ? JSON.parse(localStorage.getItem("idToken")).token
-    : false;
+  let token = localStorage.getItem("idToken") ? JSON.parse(localStorage.getItem("idToken")).token : false;
   let authed = Boolean(token);
   return (
     <Route
       {...rest}
       render={(props) =>
-        authed === true ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to={{ pathname: "/accounts/login", state: { from: props.location } }} />
-        )
+        authed === true ? <Component {...props} /> : <Redirect to={{ pathname: "/accounts/login", state: { from: props.location } }} />
       }
     />
   );
@@ -91,7 +85,6 @@ function App() {
               <Layout>
                 <Switch>
                   <PrivateRoute exact path="/" component={Home} />
-                  <Route exact path="/" component={Home} />
                   <PrivateRoute exact path="/alarm/center" component={Alarm} />
                   <PrivateRoute exact path="/search" component={Search} />
                   <PrivateRoute exact path="/search/characters" component={SearchCharacters} />
@@ -104,11 +97,7 @@ function App() {
                   <PrivateRoute exact path="/:nickname/follow" component={Follow} />
                   <PrivateRoute exact path="/:nickname/achievement" component={Achievement} />
                   <PrivateRoute exact path="/:nickname/storages" component={Storages} />
-                  <PrivateRoute
-                    exact
-                    path="/:nickname/storages/:storage_seq"
-                    component={StoragesDetail}
-                  />
+                  <PrivateRoute exact path="/:nickname/storages/:storage_seq" component={StoragesDetail} />
                   <Route path="*" component={NotFound} />
                 </Switch>
               </Layout>
