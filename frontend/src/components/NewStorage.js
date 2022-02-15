@@ -36,12 +36,46 @@ function NewStorage(props) {
     formData.append("sendStorageCreateRequest", new Blob([JSON.stringify(data)], { type: "application/json" }));
     File.post("/storage", formData)
       .then((res) => {
+        // 저장소 생성/삭제/게시글변동 등의 요청이 성공했다면
+        if (res.status === 200) {
+          // 필요하다면 상대방(알람을 받을) 캐릭터 정보 가져와서 -> 상대방한테 알림을 보낼 때
+          // 알람 보내기
+          if (props.characterSlice.alarmAllow) {
+            // 상대방 캐릭터의 알람 허용 상태 확인
+            // alarmAllow: 모든 알림, likeAlarm: 좋아요 알림, modifyAlarm: 저장한 게시글 수정 및 삭제 알림, replyAlarm: 댓글 알림,
+            const alarmData = {
+              alarmDate: new Date().toISOString(),
+              alarmType: 2,
+              characterSeq: props.characterSlice.characterSeq, // 상대방(알람을 받을) 캐릭터
+              relationTb: "tb_storage", // 관련 테이블(tb_character or tb_storage or tb_achievement)
+              targetSeq: res.data.storage_seq, // 본인 캐릭터or저장소or업적의 일련번호(storageSeq or achievementSeq)
+            };
+            // 해당 캐릭터에 알람 보내기
+            Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => console.log(res));
+          }
+        }
         const data = {
           characterSeq: props.characterSlice.characterSeq,
           contentSeq: contentSeq,
           storageSeq: res.data.storage_seq,
         };
-        Send.post("/content/store", JSON.stringify(data));
+        Send.post("/content/store", JSON.stringify(data)).then((res) => {
+          if (res.status === 200) {
+            if (props.characterSlice.alarmAllow || props.characterSlice.modifyAlarm) {
+              // 상대방 캐릭터의 알람 허용 상태 확인
+              // alarmAllow: 모든 알림, likeAlarm: 좋아요 알림, modifyAlarm: 저장한 게시글 수정 및 삭제 알림, replyAlarm: 댓글 알림,
+              const alarmData = {
+                alarmDate: new Date().toISOString(),
+                alarmType: 4,
+                characterSeq: props.characterSlice.characterSeq, // 상대방(알람을 받을) 캐릭터
+                relationTb: "tb_storage", // 관련 테이블(tb_character or tb_storage or tb_achievement)
+                targetSeq: data.storageSeq, // 본인 캐릭터or저장소or업적의 일련번호(storageSeq or achievementSeq)
+              };
+              // 해당 캐릭터에 알람 보내기
+              Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => console.log(res));
+            }
+          }
+        });
       })
       .catch((err) => console.log(err));
   };
