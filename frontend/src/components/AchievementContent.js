@@ -20,6 +20,7 @@ function Content({ characterSlice, achievements }) {
   const initFun = () => {
     console.log(isRepresentative);
     console.log(characterSlice.representativeAchievement);
+    setIsRepresentative(characterSlice.representativeAchievement);
     // console.log("@@");
     // console.log(achievements);
     // achievements.map((achieve, index) => {
@@ -46,9 +47,9 @@ function Content({ characterSlice, achievements }) {
   //     });
   // };
 
-  useEffect(() => {
-    initFun();
-  }, [achievements]);
+  // useEffect(() => {
+  //   initFun();
+  // }, []);
   const deleteAchievement = () => {
     const data = {
       characterSeq: characterSlice.characterSeq,
