@@ -8,7 +8,7 @@ import styles from "../components/Achievement.module.css";
 import AchievementContent from "../components/AchievementContent";
 import { useEffect, useState } from "react";
 
-export default function Profile() {
+function Profile({ characterSlice }) {
   const { nickname } = useParams();
   const [achievements, setAchievements] = useState([]);
   const [count, setCount] = useState(0);
@@ -61,3 +61,9 @@ export default function Profile() {
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  return { characterSlice: state.character };
+}
+
+export default connect(mapStateToProps)(Profile);
