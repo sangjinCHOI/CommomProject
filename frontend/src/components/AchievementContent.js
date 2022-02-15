@@ -15,6 +15,12 @@ import styles from "./AchievementContent.module.css";
 function Content({ characterSlice, achievements }) {
   console.log(achievements);
   const [isRepresentative, setIsRepresentative] = useState(0);
+
+  const initFun = () => {
+    achievements.map((achieve, index) => {
+      if (achieve.isGained == 1) console.log(index);
+    });
+  };
   //console.log(props);
   // const [achievements, setAchievements] = useState([]);
 
@@ -34,10 +40,10 @@ function Content({ characterSlice, achievements }) {
   //     });
   // };
 
-  // useEffect(() => {
-  //   initFun();
-  // }, []);
-  const deleteAchievement = (seq) => {
+  useEffect(() => {
+    initFun();
+  }, []);
+  const deleteAchievement = () => {
     const data = {
       characterSeq: characterSlice.characterSeq,
     };
@@ -99,7 +105,7 @@ function Content({ characterSlice, achievements }) {
                         />
                         {/* isRepresentative로 임시로 대표 업적에 따라 색깔 바뀌개 해놨습니다. */}
                         <div
-                          onClick={isRepresentative ? updateAchievement(achieve.achievementSeq) : deleteAchievement(achieve.achievementSeq)}
+                          onClick={isRepresentative ? deleteAchievement : updateAchievement(achieve.achievementSeq)}
                           className={`absolute right-7 px-4 py-0.5 rounded-lg font-semibold ${isRepresentative ? "bg-gray-200 text-gray-400" : "bg-orange-200 text-orange-500"}`}
                           style={{ cursor: "pointer", top: "155px" }}
                         >
