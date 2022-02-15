@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu } from "@headlessui/react";
 import { Label } from "@material-tailwind/react";
 import MainCard from "./MainCard";
@@ -19,14 +19,20 @@ function Content({ characterSlice }) {
     characterSeq: characterSlice.characterSeq,
     level: 0,
   };
-  Send.post(`/character/achievements`, JSON.stringify(data))
-    .then((res) => {
-      if (res.status == 200) setAchievements(res.data);
-      else alert("error!!");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  const initFun = () => {
+    Send.post(`/character/achievements`, JSON.stringify(data))
+      .then((res) => {
+        if (res.status == 200) setAchievements(res.data);
+        else alert("error!!");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    initFun();
+  }, []);
 
   return (
     <>
