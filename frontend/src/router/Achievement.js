@@ -7,7 +7,7 @@ import { Label, Button, Progress } from "@material-tailwind/react";
 import styles from "../components/Achievement.module.css";
 import AchievementContent from "../components/AchievementContent";
 
-export default async function Profile() {
+export default function Profile() {
   const { nickname } = useParams();
   const [achievements, setAchievements] = useState([]);
   const [count, setCount] = userState(0);
@@ -21,7 +21,7 @@ export default async function Profile() {
     Send.post(`/character/achievements`, JSON.stringify(data))
       .then((res) => {
         if (res.status == 200) {
-          await setAchievements(res.data);
+          setAchievements(res.data);
           console.log(achievements);
         } else alert("error!!");
       })
