@@ -69,7 +69,7 @@ function Content({ characterSlice, achievements }) {
                             <img src={trophy} style={{ width: 73, height: 73 }} />
                             <div>
                               <H5>Achieve!!</H5>
-                              <H6>{achieve.achievementCreatedDate.substrint(0, 10)}</H6>
+                              <H6>{achieve.achievementCreatedDate.substring(0, 10)}</H6>
                             </div>
                           </div>
                         </div>
