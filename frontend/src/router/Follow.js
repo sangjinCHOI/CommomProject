@@ -124,7 +124,7 @@ function Follow({ characterSlice }) {
                 // alarmText: `${followerNickname}님이 회원님을 팔로우하기 시작했습니다.`,
                 alarmType: 1,
                 characterSeq: followerSeq, // 상대방
-                relationTb: "tb_character",
+                relationTb: "tb_character", // 관련 테이블
                 targetSeq: characterSlice.characterSeq, // 본인 캐릭터or저장소or업적
                 // userSeq: 0
               };
