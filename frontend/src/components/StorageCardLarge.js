@@ -53,6 +53,7 @@ function StorageCardLarge({
         </CustomModal>
       )}
       <Link
+        className="relative px-4 py-2"
         to={{
           pathname: `./storages/storageSeq`,
           state: {
@@ -62,8 +63,6 @@ function StorageCardLarge({
         }}
       >
         <img
-          src=""
-          alt=""
           src={require(`../assets${imgSrc}`)}
           alt={require(`../assets/images/save_box.jpg`)}
           // alt={require(`../assets${imgSrc}`)}
