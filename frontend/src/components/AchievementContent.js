@@ -30,9 +30,9 @@ function Content({ characterSlice, achievements }) {
   //     });
   // };
 
-  useEffect(() => {
-    initFun();
-  }, []);
+  // useEffect(() => {
+  //   initFun();
+  // }, []);
 
   return (
     <>
