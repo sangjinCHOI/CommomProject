@@ -120,17 +120,17 @@ function AlarmShow({ characterSlice }) {
 
     if (alarmType === 1) {
       // targetSeq === characterSeq
-      Send.get(`/character/${targetSeq}`).then((res) => history.push(`../${res.data.nickname}`));
+      Send.get(`/character/${targetSeq}`).then((res) => history.push(`/${res.data.nickname}`));
     } else if (2 <= alarmType && alarmType <= 3) {
       // 내 저장소로 이동
-      history.push(`../${targetNickname}/storages`);
+      history.push(`/${targetNickname}/storages`);
     } else if (4 <= alarmType && alarmType <= 6) {
       // targetSeq === storageSeq
       // 해당 저장소 상세로 이동
-      history.push(`../${targetNickname}/storages/${targetSeq}`);
+      history.push(`/${targetNickname}/storages/${targetSeq}`);
     } else if (alarmType === 7) {
       // 내 업적으로 이동
-      history.push(`../${targetNickname}/achievement`);
+      history.push(`/${targetNickname}/achievement`);
     }
   };
 
@@ -153,7 +153,7 @@ function AlarmShow({ characterSlice }) {
       >
         <div className="flex justify-between">
           <div className="text-2xl px-4 py-2">알림</div>
-          <Link to="../alarm/center">
+          <Link to="/alarm/center">
             <div className="px-4 py-2 mt-2">모두 보기</div>
           </Link>
         </div>

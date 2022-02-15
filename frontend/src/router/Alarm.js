@@ -123,7 +123,7 @@ function Alarm({ characterSlice }) {
 
     if (alarmType === 1) {
       // targetSeq === characterSeq
-      Send.get(`/character/${targetSeq}`).then((res) => history.push(`../${res.data.nickname}`));
+      Send.get(`/character/${targetSeq}`).then((res) => history.push(`/${res.data.nickname}`));
     } else if (2 <= alarmType && alarmType <= 3) {
       // 내 저장소로 이동
       history.push(`/${targetNickname}/storages`);
