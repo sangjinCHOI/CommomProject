@@ -131,6 +131,12 @@ function Alarm({ characterSlice }) {
       // targetSeq === storageSeq
       // 해당 저장소 상세로 이동
       history.push(`../${targetNickname}/storages/${targetSeq}`);
+      history.push({
+        pathname: `../${targetNickname}/storages/${targetSeq}`,
+        props: {
+          storageSeq: targetSeq,
+        },
+      });
     } else if (alarmType === 7) {
       // 내 업적으로 이동
       history.push(`../${targetNickname}/achievement`);
