@@ -63,7 +63,7 @@ public class ContentServiceImpl implements ContentService {
 		LocalTime now = LocalTime.now();
 		int hour = now.getHour();
 		// 업적 매퍼 호출(17번)
-		if(hour == 15) {
+		if(hour == 14) {
 			AlarmCreateRequest alarm = null;
 			achievementRequest = AchievementRegistRequest.builder()
 					.characterSeq(contentCreateRequest.getCharacterSeq())
