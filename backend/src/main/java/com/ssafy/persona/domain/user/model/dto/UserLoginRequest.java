@@ -2,13 +2,11 @@ package com.ssafy.persona.domain.user.model.dto;
 
 import com.ssafy.persona.domain.user.model.entity.User;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class UserLoginRequest {
 	@NonNull
