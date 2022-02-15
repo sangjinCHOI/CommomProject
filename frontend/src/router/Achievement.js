@@ -25,7 +25,10 @@ function Profile({ characterSlice }) {
       .then((res) => {
         if (res.status == 200) {
           // setAchievements(res.data);
-          setAchievements(() => res.data);
+          console.log(characterSlice.characterSeq);
+          console.log(res.data);
+          setAchieve(res.data);
+          //setAchievements(() => res.data);
           console.log(achievements);
         } else alert("error!!");
       })
@@ -33,6 +36,10 @@ function Profile({ characterSlice }) {
         console.log(err);
       });
   };
+
+  function setAchieve(data) {
+    setAchievements(data);
+  }
 
   useEffect(() => {
     initFun();
@@ -58,11 +65,7 @@ function Profile({ characterSlice }) {
         <hr />
         <div className="px-9 my-3">
           <H4 color="black">Achievement</H4>
-          <Progress
-            color="lightBlue"
-            value={(100 * count) / achievements.length}
-            percentage={false}
-          />
+          <Progress color="lightBlue" value={(100 * count) / achievements.length} percentage={false} />
           <H5 color="black">
             total: {count}/{achievements.length}
           </H5>

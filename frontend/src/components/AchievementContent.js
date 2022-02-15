@@ -43,7 +43,7 @@ function Content({ characterSlice, achievements }) {
       <div>
         {achievements.map((achieve) => (
           <div>
-            {achieve.isgained ? (
+            {achieve.isGained ? (
               <MainCard key={achieve.achievementSeq} max-height="900px">
                 <div style={{ height: 180 }} className="p-4 flex justify-between">
                   <div className="flex justify-center">
@@ -66,19 +66,11 @@ function Content({ characterSlice, achievements }) {
                         <img
                           style={{ maxWidth: 150, maxHeight: 150, objectFit: "cover" }}
                           src={ExAchievment}
-                          className={
-                            isRepresentative
-                              ? "border-4 border-yellow-400 rounded-lg"
-                              : "border-4 border-gray-400 rounded-lg"
-                          }
+                          className={isRepresentative ? "border-4 border-yellow-400 rounded-lg" : "border-4 border-gray-400 rounded-lg"}
                         />
                         {/* isRepresentative로 임시로 대표 업적에 따라 색깔 바뀌개 해놨습니다. */}
                         <div
-                          className={`absolute right-7 px-4 py-0.5 rounded-lg font-semibold ${
-                            isRepresentative
-                              ? "bg-gray-200 text-gray-400"
-                              : "bg-orange-200 text-orange-500"
-                          }`}
+                          className={`absolute right-7 px-4 py-0.5 rounded-lg font-semibold ${isRepresentative ? "bg-gray-200 text-gray-400" : "bg-orange-200 text-orange-500"}`}
                           style={{ cursor: "pointer", top: "155px" }}
                         >
                           {isRepresentative ? "대표 해제" : "대표 설정"}
@@ -90,10 +82,7 @@ function Content({ characterSlice, achievements }) {
               </MainCard>
             ) : (
               <MainCard key={achieve.achievementSeq} max-height="900px">
-                <div
-                  style={{ height: 220 }}
-                  className="p-4 flex justify-between bg-slate-100 border-b"
-                >
+                <div style={{ height: 220 }} className="p-4 flex justify-between bg-slate-100 border-b">
                   <div className="flex justify-center ">
                     <div className="flex justify-center" style={{ width: 565 }}>
                       <div className="flex justify-start " style={{ width: 380 }}>
@@ -111,22 +100,14 @@ function Content({ characterSlice, achievements }) {
                           className={`${styles.gray}`}
                           style={{ maxWidth: 150, maxHeight: 150, objectFit: "cover" }}
                           src={ExAchievment}
-                          className={
-                            isRepresentative
-                              ? "border-4 border-yellow-400 rounded-lg"
-                              : "border-4 border-gray-400 rounded-lg"
-                          }
+                          // className={isRepresentative ? "border-4 border-yellow-400 rounded-lg" : "border-4 border-gray-400 rounded-lg"}
                         />
-                        <div
-                          className={`absolute right-7 px-4 py-0.5 rounded-lg font-semibold ${
-                            isRepresentative
-                              ? "bg-gray-200 text-gray-400"
-                              : "bg-orange-200 text-orange-500"
-                          }`}
+                        {/* <div
+                          className={`absolute right-7 px-4 py-0.5 rounded-lg font-semibold ${isRepresentative ? "bg-gray-200 text-gray-400" : "bg-orange-200 text-orange-500"}`}
                           style={{ cursor: "pointer", top: "155px" }}
                         >
                           {isRepresentative ? "대표 해제" : "대표 설정"}
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>
