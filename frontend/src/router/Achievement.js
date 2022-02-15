@@ -38,6 +38,13 @@ function Profile({ characterSlice }) {
     initFun();
   }, []);
 
+  useEffect(() => {
+    console.log(achievements.length);
+    achievements.map((check) => {
+      if (check.isGained == 1) setCount((prev) => prev + 1);
+    });
+  }, achievements);
+
   return (
     <div className={`${styles.textCenter}`}>
       <MainCard classes="border">
@@ -48,8 +55,10 @@ function Profile({ characterSlice }) {
         <hr />
         <div className="px-9 mb-3">
           <H4 color="black">Achievement</H4>
-          <Progress color="lightBlue" value="75" percentage={false} />
-          <H5 color="black">total: 75/100</H5>
+          <Progress color="lightBlue" value={(100 * count) / achievements.length} percentage={false} />
+          <H5 color="black">
+            total: {count}/{achievements.length}
+          </H5>
         </div>
       </MainCard>
       <div className="border">

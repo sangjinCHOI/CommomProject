@@ -12,6 +12,7 @@ import trophy from "../assets/images/trophy.png";
 import Send from "../config/Send";
 
 function Content({ characterSlice, achievements }) {
+  console.log(achievements);
   //console.log(props);
   // const [achievements, setAchievements] = useState([]);
 
@@ -41,7 +42,7 @@ function Content({ characterSlice, achievements }) {
         {achievements.map((achieve) => (
           <div>
             {achieve.isgained ? (
-              <MainCard max-height="900px">
+              <MainCard key={achieve.achievementSeq} max-height="900px">
                 <div style={{ height: 180 }} className="p-4 flex justify-between">
                   <div className="flex justify-center">
                     <div className="flex justify-center" style={{ width: 565 }}>
@@ -67,7 +68,7 @@ function Content({ characterSlice, achievements }) {
                 </div>
               </MainCard>
             ) : (
-              <MainCard max-height="900px">
+              <MainCard key={achieve.achievementSeq} max-height="900px">
                 <div style={{ height: 180 }} className="p-4 flex justify-between bg-slate-100">
                   <div className="flex justify-center ">
                     <div className="flex justify-center" style={{ width: 565 }}>
