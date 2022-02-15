@@ -6,6 +6,7 @@ import H5 from "@material-tailwind/react/Heading5";
 import { Label, Button, Progress } from "@material-tailwind/react";
 import styles from "../components/Achievement.module.css";
 import AchievementContent from "../components/AchievementContent";
+import { useEffect, useState } from "react";
 
 export default function Profile() {
   const { nickname } = useParams();
