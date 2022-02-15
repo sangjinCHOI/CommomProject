@@ -12,6 +12,7 @@ function SearchCharacters({ location, characterSlice }) {
   const queryString = location.search;
   const params = new URLSearchParams(queryString);
   //const query = params.get("query");
+  const isMe = characterSlice.nickname === nickname ? true : false;
 
   // console.log(location);
   // console.log(characterSlice);
@@ -51,7 +52,7 @@ function SearchCharacters({ location, characterSlice }) {
                 storageName={content.storageName}
                 imgSrc={content.storageImagePath + content.storageImageName}
                 // isMe = true일 때 삭제 가능하게끔
-                isMe={characterSlice.nickname === nickname}
+                isMe={isMe}
               ></StorageCardLarge>
             </Link>
           ))}
