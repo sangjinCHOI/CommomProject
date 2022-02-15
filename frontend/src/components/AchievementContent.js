@@ -13,47 +13,15 @@ import Send from "../config/Send";
 import styles from "./AchievementContent.module.css";
 
 function Content({ characterSlice, achievements }) {
-  console.log(achievements);
-
   const [isRepresentative, setIsRepresentative] = useState(0);
-  //representativeAchievement
   const initFun = () => {
-    console.log(isRepresentative);
-    console.log(characterSlice.representativeAchievement);
     setIsRepresentative(characterSlice.representativeAchievement);
-    // console.log("@@");
-    // console.log(achievements);
-    // achievements.map((achieve, index) => {
-    //   console.log(achieve);
-    //   if (achieve.isGained == 1) console.log(index);
-    // });
   };
-  //console.log(props);
-  // const [achievements, setAchievements] = useState([]);
-
-  // const data = {
-  //   achievementType: 1,
-  //   characterSeq: characterSlice.characterSeq,
-  //   level: 0,
-  // };
-  // const initFun = () => {
-  //   Send.post(`/character/achievements`, JSON.stringify(data))
-  //     .then((res) => {
-  //       if (res.status == 200) setAchievements(res.data);
-  //       else alert("error!!");
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
 
   useEffect(() => {
     initFun();
   }, []);
   const deleteAchievement = () => {
-    // const data = {
-    //   characterSeq: characterSlice.characterSeq,
-    // };
     return () => {
       //캐릭터의 대표업적이 삭제
       Send.put(`/character/achievement/delete/${characterSlice.characterSeq}`)
