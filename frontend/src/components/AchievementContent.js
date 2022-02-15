@@ -45,7 +45,10 @@ function Content({ characterSlice, achievements }) {
     };
     return () => {
       Send.put(`/character/achievement/representative`, JSON.stringify(data))
-        .then((res) => console.log(res))
+        .then((res) => {
+          setIsRepresentative(seq);
+          console.log(res);
+        })
         .catch((e) => console.log(e));
     };
   };
