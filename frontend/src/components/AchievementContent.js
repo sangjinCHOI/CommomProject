@@ -51,12 +51,12 @@ function Content({ characterSlice, achievements }) {
     initFun();
   }, []);
   const deleteAchievement = () => {
-    const data = {
-      characterSeq: characterSlice.characterSeq,
-    };
+    // const data = {
+    //   characterSeq: characterSlice.characterSeq,
+    // };
     return () => {
       //캐릭터의 대표업적이 삭제
-      Send.put(`/character/achievement/delete`, JSON.stringify(data))
+      Send.put(`/character/achievement/delete/${characterSlice.characterSeq}`)
         .then((res) => {
           setIsRepresentative(0);
           console.log(res);
