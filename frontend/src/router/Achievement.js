@@ -5,6 +5,7 @@ import H4 from "@material-tailwind/react/Heading4";
 import H5 from "@material-tailwind/react/Heading5";
 import { Label, Button, Progress } from "@material-tailwind/react";
 import styles from "../components/Achievement.module.css";
+import { connect } from "react-redux";
 import AchievementContent from "../components/AchievementContent";
 import { useEffect, useState } from "react";
 
