@@ -93,7 +93,12 @@ public class CharacterServiceImpl implements CharacterService {
 	public int setCharacterProfileDefault(int characterSeq) {
 		return characterMapper.setCharacterProfileDefault(characterSeq);
 	}
-	
+
+	@Override
+	public int deleteAchievement(int characterSeq) {
+		return characterMapper.deleteAchievement(characterSeq);
+	}
+
 	@Override
 	public CharacterGetResponse detail(int characterSeq) {
 		return characterMapper.detail(characterSeq);

@@ -241,6 +241,25 @@ public class CharacterController {
 		return new ResponseEntity<Map<String, String>>(result, status);
 	}
 
+	@PutMapping("/achievement/delete")
+	public ResponseEntity<Map<String, String>> deleteRepresentativeAchievement(
+			@RequestBody int characterSeq) {
+		logger.info("대표 업적 삭제 - 요청 캐릭터 번호: " + characterSeq);
+		String message = "";
+		HttpStatus status = null;
+
+		if (characterService.deleteAchievement(characterSeq) == 1) {
+			message = SUCCESS;
+			status = HttpStatus.OK;
+		} else {
+			message = FAIL;
+			status = HttpStatus.ACCEPTED;
+		}
+		Map<String, String> result = new HashMap<String, String>();
+		result.put("message", message);
+		return new ResponseEntity<Map<String, String>>(result, status);
+	}
+
 	@PostMapping("follow")
 	public ResponseEntity<Map<String, String>> followRequest(@RequestBody FollowRequest request) {
 		logger.info("팔로워 요청 - follwer: " + request.getFollower() + " followee: " + request.getFollowee());

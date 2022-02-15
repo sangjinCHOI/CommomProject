@@ -29,7 +29,14 @@
 		character_modified_date = now()
 		where character_seq=#{characterSeq}
 	</update>
-	
+
+	<update id="deleteAchievement">
+		update tb_character set
+		representative_achievement=0,
+		character_modified_date = now()
+		where character_seq=#{characterSeq}
+	</update>
+
 	<update id="updateAlarmStatus">
 		update tb_character set 
 		<if test="alarmAllow != null">
