@@ -45,7 +45,7 @@ public class StorageServiceImpl implements StorageService {
 				.alarmType(2)
 				.alarmText(AlarmEnum.ALARM_STORAGE_CREATE.creatResultText(storageCreateRequest.getStorageName()))
 				.relationTb("tb_storage")
-				.targetSeq(storageCreateRequest.getCharacterSeq())
+				.targetSeq(storageCreateRequest.getStorageSeq())
 				.build();
 		alarmMapper.createAlarm(alarm);
 		
@@ -93,7 +93,7 @@ public class StorageServiceImpl implements StorageService {
 				.alarmType(3)
 				.alarmText(AlarmEnum.ALARM_STORAGE_DELETE.creatResultText(storageName))
 				.relationTb("tb_storage")
-				.targetSeq(characterSeq)
+				.targetSeq(storageSeq)
 				.build();
 		alarmMapper.createAlarm(alarm);
 		
@@ -113,7 +113,7 @@ public class StorageServiceImpl implements StorageService {
 				.alarmType(4)
 				.alarmText(AlarmEnum.ALARM_STORAGE_CONTENT_ADD.creatResultText(storageName))
 				.relationTb("tb_storage")
-				.targetSeq(contentStoreRequest.getCharacterSeq())
+				.targetSeq(contentStoreRequest.getStorageSeq())
 				.build();
 		alarmMapper.createAlarm(alarm);
 		
