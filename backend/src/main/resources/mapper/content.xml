@@ -92,6 +92,12 @@
 		where content_Seq = #{contentSeq}
 	</select>
 	
+	<select id="checkTodayContent" resultType="int">
+		select count(*)
+		from tb_content
+		where character_seq = #{characterSeq} and DATE_FORMAT(content_created_date, '%Y-%m-%d') = DATE_FORMAT(NOW(), '%Y-%m-%d')
+	</select>
+	
 	
 	
 	

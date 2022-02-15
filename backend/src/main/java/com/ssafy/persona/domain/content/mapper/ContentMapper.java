@@ -19,4 +19,5 @@ public interface ContentMapper {
 	int hashtagCreate(String[] hashtag, int contentSeq);
 	int hashtagModify(String[] hashtag, int contentSeq);
 	List<String> hashtagGet(int contentSeq);
+	int checkTodayContent(int characterSeq);
 }
