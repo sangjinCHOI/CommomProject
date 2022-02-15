@@ -38,10 +38,15 @@ function Content({ characterSlice, achievements }) {
   //   initFun();
   // }, []);
 
-  function tmpTest(seq) {
+  const tmpTest = (seq) => {
     console.log(seq);
     console.log("!");
-  }
+  };
+
+  // function tmpTest(seq) {
+  //   console.log(seq);
+  //   console.log("!");
+  // }
 
   return (
     <>
