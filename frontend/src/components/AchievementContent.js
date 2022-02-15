@@ -112,7 +112,7 @@ function Content({ characterSlice, achievements }) {
                         />
                         {/* isRepresentative로 임시로 대표 업적에 따라 색깔 바뀌개 해놨습니다. */}
                         <div
-                          onClick={isRepresentative ? deleteAchievement : updateAchievement(achieve.achievementSeq)}
+                          onClick={isRepresentative ? deleteAchievement() : updateAchievement(achieve.achievementSeq)}
                           className={`absolute right-7 px-4 py-0.5 rounded-lg font-semibold ${isRepresentative ? "bg-gray-200 text-gray-400" : "bg-orange-200 text-orange-500"}`}
                           style={{ cursor: "pointer", top: "155px" }}
                         >
