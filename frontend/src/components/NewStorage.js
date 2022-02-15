@@ -33,7 +33,10 @@ function NewStorage(props) {
       storagePublic: isPublic,
     };
     formData.append("file", []);
-    formData.append("sendStorageCreateRequest", new Blob([JSON.stringify(data)], { type: "application/json" }));
+    formData.append(
+      "sendStorageCreateRequest",
+      new Blob([JSON.stringify(data)], { type: "application/json" })
+    );
     File.post("/storage", formData)
       .then((res) => {
         // 저장소 생성/삭제/게시글변동 등의 요청이 성공했다면
@@ -51,7 +54,7 @@ function NewStorage(props) {
               targetSeq: res.data.storage_seq, // 본인 캐릭터or저장소or업적의 일련번호(storageSeq or achievementSeq)
             };
             // 해당 캐릭터에 알람 보내기
-            Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => console.log(res));
+            // Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => console.log(res));
           }
         }
         const data = {
@@ -72,7 +75,7 @@ function NewStorage(props) {
                 targetSeq: data.storageSeq, // 본인 캐릭터or저장소or업적의 일련번호(storageSeq or achievementSeq)
               };
               // 해당 캐릭터에 알람 보내기
-              Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => console.log(res));
+              // Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => console.log(res));
             }
           }
         });
@@ -82,7 +85,11 @@ function NewStorage(props) {
 
   return (
     <>
-      <StoreCompleted isOpen={storeCompletedModal} onCancel={handleStoreCompletedClose} style={{ zIndex: 3 }} />
+      <StoreCompleted
+        isOpen={storeCompletedModal}
+        onCancel={handleStoreCompletedClose}
+        style={{ zIndex: 3 }}
+      />
       <Modal size="regular" active={isOpen} toggler={() => handleClose(false)}>
         <ModalHeader className="text-center" toggler={() => handleClose(false)}>
           <span>새 저장목록</span>
