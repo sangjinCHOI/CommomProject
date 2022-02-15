@@ -19,5 +19,5 @@ public class UserAchievement {
 	private int userAchievementSeq;
 	@Column	private int characterSeq;
 	@Column	private int achievementSeq;
-	@Column	private LocalDateTime userAchivementDate;
+	@Column	private LocalDateTime userAchievementDate;
 }

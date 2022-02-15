@@ -27,7 +27,7 @@
 	           THEN (select nickname from tb_character where character_seq = a.target_seq)
 	           WHEN 'tb_storage'
 	           THEN (select nickname from tb_character where character_seq = (select character_seq from tb_storage where storage_seq = a.target_seq))
-	           WHEN 'tb_achivement'
+	           WHEN 'tb_achievement'
 	           THEN (select nickname from tb_character where character_seq = a.character_seq)
            END AS target_nickname, 
        	a.target_seq, a.alarm_is_read, a.alarm_date
@@ -45,7 +45,7 @@
 				THEN (select nickname from tb_character where character_seq = a.target_seq)
 				WHEN 'tb_storage'
 				THEN (select nickname from tb_character where character_seq = (select character_seq from tb_storage where storage_seq = a.target_seq))
-				WHEN 'tb_achivement'
+				WHEN 'tb_achievement'
 				THEN (select nickname from tb_character where character_seq = a.character_seq)
 			END AS target_nickname, 
 			(SELECT file_path from tb_file f WHERE f.relation_tb = a.relation_tb AND f.relation_seq = a.target_seq AND f.file_is_active = 1) AS file_path,
