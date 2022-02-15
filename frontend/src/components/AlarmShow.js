@@ -192,8 +192,8 @@ function AlarmShow({ characterSlice }) {
                     imgSrc={
                       alarm.filePath === null || alarm.fileName === null
                         ? alarm.alarmType === 1
-                          ? "images/default_user.png"
-                          : "images/default_storage.png"
+                          ? "/images/default_user.png"
+                          : "/images/default_storage.png"
                         : alarm.filePath + alarm.fileName
                     }
                   />
