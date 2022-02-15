@@ -133,7 +133,7 @@ function Alarm({ characterSlice }) {
       // history.push(`../${targetNickname}/storages/${targetSeq}`);
       history.push({
         pathname: `/${targetNickname}/storages/${targetSeq}`,
-        props: {
+        state: {
           storageSeq: targetSeq,
         },
       });

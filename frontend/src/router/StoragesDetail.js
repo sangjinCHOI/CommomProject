@@ -2,16 +2,17 @@ import Content from "../components/Content";
 import { connect } from "react-redux";
 import { useEffect, useState } from "react";
 import Send from "../config/Send";
+import { useParams } from "react-router-dom";
 
 function StoragesDetail(props) {
   const [storageContent, setStorageContent] = useState([]);
-  console.log(props);
+  const { storageSeq } = useParams();
   //^^ characterNow, characterSeq 차이점 알아내면 새로 적어야함
   const data = {
     characterNow: props.characterSlice.characterSeq,
     //characterSeq: props.location.state.characterSeq,
     // storageSeq: props.location.state.storageSeq,
-    storageSeq: props.location.props.storageSeq,
+    storageSeq,
   };
   const getStorage = () => {
     Send.post("/storage/contents", JSON.stringify(data))
