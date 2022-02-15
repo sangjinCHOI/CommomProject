@@ -14,6 +14,7 @@ import styles from "./AchievementContent.module.css";
 
 function Content({ characterSlice, achievements }) {
   console.log(achievements);
+
   const [isRepresentative, setIsRepresentative] = useState(0);
 
   const initFun = () => {
@@ -45,7 +46,7 @@ function Content({ characterSlice, achievements }) {
 
   useEffect(() => {
     initFun();
-  }, []);
+  }, [achievements]);
   const deleteAchievement = () => {
     const data = {
       characterSeq: characterSlice.characterSeq,
