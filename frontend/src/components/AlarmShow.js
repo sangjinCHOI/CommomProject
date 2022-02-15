@@ -180,22 +180,23 @@ function AlarmShow({ characterSlice }) {
                   <CharacterImg
                     imgWidth="40px"
                     classes="mr-4"
-                    // imgSrc={
-                    //   alarm.filePath === null || alarm.fileName === null
-                    //     ? alarm.alarmType === 1
-                    //       ? "/images/default_user.png"
-                    //       : 2 <= alarm.alarmType && alarm.alarmType <= 6
-                    //       ? "/images/default_storage.png"
-                    //       : alarm.filePath + alarm.fileName
-                    //     : alarm.filePath + alarm.fileName
-                    // }
                     imgSrc={
                       alarm.filePath === null || alarm.fileName === null
                         ? alarm.alarmType === 1
                           ? "/images/default_user.png"
-                          : "/images/default_storage.png"
+                          : 2 <= alarm.alarmType && alarm.alarmType <= 6
+                          ? "/images/default_storage.png"
+                          : alarm.filePath + alarm.fileName
                         : alarm.filePath + alarm.fileName
                     }
+
+                    // imgSrc={
+                    //   alarm.filePath === null || alarm.fileName === null
+                    //     ? alarm.alarmType === 1
+                    //       ? "/images/default_user.png"
+                    //       : "/images/default_storage.png"
+                    //     : alarm.filePath + alarm.fileName
+                    // }
                   />
                   <div style={{ width: "220px" }}>{alarm.alarmText}</div>
                 </Link>
