@@ -5,14 +5,16 @@ import { Label } from "@material-tailwind/react";
 import MainCard from "./MainCard";
 import ExAchievment from "../assets/images/Achievement01.png";
 import { connect } from "react-redux";
-import styles from "../components/Achievement.module.css";
+// import styles from "../components/Achievement.module.css";
 import H5 from "@material-tailwind/react/Heading5";
 import H6 from "@material-tailwind/react/Heading6";
 import trophy from "../assets/images/trophy.png";
 import Send from "../config/Send";
+import styles from "./AchievementContent.module.css";
 
 function Content({ characterSlice, achievements }) {
   console.log(achievements);
+  const [isRepresentative, setIsRepresentative] = useState(false);
   //console.log(props);
   // const [achievements, setAchievements] = useState([]);
 
@@ -61,7 +63,26 @@ function Content({ characterSlice, achievements }) {
                         </div>
                       </div>
                       <div className="flex justify-end bg-slate-100">
-                        <img style={{ maxWidth: 150, maxHeight: 150, objectFit: "cover" }} src={ExAchievment} />
+                        <img
+                          style={{ maxWidth: 150, maxHeight: 150, objectFit: "cover" }}
+                          src={ExAchievment}
+                          className={
+                            isRepresentative
+                              ? "border-4 border-yellow-400 rounded-lg"
+                              : "border-4 border-gray-400 rounded-lg"
+                          }
+                        />
+                        {/* isRepresentative로 임시로 대표 업적에 따라 색깔 바뀌개 해놨습니다. */}
+                        <div
+                          className={`absolute right-7 px-4 py-0.5 rounded-lg font-semibold ${
+                            isRepresentative
+                              ? "bg-gray-200 text-gray-400"
+                              : "bg-orange-200 text-orange-500"
+                          }`}
+                          style={{ cursor: "pointer", top: "155px" }}
+                        >
+                          {isRepresentative ? "대표 해제" : "대표 설정"}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -69,7 +90,10 @@ function Content({ characterSlice, achievements }) {
               </MainCard>
             ) : (
               <MainCard key={achieve.achievementSeq} max-height="900px">
-                <div style={{ height: 180 }} className="p-4 flex justify-between bg-slate-100">
+                <div
+                  style={{ height: 220 }}
+                  className="p-4 flex justify-between bg-slate-100 border-b"
+                >
                   <div className="flex justify-center ">
                     <div className="flex justify-center" style={{ width: 565 }}>
                       <div className="flex justify-start " style={{ width: 380 }}>
@@ -77,13 +101,32 @@ function Content({ characterSlice, achievements }) {
                           <H5>[{achieve.achievementName}]</H5>
                           <p>{achieve.achievementDescription}</p>
                           <br />
-                          <div className="flex justify-start">
+                          <div className="flex justify-start mt-6">
                             <img src={trophy} style={{ width: 73, height: 73 }} />
                           </div>
                         </div>
                       </div>
-                      <div className="flex justify-end bg-slate-100">
-                        <img className={`${styles.gray}`} style={{ maxWidth: 150, maxHeight: 150, objectFit: "cover" }} src={ExAchievment} />
+                      <div className="relative flex justify-end bg-slate-100">
+                        <img
+                          className={`${styles.gray}`}
+                          style={{ maxWidth: 150, maxHeight: 150, objectFit: "cover" }}
+                          src={ExAchievment}
+                          className={
+                            isRepresentative
+                              ? "border-4 border-yellow-400 rounded-lg"
+                              : "border-4 border-gray-400 rounded-lg"
+                          }
+                        />
+                        <div
+                          className={`absolute right-7 px-4 py-0.5 rounded-lg font-semibold ${
+                            isRepresentative
+                              ? "bg-gray-200 text-gray-400"
+                              : "bg-orange-200 text-orange-500"
+                          }`}
+                          style={{ cursor: "pointer", top: "155px" }}
+                        >
+                          {isRepresentative ? "대표 해제" : "대표 설정"}
+                        </div>
                       </div>
                     </div>
                   </div>

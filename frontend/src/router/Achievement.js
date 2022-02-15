@@ -49,13 +49,20 @@ function Profile({ characterSlice }) {
     <div className={`${styles.textCenter}`}>
       <MainCard classes="border">
         <div>
-          <H2 color="black">업적 모아보기</H2>
+          <p className="pt-4" style={{ fontSize: "44px" }}>
+            업적 모아보기
+          </p>
+          {/* <H2 color="black">업적 모아보기</H2> */}
           <br />
         </div>
         <hr />
-        <div className="px-9 mb-3">
+        <div className="px-9 my-3">
           <H4 color="black">Achievement</H4>
-          <Progress color="lightBlue" value={(100 * count) / achievements.length} percentage={false} />
+          <Progress
+            color="lightBlue"
+            value={(100 * count) / achievements.length}
+            percentage={false}
+          />
           <H5 color="black">
             total: {count}/{achievements.length}
           </H5>
