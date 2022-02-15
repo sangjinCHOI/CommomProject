@@ -46,7 +46,13 @@ function SearchCharacters({ location, characterSlice }) {
                 },
               }}
             >
-              <StorageCardLarge key={content.storageSeq} storageName={content.storageName} imgSrc={content.storageImagePath + content.storageImageName}></StorageCardLarge>
+              <StorageCardLarge
+                key={content.storageSeq}
+                storageName={content.storageName}
+                imgSrc={content.storageImagePath + content.storageImageName}
+                // isMe = true일 때 삭제 가능하게끔
+                isMe={characterSlice.nickname === nickname}
+              ></StorageCardLarge>
             </Link>
           ))}
         </div>

@@ -6,6 +6,8 @@ import Send from "../config/Send";
 
 function StoragesDetail(props) {
   const [storageContent, setStorageContent] = useState([]);
+  // useParams로 url에서 storageSeq 추출하면 왜 게시물이 안뜨는걸까?
+  // -> 에러도 안뜨는데, 이게 가능하면 어떤 페이지에서든 저장소 디테일로 갈 수 있음
   // const { storageSeq } = useParams();
   //^^ characterNow, characterSeq 차이점 알아내면 새로 적어야함
   const data = {
