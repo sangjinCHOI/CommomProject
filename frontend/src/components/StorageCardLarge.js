@@ -32,7 +32,7 @@ export default function StorageCardLarge({ storageName, imgSrc, isMe = false }) 
     >
       <div
         className={`absolute px-2 py-1 z-50 ${isMouseOver ? "right-3 top-0" : "right-7 top-2"}`}
-        style={{ cursor: "pointer" }}
+        style={{ cursor: "pointer", width: "24px", height: "24px" }}
         onClick={isMe ? () => setIsOptionClick(!isOptionClick) : null}
       >
         ...

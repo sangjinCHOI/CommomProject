@@ -62,7 +62,7 @@ function Content({ characterSlice, achievements }) {
                           </div>
                         </div>
                       </div>
-                      <div className="flex justify-end bg-slate-100">
+                      <div className="relative flex justify-end bg-slate-100">
                         <img
                           style={{ maxWidth: 150, maxHeight: 150, objectFit: "cover" }}
                           src={ExAchievment}
