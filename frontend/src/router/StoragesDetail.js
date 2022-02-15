@@ -10,7 +10,8 @@ function StoragesDetail(props) {
   const data = {
     characterNow: props.characterSlice.characterSeq,
     //characterSeq: props.location.state.characterSeq,
-    storageSeq: props.location.state.storageSeq,
+    // storageSeq: props.location.state.storageSeq,
+    storageSeq: props.location.props.storageSeq,
   };
   const getStorage = () => {
     Send.post("/storage/contents", JSON.stringify(data))
