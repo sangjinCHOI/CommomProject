@@ -35,7 +35,7 @@ function StorageCardLarge({
 
   return (
     <div
-      className={`relative flex justify-center items-center px-4 py-2`}
+      className={`relative flex justify-center items-center px-5 my-4`}
       style={{ height: "200px" }}
       onMouseOver={() => setIsMouseOver(true)}
       onMouseOut={() => setIsMouseOver(false)}
@@ -53,7 +53,6 @@ function StorageCardLarge({
         </CustomModal>
       )}
       <Link
-        className="relative px-4 py-2"
         to={{
           pathname: `./storages/storageSeq`,
           state: {
@@ -77,17 +76,17 @@ function StorageCardLarge({
             boxShadow: "rgba(0, 0, 0, 0.8) 0px 4px 4px",
           }}
         />
-        <div
-          className={`absolute top-auto left-auto w-auto px-2 ${
-            isMouseOver ? `${styles.textActive}` : `${styles.textInactive} text-xl`
-          }`}
-          style={{
-            cursor: "pointer",
-          }}
-        >
-          {storageName}
-        </div>
       </Link>
+      <div
+        className={`absolute top-auto left-auto w-auto px-2 ${
+          isMouseOver ? `${styles.textActive}` : `${styles.textInactive} text-xl`
+        }`}
+        style={{
+          cursor: "pointer",
+        }}
+      >
+        {storageName}
+      </div>
     </div>
   );
 }
