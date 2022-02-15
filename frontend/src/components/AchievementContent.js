@@ -43,7 +43,7 @@ function Content({ characterSlice, achievements }) {
     };
     return () => {
       //캐릭터의 대표업적이 삭제
-      Send.put(`/achievement/delete`, JSON.stringify(data))
+      Send.put(`/character/achievement/delete`, JSON.stringify(data))
         .then((res) => {
           setIsRepresentative(0);
           console.log(res);
