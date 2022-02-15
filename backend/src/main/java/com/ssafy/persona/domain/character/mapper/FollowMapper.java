@@ -20,4 +20,5 @@ public interface FollowMapper {
 	List<FollowerListResponse> getFollowerList(FollowerListRequest request);
 
 	List<Integer> getFolloweeList(FolloweeListRequest request);
+
 }

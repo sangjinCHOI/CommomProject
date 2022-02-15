@@ -20,7 +20,6 @@ public enum AlarmEnum {
 	private String alarmTextBack;
 	
 	public String creatResultText(String variableText) {
-		return alarmTextFront.concat(variableText+alarmTextBack);
-	}
-	
+		return alarmTextFront.concat(alarmTextFront+variableText+alarmTextBack);
+	}	
 }

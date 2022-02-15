@@ -9,7 +9,7 @@
 		select a.achievement_seq, a.achievement_name, a.achievement_description, 
 			a.achievement_condition, a.achievement_type, a.achievement_level, 
 			a.achievement_is_active, a.achievement_created_date,
-		    (select count(*) from tb_user_achievement ua where ua.achievement_seq = a.achievement_seq and ua.character_seq = 1) as isGained,
+		    (select count(*) from tb_user_achivement ua where ua.achievement_seq = a.achievement_seq and ua.character_seq = #{characterSeq}) as isGained,
 			f.file_path		
 		from tb_achievement a
 		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_achievement'
@@ -21,6 +21,19 @@
 		<if test="level != null and level != ''">
 			and level=#{level}
 		</if>
+	</select>
+
+	<insert id="registCharacterAchievement">
+		INSERT INTO tb_user_achievement 
+			(character_seq, achievement_seq) 
+		VALUES 
+			(#{characterSeq}, #{achievementSeq})
+	</insert>
+	
+	<select id="checkIsGottenAchievement" resultType="int">
+		SELECT count(*) from tb_user_achivement 
+		WHERE achievement_seq = #{achievementSeq} 
+		AND character_seq = #{characterSeq}
 	</select>
 
 </mapper>

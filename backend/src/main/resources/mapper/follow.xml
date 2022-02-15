@@ -30,7 +30,7 @@
 	</delete>
 
 	<select id="getFollowerList"
-		resultType="com.ssafy.persona.domain.character.model.dto.FollowerListResponse">
+		resultType="FollowerListResponse">
 		select
 		follower,
 		(select count(*) from tb_follow i where i.follower = #{followee} and i.followee = f.follower) as isFollowToo
@@ -41,7 +41,7 @@
 		</if>
 		where followee=#{followee}
 		<if test="nickname != null and nickname != ''">
-			and c.nickname like CONCAT(#{nickname}, '%')
+			and c.nickname like CONCAT('%', #{nickname}, '%')
 		</if>
 	</select>
 
@@ -55,10 +55,7 @@
 		</if>
 		where follower=#{follower}
 		<if test="nickname != null and nickname != ''">
-			and c.nickname like CONCAT(#{nickname}, '%')
+			and c.nickname like CONCAT('%', #{nickname}, '%')
 		</if>
 	</select>
-
-
-
 </mapper>
