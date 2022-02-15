@@ -18,6 +18,7 @@ function Content({ characterSlice, achievements }) {
 
   const initFun = () => {
     achievements.map((achieve, index) => {
+      console.log(achieve);
       if (achieve.isGained == 1) console.log(index);
     });
   };
