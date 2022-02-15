@@ -8,6 +8,7 @@ import styles from "../components/Achievement.module.css";
 import { connect } from "react-redux";
 import AchievementContent from "../components/AchievementContent";
 import { useEffect, useState } from "react";
+import Send from "../config/Send";
 
 function Profile({ characterSlice }) {
   const { nickname } = useParams();
@@ -23,7 +24,8 @@ function Profile({ characterSlice }) {
     Send.post(`/character/achievements`, JSON.stringify(data))
       .then((res) => {
         if (res.status == 200) {
-          setAchievements(res.data);
+          // setAchievements(res.data);
+          setAchievements(() => res.data);
           console.log(achievements);
         } else alert("error!!");
       })
@@ -51,7 +53,7 @@ function Profile({ characterSlice }) {
         </div>
       </MainCard>
       <div className="border">
-        <AchievementContent prop={achievements} />
+        <AchievementContent achievements={achievements} />
       </div>
       {/* <div className="border">
         <AchievementContent />

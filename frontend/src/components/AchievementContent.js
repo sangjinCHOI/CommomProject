@@ -12,6 +12,7 @@ import trophy from "../assets/images/trophy.png";
 import Send from "../config/Send";
 
 function Content({ characterSlice, achievements }) {
+  //console.log(props);
   // const [achievements, setAchievements] = useState([]);
 
   // const data = {
@@ -46,7 +47,6 @@ function Content({ characterSlice, achievements }) {
                     <div className="flex justify-center" style={{ width: 565 }}>
                       <div className="flex justify-start " style={{ width: 380 }}>
                         <div style={{ textAlign: "left", width: 360 }}>
-                          {/* <H5>[우리는 깐부잖아]</H5> */}
                           <H5>[{achieve.achievementName}]</H5>
                           <p>{achieve.achievementCondition}</p>
                           <br />
