@@ -91,7 +91,7 @@ export default function CharacterImg({
             lock ? "bg-gray-400" : null
           }`}
           style={{
-            border: "1px solid lightgray",
+            // border: "1px solid lightgray",
             height: imgWidth,
             width: imgWidth,
           }}

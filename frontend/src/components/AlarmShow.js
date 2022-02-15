@@ -121,10 +121,10 @@ function AlarmShow({ characterSlice }) {
     if (alarmType === 1) {
       // targetSeq === characterSeq
       Send.get(`/character/${targetSeq}`).then((res) => history.push(`../${res.data.nickname}`));
-    } else if (2 <= alarmType <= 3) {
+    } else if (2 <= alarmType && alarmType <= 3) {
       // 내 저장소로 이동
       history.push(`../${targetNickname}/storages`);
-    } else if (4 <= alarmType <= 6) {
+    } else if (4 <= alarmType && alarmType <= 6) {
       // targetSeq === storageSeq
       // 해당 저장소 상세로 이동
       history.push(`../${targetNickname}/storages/${targetSeq}`);
@@ -184,7 +184,7 @@ function AlarmShow({ characterSlice }) {
                       alarm.filePath === null || alarm.fileName === null
                         ? alarm.alarmType === 1
                           ? "/images/default_user.png"
-                          : 2 <= alarm.alarmType <= 6
+                          : 2 <= alarm.alarmType && alarm.alarmType <= 6
                           ? "/images/default_storage.png"
                           : alarm.filePath + alarm.fileName
                         : alarm.filePath + alarm.fileName
