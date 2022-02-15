@@ -11,24 +11,24 @@ import H6 from "@material-tailwind/react/Heading6";
 import trophy from "../assets/images/trophy.png";
 import Send from "../config/Send";
 
-function Content({ characterSlice }) {
-  const [achievements, setAchievements] = useState([]);
+function Content({ characterSlice, achievements }) {
+  // const [achievements, setAchievements] = useState([]);
 
-  const data = {
-    achievementType: 1,
-    characterSeq: characterSlice.characterSeq,
-    level: 0,
-  };
-  const initFun = () => {
-    Send.post(`/character/achievements`, JSON.stringify(data))
-      .then((res) => {
-        if (res.status == 200) setAchievements(res.data);
-        else alert("error!!");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const data = {
+  //   achievementType: 1,
+  //   characterSeq: characterSlice.characterSeq,
+  //   level: 0,
+  // };
+  // const initFun = () => {
+  //   Send.post(`/character/achievements`, JSON.stringify(data))
+  //     .then((res) => {
+  //       if (res.status == 200) setAchievements(res.data);
+  //       else alert("error!!");
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   useEffect(() => {
     initFun();
