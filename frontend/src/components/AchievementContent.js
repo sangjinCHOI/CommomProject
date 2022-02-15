@@ -47,9 +47,9 @@ function Content({ characterSlice, achievements }) {
   //     });
   // };
 
-  // useEffect(() => {
-  //   initFun();
-  // }, []);
+  useEffect(() => {
+    initFun();
+  }, []);
   const deleteAchievement = () => {
     const data = {
       characterSeq: characterSlice.characterSeq,
