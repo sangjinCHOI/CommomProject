@@ -76,7 +76,7 @@ public class ContentServiceImpl implements ContentService {
 						.alarmType(7)
 						.alarmText(AlarmEnum.ALARM_FOR_ACHIEVMENT.creatResultText("카페인이 필요해"))
 						.relationTb("tb_achievement")
-						.targetSeq(contentCreateRequest.getCharacterSeq())
+						.targetSeq(17)
 						.build();
 		
 				alarmMapper.createAlarm(alarm);
@@ -96,7 +96,7 @@ public class ContentServiceImpl implements ContentService {
 						.alarmType(7)
 						.alarmText(AlarmEnum.ALARM_FOR_ACHIEVMENT.creatResultText("밥은 먹고 다니냐?"))
 						.relationTb("tb_achievement")
-						.targetSeq(contentCreateRequest.getCharacterSeq())
+						.targetSeq(18)
 						.build();
 		
 				alarmMapper.createAlarm(alarm);
@@ -116,7 +116,7 @@ public class ContentServiceImpl implements ContentService {
 						.alarmType(7)
 						.alarmText(AlarmEnum.ALARM_FOR_ACHIEVMENT.creatResultText("묻고 더블로 가!"))
 						.relationTb("tb_achievement")
-						.targetSeq(contentCreateRequest.getCharacterSeq())
+						.targetSeq(19)
 						.build();
 		
 				alarmMapper.createAlarm(alarm);
@@ -158,6 +158,14 @@ public class ContentServiceImpl implements ContentService {
 
 	@Override
 	public boolean contentDelete(int contentSeq) {
+//		AlarmCreateRequest alarm = AlarmCreateRequest.builder()
+//				.characterSeq(storageCreateRequest.getCharacterSeq())
+//				.alarmType(2)
+//				.alarmText(AlarmEnum.ALARM_STORAGE_CREATE.creatResultText(storageCreateRequest.getStorageName()))
+//				.relationTb("tb_storage")
+//				.targetSeq(storageCreateRequest.getCharacterSeq())
+//				.build();
+//		alarmMapper.createAlarm(alarm);
 		return contentMapper.contentDelete(contentSeq) == 1;
 	}
 
