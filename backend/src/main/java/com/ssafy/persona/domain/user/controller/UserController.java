@@ -77,7 +77,7 @@ public class UserController {
 			return (new ResponseEntity<Map<String,String>>(map,HttpStatus.NO_CONTENT));
 		
 		// 만료기간 1분
-		String token = securityService.createToken(request.getUserId(), (1*1000*60));
+		String token = securityService.createToken(request.getUserId(), (10*1000*60));
 
 		map.put("token", token);
 		System.out.println(token);
