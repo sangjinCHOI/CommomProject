@@ -37,6 +37,20 @@ function Content({ characterSlice, achievements }) {
   // useEffect(() => {
   //   initFun();
   // }, []);
+  const deleteAchievement = (seq) => {
+    const data = {
+      characterSeq: characterSlice.characterSeq,
+    };
+    return () => {
+      //캐릭터의 대표업적이 삭제
+      Send.put(`/achievement/delete`, JSON.stringify(data))
+        .then((res) => {
+          setIsRepresentative(0);
+          console.log(res);
+        })
+        .catch((e) => console.log(e));
+    };
+  };
 
   const updateAchievement = (seq) => {
     const data = {
@@ -85,7 +99,7 @@ function Content({ characterSlice, achievements }) {
                         />
                         {/* isRepresentative로 임시로 대표 업적에 따라 색깔 바뀌개 해놨습니다. */}
                         <div
-                          onClick={updateAchievement(achieve.achievementSeq)}
+                          onClick={isRepresentative ? updateAchievement(achieve.achievementSeq) : deleteAchievement(achieve.achievementSeq)}
                           className={`absolute right-7 px-4 py-0.5 rounded-lg font-semibold ${isRepresentative ? "bg-gray-200 text-gray-400" : "bg-orange-200 text-orange-500"}`}
                           style={{ cursor: "pointer", top: "155px" }}
                         >
