@@ -26,6 +26,8 @@ function CharacterProfile({
     });
   };
 
+  console.log(`../assets/achievements/${characterSlice.representativeAchievement}.png`);
+
   useEffect(() => {
     getCharacterProfile();
   }, []);
