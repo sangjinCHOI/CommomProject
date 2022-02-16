@@ -36,7 +36,7 @@ function Content(props) {
       setCount(count + 10);
     }, 1500);
   };
-
+  console.log(feedContents);
   return (
     <>
       <InfiniteScroll dataLength={items.length} next={fetchMoreData} hasMore={true} loader={<h4 className="text-center">persona</h4>}>
