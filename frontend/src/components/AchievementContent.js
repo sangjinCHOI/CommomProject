@@ -75,16 +75,19 @@ function Content({ characterSlice, achievements }) {
                       <div className="relative flex justify-end bg-slate-100">
                         <img
                           style={{ maxWidth: 150, maxHeight: 150, objectFit: "cover" }}
-                          src={ExAchievment}
-                          className={isRepresentative ? "border-4 border-yellow-400 rounded-lg" : "border-4 border-gray-400 rounded-lg"}
+                          src={require(`../assets${achieve.filePath + achieve.fileName}`)}
+                          alt={require(`../assets${achieve.filePath + achieve.fileName}`)}
+                          className={isRepresentative == achieve.achievementSeq ? "border-4 border-yellow-400 rounded-lg" : "border-4 border-gray-400 rounded-lg"}
                         />
                         {/* isRepresentative로 임시로 대표 업적에 따라 색깔 바뀌개 해놨습니다. */}
                         <div
-                          onClick={isRepresentative ? deleteAchievement() : updateAchievement(achieve.achievementSeq)}
-                          className={`absolute right-7 px-4 py-0.5 rounded-lg font-semibold ${isRepresentative ? "bg-gray-200 text-gray-400" : "bg-orange-200 text-orange-500"}`}
+                          onClick={isRepresentative == achieve.achievementSeq ? deleteAchievement() : updateAchievement(achieve.achievementSeq)}
+                          className={`absolute right-7 px-4 py-0.5 rounded-lg font-semibold ${
+                            isRepresentative == achieve.achievementSeq ? "bg-gray-200 text-gray-400" : "bg-orange-200 text-orange-500"
+                          }`}
                           style={{ cursor: "pointer", top: "155px" }}
                         >
-                          {isRepresentative ? "대표 해제" : "대표 설정"}
+                          {isRepresentative == achieve.achievementSeq ? "대표 해제" : "대표 설정"}
                         </div>
                       </div>
                     </div>
@@ -110,7 +113,9 @@ function Content({ characterSlice, achievements }) {
                         <img
                           className={`${styles.gray}`}
                           style={{ maxWidth: 150, maxHeight: 150, objectFit: "cover" }}
-                          src={ExAchievment}
+                          src={require(`../assets${achieve.filePath + achieve.fileName}`)}
+                          alt={require(`../assets${achieve.filePath + achieve.fileName}`)}
+                          // src={ExAchievment}
                           // className={isRepresentative ? "border-4 border-yellow-400 rounded-lg" : "border-4 border-gray-400 rounded-lg"}
                         />
                         {/* <div
