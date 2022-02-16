@@ -75,7 +75,8 @@ function Content({ characterSlice, achievements }) {
                       <div className="relative flex justify-end bg-slate-100">
                         <img
                           style={{ maxWidth: 150, maxHeight: 150, objectFit: "cover" }}
-                          src={ExAchievment}
+                          src={require(`../assets${achieve.filePath + achieve.fileName}`)}
+                          alt={require(`../assets${achieve.filePath + achieve.fileName}`)}
                           className={isRepresentative ? "border-4 border-yellow-400 rounded-lg" : "border-4 border-gray-400 rounded-lg"}
                         />
                         {/* isRepresentative로 임시로 대표 업적에 따라 색깔 바뀌개 해놨습니다. */}
@@ -110,7 +111,9 @@ function Content({ characterSlice, achievements }) {
                         <img
                           className={`${styles.gray}`}
                           style={{ maxWidth: 150, maxHeight: 150, objectFit: "cover" }}
-                          src={ExAchievment}
+                          src={require(`../assets${achieve.filePath + achieve.fileName}`)}
+                          alt={require(`../assets${achieve.filePath + achieve.fileName}`)}
+                          // src={ExAchievment}
                           // className={isRepresentative ? "border-4 border-yellow-400 rounded-lg" : "border-4 border-gray-400 rounded-lg"}
                         />
                         {/* <div
