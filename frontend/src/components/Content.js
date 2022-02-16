@@ -1,5 +1,7 @@
 import ContentItem from "../components/ContentItem";
 import { connect } from "react-redux";
+import { useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 function Content(props) {
   const priorityContent = props.priorityContent ? props.priorityContent : null;
@@ -20,11 +22,28 @@ function Content(props) {
     feedContents = priorityContent;
   }
 
+  // 무한스크롤
+  const [items, setItems] = useState(feedContents.reverse().slice(0, 10));
+  const [count, setCount] = useState(10);
+
+  const handleItems = () => {
+    setItems(items.concat(feedContents.slice(count, count + 10)));
+    console.log(count);
+  };
+  const fetchMoreData = () => {
+    setTimeout(() => {
+      handleItems();
+      setCount(count + 10);
+    }, 1500);
+  };
+
   return (
     <>
-      {feedContents.reverse().map((content, index) => {
-        return <ContentItem content={content} storages={props.storages} key={index}></ContentItem>;
-      })}
+      <InfiniteScroll dataLength={items.length} next={fetchMoreData} hasMore={true} loader={<h4 className="text-center">persona</h4>}>
+        {items.map((content, index) => {
+          return <ContentItem ContentItem content={content} storages={props.storages} key={index}></ContentItem>;
+        })}
+      </InfiniteScroll>
     </>
   );
 }
