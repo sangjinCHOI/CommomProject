@@ -232,50 +232,18 @@ function ContentItem(props) {
 
   return (
     <>
-      <Comment
-        comments={comments}
-        isOpen={commentModal}
-        onCancel={handleCommentClose}
-        style={{ zIndex: 2 }}
-      />
-      <Report
-        content={props.content}
-        isOpen={reportModal}
-        onCancel={handleReportClose}
-        style={{ zIndex: 2 }}
-      />
-      <NewStorage
-        content={props.content}
-        isOpen={newStorageModal}
-        onCancel={handleNewStorageClose}
-        style={{ zIndex: 2 }}
-      />
-      <ContentUpdate
-        content={props.content}
-        isOpen={contentCreateModal}
-        onCancel={handleClose}
-        style={{ zIndex: 2 }}
-      />
+      <Comment comments={comments} isOpen={commentModal} onCancel={handleCommentClose} style={{ zIndex: 2 }} />
+      <Report content={props.content} isOpen={reportModal} onCancel={handleReportClose} style={{ zIndex: 2 }} />
+      <NewStorage content={props.content} isOpen={newStorageModal} onCancel={handleNewStorageClose} style={{ zIndex: 2 }} />
+      <ContentUpdate content={props.content} isOpen={contentCreateModal} onCancel={handleClose} style={{ zIndex: 2 }} />
       <MainCard classes="mb-3" max-height="900px">
         <div style={{ height: 60 }} className="p-4 flex justify-between">
           <Link to={{ pathname: `/${props.content.contentWriter}` }}>
             <div className="text-xl flex">
               {props.content.writerProfile ? (
-                <Image
-                  src={require(`../assets${props.content.writerProfile}`)}
-                  width="32px"
-                  rounded={true}
-                  raised={false}
-                  alt=""
-                />
+                <Image src={require(`../assets${props.content.writerProfile}`)} width="32px" height="32px" rounded={true} raised={false} alt="" />
               ) : (
-                <Image
-                  src="/images/default_user.png"
-                  width="32px"
-                  rounded={true}
-                  raised={false}
-                  alt=""
-                />
+                <Image src="/images/default_user.png" width="32px" height="32px" rounded={true} raised={false} alt="" />
               )}
               <p className="ml-2">{props.content.contentWriter}</p>
             </div>
@@ -323,20 +291,10 @@ function ContentItem(props) {
         </div>
         <div>
           {props.content.contentFileName ? (
-            <Carousel
-              dynamicHeight={true}
-              showArrows={true}
-              showThumbs={false}
-              width="600px"
-              className="flex items-center"
-            >
+            <Carousel dynamicHeight={true} showArrows={true} showThumbs={false} width="600px" className="flex items-center">
               {props.content.contentFilePath.split("|").map((filePath, index) => {
                 return (
-                  <div
-                    className="flex justify-center bg-slate-100"
-                    style={{ height: 600 }}
-                    key={index}
-                  >
+                  <div className="flex justify-center bg-slate-100" style={{ height: 600 }} key={index}>
                     <img
                       style={{
                         maxWidth: 600,
@@ -345,9 +303,7 @@ function ContentItem(props) {
                         height: "auto",
                         objectFit: "cover",
                       }}
-                      src={require(`../assets${
-                        filePath + props.content.contentFileName.split("|")[index]
-                      }`)}
+                      src={require(`../assets${filePath + props.content.contentFileName.split("|")[index]}`)}
                       alt=""
                     />
                   </div>
@@ -370,36 +326,21 @@ function ContentItem(props) {
           {props.content.tags
             ? props.content.tags.split("|").map((tag, index) => {
                 return (
-                  <Link
-                    to={{ pathname: "/search/tag", search: `?detail=${tag}` }}
-                    className="mb-1 mr-1"
-                    key={index}
-                  >
+                  <Link to={{ pathname: "/search/tag", search: `?detail=${tag}` }} className="mb-1 mr-1" key={index}>
                     <Label color="lightGreen">{tag}</Label>
                   </Link>
                 );
               })
             : null}
         </div>
-        <div className="text-slate-400 px-4">
-          {timeDifference(props.content.contentCreatedDate)}
-        </div>
+        <div className="text-slate-400 px-4">{timeDifference(props.content.contentCreatedDate)}</div>
         <div className="px-4 py-2 flex justify-between">
           <div className="flex items-center">
             <button className="flex items-center">
               {props.content.contentIsLike ? (
-                <FontAwesomeIcon
-                  icon={hs}
-                  size="lg"
-                  style={{ color: "red" }}
-                  onClick={(e) => deleteLike(props.content.contentSeq, e)}
-                />
+                <FontAwesomeIcon icon={hs} size="lg" style={{ color: "red" }} onClick={(e) => deleteLike(props.content.contentSeq, e)} />
               ) : (
-                <FontAwesomeIcon
-                  icon={hr}
-                  size="lg"
-                  onClick={(e) => postLike(props.content.contentSeq, e)}
-                />
+                <FontAwesomeIcon icon={hr} size="lg" onClick={(e) => postLike(props.content.contentSeq, e)} />
               )}
             </button>
             <button className="mx-1 pb-1">
@@ -439,12 +380,7 @@ function ContentItem(props) {
                   ? props.storages.map((storage, index) => {
                       return (
                         <Menu.Item key={index}>
-                          <button
-                            className="mx-4"
-                            onClick={(e) =>
-                              postStore(props.content.contentSeq, storage.storageSeq, e)
-                            }
-                          >
+                          <button className="mx-4" onClick={(e) => postStore(props.content.contentSeq, storage.storageSeq, e)}>
                             {storage.storageName}
                           </button>
                         </Menu.Item>
@@ -462,22 +398,15 @@ function ContentItem(props) {
             <div>
               {props.characterSlice.filePath ? (
                 <Image
-                  src={require(`../assets${
-                    props.characterSlice.filePath + props.characterSlice.fileName
-                  }`)}
+                  src={require(`../assets${props.characterSlice.filePath + props.characterSlice.fileName}`)}
                   width="32px"
+                  height="32px"
                   rounded={true}
                   raised={false}
                   alt=""
                 />
               ) : (
-                <Image
-                  src="/images/default_user.png"
-                  width="32px"
-                  rounded={true}
-                  raised={false}
-                  alt=""
-                />
+                <Image src="/images/default_user.png" width="32px" height="32px" rounded={true} raised={false} alt="" />
               )}
             </div>
             <textarea
