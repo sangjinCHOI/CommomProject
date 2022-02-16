@@ -12,6 +12,6 @@ public class SearchStorageResponse {
 	private String storageName;
 	private String filePath;
 	private String fileName;
-	private String ninkname;
+	private String nickname;
 
 }

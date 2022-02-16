@@ -19,6 +19,8 @@ public class AchievementGetResponse {
 	private String achievementCondition;
 	private int achievementType;
 	private int achievementLevel;
+	private String filePath;
+	private String fileName;
 	private LocalDateTime achievementCreatedDate;
 	private int isGained;
 	
