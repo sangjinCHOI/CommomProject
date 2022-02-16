@@ -214,7 +214,13 @@ function Search({ characterSlice, location }) {
           <div className="material-icons flex items-center text-lg">
             folder_shared<span className="ml-1">저장소</span>
           </div>
-          <Link to={{ pathname: "/search/storages", search: `?query=${query}` }}>
+          <Link
+            to={{
+              pathname: "/search/storages",
+              search: `?query=${query}`,
+              props: { storagesResultList },
+            }}
+          >
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
@@ -228,7 +234,8 @@ function Search({ characterSlice, location }) {
           >
             {storagesResultList.slice(0, 3).map((storage) => (
               // 테스트 아직
-              <Link to={`${storage.nickname}/storages/${storage.storageSeq}`}>
+              // nickname -> ninkname인 상태
+              <Link to={`/${storage.ninkname}/storages/${storage.storageSeq}`}>
                 <StorageCardSmall
                   storageName={storage.storageName}
                   imgSrc={

@@ -2,17 +2,17 @@ import Content from "../components/Content";
 import { connect } from "react-redux";
 import { useEffect, useState } from "react";
 import Send from "../config/Send";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 function StoragesDetail(props) {
   const [storageContent, setStorageContent] = useState([]);
   // useParams로 url에서 storageSeq 추출하면 왜 게시물이 안뜨는걸까?
   // -> 에러도 안뜨는데, 이게 가능하면 어떤 페이지에서든 저장소 디테일로 갈 수 있음
-  // const { storageSeq } = useParams();
+  const { storageSeq } = useParams();
   const data = {
     characterNow: props.characterSlice.characterSeq,
-    storageSeq: props.location.state.storageSeq,
-    // storageSeq: parseInt(storageSeq),
+    // storageSeq: props.location.state.storageSeq,
+    storageSeq: parseInt(storageSeq),
   };
   const getStorage = () => {
     Send.post("/storage/contents", JSON.stringify(data))
