@@ -7,6 +7,8 @@ function SearchCharacters({ location, characterSlice }) {
   const params = new URLSearchParams(queryString);
   const query = params.get("query");
   const { storagesResultList } = location.props;
+  console.log(location);
+  console.log(storagesResultList);
 
   return (
     <div>
