@@ -241,13 +241,7 @@ function ContentItem(props) {
           <Link to={{ pathname: `/${props.content.contentWriter}` }}>
             <div className="text-xl flex">
               {props.content.writerProfile ? (
-                <Image
-                  src={require(`../assets${props.content.writerProfile}`)}
-                  style={{ width: 32, height: 32 }}
-                  rounded={true}
-                  raised={false}
-                  alt=""
-                />
+                <Image src={require(`../assets${props.content.writerProfile}`)} style={{ width: 32, height: 32 }} rounded={true} raised={false} alt="" />
               ) : (
                 <Image src="/images/default_user.png" rounded={true} raised={false} alt="" style={{ width: 32, height: 32 }} />
               )}
@@ -367,16 +361,9 @@ function ContentItem(props) {
           <div className="flex items-center">
             <Menu as="div" className="mx-2 relative" style={{ zIndex: 6 }}>
               <Menu.Button className="flex text-sm">
-                {props.content.contentIsStore ? (
-                  <span className="material-icons">library_add_check</span>
-                ) : (
-                  <span className="material-icons-outlined">library_add</span>
-                )}
+                {props.content.contentIsStore ? <span className="material-icons">library_add_check</span> : <span className="material-icons-outlined">library_add</span>}
               </Menu.Button>
-              <Menu.Items
-                className="origin-top-right absolute right-0 mt-2 w-48 rounded-md border-2 shadow-lg py-1 bg-white flex flex-col"
-                style={{ overflowY: "scroll", maxHeight: 120 }}
-              >
+              <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md border-2 shadow-lg py-1 bg-white flex flex-col" style={{ overflowY: "scroll", maxHeight: 120 }}>
                 <Menu.Item>
                   <button className="mx-4" onClick={() => setNewStorageModal(true)}>
                     새 저장목록 생성
@@ -403,25 +390,12 @@ function ContentItem(props) {
           <div className="flex">
             <div>
               {props.characterSlice.filePath ? (
-                <Image
-                  src={require(`../assets${props.characterSlice.filePath + props.characterSlice.fileName}`)}
-                  style={{ width: 32, height: 32 }}
-                  rounded={true}
-                  raised={false}
-                  alt=""
-                />
+                <Image src={require(`../assets${props.characterSlice.filePath + props.characterSlice.fileName}`)} style={{ width: 32, height: 32 }} rounded={true} raised={false} alt="" />
               ) : (
-                <Image src="/images/default_user.png" style={{ width: 32, height: 32 }} rounded={true} raised={false} alt="" />
+                <Image src="../assets/images/default_user.png" style={{ width: 32, height: 32 }} rounded={true} raised={false} alt="" />
               )}
             </div>
-            <textarea
-              value={replyText}
-              onChange={handleReplyTextChange}
-              className="mx-4"
-              type="text"
-              placeholder="댓글 달기..."
-              style={{ height: 25, width: 400, marginTop: 3 }}
-            />
+            <textarea value={replyText} onChange={handleReplyTextChange} className="mx-4" type="text" placeholder="댓글 달기..." style={{ height: 25, width: 400, marginTop: 3 }} />
           </div>
           <button
             className="px-2 pb-0.5 rounded-md bg-slate-200"
