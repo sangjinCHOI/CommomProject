@@ -13,7 +13,7 @@ import Send from "../config/Send";
 import styles from "./AchievementContent.module.css";
 import { achieve } from "../store/characterStore";
 
-function Content({ characterSlice, achievements }) {
+function Content({ characterSlice, updateachieve, achievements }) {
   const [isRepresentative, setIsRepresentative] = useState(0);
   const initFun = () => {
     setIsRepresentative(characterSlice.representativeAchievement);
