@@ -82,7 +82,7 @@ function CharacterProfile({
       </Link>
       <div className="ml-10">
         <div>
-          <div className="inline-block bg-red-500 px-1 mr-1 rounded-xl">
+          <div className="inline-block px-1 mr-1 rounded-xl">
             <img
               src={
                 characterSlice.representativeAchievement != 0
