@@ -21,6 +21,7 @@
 		from tb_achievement a
 		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_achievement'
 		AND f.relation_seq = a.achievement_seq
+		AND f.file_is_active = 1 
 		where 1 = 1
 		<if test="achievementType != null and achievementType != ''">
 			and achievement_type=#{achievementType}
