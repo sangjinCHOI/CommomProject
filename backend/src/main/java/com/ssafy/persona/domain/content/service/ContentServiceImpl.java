@@ -1,11 +1,18 @@
 package com.ssafy.persona.domain.content.service;
 
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.persona.domain.character.mapper.AchievementMapper;
+import com.ssafy.persona.domain.character.mapper.AlarmMapper;
+import com.ssafy.persona.domain.character.model.AlarmEnum;
+import com.ssafy.persona.domain.character.model.dto.AchievementRegistRequest;
+import com.ssafy.persona.domain.character.model.dto.AlarmCreateRequest;
 import com.ssafy.persona.domain.content.mapper.ContentMapper;
 import com.ssafy.persona.domain.content.mapper.LikeMapper;
 import com.ssafy.persona.domain.content.mapper.ReplyMapper;
@@ -38,14 +45,83 @@ public class ContentServiceImpl implements ContentService {
 	LikeMapper likeMapper;
 	@Autowired
 	ReportMapper reportMapper;
+	@Autowired
+	AchievementMapper achievementMapper;
+	@Autowired
+	AlarmMapper alarmMapper;
 	
 	private final FileServiceImpl fileService;
-
+	
+	@Transactional
 	@Override
 	public int contentCreate(ContentCreateRequest contentCreateRequest) {
 		int result = 0;
 		result = contentMapper.contentCreate(contentCreateRequest);
+		int characterSeq = contentCreateRequest.getCharacterSeq();
+		AchievementRegistRequest achievementRequest = null;
+		// 업적
+		LocalTime now = LocalTime.now();
+		int hour = now.getHour();
+		// 업적 매퍼 호출(17번)
+		if(hour == 14) {
+			AlarmCreateRequest alarm = null;
+			achievementRequest = AchievementRegistRequest.builder()
+					.characterSeq(contentCreateRequest.getCharacterSeq())
+					.achievementSeq(17)
+					.build();
+			if (achievementMapper.checkIsGottenAchievement(achievementRequest) == 0) {
+				achievementMapper.registCharacterAchievement(achievementRequest);
+				alarm = AlarmCreateRequest.builder()
+						.characterSeq(contentCreateRequest.getCharacterSeq())
+						.alarmType(7)
+						.alarmText(AlarmEnum.ALARM_FOR_ACHIEVMENT.creatResultText("카페인이 필요해"))
+						.relationTb("tb_achievement")
+						.targetSeq(17)
+						.build();
 		
+				alarmMapper.createAlarm(alarm);
+			}	
+		}
+		// 업적 18번
+		if(hour == 11 || hour == 12) {
+			AlarmCreateRequest alarm = null;
+			achievementRequest = AchievementRegistRequest.builder()
+					.characterSeq(contentCreateRequest.getCharacterSeq())
+					.achievementSeq(18)
+					.build();
+			if (achievementMapper.checkIsGottenAchievement(achievementRequest) == 0) {
+				achievementMapper.registCharacterAchievement(achievementRequest);
+				alarm = AlarmCreateRequest.builder()
+						.characterSeq(contentCreateRequest.getCharacterSeq())
+						.alarmType(7)
+						.alarmText(AlarmEnum.ALARM_FOR_ACHIEVMENT.creatResultText("밥은 먹고 다니냐?"))
+						.relationTb("tb_achievement")
+						.targetSeq(18)
+						.build();
+		
+				alarmMapper.createAlarm(alarm);
+			}
+		}
+		// 업적 19번
+		if(contentMapper.checkTodayContent(characterSeq) >= 2) {
+			AlarmCreateRequest alarm = null;
+			achievementRequest = AchievementRegistRequest.builder()
+					.characterSeq(contentCreateRequest.getCharacterSeq())
+					.achievementSeq(19)
+					.build();
+			if (achievementMapper.checkIsGottenAchievement(achievementRequest) == 0) {
+				achievementMapper.registCharacterAchievement(achievementRequest);
+				alarm = AlarmCreateRequest.builder()
+						.characterSeq(contentCreateRequest.getCharacterSeq())
+						.alarmType(7)
+						.alarmText(AlarmEnum.ALARM_FOR_ACHIEVMENT.creatResultText("묻고 더블로 가!"))
+						.relationTb("tb_achievement")
+						.targetSeq(19)
+						.build();
+		
+				alarmMapper.createAlarm(alarm);
+			}
+		}
 		if (contentCreateRequest.getMyfile() != null) {
 			FileUploadRequest file = FileUploadRequest.builder()
 					.myfile(contentCreateRequest.getMyfile())
@@ -82,6 +158,14 @@ public class ContentServiceImpl implements ContentService {
 
 	@Override
 	public boolean contentDelete(int contentSeq) {
+//		AlarmCreateRequest alarm = AlarmCreateRequest.builder()
+//				.characterSeq(storageCreateRequest.getCharacterSeq())
+//				.alarmType(2)
+//				.alarmText(AlarmEnum.ALARM_STORAGE_CREATE.creatResultText(storageCreateRequest.getStorageName()))
+//				.relationTb("tb_storage")
+//				.targetSeq(storageCreateRequest.getCharacterSeq())
+//				.build();
+//		alarmMapper.createAlarm(alarm);
 		return contentMapper.contentDelete(contentSeq) == 1;
 	}
 

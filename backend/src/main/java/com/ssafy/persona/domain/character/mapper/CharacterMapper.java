@@ -21,6 +21,8 @@ public interface CharacterMapper {
 	int delete(CharacterDeleteRequest request);
 
 	int setCharacterProfileDefault(int characterSeq);
+
+	int deleteAchievement(int characterSeq);
 	
 	int checkNicknameDuplicate(String nickname);
 	

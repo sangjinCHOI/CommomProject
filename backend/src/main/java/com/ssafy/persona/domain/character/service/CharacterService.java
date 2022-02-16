@@ -18,6 +18,8 @@ public interface CharacterService {
 	
 	int setCharacterProfileDefault(int characterSeq);
 
+	int deleteAchievement(int characterSeq);
+
 	CharacterGetResponse detail(int characterSeq);
 
 	CharacterProfileResponse getCharacterProfile(String nickname);

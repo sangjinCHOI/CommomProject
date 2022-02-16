@@ -32,9 +32,9 @@
 
 	<insert id="registCharacterAchievement">
 		INSERT INTO tb_user_achievement 
-			(character_seq, achievement_seq) 
+			(character_seq, achievement_seq, user_achievement_date) 
 		VALUES 
-			(#{characterSeq}, #{achievementSeq})
+			(#{characterSeq}, #{achievementSeq}, now())
 	</insert>
 	
 	<select id="checkIsGottenAchievement" resultType="int">

@@ -71,5 +71,18 @@
 		where content_seq In (select content_seq from tb_stored_content where storage_seq = #{storageSeq}) and content_is_active = 1
 	</select>
 	
+	<select id="deleteStoragecharcterSeq" resultType="int">
+		select character_seq
+		from tb_storage
+		where storage_seq = #{storageSeq}
+	</select>
+	
+	
+	<select id="selectStorageName" resultType="String">
+		select storage_name
+		from tb_storage
+		where storage_seq = #{storageSeq}
+	</select>
+	
 	
 </mapper>
