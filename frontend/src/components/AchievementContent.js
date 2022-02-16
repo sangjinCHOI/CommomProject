@@ -136,9 +136,9 @@ function Content({ characterSlice, updateachieve, achievements }) {
                         <img
                           className={`${styles.gray}`}
                           style={{ maxWidth: 150, maxHeight: 150, objectFit: "cover" }}
-                          // src={require(`../assets${achieve.filePath + achieve.fileName}`)}
-                          // alt={require(`../assets${achieve.filePath + achieve.fileName}`)}
-                          src={ExAchievment}
+                          src={require(`../assets${achieve.filePath + achieve.fileName}`)}
+                          alt={require(`../assets${achieve.filePath + achieve.fileName}`)}
+                          // src={ExAchievment}
                           // className={isRepresentative ? "border-4 border-yellow-400 rounded-lg" : "border-4 border-gray-400 rounded-lg"}
                         />
                         {/* <div
