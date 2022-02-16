@@ -235,7 +235,7 @@ function Search({ characterSlice, location }) {
             {storagesResultList.slice(0, 3).map((storage) => (
               // 테스트 아직
               // nickname -> ninkname인 상태
-              <Link to={`/${storage.ninkname}/storages/${storage.storageSeq}`}>
+              <Link to={`/${storage.nickname}/storages/${storage.storageSeq}`}>
                 <StorageCardSmall
                   storageName={storage.storageName}
                   imgSrc={

@@ -20,7 +20,7 @@ function SearchCharacters({ location, characterSlice }) {
             key={storage.storageSeq}
             storageName={storage.storageName}
             imgSrc={storage.filePath + storage.fileName}
-            ownerNickname={storage.ninkname}
+            ownerNickname={storage.nickname}
             characterSeq={characterSlice.characterSeq}
             storageSeq={storage.storageSeq}
           />
