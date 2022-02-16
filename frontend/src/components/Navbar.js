@@ -221,7 +221,7 @@ function Navbar({ characterSlice }) {
                   value={word}
                   onChange={onChange}
                   onKeyPress={handleKeyPress}
-                  onClick={() => setIsSearchClick(true)}
+                  onMouseDown={() => setIsSearchClick(true)}
                 />
                 <img
                   className="absolute inset-y-2 right-3"

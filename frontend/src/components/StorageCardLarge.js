@@ -43,7 +43,7 @@ function StorageCardLarge({
       <div
         className={`absolute px-2 py-1 z-50 ${isMouseOver ? "right-3 top-0" : "right-7 top-2"}`}
         style={{ cursor: "pointer" }}
-        onClick={isMe ? () => setIsOptionClick(!isOptionClick) : null}
+        onMouseDown={isMe ? () => setIsOptionClick(true) : null}
       >
         ...
       </div>
