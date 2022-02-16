@@ -243,7 +243,7 @@ function ContentItem(props) {
               {props.content.writerProfile ? (
                 <Image src={require(`../assets${props.content.writerProfile}`)} style={{ width: 32, height: 32 }} rounded={true} raised={false} alt="" />
               ) : (
-                <Image src="/images/default_user.png" rounded={true} raised={false} alt="" style={{ width: 32, height: 32 }} />
+                <Image src="../assets/images/default_user.png" rounded={true} raised={false} alt="" style={{ width: 32, height: 32 }} />
               )}
               <p className="ml-2">{props.content.contentWriter}</p>
             </div>
