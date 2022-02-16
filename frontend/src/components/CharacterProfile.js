@@ -71,7 +71,7 @@ function CharacterProfile({
 
   return (
     <div className={`flex justify-center items-center p-4 my-4 ${classes}`}>
-      <Link to={`../${nickname}`}>
+      <Link to={`/${nickname}`}>
         <CharacterImg
           // imgSrc={
           //   isNaN(characterProfile.profileImagePath + characterProfile.profileImageName) ||
@@ -98,27 +98,27 @@ function CharacterProfile({
             />
             {/* <span className="text-xs text-yellow-300">요리왕</span> */}
           </div>
-          <Link to={`../${nickname}`}>
+          <Link to={`/${nickname}`}>
             {nickname} ({characterProfile.categoryName})
           </Link>
         </div>
         <div className="py-1">
           <div className="inline-block mr-12">
-            <Link to={`../${nickname}`}>
+            <Link to={`/${nickname}`}>
               <span>
                 게시물 <span className="font-bold">{characterProfile.contentCount}</span>
               </span>
             </Link>
           </div>
           <div className="inline-block mr-12">
-            <Link to={`../${nickname}/follow`}>
+            <Link to={`/${nickname}/follow`}>
               <span>
                 팔로워 <span className="font-bold">{characterProfile.followerCount}</span>
               </span>
             </Link>
           </div>
           <div className="inline-block">
-            <Link to={`../${nickname}/follow`}>
+            <Link to={`/${nickname}/follow`}>
               <span>
                 팔로우 <span className="font-bold">{characterProfile.followeeCount}</span>
               </span>
@@ -132,7 +132,7 @@ function CharacterProfile({
         {isMe ? (
           <div className="mt-4">
             <div className="inline-block px-2">
-              <Link to={`../${nickname}/achievement`}>
+              <Link to={`/${nickname}/achievement`}>
                 <Label
                   color="dark"
                   className={`${styles.customRadius} ${styles.clickAchievementBtn} bg-white border`}
@@ -154,7 +154,7 @@ function CharacterProfile({
             <div className="inline-block px-2">
               <Link
                 to={{
-                  pathname: "../characters/update",
+                  pathname: "/characters/update",
                   state: {
                     characterSeq: characterSlice.characterSeq,
                   },
@@ -172,7 +172,7 @@ function CharacterProfile({
         ) : (
           <div className="mt-4">
             <div className="inline-block px-2">
-              <Link to={`../${nickname}/achievement`}>
+              <Link to={`/${nickname}/achievement`}>
                 <Label
                   color="dark"
                   className={`${styles.customRadius} ${styles.clickAchievementBtn} bg-white border`}
@@ -182,7 +182,7 @@ function CharacterProfile({
               </Link>
             </div>
             <div className="inline-block px-2">
-              <Link to={`../${nickname}/storages`}>
+              <Link to={`/${nickname}/storages`}>
                 <Label
                   color="dark"
                   className={`${styles.customRadius} ${styles.clickSubcharacterBtn} bg-white border`}
