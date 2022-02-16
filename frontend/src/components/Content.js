@@ -41,7 +41,7 @@ function Content(props) {
     <>
       <InfiniteScroll dataLength={items.length} next={fetchMoreData} hasMore={true} loader={<h4 className="text-center">persona</h4>}>
         {items.map((content, index) => {
-          return <ContentItem ContentItem content={content} storages={props.storages} key={index}></ContentItem>;
+          return <ContentItem content={content} storages={props.storages} key={index}></ContentItem>;
         })}
       </InfiniteScroll>
     </>
