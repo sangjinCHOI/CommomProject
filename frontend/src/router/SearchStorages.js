@@ -18,7 +18,7 @@ function SearchCharacters({ location, characterSlice }) {
           // 현재 nickname -> ninkname인 상태
           <StorageCardLarge
             key={storage.storageSeq}
-            storageName={storage.storageSeq}
+            storageName={storage.storageName}
             imgSrc={storage.filePath + storage.fileName}
             ownerNickname={storage.ninkname}
             characterSeq={characterSlice.characterSeq}

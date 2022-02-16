@@ -54,7 +54,7 @@ function StorageCardLarge({
       )}
       <Link
         to={{
-          pathname: `./storages/storageSeq`,
+          pathname: `./storages/${storageSeq}`,
           state: {
             characterSeq,
             storageSeq,
