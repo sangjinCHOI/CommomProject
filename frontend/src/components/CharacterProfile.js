@@ -82,7 +82,8 @@ function CharacterProfile({
         <div>
           <div className="inline-block bg-red-500 px-1 mr-1 rounded-xl">
             <img
-              src={characterSlice.representativeAchievement ? require(`../assets/achievements/${characterSlice.representativeAchievement}.png`) : require("../assets/images/sample_achievement.png")}
+              //src={characterSlice.representativeAchievement ? require(`../assets/achievements/${characterSlice.representativeAchievement}.png`) : require("../assets/images/sample_achievement.png")}
+              src={require("../assets/images/sample_achievement.png")}
               alt="sample_achievement_img"
               width="16px"
               className="inline-block"
