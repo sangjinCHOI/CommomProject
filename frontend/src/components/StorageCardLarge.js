@@ -22,10 +22,9 @@ function StorageCardLarge({
 
   function deleteStorage() {
     if (window.confirm("정말로 삭제하시겠습니까?") === true) {
-      const data = {
-        storageSeq,
-      };
-      Send.delete("/storage", { data: JSON.stringify(data) }).then((res) => console.log(res));
+      Send.delete("/storage", { params: storageSeq })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
     } else {
       alert("취소되었습니다.");
     }
