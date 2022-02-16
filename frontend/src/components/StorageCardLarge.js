@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import CustomModal from "./CustomModal";
 import styles from "./StorageCardLarge.module.css";
+import Send from "../config/Send";
 
 function StorageCardLarge({
   storageName,
@@ -19,6 +20,14 @@ function StorageCardLarge({
   const isMe = ownerNickname === characterSlice.nickname ? true : false;
   const [isOptionClick, setIsOptionClick] = useState(false);
 
+  function deleteStorage() {
+    if (window.confirm("정말로 삭제하시겠습니까?") === true) {
+      Send.delete("/storage", { data: { storageSeq } }).then((res) => console.log(res));
+    } else {
+      alert("취소되었습니다.");
+    }
+  }
+
   function OptionClick() {
     return (
       <div
@@ -26,7 +35,11 @@ function StorageCardLarge({
           isMouseOver ? "top-8 right-0" : "top-10 right-4"
         }`}
       >
-        <div className={`flex justify-center p-1.5`} style={{ cursor: "pointer" }}>
+        <div
+          className={`flex justify-center p-1.5`}
+          style={{ cursor: "pointer" }}
+          onClick={deleteStorage}
+        >
           삭제
         </div>
       </div>
