@@ -12,9 +12,15 @@ export default function SearchTags({ location }) {
   const getTagsResult = () => {
     setTagsResultList([]);
     Send.get(`/search/tags/${query}`).then((res) => {
+      console.log(res.data);
       setTagsResultList(res.data);
     });
   };
+
+  // query가 변하지 않을 때 최초 실행
+  useEffect(() => {
+    getTagsResult();
+  });
 
   useEffect(() => {
     getTagsResult();
