@@ -11,6 +11,7 @@ import H6 from "@material-tailwind/react/Heading6";
 import trophy from "../assets/images/trophy.png";
 import Send from "../config/Send";
 import styles from "./AchievementContent.module.css";
+import { achieve } from "../store/characterStore";
 
 function Content({ characterSlice, achievements }) {
   const [isRepresentative, setIsRepresentative] = useState(0);
