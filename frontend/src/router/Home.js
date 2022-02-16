@@ -54,7 +54,7 @@ function Home({ characterSlice }) {
     getFeed();
     getCharacterProfile();
   }, []);
-  console.log(characterProfile);
+
   return (
     <>
       <ContentCreate isOpen={contentCreateModal} onCancel={handleClose} />
