@@ -72,7 +72,7 @@
 				character_seq = #{characterSeq}
 			</when>
 		</choose>
-		and content_is_active = 1
+		and content_is_active = 1 or category_number IN (select category_number from tb_character where character_seq = #{characterNow})
 	</select>
 	
 	<insert id="hashtagCreate" >
