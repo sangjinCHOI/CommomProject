@@ -23,12 +23,12 @@ function Content(props) {
   }
 
   // 무한스크롤
-  const [items, setItems] = useState(feedContents.reverse().slice(0, 10));
-  const [count, setCount] = useState(10);
+  const item = feedContents.reverse().slice(0, 5);
+  const [items, setItems] = useState(feedContents.slice(5, 15));
+  const [count, setCount] = useState(15);
 
   const handleItems = () => {
     setItems(items.concat(feedContents.slice(count, count + 10)));
-    console.log(count);
   };
   const fetchMoreData = () => {
     setTimeout(() => {
@@ -36,9 +36,12 @@ function Content(props) {
       setCount(count + 10);
     }, 1500);
   };
-  console.log(feedContents);
+
   return (
     <>
+      {item.map((content, index) => {
+        return <ContentItem content={content} storages={props.storages} key={index}></ContentItem>;
+      })}
       <InfiniteScroll dataLength={items.length} next={fetchMoreData} hasMore={true} loader={<h4 className="text-center">persona</h4>}>
         {items.map((content, index) => {
           return <ContentItem content={content} storages={props.storages} key={index}></ContentItem>;
