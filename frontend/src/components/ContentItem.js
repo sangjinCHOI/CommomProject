@@ -243,7 +243,8 @@ function ContentItem(props) {
               {props.content.writerProfile ? (
                 <Image src={require(`../assets${props.content.writerProfile}`)} style={{ width: 32, height: 32 }} rounded={true} raised={false} alt="" />
               ) : (
-                <Image src="../assets/images/default_user.png" rounded={true} raised={false} alt="" style={{ width: 32, height: 32 }} />
+                //<Image src="../assets/images/default_user.png" rounded={true} raised={false} alt="" style={{ width: 32, height: 32 }} />
+                <Image src={require(`../assets/images/default_user.png`)} rounded={true} raised={false} alt="" style={{ width: 32, height: 32 }} />
               )}
               <p className="ml-2">{props.content.contentWriter}</p>
             </div>
@@ -392,7 +393,7 @@ function ContentItem(props) {
               {props.characterSlice.filePath ? (
                 <Image src={require(`../assets${props.characterSlice.filePath + props.characterSlice.fileName}`)} style={{ width: 32, height: 32 }} rounded={true} raised={false} alt="" />
               ) : (
-                <Image src="../assets/images/default_user.png" style={{ width: 32, height: 32 }} rounded={true} raised={false} alt="" />
+                <Image src={require(`../assets/images/default_user.png`)} style={{ width: 32, height: 32 }} rounded={true} raised={false} alt="" />
               )}
             </div>
             <textarea value={replyText} onChange={handleReplyTextChange} className="mx-4" type="text" placeholder="댓글 달기..." style={{ height: 25, width: 400, marginTop: 3 }} />
