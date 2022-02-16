@@ -22,11 +22,15 @@ function Content({ characterSlice, achievements }) {
     initFun();
   }, []);
   const deleteAchievement = () => {
+    const sendData = {
+      representativeAchievement: 0,
+    };
     return () => {
       //캐릭터의 대표업적이 삭제
       Send.put(`/character/achievement/delete/${characterSlice.characterSeq}`)
         .then((res) => {
           setIsRepresentative(0);
+          updateachieve(sendData);
           console.log(res);
         })
         .catch((e) => console.log(e));
@@ -38,10 +42,15 @@ function Content({ characterSlice, achievements }) {
       characterSeq: characterSlice.characterSeq,
       representativeAchievement: seq,
     };
+    const sendData = {
+      representativeAchievement: seq,
+    };
     return () => {
       Send.put(`/character/achievement/representative`, JSON.stringify(data))
         .then((res) => {
           setIsRepresentative(seq);
+
+          updateachieve(sendData);
           console.log(res);
         })
         .catch((e) => console.log(e));
@@ -142,4 +151,8 @@ function mapStateToProps(state) {
   return { characterSlice: state.character };
 }
 
-export default connect(mapStateToProps)(Content);
+function mapDispatchToProps(dispatch) {
+  return { updateachieve: (character) => dispatch(achieve(character)) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Content);

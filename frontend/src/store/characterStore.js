@@ -62,8 +62,12 @@ const characterSlice = createSlice({
       state.followAlarm = action.payload.followAlarm;
       state.modifyAlarm = action.payload.modifyAlarm;
     },
+    achieve: (state, action) => {
+      console.log(action);
+      state.representativeAchievement = action.payload.representativeAchievement;
+    },
   },
 });
 
-export const { save, update, alarmUpdate } = characterSlice.actions;
+export const { save, update, alarmUpdate, achieve } = characterSlice.actions;
 export default characterSlice.reducer;
