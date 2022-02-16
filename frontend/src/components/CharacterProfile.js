@@ -82,10 +82,14 @@ function CharacterProfile({
       </Link>
       <div className="ml-10">
         <div>
-          <div className="inline-block bg-red-500 px-1 mr-1 rounded-xl">
+          <div className="inline-block px-1 mr-1 rounded-xl">
             <img
-              //src={characterSlice.representativeAchievement ? require(`../assets/achievements/${characterSlice.representativeAchievement}.png`) : require("../assets/images/sample_achievement.png")}
-              src={require("../assets/images/sample_achievement.png")}
+              src={
+                characterSlice.representativeAchievement != 0
+                  ? require(`../assets/files/achievements/${characterSlice.representativeAchievement}.png`)
+                  : require("../assets/images/sample_achievement.png")
+              }
+              //src={require("../assets/images/sample_achievement.png")}
               alt="sample_achievement_img"
               width="16px"
               className="inline-block"

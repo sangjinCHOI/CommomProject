@@ -87,6 +87,12 @@ function Signup({ userSlice, saveUserId }) {
     });
   };
 
+  const onEnterSubmit = (e) => {
+    if (e.key === "Enter") {
+      onSubmit(e);
+    }
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -125,7 +131,14 @@ function Signup({ userSlice, saveUserId }) {
 
       <div className="mt-3 mb-5 px-11">
         <div className="bg-white rounded-lg">
-          <InputIcon type="text" color="lightBlue" placeholder="USER ID" outline={true} iconName="person" onChange={onIdHandler} />
+          <InputIcon
+            type="text"
+            color="lightBlue"
+            placeholder="USER ID"
+            outline={true}
+            iconName="person"
+            onChange={onIdHandler}
+          />
         </div>
         {showIdConfirm ? <IdConf></IdConf> : null}
         {showIdDuplicate ? <IdDupl></IdDupl> : null}
@@ -133,21 +146,43 @@ function Signup({ userSlice, saveUserId }) {
 
       <div className="mb-5 px-11">
         <div className="bg-white rounded-lg">
-          <InputIcon type="password" color="lightBlue" placeholder="Password" outline={true} iconName="pin" onChange={onPasswordHandler} />
+          <InputIcon
+            type="password"
+            color="lightBlue"
+            placeholder="Password"
+            outline={true}
+            iconName="pin"
+            onChange={onPasswordHandler}
+          />
         </div>
         {showPassConfirm ? <PassConf></PassConf> : null}
       </div>
 
       <div className="mb-5 px-11">
         <div className="bg-white rounded-lg">
-          <InputIcon type="password" color="lightBlue" placeholder="Password Check" outline={true} iconName="pin" onChange={onPasswordCheckHandler} />
+          <InputIcon
+            type="password"
+            color="lightBlue"
+            placeholder="Password Check"
+            outline={true}
+            iconName="pin"
+            onChange={onPasswordCheckHandler}
+          />
         </div>
         {showPassCheckConfirm ? <PassCheckConf></PassCheckConf> : null}
       </div>
 
       <div className="mb-4 px-11">
         <div className="bg-white rounded-lg">
-          <InputIcon type="email" color="lightBlue" placeholder="Email Address" outline={true} iconName="email" onChange={onEmailHandler} />
+          <InputIcon
+            type="email"
+            color="lightBlue"
+            placeholder="Email Address"
+            outline={true}
+            iconName="email"
+            onChange={onEmailHandler}
+            onKeyUp={onEnterSubmit}
+          />
         </div>
         {showEmailConfirm ? <EmailConf></EmailConf> : null}
         {showEmailDuplicate ? <EmailDupl></EmailDupl> : null}
@@ -156,7 +191,7 @@ function Signup({ userSlice, saveUserId }) {
       <CardFooter>
         <div className="flex justify-center">
           <Button color="lightBlue" buttonType="link" size="lg" ripple="dark" onClick={onSubmit}>
-            Register
+            가입하기
           </Button>
         </div>
 
