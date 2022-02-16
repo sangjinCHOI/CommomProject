@@ -241,9 +241,15 @@ function ContentItem(props) {
           <Link to={{ pathname: `/${props.content.contentWriter}` }}>
             <div className="text-xl flex">
               {props.content.writerProfile ? (
-                <Image src={require(`../assets${props.content.writerProfile}`)} width="32px" height="32px" rounded={true} raised={false} alt="" />
+                <Image
+                  src={require(`../assets${props.content.writerProfile}`)}
+                  style={{ width: 32, height: 32 }}
+                  rounded={true}
+                  raised={false}
+                  alt=""
+                />
               ) : (
-                <Image src="/images/default_user.png" width="32px" height="32px" rounded={true} raised={false} alt="" />
+                <Image src="/images/default_user.png" rounded={true} raised={false} alt="" style={{ width: 32, height: 32 }} />
               )}
               <p className="ml-2">{props.content.contentWriter}</p>
             </div>
@@ -399,14 +405,13 @@ function ContentItem(props) {
               {props.characterSlice.filePath ? (
                 <Image
                   src={require(`../assets${props.characterSlice.filePath + props.characterSlice.fileName}`)}
-                  width="32px"
-                  height="32px"
+                  style={{ width: 32, height: 32 }}
                   rounded={true}
                   raised={false}
                   alt=""
                 />
               ) : (
-                <Image src="/images/default_user.png" width="32px" height="32px" rounded={true} raised={false} alt="" />
+                <Image src="/images/default_user.png" style={{ width: 32, height: 32 }} rounded={true} raised={false} alt="" />
               )}
             </div>
             <textarea
