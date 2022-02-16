@@ -99,7 +99,13 @@ function CharacterProfile({
             {/* <span className="text-xs text-yellow-300">요리왕</span> */}
           </div>
           <Link to={`/${nickname}`}>
-            {nickname} ({characterProfile.categoryName})
+            {nickname}
+            <span
+              className="font-bold bg-black rounded-lg px-2 text-white ml-1.5"
+              style={{ fontSize: "13px" }}
+            >
+              {characterProfile.categoryName}
+            </span>
           </Link>
         </div>
         <div className="py-1">
