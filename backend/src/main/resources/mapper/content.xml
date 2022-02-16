@@ -60,7 +60,7 @@
 		where
 		<choose>
 			<when test="condition == 'main'">
-				(character_seq IN (select followee from tb_follow where follower = #{characterNow}) or character_seq = #{characterNow})
+				(character_seq IN (select followee from tb_follow where follower = #{characterNow}) or character_seq = #{characterNow}) or category_number IN (select category_number from tb_character where character_seq = #{characterNow})
 			</when>
 			<when test="condition == 'tag'">
 				content_seq In (select content_seq from tb_tag where tag_text = #{tagText})
@@ -72,7 +72,7 @@
 				character_seq = #{characterSeq}
 			</when>
 		</choose>
-		and content_is_active = 1 or category_number IN (select category_number from tb_character where character_seq = #{characterNow})
+		and content_is_active = 1 
 	</select>
 	
 	<insert id="hashtagCreate" >
