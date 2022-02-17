@@ -93,7 +93,9 @@ function ContentUpdate(props) {
       if (tags.length !== 0) {
         putTags(tags, res.data.content_seq);
       }
-      history.push("/");
+      if (res.status === 200) {
+        props.getFeed();
+      }
     });
   };
 
