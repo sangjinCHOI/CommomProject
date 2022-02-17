@@ -246,7 +246,7 @@ function ContentItem(props) {
       <Comment comments={comments} isOpen={commentModal} onCancel={handleCommentClose} style={{ zIndex: 2 }} />
       <Report content={props.content} isOpen={reportModal} onCancel={handleReportClose} style={{ zIndex: 2 }} />
       <NewStorage content={props.content} isOpen={newStorageModal} onCancel={handleNewStorageClose} style={{ zIndex: 2 }} />
-      <ContentUpdate content={props.content} isOpen={contentCreateModal} onCancel={handleClose} getFeed={props.getFeed} style={{ zIndex: 2 }} />
+      <ContentUpdate content={props.content} isOpen={contentCreateModal} onCancel={handleClose} style={{ zIndex: 2 }} />
       <MainCard classes="mb-3" max-height="900px">
         <div style={{ height: 60 }} className="p-4 flex justify-between">
           <Link to={{ pathname: `/${props.content.contentWriter}` }}>
@@ -285,9 +285,7 @@ function ContentItem(props) {
                           contentSeq: props.content.contentSeq,
                         },
                       }).then((res) => {
-                        if (res.status === 200) {
-                          props.getFeed();
-                        }
+                        console.log(res.data);
                       });
                     }}
                   >

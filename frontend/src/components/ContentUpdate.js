@@ -93,9 +93,7 @@ function ContentUpdate(props) {
       if (tags.length !== 0) {
         putTags(tags, res.data.content_seq);
       }
-      if (res.status === 200) {
-        props.getFeed();
-      }
+      history.push("/");
     });
   };
 
