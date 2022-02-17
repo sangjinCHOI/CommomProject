@@ -255,6 +255,7 @@ function Navbar({ characterSlice }) {
                   onClick={(e) => {
                     e.preventDefault();
                     history.push(`/${characterSlice.nickname}`);
+                    window.location.reload();
                   }}
                 >
                   <span
