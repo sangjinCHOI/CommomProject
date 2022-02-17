@@ -1,10 +1,12 @@
 import MainCard from "../components/MainCard";
 import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
 export default function NotFound() {
   let history = useHistory();
+  const [isMouseOver, setIsMouseOver] = useState(false);
   return (
-    <MainCard classes="rounded-xl h-80 mt-12">
+    <MainCard classes="rounded-xl h-80 mt-4">
       <div className="flex justify-center items-center">
         <div className="text-center mt-14" style={{ width: "250px" }}>
           <div style={{ fontSize: "80px" }}>404</div>
@@ -23,8 +25,10 @@ export default function NotFound() {
       </div>
       <div
         onClick={() => history.goBack()}
-        className="flex justify-center mt-10"
+        className={`mx-auto mt-10 w-24 ${isMouseOver ? "" : "text-gray-400"}`}
         style={{ cursor: "pointer" }}
+        onMouseOver={() => setIsMouseOver(true)}
+        onMouseOut={() => setIsMouseOver(false)}
       >
         이전 페이지로
       </div>
