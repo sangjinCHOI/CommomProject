@@ -121,14 +121,15 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
       characterDeleteReason: 1,
       characterSeq: characterSlice.characterSeq,
     };
+    if (window.confirm("정말로 삭제하시겠습니까?")) {
+      Send.delete("/character", { data: JSON.stringify(data) })
+        .then((res) => {
+          alert("삭제되었습니다.");
+          history.push("../characters/select");
+        })
+        .catch((err) => console.log(err));
+    }
     setShowModal(false);
-    Send.delete("/character", { data: JSON.stringify(data) })
-      .then((res) => {
-        alert("삭제되었습니다.");
-        console.log(res);
-        history.push("../characters/select");
-      })
-      .catch((err) => console.log(err));
   };
 
   const oncharacterDeleteReasonHandler = (e) => {
