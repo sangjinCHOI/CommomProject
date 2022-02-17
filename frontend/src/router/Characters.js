@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
+import { useHistory } from "react-router-dom";
 
 import { save } from "../store/characterStore";
 import Send from "../config/Send";
 
 function Characters({ userSlice, saveCharacter }) {
+  const history = useHistory();
   const [isManagement, setIsManagement] = useState(false);
   const [characterList, setCharacterList] = useState([]);
   const [characterLen, setCharacterLen] = useState(0);
@@ -61,11 +63,15 @@ function Characters({ userSlice, saveCharacter }) {
             isLock
               ? (e) => e.preventDefault()
               : isExist
-              ? () => {
+              ? (e) => {
                   // 메인페이지로 넘어갈 때 캐릭터 저장
-                  Send.get(`/character/${characterSeq}`).then((res) => {
-                    saveCharacter(res.data);
-                  });
+                  e.preventDefault();
+                  Send.get(`/character/${characterSeq}`)
+                    .then((res) => {
+                      saveCharacter(res.data);
+                      history.push("/");
+                    })
+                    .catch((err) => console.log(err));
                 }
               : null
           }
