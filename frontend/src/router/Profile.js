@@ -45,7 +45,7 @@ function Profile({ characterSlice }) {
 
   return (
     <div>
-      <ContentCreate isOpen={contentCreateModal} onCancel={handleClose} />
+      <ContentCreate isOpen={contentCreateModal} onCancel={handleClose} getFeed={getFeed} />
       <MainCard classes="border">
         <CharacterProfile
           isMe={characterSlice.nickname === nickname ? true : false}
@@ -56,7 +56,7 @@ function Profile({ characterSlice }) {
       </MainCard>
       {feedContents.length ? (
         <div className="border">
-          <Content contents={feedContents} />
+          <Content getFeed={getFeed} contents={feedContents} />
         </div>
       ) : (
         <div className="text-center flex-col" style={{ marginTop: 250 }}>

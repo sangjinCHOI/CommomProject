@@ -30,11 +30,9 @@ function SearchTexts({ location, characterSlice }) {
     <>
       <div className="my-4 flex items-center">
         <div className="material-icons font-bold px-2 pt-2 pb-2">article</div>
-        <div className="pb-0.5 text-2xl font-bold">
-          {query.length > 24 ? query.slice(0, 24) + "..." : query}
-        </div>
+        <div className="pb-0.5 text-2xl font-bold">{query.length > 24 ? query.slice(0, 24) + "..." : query}</div>
       </div>
-      <Content contents={feedContents} priorityContent={propsContent} />
+      <Content getFeed={getTagList} contents={feedContents} priorityContent={propsContent} />
     </>
   );
 }

@@ -32,7 +32,7 @@ function SearchTagsDetail({ location, characterSlice }) {
         <div className="material-icons font-bold px-2 pt-2 pb-2">tag</div>
         <div className="pb-0.5 text-2xl font-bold">{detail.length > 24 ? detail.slice(0, 24) + "..." : detail}</div>
       </div>
-      <Content contents={feedContents} />
+      <Content getFeed={getTagList} contents={feedContents} />
     </>
   );
 }
