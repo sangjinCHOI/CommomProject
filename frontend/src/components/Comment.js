@@ -157,7 +157,7 @@ function Comment(props) {
                             {comment.writerProfile ? (
                               <Image src={require(`../assets${comment.writerProfile}`)} width="32px" rounded={true} raised={false} alt="" />
                             ) : (
-                              <Image src="../assets/images/default_user.png" width="32px" rounded={true} raised={false} alt="" />
+                              <Image src={require(`../assets/images/default_user.png`)} width="32px" rounded={true} raised={false} alt="" />
                             )}
                             <p className="pt-0.5 mx-2 text-lg">{comment.replyWriter}</p>
                           </div>
