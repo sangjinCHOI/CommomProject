@@ -160,7 +160,12 @@ function ContentItem(props) {
       contentSeq: contentSeq,
       replyText: replyText,
     };
-    Send.post("/content/reply", JSON.stringify(data)).then((res) => setReplyText(""));
+    Send.post("/content/reply", JSON.stringify(data)).then((res) => {
+      if (res.status === 200) {
+        props.getFeed();
+      }
+      setReplyText("");
+    });
   };
 
   //댓글 불러오기
@@ -191,7 +196,9 @@ function ContentItem(props) {
       contentSeq: contentSeq,
     };
     Send.post("/content/like", JSON.stringify(data)).then((res) => {
-      console.log(res.data);
+      if (res.status === 200) {
+        props.getFeed();
+      }
     });
   };
 
@@ -204,7 +211,9 @@ function ContentItem(props) {
         contentSeq: contentSeq,
       },
     }).then((res) => {
-      console.log(res.data);
+      if (res.status === 200) {
+        props.getFeed();
+      }
     });
   };
 
@@ -231,7 +240,7 @@ function ContentItem(props) {
       }
     });
   };
-
+  console.log(props);
   return (
     <>
       <Comment comments={comments} isOpen={commentModal} onCancel={handleCommentClose} style={{ zIndex: 2 }} />
@@ -345,7 +354,7 @@ function ContentItem(props) {
         <div className="text-slate-400 px-4">{timeDifference(props.content.contentCreatedDate)}</div>
         <div className="px-4 py-2 flex justify-between">
           <div className="flex items-center">
-            <button className="flex items-center" onClick={() => history.go("/")}>
+            <button className="flex items-center">
               {props.content.contentIsLike ? (
                 <FontAwesomeIcon icon={hs} size="lg" style={{ color: "red" }} onClick={(e) => deleteLike(props.content.contentSeq, e)} />
               ) : (
@@ -431,7 +440,6 @@ function ContentItem(props) {
             onClick={(e) => {
               if (replyText) {
                 postComment(props.content.contentSeq, replyText, e);
-                history.go("/");
               }
             }}
           >

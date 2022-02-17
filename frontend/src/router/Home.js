@@ -57,10 +57,10 @@ function Home({ characterSlice }) {
 
   return (
     <>
-      <ContentCreate isOpen={contentCreateModal} onCancel={handleClose} />
+      <ContentCreate isOpen={contentCreateModal} onCancel={handleClose} getFeed={getFeed} />
       {feedContents.length ? (
         <div className="mb-4">
-          <Content contents={feedContents} storages={storages} />
+          <Content contents={feedContents} getFeed={getFeed} storages={storages} />
         </div>
       ) : (
         <div className="text-center flex-col" style={{ marginTop: 350 }}>
