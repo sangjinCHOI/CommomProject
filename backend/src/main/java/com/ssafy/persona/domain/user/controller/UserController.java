@@ -171,21 +171,6 @@ public class UserController {
 		return (new ResponseEntity(HttpStatus.OK));
 	}
 	
-	// 이메일에서 인증 눌렀을 때 반응
-	@GetMapping("/email/verify")
-	public ResponseEntity verifyEmail(MailVerifyRequest mailRequest){
-		
-		if(mailService.verifyEmail(mailRequest) > 0) {
-			// 허가 받았다고 user 업데이트 해야함
-			userService.emailIsValid(mailRequest.getUserId());
-			System.out.println("성공");
-			return (new ResponseEntity(HttpStatus.OK));
-		}
-		else
-			System.out.println("실패");
-		return (new ResponseEntity(HttpStatus.BAD_REQUEST));
-	}
-	
 	@GetMapping("/email/valid/{userEmail}")
 	public ResponseEntity<Map<String,Character>> emailValid(@PathVariable String userEmail){
 		Map<String, Character>map = new HashMap<>();
