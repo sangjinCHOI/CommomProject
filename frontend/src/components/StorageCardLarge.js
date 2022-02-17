@@ -21,8 +21,11 @@ function StorageCardLarge({
   const [isOptionClick, setIsOptionClick] = useState(false);
 
   function deleteStorage() {
+    const data = {
+      storageSeq,
+    };
     if (window.confirm("정말로 삭제하시겠습니까?") === true) {
-      Send.delete("/storage", { params: storageSeq })
+      Send.delete("/storage", JSON.stringify(data))
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     } else {
