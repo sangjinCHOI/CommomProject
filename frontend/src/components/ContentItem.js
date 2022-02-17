@@ -6,6 +6,7 @@ import { Image, Label } from "@material-tailwind/react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useHistory } from "react-router-dom";
 import { faHeart as hs } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as hr } from "@fortawesome/free-regular-svg-icons";
 import MainCard from "../components/MainCard";
@@ -110,6 +111,7 @@ const timeDifference = (time) => {
 };
 
 function ContentItem(props) {
+  const history = useHistory();
   const priorityContent = props.priorityContent ? props.priorityContent : null;
   // console.log("priorityContent", priorityContent);
   const [reportModal, setReportModal] = useState(false);
@@ -240,12 +242,12 @@ function ContentItem(props) {
         <div style={{ height: 60 }} className="p-4 flex justify-between">
           <Link to={{ pathname: `/${props.content.contentWriter}` }}>
             <div className="text-xl flex">
-              {props.content.writerProfile ? (
+              {/* {props.content.writerProfile ? (
                 <Image src={require(`../assets${props.content.writerProfile}`)} style={{ width: 32, height: 32 }} rounded={true} raised={false} alt="" />
               ) : (
                 //<Image src="../assets/images/default_user.png" rounded={true} raised={false} alt="" style={{ width: 32, height: 32 }} />
                 <Image src={require(`../assets/images/default_user.png`)} rounded={true} raised={false} alt="" style={{ width: 32, height: 32 }} />
-              )}
+              )} */}
               <p className="ml-2">{props.content.contentWriter}</p>
             </div>
           </Link>
@@ -293,7 +295,7 @@ function ContentItem(props) {
         <div>
           {props.content.contentFileName ? (
             <Carousel dynamicHeight={true} showArrows={true} showThumbs={false} width="600px" className="flex items-center">
-              {props.content.contentFilePath.split("|").map((filePath, index) => {
+              {/* {props.content.contentFilePath.split("|").map((filePath, index) => {
                 return (
                   <div className="flex justify-center bg-slate-100" style={{ height: 600 }} key={index}>
                     <img
@@ -309,7 +311,7 @@ function ContentItem(props) {
                     />
                   </div>
                 );
-              })}
+              })} */}
             </Carousel>
           ) : null}
         </div>
@@ -337,7 +339,7 @@ function ContentItem(props) {
         <div className="text-slate-400 px-4">{timeDifference(props.content.contentCreatedDate)}</div>
         <div className="px-4 py-2 flex justify-between">
           <div className="flex items-center">
-            <button className="flex items-center">
+            <button className="flex items-center" onClick={() => history.go("/")}>
               {props.content.contentIsLike ? (
                 <FontAwesomeIcon icon={hs} size="lg" style={{ color: "red" }} onClick={(e) => deleteLike(props.content.contentSeq, e)} />
               ) : (
@@ -362,9 +364,16 @@ function ContentItem(props) {
           <div className="flex items-center">
             <Menu as="div" className="mx-2 relative" style={{ zIndex: 6 }}>
               <Menu.Button className="flex text-sm">
-                {props.content.contentIsStore ? <span className="material-icons">library_add_check</span> : <span className="material-icons-outlined">library_add</span>}
+                {props.content.contentIsStore ? (
+                  <span className="material-icons">library_add_check</span>
+                ) : (
+                  <span className="material-icons-outlined">library_add</span>
+                )}
               </Menu.Button>
-              <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md border-2 shadow-lg py-1 bg-white flex flex-col" style={{ overflowY: "scroll", maxHeight: 120 }}>
+              <Menu.Items
+                className="origin-top-right absolute right-0 mt-2 w-48 rounded-md border-2 shadow-lg py-1 bg-white flex flex-col"
+                style={{ overflowY: "scroll", maxHeight: 120 }}
+              >
                 <Menu.Item>
                   <button className="mx-4" onClick={() => setNewStorageModal(true)}>
                     새 저장목록 생성
@@ -390,19 +399,27 @@ function ContentItem(props) {
         <div className="px-4 py-2 flex justify-between self-center">
           <div className="flex">
             <div>
-              {props.characterSlice.filePath ? (
+              {/* {props.characterSlice.filePath ? (
                 <Image src={require(`../assets${props.characterSlice.filePath + props.characterSlice.fileName}`)} style={{ width: 32, height: 32 }} rounded={true} raised={false} alt="" />
               ) : (
                 <Image src={require(`../assets/images/default_user.png`)} style={{ width: 32, height: 32 }} rounded={true} raised={false} alt="" />
-              )}
+              )} */}
             </div>
-            <textarea value={replyText} onChange={handleReplyTextChange} className="mx-4" type="text" placeholder="댓글 달기..." style={{ height: 25, width: 400, marginTop: 3 }} />
+            <textarea
+              value={replyText}
+              onChange={handleReplyTextChange}
+              className="mx-4"
+              type="text"
+              placeholder="댓글 달기..."
+              style={{ height: 25, width: 400, marginTop: 3 }}
+            />
           </div>
           <button
             className="px-2 pb-0.5 rounded-md bg-slate-200"
             onClick={(e) => {
               if (replyText) {
                 postComment(props.content.contentSeq, replyText, e);
+                history.go("/");
               }
             }}
           >
