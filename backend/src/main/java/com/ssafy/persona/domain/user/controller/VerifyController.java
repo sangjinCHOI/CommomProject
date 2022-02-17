@@ -36,7 +36,7 @@ public class VerifyController {
 			System.out.println("실패");
 
 		RedirectView redirectView = new RedirectView();
-		redirectView.setUrl("http://i6a506.p.ssafy.io/");
+		redirectView.setUrl("http://i6a506.p.ssafy.io/error/conflict");
 		return redirectView;
 	}
 }

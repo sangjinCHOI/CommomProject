@@ -5,23 +5,22 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
-//@Component
-//public class UserInterceptor extends WebMvcConfigurationSupport{
-//
-//	@Autowired
-//	GeneralInterceptor generalInterceptor;
+//@Component	// bean 등록 annotation (주석 해제하면 생성돼서 swagger 걸러짐 왜인지는 모름)
+public class UserInterceptor extends WebMvcConfigurationSupport{
 
-	// interceptor 영향안받는 URL 추가해야함
-//	@Override
-//	protected void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(generalInterceptor)
-//				.excludePathPatterns("/user/login")
-//				.excludePathPatterns("/user/valid/**")
-//				.excludePathPatterns("/user/email/**")
-//				.excludePathPatterns("/user")
-//				.excludePathPatterns("/v2/api-docs")
-//				.excludePathPatterns("/webjars/**")
-//				.excludePathPatterns("/swagger-ui/**")
-//				.excludePathPatterns("/swagger-resources/**");
-//	}
-//}
+	@Autowired
+	GeneralInterceptor generalInterceptor;
+
+	@Override
+	protected void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(generalInterceptor)
+				.excludePathPatterns("/user/login",
+						"/user/valid/**",
+						"/user/email/**",
+						"/user",
+						"/v2/api-docs",
+						"/webjars/**",
+						"/swagger-ui/**",
+						"/swagger-resources/**");
+	}	// 영향받지 않는 url
+}
