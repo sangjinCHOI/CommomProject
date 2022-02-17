@@ -5,11 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.ssafy.persona.domain.search.model.dto.SearchTagResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.persona.domain.character.mapper.AchievementMapper;
+import com.ssafy.persona.domain.character.mapper.AlarmMapper;
+import com.ssafy.persona.domain.character.model.AlarmEnum;
+import com.ssafy.persona.domain.character.model.dto.AchievementRegistRequest;
+import com.ssafy.persona.domain.character.model.dto.AlarmCreateRequest;
 import com.ssafy.persona.domain.search.mapper.SearchMapper;
 import com.ssafy.persona.domain.search.model.dto.CloudCreateRequest;
 import com.ssafy.persona.domain.search.model.dto.HistoryCreateRequest;
@@ -18,12 +22,16 @@ import com.ssafy.persona.domain.search.model.dto.RealTimeRequest;
 import com.ssafy.persona.domain.search.model.dto.SearchContentResponse;
 import com.ssafy.persona.domain.search.model.dto.SearchPeopleResponse;
 import com.ssafy.persona.domain.search.model.dto.SearchStorageResponse;
+import com.ssafy.persona.domain.search.model.dto.SearchTagResponse;
 
 @Service
 public class SearchServiceImpl implements SearchService {
-
 	@Autowired
 	SearchMapper searchMapper;
+	@Autowired
+    AchievementMapper achievementMapper;	
+	@Autowired
+	AlarmMapper alarmMapper;
 	
 	@Override
 	public List<SearchPeopleResponse> searchPeople(String text) {
@@ -48,13 +56,36 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	@Transactional
 	public int searchRecord(HistoryCreateRequest request) {
+		LocalDate today = LocalDate.now();
+		RealTimeRequest RTRequest = RealTimeRequest.builder()
+				.searchDate(String.valueOf(today)).build();
+		
+		if (request.getSearchHistoryText().equals(searchMapper.realTimePopularWord(RTRequest).get(0))) {
+			AchievementRegistRequest achievementRequest = AchievementRegistRequest.builder()
+					.characterSeq(request.getCharacterSeq())
+					.achievementSeq(3)
+					.build();
+			
+			if (achievementMapper.checkIsGottenAchievement(achievementRequest) == 0) {
+				achievementMapper.registCharacterAchievement(achievementRequest);
+				AlarmCreateRequest alarm = AlarmCreateRequest.builder()
+						.characterSeq(request.getCharacterSeq())
+						.alarmType(7)
+						.alarmText(AlarmEnum.ALARM_FOR_ACHIEVMENT.creatResultText("핫이슈"))
+						.relationTb("tb_achievement")
+						.targetSeq(request.getCharacterSeq())
+						.build();
+				
+				alarmMapper.createAlarm(alarm);
+			}
+		}
+		
 		int flag = 0;
 		if (searchMapper.checkHistory(request) == 0) {
 			flag = searchMapper.createHistory(request);
 		}else {
 			flag = searchMapper.renewalHistory(request);
 		}
-		LocalDate today = LocalDate.now();
 		CloudCreateRequest cloudCreateRequest = CloudCreateRequest.builder()
 				.searchWord(request.getSearchHistoryText())
 				.searchDate(String.valueOf(today))

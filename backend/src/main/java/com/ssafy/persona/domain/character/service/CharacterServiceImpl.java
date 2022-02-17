@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.persona.domain.character.mapper.AchievementMapper;
 import com.ssafy.persona.domain.character.mapper.CharacterMapper;
+import com.ssafy.persona.domain.character.model.dto.AchievementGetRequest;
 import com.ssafy.persona.domain.character.model.dto.AlarmSettingUpdateRequest;
 import com.ssafy.persona.domain.character.model.dto.CharacterCreatRequest;
 import com.ssafy.persona.domain.character.model.dto.CharacterDeleteRequest;
@@ -19,18 +21,19 @@ import com.ssafy.persona.exception.model.ErrorCode;
 import com.ssafy.persona.domain.file.model.dto.FileUploadRequest;
 import com.ssafy.persona.domain.file.service.FileServiceImpl;
 import com.ssafy.persona.domain.user.mapper.UserMapper;
+import com.ssafy.persona.domain.user.model.dto.UpdateCountRequest;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class CharacterServiceImpl implements CharacterService {
-
 	@Autowired
 	CharacterMapper characterMapper;
-	
 	@Autowired
 	UserMapper userMapper;
+	@Autowired
+	AchievementMapper achievementMapper;
 	
 	private final FileServiceImpl fileService;
 	
@@ -109,8 +112,21 @@ public class CharacterServiceImpl implements CharacterService {
 		return characterMapper.getCharacterProfile(nickname);
 	}
 	
+	@Transactional
 	@Override
 	public List<CharacterGetResponse> list(int userSeq) {
+		int achievementCount = achievementMapper.userAchievementCount(userSeq);
+		int creatableCount = userMapper.getCreatableCount(userSeq);
+		
+		if ((creatableCount == 3 && achievementCount >= 20) || 
+				(creatableCount == 2 && achievementCount >= 10) ||
+				(creatableCount == 1 && achievementCount >= 4)) {
+			UpdateCountRequest request = UpdateCountRequest.builder()
+					.userSeq(userSeq)
+					.userCreatableCount(creatableCount+1).build();
+			userMapper.updateCreatableCount(request);
+		}
+		
 		return characterMapper.list(userSeq);
 	}
 

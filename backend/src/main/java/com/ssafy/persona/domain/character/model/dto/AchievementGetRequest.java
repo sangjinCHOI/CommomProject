@@ -11,4 +11,9 @@ public class AchievementGetRequest {
 	private int characterSeq;
 	private int achievementType;
 	private int level;
+	
+	public AchievementGetRequest(int characterSeq) {
+		super();
+		this.characterSeq = characterSeq;
+	}
 }

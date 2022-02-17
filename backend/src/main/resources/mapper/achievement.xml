@@ -43,5 +43,12 @@
 		WHERE achievement_seq = #{achievementSeq} 
 		AND character_seq = #{characterSeq}
 	</select>
+	
+	<select id="userAchievementCount" resultType="int">
+		SELECT count(*) FROM tb_user_achievement 
+		WHERE character_seq IN 
+			(SELECT character_seq FROM tb_character
+            WHERE character_active = 1 AND user_seq = #{userSeq});
+	</select>
 
 </mapper>

@@ -10,10 +10,11 @@ import com.ssafy.persona.domain.character.model.dto.AchievementRegistRequest;
 
 @Mapper
 public interface AchievementMapper {
-
 	List<AchievementGetResponse> getAchievementList(AchievementGetRequest request);
 
 	int registCharacterAchievement(AchievementRegistRequest request);
 
 	int checkIsGottenAchievement(AchievementRegistRequest request);
+
+	int userAchievementCount(int userSeq);
 }
