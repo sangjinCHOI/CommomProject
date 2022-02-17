@@ -36,24 +36,12 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import NotFound from "./router/NotFound";
 import NotAllowed from "./router/NotAllowed";
 import { Redirect } from "react-router-dom";
+import ConflictPage from "./router/ConflictPage";
 
 function PrivateRoute({ component: Component, ...rest }) {
-  let token = localStorage.getItem("idToken")
-    ? JSON.parse(localStorage.getItem("idToken")).token
-    : false;
+  let token = localStorage.getItem("idToken") ? JSON.parse(localStorage.getItem("idToken")).token : false;
   let authed = Boolean(token);
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        authed === true ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to={{ pathname: "/accounts/login", state: { from: props.location } }} />
-        )
-      }
-    />
-  );
+  return <Route {...rest} render={(props) => (authed === true ? <Component {...props} /> : <Redirect to={{ pathname: "/accounts/login", state: { from: props.location } }} />)} />;
 }
 
 function App() {
@@ -83,6 +71,8 @@ function App() {
                   <PrivateRoute exact path="/settings/account" component={SettingsAccount} />
                   <PrivateRoute exact path="/settings/alarm" component={SettingsAlarm} />
                   <PrivateRoute exact path="/settings/help" component={SettingsHelp} />
+                  <Route path="/error/conflict" component={ConflictPage} />
+                  <Route path="/error/notallow" component={NotAllowed} />
                   <Route path="*" component={NotFound} />
                 </Switch>
               </SettingLayout>
@@ -106,15 +96,15 @@ function App() {
                   <PrivateRoute exact path="/:nickname/achievement" component={Achievement} />
                   <PrivateRoute exact path="/:nickname/storages" component={Storages} />
                   {/* <PrivateRoute exact path="/:nickname/storages/:storage_seq" component={StoragesDetail} /> */}
-                  <PrivateRoute
-                    exact
-                    path="/:nickname/storages/:storageSeq"
-                    component={StoragesDetail}
-                  />
+                  <PrivateRoute exact path="/:nickname/storages/:storageSeq" component={StoragesDetail} />
+                  <Route path="/error/conflict" component={ConflictPage} />
+                  <Route path="/error/notallow" component={NotAllowed} />
                   <Route path="*" component={NotFound} />
                 </Switch>
               </Layout>
             </Route>
+            <Route path="/error/conflict" component={ConflictPage} />
+            <Route path="/error/notallow" component={NotAllowed} />
             <Route path="*" component={NotFound} />
           </Switch>
         </Router>
