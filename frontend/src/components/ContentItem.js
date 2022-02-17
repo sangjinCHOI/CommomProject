@@ -242,12 +242,18 @@ function ContentItem(props) {
         <div style={{ height: 60 }} className="p-4 flex justify-between">
           <Link to={{ pathname: `/${props.content.contentWriter}` }}>
             <div className="text-xl flex">
-              {/* {props.content.writerProfile ? (
-                <Image src={require(`../assets${props.content.writerProfile}`)} style={{ width: 32, height: 32 }} rounded={true} raised={false} alt="" />
+              {props.content.writerProfile ? (
+                <Image
+                  src={require(`../assets${props.content.writerProfile}`)}
+                  style={{ width: 32, height: 32 }}
+                  rounded={true}
+                  raised={false}
+                  alt=""
+                />
               ) : (
                 //<Image src="../assets/images/default_user.png" rounded={true} raised={false} alt="" style={{ width: 32, height: 32 }} />
                 <Image src={require(`../assets/images/default_user.png`)} rounded={true} raised={false} alt="" style={{ width: 32, height: 32 }} />
-              )} */}
+              )}
               <p className="ml-2">{props.content.contentWriter}</p>
             </div>
           </Link>
@@ -295,7 +301,7 @@ function ContentItem(props) {
         <div>
           {props.content.contentFileName ? (
             <Carousel dynamicHeight={true} showArrows={true} showThumbs={false} width="600px" className="flex items-center">
-              {/* {props.content.contentFilePath.split("|").map((filePath, index) => {
+              {props.content.contentFilePath.split("|").map((filePath, index) => {
                 return (
                   <div className="flex justify-center bg-slate-100" style={{ height: 600 }} key={index}>
                     <img
@@ -311,7 +317,7 @@ function ContentItem(props) {
                     />
                   </div>
                 );
-              })} */}
+              })}
             </Carousel>
           ) : null}
         </div>
@@ -399,11 +405,17 @@ function ContentItem(props) {
         <div className="px-4 py-2 flex justify-between self-center">
           <div className="flex">
             <div>
-              {/* {props.characterSlice.filePath ? (
-                <Image src={require(`../assets${props.characterSlice.filePath + props.characterSlice.fileName}`)} style={{ width: 32, height: 32 }} rounded={true} raised={false} alt="" />
+              {props.characterSlice.filePath ? (
+                <Image
+                  src={require(`../assets${props.characterSlice.filePath + props.characterSlice.fileName}`)}
+                  style={{ width: 32, height: 32 }}
+                  rounded={true}
+                  raised={false}
+                  alt=""
+                />
               ) : (
                 <Image src={require(`../assets/images/default_user.png`)} style={{ width: 32, height: 32 }} rounded={true} raised={false} alt="" />
-              )} */}
+              )}
             </div>
             <textarea
               value={replyText}
