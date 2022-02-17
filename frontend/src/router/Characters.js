@@ -63,16 +63,18 @@ function Characters({ userSlice, saveCharacter }) {
             isLock
               ? (e) => e.preventDefault()
               : isExist
-              ? (e) => {
-                  // 메인페이지로 넘어갈 때 캐릭터 저장
-                  e.preventDefault();
-                  Send.get(`/character/${characterSeq}`)
-                    .then((res) => {
-                      saveCharacter(res.data);
-                      history.push("/");
-                    })
-                    .catch((err) => console.log(err));
-                }
+              ? isManagement
+                ? null
+                : (e) => {
+                    // 메인페이지로 넘어갈 때 캐릭터 저장
+                    e.preventDefault();
+                    Send.get(`/character/${characterSeq}`)
+                      .then((res) => {
+                        saveCharacter(res.data);
+                        history.push("/");
+                      })
+                      .catch((err) => console.log(err));
+                  }
               : null
           }
         >
