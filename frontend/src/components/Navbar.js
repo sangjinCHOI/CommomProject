@@ -250,7 +250,13 @@ function Navbar({ characterSlice }) {
 
                 <AlarmShow />
 
-                <Link to={`/${characterSlice.nickname}`}>
+                <Link
+                  to={`/${characterSlice.nickname}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    history.push(`/${characterSlice.nickname}`);
+                  }}
+                >
                   <span
                     className="hidden md:block material-icons h-10 w-10 mt-1 mx-2"
                     style={{ fontSize: 40 }}
