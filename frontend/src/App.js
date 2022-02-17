@@ -34,6 +34,7 @@ import StoragesDetail from "./router/StoragesDetail";
 
 import ErrorBoundary from "./components/ErrorBoundary";
 import NotFound from "./router/NotFound";
+import NotAllowed from "./router/NotAllowed";
 import { Redirect } from "react-router-dom";
 
 function PrivateRoute({ component: Component, ...rest }) {
@@ -69,6 +70,7 @@ function App() {
             <Route path="/accounts/id_inquiry/result" component={IdInquiryResult} />
             <Route exact path="/accounts/pw_inquiry" component={PwInquiry} />
             <Route exact path="/accounts/pw_inquiry/result" component={PwInquiryResult} />
+            <Route exact path="/accounts/notallowed" component={NotAllowed} />
             <Route exact path="/characters/select" component={Characters} />
             <PrivateRoute exact path="/characters/create" component={CharactersCreate} />
             <PrivateRoute exact path="/characters/update" component={CharactersUpdate} />
