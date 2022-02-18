@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "@material-tailwind/react";

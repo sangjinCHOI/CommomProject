@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Menu } from "@headlessui/react";
@@ -6,7 +6,6 @@ import { Image, Label } from "@material-tailwind/react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useHistory } from "react-router-dom";
 import { faHeart as hs } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as hr } from "@fortawesome/free-regular-svg-icons";
 import MainCard from "../components/MainCard";
@@ -111,7 +110,6 @@ const timeDifference = (time) => {
 };
 
 function ContentItem(props) {
-  const history = useHistory();
   const priorityContent = props.priorityContent ? props.priorityContent : null;
   // console.log("priorityContent", priorityContent);
   const [reportModal, setReportModal] = useState(false);
@@ -227,20 +225,20 @@ function ContentItem(props) {
     };
     Send.post("/content/store", JSON.stringify(data)).then((res) => {
       if (res.status === 200) {
-        if (props.characterSlice.alarmAllow || props.characterSlice.modifyAlarm) {
-          const alarmData = {
-            alarmDate: new Date().toISOString(),
-            alarmType: 4,
-            characterSeq: props.characterSlice.characterSeq, // 상대방(알람을 받을) 캐릭터
-            relationTb: "tb_storage", // 관련 테이블(tb_character or tb_storage or tb_achievement)
-            targetSeq: storageSeq, // 본인 캐릭터or저장소or업적의 일련번호(storageSeq or achievementSeq)
-          };
-          // Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => console.log(res));
-        }
+        // if (props.characterSlice.alarmAllow || props.characterSlice.modifyAlarm) {
+        //   const alarmData = {
+        //     alarmDate: new Date().toISOString(),
+        //     alarmType: 4,
+        //     characterSeq: props.characterSlice.characterSeq, // 상대방(알람을 받을) 캐릭터
+        //     relationTb: "tb_storage", // 관련 테이블(tb_character or tb_storage or tb_achievement)
+        //     targetSeq: storageSeq, // 본인 캐릭터or저장소or업적의 일련번호(storageSeq or achievementSeq)
+        //   };
+        //   Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => console.log(res));
+        // }
       }
     });
   };
-  console.log(props);
+
   return (
     <>
       <Comment comments={comments} isOpen={commentModal} onCancel={handleCommentClose} style={{ zIndex: 2 }} />

@@ -19,7 +19,7 @@ function Login({ saveUser, userSlice }) {
 
   const onIdHandler = (e) => {
     setId(e.target.value);
-    if (e.target.value == "") {
+    if (e.target.value === "") {
       setPassShow(false);
     }
   };
@@ -49,14 +49,14 @@ function Login({ saveUser, userSlice }) {
       userId: _id,
       userPw: password,
     };
-    console.log(data);
+    // console.log(data);
     Send.post(`/user/login`, JSON.stringify(data))
 
       .then((res) => {
-        if (res.status == 202) {
+        if (res.status === 202) {
           alert("아이디 및 비밀번호를 확인해주세요");
           return;
-        } else if (res.status == 204) {
+        } else if (res.status === 204) {
           alert("메일 인증을 완료해주세요");
           return;
         }

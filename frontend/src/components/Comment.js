@@ -121,7 +121,7 @@ function Comment(props) {
       replySeq: replySeq,
     };
     Send.post("/content/reply/like", JSON.stringify(data)).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
     });
   };
 
@@ -134,7 +134,7 @@ function Comment(props) {
         replySeq: replySeq,
       },
     }).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
     });
   };
 
@@ -176,7 +176,8 @@ function Comment(props) {
                                         params: {
                                           replySeq: comment.replySeq,
                                         },
-                                      }).then((res) => console.log(res.data));
+                                      });
+                                      // .then((res) => console.log(res.data));
                                     }}
                                   >
                                     삭제

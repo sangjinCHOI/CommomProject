@@ -1,5 +1,5 @@
 import MainCard from "../components/MainCard";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import StorageCardLarge from "../components/StorageCardLarge";
 import { connect } from "react-redux";
 import Send from "../config/Send";
@@ -24,7 +24,7 @@ function SearchCharacters({ location, characterSlice }) {
       .catch((res) => console.log(res));
   }
   useEffect(() => {
-    console.log(contentArr);
+    // console.log(contentArr);
   }, [contentArr]);
 
   useEffect(() => {

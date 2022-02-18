@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
 import { useHistory } from "react-router";
@@ -22,7 +21,7 @@ function PwInquiry({ saveUser, userSlice }) {
   const [email, setEmail] = useState("");
 
   const onIdHandler = (e) => {
-    console.log("id : " + e.target.value);
+    // console.log("id : " + e.target.value);
     setId(e.target.value);
   };
 
@@ -36,15 +35,15 @@ function PwInquiry({ saveUser, userSlice }) {
   const emailHandleKeyPress = useCallback((e) => {
     if (e.key === "Enter") {
       setEmail(e.target.value);
-      console.log(e.target.value);
+      // console.log(e.target.value);
       onSubmit();
     }
   });
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("비밀번호 찾기");
-    console.log(userSlice);
+    // console.log("비밀번호 찾기");
+    // console.log(userSlice);
     const data = {
       userEmail: email,
       userId: _id,
@@ -66,14 +65,22 @@ function PwInquiry({ saveUser, userSlice }) {
   return (
     <div className={`${styles.center}`}>
       <div id="logo" className={`${styles.logo}`}>
-        <img src={Logo} />
+        <img src={Logo} alt="" />
       </div>
 
       <p align="center">가입한 ID을 입력해 주세요.</p>
 
       <div className="mt-3 mb-4 px-11">
         <div className="bg-white rounded-lg">
-          <InputIcon type="text" color="lightBlue" placeholder="ID" outline={true} iconName="person" onChange={onIdHandler} onKeyPress={handleKeyPress} />
+          <InputIcon
+            type="text"
+            color="lightBlue"
+            placeholder="ID"
+            outline={true}
+            iconName="person"
+            onChange={onIdHandler}
+            onKeyPress={handleKeyPress}
+          />
         </div>
       </div>
 

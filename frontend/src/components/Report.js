@@ -31,7 +31,9 @@ function Report(props) {
       reportedContent: props.content.contentSeq,
       reportingCharacter: props.characterSlice.characterSeq,
     };
-    Send.post("/content/report", JSON.stringify(data)).then((res) => console.log(res.data));
+    Send.post("/content/report", JSON.stringify(data)).then((res) => {
+      // console.log(res.data)
+    });
   };
   const postCommentReport = (e) => {
     e.preventDefault();
@@ -41,7 +43,9 @@ function Report(props) {
       reportedReply: props.comment.replySeq,
       reportingCharacter: props.characterSlice.characterSeq,
     };
-    Send.post("/content/reply/report", JSON.stringify(data)).then((res) => console.log(res.data));
+    Send.post("/content/reply/report", JSON.stringify(data)).then((res) => {
+      // console.log(res.data)
+    });
   };
   // console.log(props);
   return (

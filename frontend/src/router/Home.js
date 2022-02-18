@@ -46,7 +46,9 @@ function Home({ characterSlice }) {
       characterSeq: characterSlice.characterSeq,
       searchHistoryText: characterProfile.categoryName,
     };
-    Send.post("/search", JSON.stringify(data)).then((res) => console.log(res));
+    Send.post("/search", JSON.stringify(data)).then((res) => {
+      // console.log(res)
+    });
     history.push(`/search?query=${characterProfile.categoryName}`);
   };
 

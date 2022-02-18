@@ -12,7 +12,7 @@ export default function CharacterImg({
   imgChangeHandler,
 }) {
   const [isClick, setIsClick] = useState(false);
-  console.log("3번", imgSrc);
+  // console.log("3번", imgSrc);
 
   const resetImage = () => {
     const previewImage = document.getElementById("profileImg");
@@ -60,11 +60,7 @@ export default function CharacterImg({
           <input id="profileChange" type="file" onChange={(e) => readImage(e.target)} />
         </div>
         <hr />
-        <div
-          className={`flex justify-center p-1.5`}
-          style={{ cursor: "pointer" }}
-          onClick={resetImage}
-        >
+        <div className={`flex justify-center p-1.5`} style={{ cursor: "pointer" }} onClick={resetImage}>
           기본 이미지로
         </div>
       </div>
@@ -87,9 +83,7 @@ export default function CharacterImg({
           src={require(`../assets${imgSrc}`)}
           alt={require(`../assets${imgSrc}`)}
           // src={require(`../assets/files/2022/2/11/7f922745-e5f5-43f2-bff1-15a56bc8c704_Cross.png`)}
-          className={`rounded-full bg-slate-100 ${styles.profileWrapper} ${styles.ProfileImg} ${
-            lock ? "bg-gray-400" : null
-          }`}
+          className={`rounded-full bg-slate-100 ${styles.profileWrapper} ${styles.ProfileImg} ${lock ? "bg-gray-400" : null}`}
           style={{
             // border: "1px solid lightgray",
             height: imgWidth,

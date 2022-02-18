@@ -1,9 +1,8 @@
 import { useParams } from "react-router-dom";
 import MainCard from "../components/MainCard";
-import H2 from "@material-tailwind/react/Heading2";
 import H4 from "@material-tailwind/react/Heading4";
 import H5 from "@material-tailwind/react/Heading5";
-import { Label, Button, Progress } from "@material-tailwind/react";
+import { Progress } from "@material-tailwind/react";
 import styles from "../components/Achievement.module.css";
 import { connect } from "react-redux";
 import AchievementContent from "../components/AchievementContent";
@@ -23,13 +22,13 @@ function Profile({ characterSlice }) {
   const initFun = () => {
     Send.post(`/character/achievements`, JSON.stringify(data))
       .then((res) => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           // setAchievements(res.data);
-          console.log(characterSlice.characterSeq);
-          console.log(res.data);
+          // console.log(characterSlice.characterSeq);
+          // console.log(res.data);
           setAchieve(setAchievements, res.data);
           //setAchievements(() => res.data);
-          console.log(achievements);
+          // console.log(achievements);
         } else alert("error!!");
       })
       .catch((err) => {
@@ -49,7 +48,7 @@ function Profile({ characterSlice }) {
     //console.log(achievements.length);
     achievements.map((check) => {
       //console.log(check.isGained);
-      if (check.isGained == 1) setCount((prev) => prev + 1);
+      if (check.isGained === 1) setCount((prev) => prev + 1);
     });
   }, [achievements]);
 

@@ -1,8 +1,6 @@
 import CharacterImg from "../components/CharacterImg";
-import { Button, Label } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { shuffle } from "lodash";
 import MainCard from "../components/MainCard";
 import { connect } from "react-redux";
 import Send from "../config/Send";
@@ -119,7 +117,9 @@ function Alarm({ characterSlice }) {
   const alarmClick = (alarmSeq, alarmType, targetSeq, targetNickname, e) => {
     e.preventDefault();
     // 신규 알림 -> 기존 알림으로 변경
-    Send.get(`/character/alarm/${alarmSeq}`).then((res) => console.log(res));
+    Send.get(`/character/alarm/${alarmSeq}`).then((res) => {
+      // console.log(res)
+    });
 
     if (alarmType === 1) {
       // targetSeq === characterSeq
@@ -162,13 +162,7 @@ function Alarm({ characterSlice }) {
                 to=""
                 className="text-sm text-gray-700 flex justify-center items-center"
                 onClick={(e) => {
-                  alarmClick(
-                    alarm.alarmSeq,
-                    alarm.alarmType,
-                    alarm.targetSeq,
-                    alarm.targetNickname,
-                    e
-                  );
+                  alarmClick(alarm.alarmSeq, alarm.alarmType, alarm.targetSeq, alarm.targetNickname, e);
                 }}
               >
                 <CharacterImg
@@ -252,13 +246,7 @@ function Alarm({ characterSlice }) {
                 to=""
                 className="text-sm text-gray-700 flex justify-center items-center"
                 onClick={(e) => {
-                  alarmClick(
-                    alarm.alarmSeq,
-                    alarm.alarmType,
-                    alarm.targetSeq,
-                    alarm.targetNickname,
-                    e
-                  );
+                  alarmClick(alarm.alarmSeq, alarm.alarmType, alarm.targetSeq, alarm.targetNickname, e);
                 }}
               >
                 <CharacterImg

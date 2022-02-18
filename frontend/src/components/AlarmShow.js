@@ -116,7 +116,9 @@ function AlarmShow({ characterSlice }) {
   const alarmClick = (alarmSeq, alarmType, targetSeq, targetNickname, e) => {
     e.preventDefault();
     // 신규 알림 -> 기존 알림으로 변경
-    Send.get(`/character/alarm/${alarmSeq}`).then((res) => console.log(res));
+    Send.get(`/character/alarm/${alarmSeq}`).then((res) => {
+      // console.log(res)
+    });
 
     if (alarmType === 1) {
       // targetSeq === characterSeq
@@ -138,19 +140,12 @@ function AlarmShow({ characterSlice }) {
     <Menu as="div" className="mx-2 relative hidden md:block">
       <div>
         <Menu.Button className="flex text-sm">
-          <span
-            className="material-icons h-10 w-10 mx-2"
-            style={{ fontSize: 40 }}
-            onClick={getAlarmList}
-          >
+          <span className="material-icons h-10 w-10 mx-2" style={{ fontSize: 40 }} onClick={getAlarmList}>
             notifications_none
           </span>
         </Menu.Button>
       </div>
-      <Menu.Items
-        className="origin-top-right absolute mt-2 w-80 rounded-md shadow-lg py-1 bg-white"
-        style={{ right: "-128px" }}
-      >
+      <Menu.Items className="origin-top-right absolute mt-2 w-80 rounded-md shadow-lg py-1 bg-white" style={{ right: "-128px" }}>
         <div className="flex justify-between">
           <div className="text-2xl px-4 py-2">알림</div>
           <Link to="/alarm/center">
@@ -168,13 +163,7 @@ function AlarmShow({ characterSlice }) {
                   to=""
                   className="text-sm text-gray-700 flex justify-center items-center"
                   onClick={(e) => {
-                    alarmClick(
-                      alarm.alarmSeq,
-                      alarm.alarmType,
-                      alarm.targetSeq,
-                      alarm.targetNickname,
-                      e
-                    );
+                    alarmClick(alarm.alarmSeq, alarm.alarmType, alarm.targetSeq, alarm.targetNickname, e);
                   }}
                 >
                   <CharacterImg

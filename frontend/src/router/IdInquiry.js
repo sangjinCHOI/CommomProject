@@ -52,7 +52,7 @@ function IdInquiry({ userSlice, saveUserId }) {
   return (
     <div className={`${styles.center}`}>
       <div id="logo" className={`${styles.logo}`}>
-        <img src={Logo} />
+        <img src={Logo} alt="" />
       </div>
 
       <div>
@@ -61,7 +61,15 @@ function IdInquiry({ userSlice, saveUserId }) {
 
         <div className="mt-3 mb-5 px-11">
           <div className="bg-white rounded-lg">
-            <InputIcon type="text" color="lightBlue" placeholder="E-mail" outline={true} iconName="person" onChange={onEmailHandler} onKeyPress={handleKeyPress} />
+            <InputIcon
+              type="text"
+              color="lightBlue"
+              placeholder="E-mail"
+              outline={true}
+              iconName="person"
+              onChange={onEmailHandler}
+              onKeyPress={handleKeyPress}
+            />
           </div>
           {showEmailConfirm ? <EmailConf></EmailConf> : null}
         </div>
@@ -100,7 +108,7 @@ function EmailConf(props) {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
+  // console.log(state);
   return { userSlice: state.user };
 }
 

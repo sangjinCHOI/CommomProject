@@ -128,9 +128,9 @@ function Follow({ characterSlice }) {
                 targetSeq: characterSlice.characterSeq, // 본인 캐릭터or저장소or업적
                 // userSeq: 0
               };
-              Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) =>
-                console.log(res)
-              );
+              Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => {
+                // console.log(res)
+              });
             }
           });
         }
@@ -147,7 +147,7 @@ function Follow({ characterSlice }) {
     Send.delete("/character/follow", { data: JSON.stringify(data) })
       .then((res) => {
         setChangePage(!changePage);
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => console.log(err));
   };
@@ -170,9 +170,7 @@ function Follow({ characterSlice }) {
       <MainCard classes="border rounded-xl pb-8">
         <div className="flex justify-center items-center">
           <Button
-            className={`px-20 py-5 w-60 text-center text-xl border-2 border-white ${
-              isFollowerTab ? "bg-sky-500" : "bg-gray-300 text-gray-300"
-            }`}
+            className={`px-20 py-5 w-60 text-center text-xl border-2 border-white ${isFollowerTab ? "bg-sky-500" : "bg-gray-300 text-gray-300"}`}
             buttonType="outline"
             onClick={() => {
               setIsFollowerTab(true);
@@ -181,9 +179,7 @@ function Follow({ characterSlice }) {
             팔로워
           </Button>
           <Button
-            className={`px-20 py-5 w-60 text-center text-xl border-2 border-white ${
-              isFollowerTab ? "bg-gray-300 text-gray-300" : "bg-sky-500"
-            }`}
+            className={`px-20 py-5 w-60 text-center text-xl border-2 border-white ${isFollowerTab ? "bg-gray-300 text-gray-300" : "bg-sky-500"}`}
             buttonType="outline"
             onClick={() => {
               setIsFollowerTab(false);
@@ -193,12 +189,7 @@ function Follow({ characterSlice }) {
           </Button>
         </div>
         <div className="relative flex justify-center items-center p-2">
-          <input
-            className="w-96 border rounded-lg px-4 py-2"
-            type="text"
-            placeholder="캐릭터 검색"
-            {...searchText}
-          />
+          <input className="w-96 border rounded-lg px-4 py-2" type="text" placeholder="캐릭터 검색" {...searchText} />
           <span className="material-icons absolute right-12">search</span>
         </div>
         <div className={`${styles.box} overflow-y-auto`} style={{ height: "550px" }}>
@@ -207,14 +198,8 @@ function Follow({ characterSlice }) {
               ? followerList // 리스트 필터링
                   .filter((follower) => follower[0].nickname.includes(searchText.value))
                   .map((follower) => (
-                    <div
-                      className="flex justify-between mx-12 items-center"
-                      key={follower[0].characterSeq}
-                    >
-                      <Link
-                        to={`../${follower[0].nickname}`}
-                        className="flex justify-between items-center"
-                      >
+                    <div className="flex justify-between mx-12 items-center" key={follower[0].characterSeq}>
+                      <Link to={`../${follower[0].nickname}`} className="flex justify-between items-center">
                         <div className="m-3">
                           <CharacterImg
                             imgWidth="50px"
@@ -236,10 +221,7 @@ function Follow({ characterSlice }) {
                                 follow(follower[0].characterSeq, e);
                               }}
                             >
-                              <Label
-                                color="lightBlue"
-                                className={`${styles.customRadius} ${styles.clickFollowBtn}`}
-                              >
+                              <Label color="lightBlue" className={`${styles.customRadius} ${styles.clickFollowBtn}`}>
                                 팔로우
                               </Label>
                             </Link>
@@ -250,10 +232,7 @@ function Follow({ characterSlice }) {
                                 deleteFollow(follower[0].characterSeq, e);
                               }}
                             >
-                              <Label
-                                color="blueGray"
-                                className={`ml-3 mr-2 ${styles.customRadius} ${styles.clickUnfollowBtn}`}
-                              >
+                              <Label color="blueGray" className={`ml-3 mr-2 ${styles.customRadius} ${styles.clickUnfollowBtn}`}>
                                 삭제
                               </Label>
                             </Link>
@@ -264,14 +243,8 @@ function Follow({ characterSlice }) {
                   ))
               : // 2글자 미만일 때 리스트 필터링X
                 followerList.map((follower) => (
-                  <div
-                    className="flex justify-between mx-12 items-center"
-                    key={follower[0].characterSeq}
-                  >
-                    <Link
-                      to={`../${follower[0].nickname}`}
-                      className="flex justify-between items-center"
-                    >
+                  <div className="flex justify-between mx-12 items-center" key={follower[0].characterSeq}>
+                    <Link to={`../${follower[0].nickname}`} className="flex justify-between items-center">
                       <div className="m-3">
                         <CharacterImg
                           imgWidth="50px"
@@ -293,10 +266,7 @@ function Follow({ characterSlice }) {
                               follow(follower[0].characterSeq, e);
                             }}
                           >
-                            <Label
-                              color="lightBlue"
-                              className={`${styles.customRadius} ${styles.clickFollowBtn}`}
-                            >
+                            <Label color="lightBlue" className={`${styles.customRadius} ${styles.clickFollowBtn}`}>
                               팔로우
                             </Label>
                           </Link>
@@ -307,10 +277,7 @@ function Follow({ characterSlice }) {
                               deleteFollow(follower[0].characterSeq, e);
                             }}
                           >
-                            <Label
-                              color="blueGray"
-                              className={`ml-3 mr-2 ${styles.customRadius} ${styles.clickUnfollowBtn}`}
-                            >
+                            <Label color="blueGray" className={`ml-3 mr-2 ${styles.customRadius} ${styles.clickUnfollowBtn}`}>
                               삭제
                             </Label>
                           </Link>
@@ -324,14 +291,8 @@ function Follow({ characterSlice }) {
             ? followeeList // 리스트 필터링
                 .filter((followee) => followee.nickname.includes(searchText.value))
                 .map((followee) => (
-                  <div
-                    className="flex justify-between mx-12 items-center"
-                    key={followee.characterSeq}
-                  >
-                    <Link
-                      to={`../${followee.nickname}`}
-                      className="flex justify-between items-center"
-                    >
+                  <div className="flex justify-between mx-12 items-center" key={followee.characterSeq}>
+                    <Link to={`../${followee.nickname}`} className="flex justify-between items-center">
                       <div className="m-3">
                         <CharacterImg
                           imgWidth="50px"
@@ -352,10 +313,7 @@ function Follow({ characterSlice }) {
                             unfollow(followee.characterSeq, e);
                           }}
                         >
-                          <Label
-                            color="blueGray"
-                            className={`${styles.customRadius} ${styles.clickUnfollowBtn}`}
-                          >
+                          <Label color="blueGray" className={`${styles.customRadius} ${styles.clickUnfollowBtn}`}>
                             언팔로우
                           </Label>
                         </Link>
@@ -365,14 +323,8 @@ function Follow({ characterSlice }) {
                 ))
             : // 2글자 미만일 때 리스트 필터링X
               followeeList.map((followee) => (
-                <div
-                  className="flex justify-between mx-12 items-center"
-                  key={followee.characterSeq}
-                >
-                  <Link
-                    to={`../${followee.nickname}`}
-                    className="flex justify-between items-center"
-                  >
+                <div className="flex justify-between mx-12 items-center" key={followee.characterSeq}>
+                  <Link to={`../${followee.nickname}`} className="flex justify-between items-center">
                     <div className="m-3">
                       <CharacterImg
                         imgWidth="50px"
@@ -393,10 +345,7 @@ function Follow({ characterSlice }) {
                           unfollow(followee.characterSeq, e);
                         }}
                       >
-                        <Label
-                          color="blueGray"
-                          className={`${styles.customRadius} ${styles.clickUnfollowBtn}`}
-                        >
+                        <Label color="blueGray" className={`${styles.customRadius} ${styles.clickUnfollowBtn}`}>
                           언팔로우
                         </Label>
                       </Link>

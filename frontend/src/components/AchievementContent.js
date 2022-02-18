@@ -1,7 +1,5 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Menu } from "@headlessui/react";
-import { Label } from "@material-tailwind/react";
 import MainCard from "./MainCard";
 import ExAchievment from "../assets/images/Achievement01.png";
 import { connect } from "react-redux";
@@ -32,7 +30,7 @@ function Content({ characterSlice, updateachieve, achievements }) {
         .then((res) => {
           setIsRepresentative(0);
           updateachieve(sendData);
-          console.log(res);
+          // console.log(res);
         })
         .catch((e) => console.log(e));
     };
@@ -52,7 +50,7 @@ function Content({ characterSlice, updateachieve, achievements }) {
           setIsRepresentative(seq);
 
           updateachieve(sendData);
-          console.log(res);
+          // console.log(res);
         })
         .catch((e) => console.log(e));
     };
@@ -88,26 +86,20 @@ function Content({ characterSlice, updateachieve, achievements }) {
                           src={require(`../assets${achieve.filePath + achieve.fileName}`)}
                           alt={require(`../assets${achieve.filePath + achieve.fileName}`)}
                           className={
-                            isRepresentative == achieve.achievementSeq
+                            isRepresentative === achieve.achievementSeq
                               ? "border-4 border-yellow-400 rounded-lg"
                               : "border-4 border-gray-400 rounded-lg"
                           }
                         />
                         {/* isRepresentative로 임시로 대표 업적에 따라 색깔 바뀌개 해놨습니다. */}
                         <div
-                          onClick={
-                            isRepresentative == achieve.achievementSeq
-                              ? deleteAchievement()
-                              : updateAchievement(achieve.achievementSeq)
-                          }
+                          onClick={isRepresentative === achieve.achievementSeq ? deleteAchievement() : updateAchievement(achieve.achievementSeq)}
                           className={`absolute right-7 px-4 py-0.5 rounded-lg font-semibold ${
-                            isRepresentative == achieve.achievementSeq
-                              ? "bg-gray-200 text-gray-400"
-                              : "bg-orange-200 text-orange-500"
+                            isRepresentative === achieve.achievementSeq ? "bg-gray-200 text-gray-400" : "bg-orange-200 text-orange-500"
                           }`}
                           style={{ cursor: "pointer", top: "155px" }}
                         >
-                          {isRepresentative == achieve.achievementSeq ? "대표 해제" : "대표 설정"}
+                          {isRepresentative === achieve.achievementSeq ? "대표 해제" : "대표 설정"}
                         </div>
                       </div>
                     </div>
@@ -116,10 +108,7 @@ function Content({ characterSlice, updateachieve, achievements }) {
               </MainCard>
             ) : (
               <MainCard key={achieve.achievementSeq} max-height="900px">
-                <div
-                  style={{ height: 220 }}
-                  className="p-4 flex justify-between bg-slate-100 border-b"
-                >
+                <div style={{ height: 220 }} className="p-4 flex justify-between bg-slate-100 border-b">
                   <div className="flex justify-center ">
                     <div className="flex justify-center" style={{ width: 565 }}>
                       <div className="flex justify-start " style={{ width: 380 }}>
