@@ -36,10 +36,10 @@ function Signup({ userSlice, saveUserId }) {
       setShowIdConfirm(false);
     }
     Send.get(`/user/valid/` + e.target.value, {}).then((data) => {
-      if (data.valid == 2) {
+      if (data.valid === 2) {
         setShowIdDuplicate(true);
-        console.log("valid : " + data.valid);
-      } else if (data.valid == 1) {
+        // console.log("valid : " + data.valid);
+      } else if (data.valid === 1) {
         setShowIdDuplicate(false);
       }
     });
@@ -59,7 +59,7 @@ function Signup({ userSlice, saveUserId }) {
   };
 
   const onPasswordCheckHandler = (e) => {
-    console.log("passcheck : " + e.target.value);
+    // console.log("passcheck : " + e.target.value);
     setpasswordCheck(e.target.value);
 
     if (password === e.target.value) {
@@ -78,13 +78,19 @@ function Signup({ userSlice, saveUserId }) {
     setEmail(e.target.value);
 
     Send.get(`/user/email/valid` + e.target.value, {}).then(({ data }) => {
-      if (data.valid == 0) {
+      if (data.valid === 0) {
         setShowEmailDuplicate(true);
-        console.log("valid : " + data.valid);
-      } else if (data.valid == 1) {
+        // console.log("valid : " + data.valid);
+      } else if (data.valid === 1) {
         setShowEmailDuplicate(false);
       }
     });
+  };
+
+  const onEnterSubmit = (e) => {
+    if (e.key === "Enter") {
+      onSubmit(e);
+    }
   };
 
   const onSubmit = (e) => {
@@ -102,12 +108,12 @@ function Signup({ userSlice, saveUserId }) {
           userId: _id,
           userEmail: email,
         });
-        if (data.status == 200) {
+        if (data.status === 200) {
           alert("회원가입에 성공하였습니다");
           history.push("../accounts/signup/email");
         }
         // 추가 실패했을때 반응 삽입 요망
-        else if (data.status == 202) {
+        else if (data.status === 202) {
           alert("아이디 혹은 E-Mail을 확인해주세요");
         } else alert("서버 오류입니다");
       })
@@ -119,7 +125,7 @@ function Signup({ userSlice, saveUserId }) {
   return (
     <div className={`${styles.center}`}>
       <div id="logo" className={`${styles.logo}`}>
-        <img src={Logo} />
+        <img src={Logo} alt="" />
       </div>
       <br />
 
@@ -147,7 +153,15 @@ function Signup({ userSlice, saveUserId }) {
 
       <div className="mb-4 px-11">
         <div className="bg-white rounded-lg">
-          <InputIcon type="email" color="lightBlue" placeholder="Email Address" outline={true} iconName="email" onChange={onEmailHandler} />
+          <InputIcon
+            type="email"
+            color="lightBlue"
+            placeholder="Email Address"
+            outline={true}
+            iconName="email"
+            onChange={onEmailHandler}
+            onKeyUp={onEnterSubmit}
+          />
         </div>
         {showEmailConfirm ? <EmailConf></EmailConf> : null}
         {showEmailDuplicate ? <EmailDupl></EmailDupl> : null}
@@ -156,7 +170,7 @@ function Signup({ userSlice, saveUserId }) {
       <CardFooter>
         <div className="flex justify-center">
           <Button color="lightBlue" buttonType="link" size="lg" ripple="dark" onClick={onSubmit}>
-            Register
+            가입하기
           </Button>
         </div>
 

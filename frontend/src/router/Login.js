@@ -19,7 +19,7 @@ function Login({ saveUser, userSlice }) {
 
   const onIdHandler = (e) => {
     setId(e.target.value);
-    if (e.target.value == "") {
+    if (e.target.value === "") {
       setPassShow(false);
     }
   };
@@ -28,11 +28,18 @@ function Login({ saveUser, userSlice }) {
     if (e.key === "Enter") {
       setPassword(e.target.value);
       setPassShow(true);
+      setTimeout(() => {
+        let temp = document.getElementById("passwordInput");
+        temp.querySelector("input").focus();
+      }, 50);
     }
   };
 
   const pwHandleKeyPress = (e) => {
     setPassword(e.target.value);
+    if (e.key === "Enter") {
+      onSubmit(e);
+    }
   };
 
   const onSubmit = (e) => {
@@ -42,14 +49,14 @@ function Login({ saveUser, userSlice }) {
       userId: _id,
       userPw: password,
     };
-    console.log(data);
+    // console.log(data);
     Send.post(`/user/login`, JSON.stringify(data))
 
       .then((res) => {
-        if (res.status == 202) {
+        if (res.status === 202) {
           alert("아이디 및 비밀번호를 확인해주세요");
           return;
-        } else if (res.status == 204) {
+        } else if (res.status === 204) {
           alert("메일 인증을 완료해주세요");
           return;
         }
@@ -92,21 +99,30 @@ function Login({ saveUser, userSlice }) {
 
       <div className="mt-3 mb-5 px-11">
         <div className="bg-white rounded-lg">
-          <InputIcon type="text" color="lightBlue" placeholder="ID를 입력해주세요" outline={true} iconName="person" value={_id} onChange={onIdHandler} onKeyUp={handleKeyPress} />
+          <InputIcon
+            type="text"
+            color="lightBlue"
+            placeholder="ID를 입력해주세요"
+            outline={true}
+            iconName="person"
+            value={_id}
+            onChange={onIdHandler}
+            onKeyUp={handleKeyPress}
+          />
         </div>
         <Link to="../accounts/id_inquiry">아이디를 잊으셨나요?</Link>
         {passShow ? <PassComp pwHandleKeyPress={pwHandleKeyPress}></PassComp> : null}
       </div>
       <CardFooter>
         <div className="flex justify-center">
+          <Link to="../accounts/signup">
+            <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
+              회원가입
+            </Button>
+          </Link>
           <Button color="lightBlue" buttonType="link" size="lg" ripple="dark" onClick={onSubmit}>
             로그인
           </Button>
-          <Link to="../accounts/signup">
-            <Button color="lightBlue" buttonType="link" size="lg" ripple="dark">
-              regist
-            </Button>
-          </Link>
         </div>
       </CardFooter>
     </div>
@@ -116,7 +132,7 @@ function Login({ saveUser, userSlice }) {
 const PassComp = ({ pwHandleKeyPress }) => {
   return (
     <div className="mb-5">
-      <div className="bg-white rounded-lg">
+      <div id="passwordInput" className="bg-white rounded-lg">
         <InputIcon
           type="password"
           color="lightBlue"

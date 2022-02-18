@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 //import userStore from "../store/userStore";
 import styles from "./Signup.module.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Card, CardBody, Button, Input, Modal, ModalHeader, ModalBody, ModalFooter, InputIcon } from "@material-tailwind/react";
-import axios from "axios";
 import Send from "../config/Send";
 import { save } from "../store/characterStore";
 import { connect } from "react-redux";
-import { useRef } from "react";
 
 const useInput = (initialValue, validator) => {
   const [value, setValue] = useState(initialValue);
@@ -62,14 +60,14 @@ function SettingsAccount({ userSlice }) {
     } else {
       setShowPassConfirm(false);
     }
-    if (password == changePassword.value) {
+    if (password === changePassword.value) {
       setPassCheckEqual(true);
     } else {
       setPassCheckEqual(false);
     }
   };
   const pwd2Valid = () => {
-    if (changePassword.value != passwordcheck.value) {
+    if (changePassword.value !== passwordcheck.value) {
       setShowPassCheckConfirm(true);
     } else {
       setShowPassCheckConfirm(false);
@@ -150,7 +148,7 @@ function SettingsAccount({ userSlice }) {
     Send.post("/user/setting/verification", JSON.stringify(data))
       .then((data) => {
         if (data.status === 200) {
-          console.log(data);
+          // console.log(data);
           setMode("setting");
         } else {
           alert("비밀번호를 확인해주세요");

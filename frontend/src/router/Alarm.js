@@ -1,8 +1,6 @@
 import CharacterImg from "../components/CharacterImg";
-import { Button, Label } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { shuffle } from "lodash";
 import MainCard from "../components/MainCard";
 import { connect } from "react-redux";
 import Send from "../config/Send";
@@ -119,17 +117,29 @@ function Alarm({ characterSlice }) {
   const alarmClick = (alarmSeq, alarmType, targetSeq, targetNickname, e) => {
     e.preventDefault();
     // 신규 알림 -> 기존 알림으로 변경
-    Send.get(`/character/alarm/${alarmSeq}`).then((res) => console.log(res));
+    Send.get(`/character/alarm/${alarmSeq}`).then((res) => {
+      // console.log(res)
+    });
 
     if (alarmType === 1) {
       // targetSeq === characterSeq
-      Send.get(`/character/${targetSeq}`).then((res) => history.push(`../${res.data.nickname}`));
-    } else if (2 <= alarmType <= 6) {
+      Send.get(`/character/${targetSeq}`).then((res) => history.push(`/${res.data.nickname}`));
+    } else if (2 <= alarmType && alarmType <= 3) {
+      // 내 저장소로 이동
+      history.push(`/${targetNickname}/storages`);
+    } else if (4 <= alarmType && alarmType <= 6) {
       // targetSeq === storageSeq
-      // 내 저장소면 상관 없지만 상대방 저장소 가려면 닉네임도 필요한데 어떻게 찾아내지?
-      history.push(`../${targetNickname}/storages/${targetSeq}`);
+      // 해당 저장소 상세로 이동
+      // history.push(`../${targetNickname}/storages/${targetSeq}`);
+      history.push({
+        pathname: `/${targetNickname}/storages/${targetSeq}`,
+        state: {
+          storageSeq: targetSeq,
+        },
+      });
     } else if (alarmType === 7) {
-      history.push(`../${targetNickname}/achievement`);
+      // 내 업적으로 이동
+      history.push(`/${targetNickname}/achievement`);
     }
   };
 
@@ -140,11 +150,11 @@ function Alarm({ characterSlice }) {
 
   return (
     <div className="px-16">
-      <MainCard classes="border rounded pb-8">
+      <MainCard classes="border rounded-xl pb-8">
         <div className="text-2xl px-4 py-4 text-center">알림</div>
         <hr className="mb-1 mx-2" />
         <div className="px-4 py-2 ml-4">신규 알림</div>
-        <div className={`overflow-y-auto ${styles.box}`} style={{ maxHeight: "350px" }}>
+        <div className={`overflow-y-auto ${styles.heightScroll}`} style={{ maxHeight: "350px" }}>
           {newAlarmList.map((alarm) => (
             <div className="px-4 py-2" key={alarm.alarmSeq}>
               {/* 현재 링크 안걸려있음 */}
@@ -152,16 +162,29 @@ function Alarm({ characterSlice }) {
                 to=""
                 className="text-sm text-gray-700 flex justify-center items-center"
                 onClick={(e) => {
-                  alarmClick(
-                    alarm.alarmSeq,
-                    alarm.alarmType,
-                    alarm.targetSeq,
-                    alarm.targetNickname,
-                    e
-                  );
+                  alarmClick(alarm.alarmSeq, alarm.alarmType, alarm.targetSeq, alarm.targetNickname, e);
                 }}
               >
-                <CharacterImg imgWidth="50px" classes="mr-4" />
+                <CharacterImg
+                  imgWidth="50px"
+                  classes="mr-4"
+                  imgSrc={
+                    alarm.filePath === null || alarm.fileName === null
+                      ? alarm.alarmType === 1
+                        ? "/images/default_user.png"
+                        : 2 <= alarm.alarmType && alarm.alarmType <= 6
+                        ? "/images/default_storage.png"
+                        : "/images/default_achievement.png"
+                      : alarm.filePath + alarm.fileName
+                  }
+                  // imgSrc={
+                  //   alarm.filePath === null || alarm.fileName === null
+                  //     ? alarm.alarmType === 1
+                  //       ? "/images/default_user.png"
+                  //       : "/images/default_storage.png"
+                  //     : alarm.filePath + alarm.fileName
+                  // }
+                />
                 <div style={{ width: "292px" }}>{alarm.alarmText}</div>
               </Link>
               <div className="flex justify-end mr-10" style={{ fontSize: "12px" }}>
@@ -216,23 +239,36 @@ function Alarm({ characterSlice }) {
           </div>
         </div> */}
         <div className="px-4 py-2 ml-4">기존 알림</div>
-        <div className={`overflow-y-auto ${styles.box}`} style={{ maxHeight: "350px" }}>
+        <div className={`overflow-y-auto ${styles.heightScroll}`} style={{ maxHeight: "350px" }}>
           {oldAlarmList.map((alarm) => (
             <div className="px-4 py-2" key={alarm.alarmSeq}>
               <Link
                 to=""
                 className="text-sm text-gray-700 flex justify-center items-center"
                 onClick={(e) => {
-                  alarmClick(
-                    alarm.alarmSeq,
-                    alarm.alarmType,
-                    alarm.targetSeq,
-                    alarm.targetNickname,
-                    e
-                  );
+                  alarmClick(alarm.alarmSeq, alarm.alarmType, alarm.targetSeq, alarm.targetNickname, e);
                 }}
               >
-                <CharacterImg imgWidth="50px" classes="mr-4" />
+                <CharacterImg
+                  imgWidth="50px"
+                  classes="mr-4"
+                  imgSrc={
+                    alarm.filePath === null || alarm.fileName === null
+                      ? alarm.alarmType === 1
+                        ? "/images/default_user.png"
+                        : 2 <= alarm.alarmType && alarm.alarmType <= 6
+                        ? "/images/default_storage.png"
+                        : "/images/default_achievement.png"
+                      : alarm.filePath + alarm.fileName
+                  }
+                  // imgSrc={
+                  //   alarm.filePath === null || alarm.fileName === null
+                  //     ? alarm.alarmType === 1
+                  //       ? "/images/default_user.png"
+                  //       : "/images/default_storage.png"
+                  //     : alarm.filePath + alarm.fileName
+                  // }
+                />
                 <div style={{ width: "292px" }}>{alarm.alarmText}</div>
               </Link>
               <div className="flex justify-end mr-10" style={{ fontSize: "12px" }}>

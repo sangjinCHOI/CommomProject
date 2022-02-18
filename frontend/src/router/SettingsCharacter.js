@@ -1,20 +1,12 @@
 import React from "react";
-import {
-  Button,
-  Input,
-  Textarea,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from "@material-tailwind/react";
+import { Button, Input, Textarea, Modal, ModalHeader, ModalBody, ModalFooter } from "@material-tailwind/react";
 import CharacterImg from "../components/CharacterImg";
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import Send from "../config/Send";
 import { useHistory } from "react-router-dom";
 import { update } from "../store/characterStore";
+import File from "../config/File";
 
 const useInput = (initialValue, validator) => {
   const [value, setValue] = useState(initialValue);
@@ -39,7 +31,7 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
   const [selectedCategory, setSelectedCategory] = useState([]);
   const getCategories = () => {
     Send.get("/character/categorys").then((res) => {
-      const nowCategory = res.data.find((category) => category.characterCategoryNumber === 0);
+      const nowCategory = res.data.find((category) => category.characterCategoryNumber === characterSlice.categoryNumber);
       setSelectedCategory([nowCategory.characterCategoryName, nowCategory.characterCategoryNumber]);
     });
   };
@@ -58,6 +50,8 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
     }
     return totalByte;
   };
+
+  const [imgFile, setImgFile] = useState(null);
 
   // 닉네임만 Byte로 제한
   const nicknameMaxLen = (value) => convertByte(value) <= 16;
@@ -80,17 +74,26 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
   const [characterDeleteReason, setcharacterDeleteReason] = useState(0);
 
   const saveCharacter = () => {
+    const formData = new FormData();
+
     const data = {
       characterSeq: characterSlice.characterSeq,
       nickname: nickname.value,
       introduction: introduction.value,
       representativeAchievement: 0,
     };
-    Send.put("/character", JSON.stringify(data))
+    formData.append("file", imgFile);
+    formData.append("request", new Blob([JSON.stringify(data)], { type: "application/json" }));
+
+    File.put("/character", formData)
       .then((res) => {
-        if (res.status == 200) {
-          updateCharacter(data);
+        if (res.status === 200) {
           alert("변경되었습니다!");
+          if (imgFile === null) {
+            Send.delete(`/character/profile/${characterSlice.characterSeq}`).then((res) => updateCharacter({ data }));
+          } else {
+            updateCharacter({ data });
+          }
           history.push("../..");
         } else alert("다시 로그인해주세요");
       })
@@ -105,25 +108,40 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
       characterDeleteReason: 1,
       characterSeq: characterSlice.characterSeq,
     };
+    if (window.confirm("정말로 삭제하시겠습니까?")) {
+      Send.delete("/character", { data: JSON.stringify(data) })
+        .then((res) => {
+          alert("삭제되었습니다.");
+          history.push("../characters/select");
+        })
+        .catch((err) => console.log(err));
+    }
     setShowModal(false);
-    Send.delete("/character", { data: JSON.stringify(data) })
-      .then((res) => {
-        alert("삭제되었습니다.");
-        console.log(res);
-        history.push("../characters/select");
-      })
-      .catch((err) => console.log(err));
   };
 
   const oncharacterDeleteReasonHandler = (e) => {
     setcharacterDeleteReason(e.target.value);
   };
 
+  const imgChangeHandler = (propsImg) => {
+    setImgFile(propsImg);
+    // console.log(propsImg);
+  };
+
   return (
     <>
       <div className="flex mx-10 mt-10">
         <div className="text-center text-md flex flex-col justify-evenly">
-          <CharacterImg underText="변경" />
+          <CharacterImg
+            imgSrc={
+              characterSlice.filePath !== null && characterSlice.fileName !== null
+                ? `${characterSlice.filePath + characterSlice.fileName}`
+                : `/images/default_user.png`
+            }
+            imgChangeHandler={imgChangeHandler}
+            isChange={true}
+            underText="변경"
+          />
           <button onClick={(e) => setShowModal(true)}>캐릭터 삭제</button>
         </div>
         <div className="w-96 mx-auto mt-10 flex flex-col justify-center">
@@ -137,15 +155,8 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
             className="my-3 block w-full px-3 py-2 border border-slate-300 rounded-md disabled:bg-slate-200 text-gray-400"
           />
           <div className="relative bg-white rounded-md rounded-lg" style={{ height: 185 }}>
-            <Textarea
-              placeholder={"한 줄 소개를 입력하세요."}
-              outline={true}
-              color="lightBlue"
-              {...introduction}
-            />
-            <div className="absolute right-5 bottom-3 text-gray-400">
-              {introduction.value.length} / 50
-            </div>
+            <Textarea placeholder={"한 줄 소개를 입력하세요."} outline={true} color="lightBlue" {...introduction} />
+            <div className="absolute right-5 bottom-3 text-gray-400">{introduction.value.length} / 50</div>
           </div>
           <Button className="my-3" onClick={saveCharacter}>
             저장
@@ -159,9 +170,7 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
         </ModalHeader>
         <hr className="mb-5" />
         <ModalBody>
-          <p className="text-base leading-relaxed text-gray-600 font-normal">
-            캐릭터를 삭제하려는 이유가 무엇인가요?
-          </p>
+          <p className="text-base leading-relaxed text-gray-600 font-normal">캐릭터를 삭제하려는 이유가 무엇인가요?</p>
           <select
             className="bg-white rounded-lg w-96 h-11 p-2 mb-16 border border-gray-300 outline-sky-500 text-black"
             onChange={oncharacterDeleteReasonHandler}
@@ -180,18 +189,11 @@ function SettingsCharacter({ characterSlice, updateCharacter }) {
             </option>
           </select>
           <br />
-          <p className="text-base leading-relaxed text-gray-600 font-normal">
-            비밀번호를 다시 입력하세요.
-          </p>
+          <p className="text-base leading-relaxed text-gray-600 font-normal">비밀번호를 다시 입력하세요.</p>
           <Input type="password" placeholder=""></Input>
         </ModalBody>
         <ModalFooter>
-          <Button
-            color="black"
-            buttonType="link"
-            onClick={(e) => setShowModal(false)}
-            ripple="dark"
-          >
+          <Button color="black" buttonType="link" onClick={(e) => setShowModal(false)} ripple="dark">
             Close
           </Button>
 

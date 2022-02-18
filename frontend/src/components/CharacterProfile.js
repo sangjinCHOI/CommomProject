@@ -16,12 +16,18 @@ function CharacterProfile({
   characterSlice,
 }) {
   const [characterProfile, setCharacterProfile] = useState({});
+  const [tempImgSrc, setTempImgSrc] = useState("/images/default_user.png");
   const getCharacterProfile = () => {
     Send.get(`/character/profile/${nickname}`).then((res) => {
+      // console.log("!!!!!!!", res.data);
       setCharacterProfile(res.data);
-      console.log(res.data);
+      setTempImgSrc(res.data.profileImagePath + res.data.profileImageName);
+      // console.log(res.data.profileImagePath + res.data.profileImageName, typeof (res.data.profileImagePath + res.data.profileImageName));
     });
   };
+
+  // console.log(`../assets/achievements/${characterSlice.representativeAchievement}.png`);
+
   useEffect(() => {
     getCharacterProfile();
   }, []);
@@ -51,10 +57,8 @@ function CharacterProfile({
                 targetSeq: characterSlice.characterSeq, // 본인 캐릭터or저장소or업적
                 // userSeq: 0
               };
-              console.log(alarmData);
-              Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) =>
-                console.log(res)
-              );
+              // console.log(alarmData);
+              Send.post("/character/alarm", JSON.stringify(alarmData)).then((res) => console.log(res));
             }
           });
         }
@@ -64,35 +68,58 @@ function CharacterProfile({
 
   return (
     <div className={`flex justify-center items-center p-4 my-4 ${classes}`}>
-      <CharacterImg />
+      <Link to={`/${nickname}`}>
+        <CharacterImg
+          // imgSrc={
+          //   isNaN(characterProfile.profileImagePath + characterProfile.profileImageName) ||
+          //   characterProfile.profileImagePath === null ||
+          //   characterProfile.profileImageName === null
+          //     ? "/images/default_user.png"
+          //     : characterProfile.profileImagePath + characterProfile.profileImageName
+          // }
+          imgSrc={characterProfile.profileImagePath === null || characterProfile.profileImageName === null ? "/images/default_user.png" : tempImgSrc}
+        />
+      </Link>
       <div className="ml-10">
         <div>
-          <div className="inline-block bg-red-500 px-1 mr-1 rounded-xl">
+          <div className="inline-block px-1 mr-1 rounded-xl">
             <img
-              src={require("../assets/images/sample_achievement.png")}
+              src={
+                characterSlice.representativeAchievement !== 0
+                  ? require(`../assets/files/achievements/${characterSlice.representativeAchievement}.png`)
+                  : require("../assets/images/sample_achievement.png")
+              }
+              // src={require("../assets/images/sample_achievement.png")}
               alt="sample_achievement_img"
               width="16px"
               className="inline-block"
             />
             {/* <span className="text-xs text-yellow-300">요리왕</span> */}
           </div>
-          {nickname} ({characterProfile.categoryName})
+          <Link to={`/${nickname}`}>
+            {nickname}
+            <span className="font-bold bg-black rounded-lg px-2 text-white ml-1.5" style={{ fontSize: "13px" }}>
+              {characterProfile.categoryName}
+            </span>
+          </Link>
         </div>
         <div className="py-1">
-          <div className="inline-block mr-8">
-            <span>
-              게시물 <span className="font-bold">{characterProfile.contentCount}</span>
-            </span>
+          <div className="inline-block mr-12">
+            <Link to={`/${nickname}`}>
+              <span>
+                게시물 <span className="font-bold">{characterProfile.contentCount}</span>
+              </span>
+            </Link>
           </div>
-          <div className="inline-block mr-8">
-            <Link to={`../${nickname}/follow`}>
+          <div className="inline-block mr-12">
+            <Link to={`/${nickname}/follow`}>
               <span>
                 팔로워 <span className="font-bold">{characterProfile.followerCount}</span>
               </span>
             </Link>
           </div>
           <div className="inline-block">
-            <Link to={`../${nickname}/follow`}>
+            <Link to={`/${nickname}/follow`}>
               <span>
                 팔로우 <span className="font-bold">{characterProfile.followeeCount}</span>
               </span>
@@ -104,51 +131,49 @@ function CharacterProfile({
           {characterProfile.introduction}
         </div>
         {isMe ? (
-          <div className="mt-3">
+          <div className="mt-4">
             <div className="inline-block px-2">
-              <Link to={`../${nickname}/achievement`}>
-                <Label
-                  color="green"
-                  className={`${styles.customRadius} ${styles.clickAchievementBtn}`}
-                >
+              <Link to={`/${nickname}/achievement`}>
+                <Label color="dark" className={`${styles.customRadius} ${styles.clickAchievementBtn} bg-white border`}>
                   업적 보기
                 </Label>
               </Link>
             </div>
             <div className="inline-block px-2">
-              <Link to="../characters/select">
-                <Label
-                  color="orange"
-                  className={`${styles.customRadius} ${styles.clickSubcharacterBtn}`}
-                >
-                  부캐 보기
+              <Link to={`${nickname}/storages`}>
+                <Label color="dark" className={`${styles.customRadius} ${styles.clickSubcharacterBtn} bg-white border`}>
+                  저장목록 보기
                 </Label>
               </Link>
             </div>
             <div className="inline-block px-2">
               <Link
                 to={{
-                  pathname: "../characters/update",
+                  pathname: "/characters/update",
                   state: {
                     characterSeq: characterSlice.characterSeq,
                   },
                 }}
               >
-                <Label color="brown" className={`${styles.customRadius} ${styles.clickProfileBtn}`}>
+                <Label color="dark" className={`${styles.customRadius} ${styles.clickProfileBtn} bg-white border`}>
                   프로필 편집
                 </Label>
               </Link>
             </div>
           </div>
         ) : (
-          <div className="mt-2">
+          <div className="mt-4">
             <div className="inline-block px-2">
-              <Link to={`../${nickname}/achievement`}>
-                <Label
-                  color="green"
-                  className={`${styles.customRadius} ${styles.clickAchievementBtn}`}
-                >
+              <Link to={`/${nickname}/achievement`}>
+                <Label color="dark" className={`${styles.customRadius} ${styles.clickAchievementBtn} bg-white border`}>
                   업적 보기
+                </Label>
+              </Link>
+            </div>
+            <div className="inline-block px-2">
+              <Link to={`/${nickname}/storages`}>
+                <Label color="dark" className={`${styles.customRadius} ${styles.clickSubcharacterBtn} bg-white border`}>
+                  저장목록 보기
                 </Label>
               </Link>
             </div>
@@ -159,10 +184,7 @@ function CharacterProfile({
                   follow(characterProfile.characterSeq, e);
                 }}
               >
-                <Label
-                  color="lightBlue"
-                  className={`${styles.customRadius} ${styles.clickFollowBtn}`}
-                >
+                <Label color="dark" className={`${styles.customRadius} ${styles.clickFollowBtn} bg-white border`}>
                   팔로우
                 </Label>
               </Link>

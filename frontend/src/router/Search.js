@@ -6,8 +6,11 @@ import MainCard from "../components/MainCard";
 import StorageCardSmall from "../components/StorageCardSmall";
 import styles from "./Search.module.css";
 import Send from "../config/Send";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
-export default function Search({ location }) {
+function Search({ characterSlice, location }) {
+  const history = useHistory();
   const queryString = location.search;
   const params = new URLSearchParams(queryString);
   const query = params.get("query");
@@ -38,34 +41,36 @@ export default function Search({ location }) {
   const getCharactersResult = () => {
     setCharactersResultList([]);
     Send.get(`/search/characters/${query}`).then((res) => {
-      // console.log(res);
       setCharactersResultList(res.data);
     });
   };
-
   const [tagsResultList, setTagsResultList] = useState([]);
   const getTagsResult = () => {
     setTagsResultList([]);
     Send.get(`/search/tags/${query}`).then((res) => {
-      // console.log(res);
       setTagsResultList(res.data);
     });
   };
-
   const [contentsResultList, setContentsResultList] = useState([]);
   const getContentsResult = () => {
     setContentsResultList([]);
     Send.get(`/search/contents/${query}`).then((res) => {
-      // console.log(res.data);
       res.data.forEach((content) => {
         Send.get(`/character/${content.characterSeq}`).then((res) => {
-          // console.log([res.data, content]);
           setContentsResultList((contentsResultList) => [
-            [res.data, content],
+            // [캐릭터 정보, 게시글 정보]
             ...contentsResultList,
+            [res.data, content],
           ]);
         });
       });
+    });
+  };
+  const [storagesResultList, setStoragesResultList] = useState([]);
+  const getStoragesResult = () => {
+    setContentsResultList([]);
+    Send.get(`/search/storages/${query}`).then((res) => {
+      setStoragesResultList(res.data);
     });
   };
 
@@ -73,7 +78,25 @@ export default function Search({ location }) {
     getCharactersResult();
     getTagsResult();
     getContentsResult();
+    getStoragesResult();
   }, [query]);
+
+  const moveContentDetail = (myCharacterSeq, contentSeq, e) => {
+    e.preventDefault();
+    Send.get(`/content/${contentSeq}`, {
+      params: {
+        characterNow: myCharacterSeq,
+        contentSeq,
+      },
+    }).then((res) => {
+      const contentDetail = res.data;
+      history.push({
+        pathname: `../search/texts`,
+        search: `?query=${query}`,
+        props: { contentDetail },
+      });
+    });
+  };
 
   return (
     <>
@@ -87,16 +110,23 @@ export default function Search({ location }) {
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard classes="border rounded-2xl py-2">
+        <MainCard classes="border rounded-xl py-2">
           <div
-            className={`flex overflow-x-auto ${
+            className={`flex overflow-x-auto ${styles.widthScroll} ${
               charactersResultList.length <= 2 ? "justify-center" : ""
             }`}
           >
             {charactersResultList.map((character) => (
               <Link to={`../${character.nickname}`} key={character.characterSeq}>
                 <div className="mx-8 my-6 w-32">
-                  <CharacterImg underText={`${character.nickname}`} />
+                  <CharacterImg
+                    imgSrc={
+                      character.filePath !== null && character.fileName !== null
+                        ? character.filePath + character.fileName
+                        : `/images/default_user.png`
+                    }
+                    underText={`${character.nickname}`}
+                  />
                 </div>
               </Link>
             ))}
@@ -113,10 +143,9 @@ export default function Search({ location }) {
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard classes="border rounded-2xl py-2">
+        <MainCard classes="border rounded-xl py-2">
           <div className={`flex overflow-x-auto justify-center items-center text-xl mx-8`}>
             {/* 태그는 최대 5개만 가져옴 + 6글자 까지 보여줌 */}
-            {/* 현재 태그 상세보기 미구현 */}
             {tagsResultList.slice(0, 4).map((tag) => (
               <Link
                 to={{ pathname: "/search/tag", search: `?detail=${tag.tagText}` }}
@@ -143,20 +172,31 @@ export default function Search({ location }) {
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard classes="border rounded-2xl py-3">
+        <MainCard classes="border rounded-xl py-3">
           <div className={`overflow-y-auto ${styles.box}`} style={{ maxHeight: "550px" }}>
             {contentsResultList.map((content) => (
               <div className="flex justify-center items-center py-2" key={content[1].contentSeq}>
                 <Link to={`../${content[0].nickname}`}>
                   <div className="m-3">
-                    <CharacterImg imgWidth="50px" />
+                    <CharacterImg
+                      imgSrc={
+                        content[0].filePath !== null && content[0].fileName !== null
+                          ? content[0].filePath + content[0].fileName
+                          : `/images/default_user.png`
+                      }
+                      imgWidth="50px"
+                    />
                   </div>
                 </Link>
                 <div style={{ width: "126px" }}>
                   <Link to={`../${content[0].nickname}`}>{content[0].nickname}</Link>
                 </div>
-                {/* 현재 해당 내용으로 이동 아직 미구현 */}
-                <Link to="">
+                <Link
+                  to=""
+                  onClick={(e) =>
+                    moveContentDetail(characterSlice.characterSeq, content[1].contentSeq, e)
+                  }
+                >
                   <div className="ml-8 w-72">
                     {content[1].contentText.length < 40
                       ? content[1].contentText
@@ -174,27 +214,47 @@ export default function Search({ location }) {
           <div className="material-icons flex items-center text-lg">
             folder_shared<span className="ml-1">저장소</span>
           </div>
-          <Link to={{ pathname: "/search/storages", search: `?query=${query}` }}>
+          <Link
+            to={{
+              pathname: "/search/storages",
+              search: `?query=${query}`,
+              props: { storagesResultList },
+            }}
+          >
             <div className="text-lg">더 보기</div>
           </Link>
         </div>
-        <MainCard classes="border rounded-2xl py-3">
-          <div className="flex justify-center">
-            <StorageCardSmall
-              storageName="요리하는 부부 저장소"
-              imgSrc="https://cdn2.thecatapi.com/images/43n.png"
-            />
-            <StorageCardSmall
-              storageName="맛있는 요리 모음"
-              imgSrc="https://cdn2.thecatapi.com/images/dnz0xXA6a.jpg"
-            />
-            <StorageCardSmall
-              storageName="불타는 요리 맛집"
-              imgSrc="https://cdn2.thecatapi.com/images/cna.jpg"
-            />
+        <MainCard classes="border rounded-xl py-3">
+          {/* 현재 이미지가 여러개 생기면 크기가 줄어들면서 스크롤 동작X 상태 */}
+          {/* 우선 최대 3개만 보이게 구현 */}
+          <div
+            className={`flex overflow-x-auto ${styles.widthScroll} ${
+              storagesResultList.length <= 2 ? "justify-center" : ""
+            }`}
+          >
+            {storagesResultList.slice(0, 3).map((storage) => (
+              // 테스트 아직
+              // nickname -> ninkname인 상태
+              <Link to={`/${storage.nickname}/storages/${storage.storageSeq}`}>
+                <StorageCardSmall
+                  storageName={storage.storageName}
+                  imgSrc={
+                    storage.fileName && storage.filePath
+                      ? require(`../assets${storage.fileName + storage.filePath}`)
+                      : require(`../assets/images/save_box.jpg`)
+                  }
+                />
+              </Link>
+            ))}
           </div>
         </MainCard>
       </div>
     </>
   );
 }
+
+function mapStateToProps(state) {
+  return { characterSlice: state.character };
+}
+
+export default connect(mapStateToProps)(Search);

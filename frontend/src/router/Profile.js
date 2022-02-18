@@ -5,6 +5,8 @@ import Content from "../components/Content";
 import { connect } from "react-redux";
 import Send from "../config/Send";
 import { useEffect, useState } from "react";
+import { Button } from "@material-tailwind/react";
+import ContentCreate from "../components/ContentCreate";
 
 function Profile({ characterSlice }) {
   const { nickname } = useParams();
@@ -31,6 +33,11 @@ function Profile({ characterSlice }) {
     });
   };
 
+  const [contentCreateModal, setContentCreateModal] = useState(false);
+  const handleClose = () => {
+    setContentCreateModal(false);
+  };
+
   useEffect(() => {
     getCharacterProfile();
     getFeed();
@@ -38,18 +45,34 @@ function Profile({ characterSlice }) {
 
   return (
     <div>
+      <ContentCreate isOpen={contentCreateModal} onCancel={handleClose} getFeed={getFeed} />
       <MainCard classes="border">
-        {/* CharacterProfile에서 요청 보내고 받는게 좋은거 같은데... */}
         <CharacterProfile
           isMe={characterSlice.nickname === nickname ? true : false}
           nickname={nickname}
           category={characterProfile.categoryName}
-          introduction={characterSlice.nickname === nickname ? characterSlice.introduction : "내 캐릭터가 아니랍니다"}
+          introduction={characterSlice.nickname === nickname ? characterSlice.introduction : characterProfile.introduction}
         />
       </MainCard>
-      <div className="border">
-        <Content contents={feedContents} />
-      </div>
+      {feedContents.length ? (
+        <div className="border">
+          <Content getFeed={getFeed} contents={feedContents} />
+        </div>
+      ) : (
+        <div className="text-center flex-col" style={{ marginTop: 250 }}>
+          <div className="text-2xl">게시물을 작성해 persona를 시작하세요.</div>
+          <Button
+            size="regular"
+            rounded={true}
+            className="mt-5"
+            color="lightBlue"
+            style={{ marginLeft: 170, width: 250 }}
+            onClick={() => setContentCreateModal(true)}
+          >
+            게시물 작성하기
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

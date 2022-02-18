@@ -1,8 +1,6 @@
-import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
-import userStore from "../store/userStore";
 import "@material-tailwind/react/tailwind.css";
 import Logo from "../assets/images/main_logo.png";
 import { Card, CardBody, CardFooter, Button } from "@material-tailwind/react";
@@ -16,15 +14,15 @@ function IdInquiryResult({ userSlice }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("이메일 보내기");
-    console.log("asfaa" + emaildata);
+    // console.log("이메일 보내기");
+    // console.log("asfaa" + emaildata);
     Send.get(`/user/email/id`, {
       params: {
         userEmail: emaildata,
       },
     })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         alert("이메일을 확인해 주세요!");
       })
       .catch((e) => {
@@ -35,7 +33,7 @@ function IdInquiryResult({ userSlice }) {
   return (
     <div className={`${styles.center}`}>
       <div id="logo" className={`${styles.logo}`}>
-        <img src={Logo} />
+        <img src={Logo} alt="" />
       </div>
 
       <Card>
@@ -61,7 +59,7 @@ function IdInquiryResult({ userSlice }) {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
+  // console.log(state);
   return { userSlice: state.user };
 }
 

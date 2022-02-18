@@ -21,10 +21,10 @@ function SettingsAlarm({ characterSlice, characterAlarmUpdate }) {
       followAlarm: followEnabled,
       modifyAlarm: saveEnabled,
     };
-    console.log(data);
+    // console.log(data);
     // 백 업데이트
     Send.put("/character/alarmStatus", JSON.stringify(data)).then((res) => {
-      console.log("백 업데이트", res);
+      // console.log("백 업데이트", res);
     });
     // 프론트 업데이트
     characterAlarmUpdate(data);

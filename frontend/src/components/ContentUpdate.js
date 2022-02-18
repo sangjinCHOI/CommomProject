@@ -5,10 +5,16 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "@material-ta
 import Send from "../config/Send";
 import File from "../config/File";
 
-function ContentCreate(props) {
+function ContentUpdate(props) {
   // 태그
+  let initialTags = [];
+  if (props.content.tags) {
+    initialTags = props.content.tags.split("|");
+  } else {
+    initialTags = [];
+  }
   const [tag, setTag] = useState("");
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState(initialTags);
   const onTagChange = (e) => setTag(e.target.value);
   const onSubmit = (e) => {
     if (e.charCode === 124) {
@@ -29,9 +35,9 @@ function ContentCreate(props) {
   };
 
   // 태그 작성
-  const postTags = (tags, contentSeq) => {
+  const putTags = (tags, contentSeq) => {
     const hashtag = tags;
-    Send.post(`/content/tag/${contentSeq}`, JSON.stringify(hashtag));
+    Send.put(`/content/tag/${props.content.contentSeq}`, JSON.stringify(hashtag));
   };
 
   // 모달
@@ -40,11 +46,11 @@ function ContentCreate(props) {
     onCancel();
   };
 
-  // 게시글 작성
+  // 게시글 수정
   const [imgFiles, setImgFiles] = useState([]);
-  const [contentText, setContentText] = useState("");
-  const [isMedia, setIsMedia] = useState(false);
-  const [isPublic, setIsPublic] = useState(true);
+  const [contentText, setContentText] = useState(props.content.contentText);
+  const [isMedia, setIsMedia] = useState(props.content.contentIsMedia);
+  const [isPublic, setIsPublic] = useState(props.content.contentIsPublic);
   const history = useHistory();
   const readImg = (input) => {
     if (input.files) {
@@ -61,24 +67,31 @@ function ContentCreate(props) {
     setIsPublic(e.target.value);
     // console.log(e.target.value);
   };
-  const postContent = () => {
+
+  // const initialSetting = () => {
+  //   contentText.setValue(props.content.contentText);
+  //   isPublic.setValue(props.content.contentIsPublic);
+  // };
+  // useEffect(() => {
+  //   initialSetting();
+  // }, []);
+
+  const putContent = () => {
     const formData = new FormData();
     for (let i = 0; i < imgFiles.length; i++) {
       formData.append("file", imgFiles[i]);
       setIsMedia(true);
     }
-
     const data = {
-      categoryNumber: props.characterSlice.categoryNumber,
-      characterSeq: props.characterSlice.characterSeq,
       contentIsMedia: isMedia,
       contentIsPublic: isPublic,
+      contentSeq: props.content.contentSeq,
       contentText: contentText,
     };
-    formData.append("sendContentCreaterequest", new Blob([JSON.stringify(data)], { type: "application/json" }));
-    File.post("/content", formData).then((res) => {
+    formData.append("sendContentModifyrequest", new Blob([JSON.stringify(data)], { type: "application/json" }));
+    File.put("/content", formData).then((res) => {
       if (tags.length !== 0) {
-        postTags(tags, res.data.content_seq);
+        putTags(tags, res.data.content_seq);
       }
       history.push("/");
     });
@@ -113,14 +126,16 @@ function ContentCreate(props) {
           onKeyPress={onSubmit}
         />
         <div className="bg-slate-100 h-9 rounded mb-1 h-fit flex flex-wrap items-center" style={{ width: 574 }}>
-          {tags.map((item, id) => (
-            <div className="m-1 px-2 rounded-md bg-purple-200 flex" key={id}>
-              {item}
-              <button className="material-icons text-sm ml-2 pt-0.5" onClick={() => onRemoveTags(id)}>
-                close
-              </button>
-            </div>
-          ))}
+          {tags
+            ? tags.map((item, id) => (
+                <div className="m-1 px-2 rounded-md bg-purple-200 flex" key={id}>
+                  {item}
+                  <button className="material-icons text-sm ml-2 pt-0.5" onClick={() => onRemoveTags(id)}>
+                    close
+                  </button>
+                </div>
+              ))
+            : null}
         </div>
         <textarea
           value={contentText}
@@ -143,14 +158,12 @@ function ContentCreate(props) {
           ripple="light"
           onClick={() => {
             if (contentText) {
-              postContent();
+              putContent();
               handleClose(false);
-              history.push("/");
-              window.location.reload();
             }
           }}
         >
-          작성
+          수정
         </Button>
       </ModalFooter>
     </Modal>
@@ -161,4 +174,4 @@ function mapStateToProps(state) {
   return { characterSlice: state.character };
 }
 
-export default connect(mapStateToProps)(ContentCreate);
+export default connect(mapStateToProps)(ContentUpdate);

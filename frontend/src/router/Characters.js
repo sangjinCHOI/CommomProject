@@ -2,15 +2,18 @@ import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
+import { useHistory } from "react-router-dom";
 
 import { save } from "../store/characterStore";
 import Send from "../config/Send";
 
 function Characters({ userSlice, saveCharacter }) {
+  const history = useHistory();
   const [isManagement, setIsManagement] = useState(false);
   const [characterList, setCharacterList] = useState([]);
   const [characterLen, setCharacterLen] = useState(0);
   const { userId, userSeq, userCreatableCount } = userSlice;
+  const [isMouseOver, setIsMouseOver] = useState(false);
 
   const getCharacterList = () => {
     Send.get(`/user/${userId}`).then((res) => {
@@ -18,14 +21,13 @@ function Characters({ userSlice, saveCharacter }) {
         .then((res) => {
           setCharacterList(res.data);
           setCharacterLen(res.data.length);
-          return userSeq;
         })
         .catch((err) => console.log(err));
     });
   };
   useEffect(() => {
     getCharacterList();
-  }, []);
+  }, [characterLen]);
 
   const management = (event) => {
     event.preventDefault();
@@ -61,28 +63,45 @@ function Characters({ userSlice, saveCharacter }) {
             isLock
               ? (e) => e.preventDefault()
               : isExist
-              ? () => {
-                  // 메인페이지로 넘어갈 때 캐릭터 저장
-                  Send.get(`/character/${characterSeq}`).then((res) => {
-                    saveCharacter(res.data);
-                  });
-                }
+              ? isManagement
+                ? null
+                : (e) => {
+                    // 메인페이지로 넘어갈 때 캐릭터 저장
+                    e.preventDefault();
+                    Send.get(`/character/${characterSeq}`)
+                      .then((res) => {
+                        saveCharacter(res.data);
+                        history.push("/");
+                      })
+                      .catch((err) => console.log(err));
+                  }
               : null
           }
         >
           <CharacterImg
             underText={nickname}
             // 캐릭터 잠금 상태인지, 캐릭터가 존재하는지, 캐릭터 관리 상태인지, 이미지가 있는지에 따라 분기(순서 중요)
+            // imgSrc={
+            //   isLock
+            //     ? require("../assets/images/character_lock.png")
+            //     : isExist
+            //     ? isManagement
+            //       ? require("../assets/images/character_edit.png")
+            //       : imgSrc // 여기가 실제 이미지
+            //       ? imgSrc
+            //       : require("../assets/images/default_user.png") // 여기가 기본 이미지
+            //     : require("../assets/images/character_plus.png")
+            // }
             imgSrc={
               isLock
-                ? require("../assets/images/character_lock.png")
+                ? "/images/character_lock.png"
                 : isExist
                 ? isManagement
-                  ? require("../assets/images/character_edit.png")
-                  : imgSrc
+                  ? "/images/character_edit.png"
+                  : imgSrc // 여기가 실제 이미지
                   ? imgSrc
-                  : require("../assets/images/default_user.png")
-                : require("../assets/images/character_plus.png")
+                  : "/images/default_user.png" // 여기가 기본 이미지
+                : "/images/character_plus.png"
             }
             lock={isLock}
           />
@@ -96,11 +115,12 @@ function Characters({ userSlice, saveCharacter }) {
       <img
         src={require("../assets/images/main_logo.png")}
         alt="main_logo"
-        className="mx-auto my-24 w-96"
+        className="mx-auto my-24"
+        style={{ width: "450px" }}
       />
-      <div className="text-center text-2xl mt-8 mb-4">
-        <span>
-          {isManagement ? "수정할 캐릭터를 선택하세요." : "PERSONA를 사용할 캐릭터를 선택하세요."}
+      <div className="text-center text-3xl mt-8 mb-4">
+        <span style={{ fontSize: "26px" }}>
+          {isManagement ? "수정할 캐릭터를 선택하세요." : "사용할 캐릭터를 선택하세요."}
         </span>
       </div>
       <div className="flex justify-center m-8">
@@ -109,7 +129,14 @@ function Characters({ userSlice, saveCharacter }) {
           isManagement={isManagement}
           isExist={characterLen >= 1 ? true : false}
           isLock={userCreatableCount >= 1 ? false : true}
-          imgSrc="https://cdn2.thecatapi.com/images/ba2.jpg"
+          // 아마 최종 형태
+          imgSrc={
+            characterLen >= 1
+              ? characterList[0].filePath !== null && characterList[0].fileName !== null
+                ? `${characterList[0].filePath + characterList[0].fileName}`
+                : null
+              : null
+          }
           characterSeq={characterLen >= 1 ? characterList[0].characterSeq : null}
         />
         <Character
@@ -117,7 +144,13 @@ function Characters({ userSlice, saveCharacter }) {
           isManagement={isManagement}
           isExist={characterLen >= 2 ? true : false}
           isLock={userCreatableCount >= 2 ? false : true}
-          imgSrc="https://cdn2.thecatapi.com/images/kFemmj2_z.jpg"
+          imgSrc={
+            characterLen >= 2
+              ? characterList[1].filePath !== null && characterList[1].fileName !== null
+                ? `${characterList[1].filePath + characterList[1].fileName}`
+                : null
+              : null
+          }
           characterSeq={characterLen >= 2 ? characterList[1].characterSeq : null}
         />
       </div>
@@ -127,7 +160,13 @@ function Characters({ userSlice, saveCharacter }) {
           isManagement={isManagement}
           isExist={characterLen >= 3 ? true : false}
           isLock={userCreatableCount >= 3 ? false : true}
-          imgSrc="https://cdn2.thecatapi.com/images/9gg.jpg"
+          imgSrc={
+            characterLen >= 3
+              ? characterList[2].filePath !== null && characterList[2].fileName !== null
+                ? `${characterList[2].filePath + characterList[2].fileName}`
+                : null
+              : null
+          }
           characterSeq={characterLen >= 3 ? characterList[2].characterSeq : null}
         />
         <Character
@@ -135,13 +174,36 @@ function Characters({ userSlice, saveCharacter }) {
           isManagement={isManagement}
           isExist={characterLen >= 4 ? true : false}
           isLock={userCreatableCount >= 4 ? false : true}
-          imgSrc="https://cdn2.thecatapi.com/images/b9v.jpg"
+          imgSrc={
+            characterLen >= 4
+              ? characterList[3].filePath !== null && characterList[3].fileName !== null
+                ? `${characterList[3].filePath + characterList[3].fileName}`
+                : null
+              : null
+          }
           characterSeq={characterLen >= 4 ? characterList[3].characterSeq : null}
         />
       </div>
       <div className="text-center text-2xl mt-24">
-        <Link to="" onClick={management}>
-          {isManagement ? "취소" : "캐릭터 관리"}
+        <Link
+          to=""
+          onClick={management}
+          className={`px-5 py-1.5 rounded-sm`}
+          onMouseOver={() => setIsMouseOver(true)}
+          onMouseOut={() => setIsMouseOver(false)}
+        >
+          <span className={`${isMouseOver ? "text-gray-800" : "text-gray-400"}`}>
+            {isManagement ? "완료" : "캐릭터 관리"}
+          </span>
+        </Link>
+      </div>
+      <div className="mt-8 text-center">
+        <Link
+          to="../accounts/login"
+          className="text-gray-400"
+          onClick={() => window.localStorage.clear()}
+        >
+          로그아웃
         </Link>
       </div>
     </>

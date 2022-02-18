@@ -21,6 +21,7 @@ const initialCharacterState = {
   userSeq: 0,
   userId: "initialUserId",
   filePath: null,
+  fileName: null,
 };
 
 const characterSlice = createSlice({
@@ -45,13 +46,15 @@ const characterSlice = createSlice({
       state.userSeq = action.payload.userSeq;
       state.userId = action.payload.userId;
       state.filePath = action.payload.filePath;
+      state.fileName = action.payload.fileName;
     },
     update: (state, action) => {
       state.introduction = action.payload.introduction;
       state.nickname = action.payload.nickname;
+      state.filePath = action.payload.filePath;
+      state.fileName = action.payload.fileName;
     },
     alarmUpdate: (state, action) => {
-      console.log("알람 업데이트 완료", action.payload);
       state.characterSeq = action.payload.characterSeq;
       state.alarmAllow = action.payload.alarmAllow;
       state.likeAlarm = action.payload.likeAlarm;
@@ -59,8 +62,12 @@ const characterSlice = createSlice({
       state.followAlarm = action.payload.followAlarm;
       state.modifyAlarm = action.payload.modifyAlarm;
     },
+    achieve: (state, action) => {
+      console.log(action);
+      state.representativeAchievement = action.payload.representativeAchievement;
+    },
   },
 });
 
-export const { save, update, alarmUpdate } = characterSlice.actions;
+export const { save, update, alarmUpdate, achieve } = characterSlice.actions;
 export default characterSlice.reducer;

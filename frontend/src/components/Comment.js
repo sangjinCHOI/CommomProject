@@ -121,7 +121,7 @@ function Comment(props) {
       replySeq: replySeq,
     };
     Send.post("/content/reply/like", JSON.stringify(data)).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
     });
   };
 
@@ -134,7 +134,7 @@ function Comment(props) {
         replySeq: replySeq,
       },
     }).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
     });
   };
 
@@ -154,7 +154,11 @@ function Comment(props) {
                       <div className="mb-5">
                         <div className="px-4 flex justify-between">
                           <div className="flex">
-                            <Image src="https://url.kr/p6xvn5" width="32px" rounded={true} raised={false} alt="Rounded Image" />
+                            {comment.writerProfile ? (
+                              <Image src={require(`../assets${comment.writerProfile}`)} width="32px" rounded={true} raised={false} alt="" />
+                            ) : (
+                              <Image src={require(`../assets/images/default_user.png`)} width="32px" rounded={true} raised={false} alt="" />
+                            )}
                             <p className="pt-0.5 mx-2 text-lg">{comment.replyWriter}</p>
                           </div>
                           <Menu as="div" className="mx-2 mt-1 relative w-12">
@@ -172,7 +176,8 @@ function Comment(props) {
                                         params: {
                                           replySeq: comment.replySeq,
                                         },
-                                      }).then((res) => console.log(res.data));
+                                      });
+                                      // .then((res) => console.log(res.data));
                                     }}
                                   >
                                     삭제

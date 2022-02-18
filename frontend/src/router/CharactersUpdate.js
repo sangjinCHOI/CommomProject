@@ -5,8 +5,9 @@ import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CharacterImg from "../components/CharacterImg";
 import Send from "../config/Send";
+import File from "../config/File";
 
-import { update } from "../store/characterStore";
+import { save, update } from "../store/characterStore";
 
 const useInput = (initialValue, validator) => {
   const [value, setValue] = useState(initialValue);
@@ -25,15 +26,7 @@ const useInput = (initialValue, validator) => {
   return { value, onChange, setValue };
 };
 
-function CharacterUpdate({ updateCharacter, location }) {
-  const [selectedCategory, setSelectedCategory] = useState([]);
-  const getCategories = () => {
-    Send.get("/character/categorys").then((res) => {
-      const nowCategory = res.data.find((category) => category.characterCategoryNumber === 0);
-      setSelectedCategory([nowCategory.characterCategoryName, nowCategory.characterCategoryNumber]);
-    });
-  };
-
+function CharacterUpdate({ saveCharacter, updateCharacter, characterSlice, location }) {
   const convertByte = (word) => {
     let totalByte = 0;
     for (let i = 0; i < word.length; i++) {
@@ -46,45 +39,83 @@ function CharacterUpdate({ updateCharacter, location }) {
     return totalByte;
   };
 
+  const [imgFile, setImgFile] = useState(null);
+
   // 닉네임만 Byte로 제한
   const nicknameMaxLen = (value) => convertByte(value) <= 16;
   const introductionMaxLen = (value) => value.length <= 50;
   const nickname = useInput("", nicknameMaxLen);
   const introduction = useInput("", introductionMaxLen);
+  const [selectedCategory, setSelectedCategory] = useState([]);
 
   const history = useHistory();
 
   const characterSeq = location.state.characterSeq;
+  const [nowCharacter, setNowCharacter] = useState([]);
+  const [tempImgSrc, setTempImgSrc] = useState("/images/default_user.png");
   const getCharacter = () => {
     Send.get(`/character/${characterSeq}`).then((res) => {
       nickname.setValue(res.data.nickname);
       introduction.setValue(res.data.introduction);
+      const tempCharacter = res.data;
+      setNowCharacter(res.data);
+      saveCharacter(res.data);
+      Send.get("/character/categorys").then((res) => {
+        const nowCategory = res.data.find(
+          (category) => category.characterCategoryNumber === tempCharacter.categoryNumber
+        );
+        setSelectedCategory([
+          nowCategory.characterCategoryName,
+          nowCategory.characterCategoryNumber,
+        ]);
+      });
+      setTempImgSrc(res.data.filePath + res.data.fileName);
     });
   };
 
   useEffect(() => {
-    getCategories();
     getCharacter();
   }, []);
 
   const characterUpdate = (e) => {
     e.preventDefault();
+    const formData = new FormData();
 
     const character = {
       characterSeq,
       introduction: introduction.value,
       nickname: nickname.value,
+      representativeAchievement: 0,
     };
-
-    updateCharacter({ character });
-
-    Send.put("/character", JSON.stringify(character))
+    formData.append("file", imgFile);
+    formData.append("request", new Blob([JSON.stringify(character)], { type: "application/json" }));
+    // Send.put("/character", JSON.stringify(character))
+    //   .then(() => {
+    //     alert("캐릭터 수정이 완료되었습니다.");
+    //     history.push("../characters/select");
+    //   })
+    //   .catch((err) => console.log(err));
+    // history.push("../characters/select");
+    File.put("/character", formData)
       .then(() => {
         alert("캐릭터 수정이 완료되었습니다.");
+        if (imgFile === null) {
+          Send.delete(`/character/profile/${character.characterSeq}`).then((res) => {
+            updateCharacter({ character });
+          });
+        } else {
+          updateCharacter({ character });
+        }
         history.push("../characters/select");
+        window.location.reload();
       })
       .catch((err) => console.log(err));
     history.push("../characters/select");
+    window.location.reload();
+  };
+
+  const imgChangeHandler = (propsImg) => {
+    setImgFile(propsImg);
   };
 
   return (
@@ -95,11 +126,20 @@ function CharacterUpdate({ updateCharacter, location }) {
       <img
         src={require("../assets/images/main_logo.png")}
         alt="main_logo"
-        className="mx-auto my-24 w-96"
+        className="mx-auto my-24"
+        style={{ width: "450px" }}
       />
-
-      <CharacterImg isChange={true} underText="변경" />
-
+      <CharacterImg
+        // 임시? 여기도 NaN...?
+        imgSrc={
+          nowCharacter.filePath === null || nowCharacter.fileName === null
+            ? "/images/default_user.png"
+            : tempImgSrc
+        }
+        imgChangeHandler={imgChangeHandler}
+        isChange={true}
+        underText="변경"
+      />
       <div className="w-96 mx-auto mt-8">
         <div className="bg-white rounded-lg">
           <InputIcon
@@ -146,7 +186,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { updateCharacter: (character) => dispatch(update(character)) };
+  return {
+    saveCharacter: (character) => dispatch(save(character)),
+    updateCharacter: (character) => dispatch(update(character)),
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CharacterUpdate);
