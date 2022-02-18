@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.persona.user.mapper.UserMapper">
+<mapper namespace="com.ssafy.persona.domain.user.mapper.UserMapper">
 	<select id="seqIsValid" resultType="Integer">
 		select count(*)
 		from tb_user

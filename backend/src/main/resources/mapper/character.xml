@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ssafy.persona.domain.character.mapper.CharacterMapper">
+
+	<insert id="regist" useGeneratedKeys="true" keyProperty="characterSeq">
+		insert into tb_character
+			(user_seq, category_number, nickname, introduction, character_created_date,
+			alarm_allow, like_alarm, reply_alarm, follow_alarm, modify_alarm)
+		values
+			(#{userSeq}, #{categoryNumber}, #{nickname}, #{introduction}, now(),
+			true, true, true, true, true)
+	</insert>
+
+	<update id="update">
+		update tb_character set
+		<if test="nickname != null and nickname != ''">
+			nickname=#{nickname},
+		</if>
+		<if test="introduction != null and introduction != ''">
+			introduction=#{introduction},
+		</if>
+		<if
+			test="representativeAchievement != null and representativeAchievement != ''">
+			representative_achievement=#{representativeAchievement},
+		</if>
+		character_modified_date = now()
+		where character_seq=#{characterSeq}
+	</update>
+
+	<update id="deleteAchievement">
+		update tb_character set
+		representative_achievement=0,
+		character_modified_date = now()
+		where character_seq=#{characterSeq}
+	</update>
+
+	<update id="updateAlarmStatus">
+		update tb_character set 
+		<if test="alarmAllow != null">
+			alarm_allow=#{alarmAllow},
+		</if>
+		<if test="likeAlarm != null">
+			like_alarm=#{likeAlarm},
+		</if>
+		<if test="replyAlarm != null">
+			reply_alarm=#{replyAlarm},
+		</if>
+		<if test="followAlarm != null">
+			follow_alarm=#{followAlarm},
+		</if>
+		<if test="modifyAlarm != null">
+			modify_alarm=#{modifyAlarm},
+		</if>
+		character_modified_date = now()
+		where character_seq=#{characterSeq}
+	</update>
+
+	<update id="delete">
+		update tb_character set
+			character_active=0,
+			character_delete_reason=#{characterDeleteReason},
+			character_modified_date = now()
+		where character_seq=#{characterSeq}
+	</update>
+
+	<update id="setCharacterProfileDefault">
+		update tb_file set
+			file_is_active = 0,
+			file_modified_date = now()
+		where relation_tb = 'tb_character'
+		AND file_is_active = 1
+		AND relation_seq = #{characterSeq}
+	</update>
+	
+	<select id="checkNicknameDuplicate"	resultType="int">
+		select 
+			count(*)
+		from
+			tb_character
+		where nickname=#{nickname} 
+		AND character_active = 1
+	</select>
+	
+	<select id="detail"	resultType="CharacterGetResponse">
+		select c.character_seq, c.user_seq, c.nickname, c.category_number, c.introduction, 
+			c.representative_achievement, c.alarm_allow, c.like_alarm, c.reply_alarm,
+			c.follow_alarm, c.modify_alarm, c.reported_time, character_active,
+			c.character_created_date, c.character_modified_date,
+			u.user_id,
+			f.file_path,
+		    f.file_name
+		from
+			tb_character c
+		JOIN tb_user u ON c.user_seq = u.user_seq
+		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_character'
+		AND f.file_is_active = 1
+		AND f.relation_seq = c.character_seq
+		where character_seq=#{characterSeq} 
+		AND character_active = 1
+	</select>
+
+	<select id="getCharacterProfile" resultType="CharacterProfileResponse">
+		select 
+			c.character_seq,
+			c.introduction,
+			c.representative_achievement, 
+			characterFile.file_path AS profileImagePath,
+			characterFile.file_name AS profileImageName,
+			achieveFile.file_path AS achievementImagePath,
+			achieveFile.file_name AS achievementImageName,
+			ca.character_category_name AS category_name,
+			(SELECT count(*) FROM tb_content where character_seq = c.character_seq AND content_is_active = 1) AS content_count,
+			(SELECT count(*) FROM tb_follow where followee = c.character_seq) AS follower_count,
+			(SELECT count(*) FROM tb_follow where follower = c.character_seq) AS followee_count
+		from
+			tb_character c
+		LEFT OUTER JOIN tb_character_category ca ON ca.character_category_number = c.category_number
+		LEFT OUTER JOIN tb_file achieveFile ON achieveFile.relation_tb = 'tb_achievement'
+		AND achieveFile.relation_seq = c.representative_achievement
+		AND achieveFile.file_is_active = 1
+		LEFT OUTER JOIN tb_file characterFile ON characterFile.relation_tb = 'tb_character'
+		AND characterFile.relation_seq = c.character_seq
+		AND characterFile.file_is_active = 1
+		where nickname=#{nickname} 
+		AND character_active = 1
+	</select>
+
+	<select id="list" resultType="CharacterGetResponse">
+		select c.character_seq, c.user_seq, c.nickname, c.category_number, c.introduction, 
+			c.representative_achievement, c.alarm_allow, c.like_alarm, c.reply_alarm,
+			c.follow_alarm, c.modify_alarm, c.reported_time, character_active,
+			c.character_created_date, c.character_modified_date,
+			f.file_path, f.file_name 
+		from tb_character c
+		LEFT OUTER JOIN tb_file f ON f.relation_tb = 'tb_character'
+		AND f.relation_seq = c.character_seq
+		AND f.file_is_active = 1
+		where user_seq=#{userSeq}
+		AND character_active = 1
+	</select>
+
+	<select id="getCharacterCount"	resultType="int">
+		select 
+			count(*)
+		from
+			tb_character
+		where user_seq=#{userSeq}
+		and character_active = 1
+	</select>
+
+	<select id="checkCharacterNickname"	resultType="int">
+		select 
+			count(*)
+		from
+			tb_character
+		where nickname=#{nickname}
+		and character_active = 1
+	</select>
+
+</mapper>
