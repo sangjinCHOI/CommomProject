@@ -13,32 +13,4 @@
 
 * 자세한 방법은 포팅 메뉴얼을 확인해주세요
 
-## 기술 스택 🌻
-<center>
-
-<img src = 
-https://img.shields.io/badge/Java-SE-green />
-<img src = 
-https://img.shields.io/badge/JDK-1.8+-red />
-
-</center>
-
-## Demo 🍁
-
-#### ⭕ 체크 박스로 검색 ⭕
-
-![](https://ifh.cc/g/bAfJkr.gif)
-
-#### ⭕ 동으로 검색 ⭕
-
-![](https://ifh.cc/g/ddKInF.gif)
-
-
-#### ⭕ 이름으로 검색 ⭕
-
-![](https://ifh.cc/g/5Z74Ou.gif)
-
-#### ⭕ 셀 선택시 이미지 변경 ⭕
-
-![](https://ifh.cc/g/2Hgjxp.gif)
 
